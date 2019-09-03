@@ -29,6 +29,7 @@
     float: right;
     text-align: center;
     min-height: 200px;
+    height:100%;
 }
 .stepse .ivu-icon {
     /* font-size: 40px; */
@@ -112,7 +113,7 @@
 </style>
 
 <template>
-    <div style="padding:10px;padding-top:20px;padding-bottom:20px;height:100%">
+    <div style="padding:10px;padding-top:20px;padding-bottom:10px;height:100%">
         <div class="blackback" v-show="imgshow1">
             <div v-show="OCRLoading" style="position:absolute;top:0;bottom:0;left:0;right:0;">
               <ClipLoader style="position:absolute;top:50%;left:50%;margin-top:-30px;margin-l eft:-30px;" color="#40a9ff" size="80px"/>
@@ -177,8 +178,9 @@
             </div>
         </div>
         <div class="content_main1" style="width:750px">
-            
+            <div style="overflow-y:auto;max-height:92%;">
             <Table ref="selection" width=""  :columns="connectedCol"  :data="connectedData"  style="margin-top: 10px;"></Table>
+            </div>
             <div style="margin: 10px;overflow: hidden">
                 <div style="float: right;">
                     <Page :total="totalPage" height='410' :page-size="1" :current="pageNumber" @on-change="changePage"></Page>
@@ -1466,7 +1468,7 @@ export default {
                 code:this.code,
                 defendantName:this.codeDenfent,
                 pageNumber:page,
-                pageSize:7,
+                pageSize:6,
                 brief:this.brief
             }
             caseList(params).then(res => {

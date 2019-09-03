@@ -32,6 +32,7 @@
     float: right;
     text-align: center;
     min-height: 200px;
+    height:100%;
 }
 .stepse .ivu-icon {
     /* font-size: 40px; */
@@ -69,7 +70,7 @@
 </style>
 
 <template>
-    <div style="padding:10px;padding-top:20px;padding-bottom:20px;height:100%">
+    <div style="padding:10px;padding-top:20px;padding-bottom:10px;height:100%">
         <div class="stepse">
             <p slot="title" style="display:inline-block;font-size: 20px;margin-top:20px">
                 <Icon type="wrench"></Icon>
@@ -113,8 +114,11 @@
         </div>
         <div class="content_main">
             <Input v-model="code" @on-enter="searchList" icon="search" placeholder="回执编号" style="width: 100%"></Input>
-            <Table ref="selection" :loading="loading"  :columns="connectedCol" :data="connectedData"  style="margin-top: 10px;"></Table>
-            <div style="margin: 10px;overflow: hidden">
+            <div style="overflow-y:auto;max-height:85%;">
+                <Table ref="selection" :loading="loading"  :columns="connectedCol" :data="connectedData"  style="margin-top: 10px;"></Table>
+            </div>
+            
+            <div style="margin: 10px;overflow: hidden;">
                 <div style="float: right;">
                     <Page :total="totalPage" :page-size="1" :current="pageNumber" @on-change="changePage"></Page>
                 </div>
@@ -1661,9 +1665,10 @@ export default {
                 brief:this.brief,
                 code:this.code,
                 pageNumber:page,
-                pageSize:7
+                pageSize:6
             }
             this.loading = true;
+            this.pageNumber = page;
             caseList(params).then(res => {
                 this.loading = false;
                 this.connectedData = [];
@@ -1678,13 +1683,17 @@ export default {
                             status = "退回"
                         }else if(item.auditStatus == 6){
                             status = "委派调解中"
+                        }else if (item.auditStatus == 7){
+                            status = "已撤回"
+                        }else if (item.auditStatus == 8){
+                            status = "撤诉申请中"
                         }
                         let plainTiffs = '';
                         let defendant = '';
                         console.log(item)
                         item.onlineLitigants.map(it => {
                             if(it.litigationStatus.name == '原告'){
-                                defendant = defendant + it.litigantName + "、"
+                                plainTiffs = plainTiffs + it.litigantName + "、"
                             }else if(it.litigationStatus.name == '被告'){
                                 defendant = defendant + it.litigantName + "、"
                             }

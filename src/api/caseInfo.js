@@ -603,3 +603,31 @@ export function withdrawalResult (onlineLawCase) {
         params
     });
 }
+
+/**
+ * 办理案件撤诉
+ */
+export function handlingWithdrawal (state,path,reason,onlineLawCaseId) {
+    const params = {
+        state,
+        path,
+        reason,
+        onlineLawCaseId
+    };
+    return service({
+        url: '/online/lawCase/handlingWithdrawal.jhtml',
+        method: 'GET',
+        params
+    });
+}
+
+// export function getWithdrawalInfo (caseNo) {
+//     const params = {
+//         caseNo
+//     };
+//     return service({
+//         url: '/online/lawCase/getWithdrawalInfo.jhtml',
+//         method: 'GET',
+//         params
+//     });
+// }
