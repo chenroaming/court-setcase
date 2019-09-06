@@ -1374,11 +1374,6 @@ export default {
             noFALES:false,
             usualList:[],
             columnsUsual:[
-                // {
-                //     type: 'selection',
-                //     width: 60,
-                //     align: 'center'
-                // },
                 {
                     title: "姓名",
                     key: "litigantName",
@@ -3210,11 +3205,9 @@ for (let index = 0; index < this.mediatePeopleArr.length; index++) {
                             litigantName:item.name,
                             identityCard:item.identicard,
                             id:item.id,
-                            type:str
-                            
+                            type:str  
                         }
-                        arr.push(data)
-                        
+                        arr.push(data)       
                     })
                     this.usualList = arr;
                     console.log(this.usualList)
@@ -3265,21 +3258,27 @@ for (let index = 0; index < this.mediatePeopleArr.length; index++) {
             this.usualList = [];
             getCmInfo().then(res => {
                 if(res.data.state == 100){
-                    let arr = [];
-                    res.data.cpPage.content.map(item => {
-                        let data = {
-                            litigantName:item.litigantName,
-                            identityCard:item.identityCard,
-                            id:item.id,
-                        }
-                        arr.push(data)
-                        
+                    // let arr = [];
+                    // res.data.cpPage.content.map(item => {
+                    //     let data = {
+                    //         litigantName:item.litigantName,
+                    //         identityCard:item.identityCard,
+                    //         id:item.id,
+                    //     }
+                    //     arr.push(data) 
+                    // })
+                    const arr = res.data.cpPage.content.map(({litigantName,identityCard,id}) => 
+                    {
+                        return {litigantName,identityCard,id};
                     })
                     this.usualList = arr;
                     this.selUsualPeo = true;
                 }else{
                     this.$Message.info(res.data.message);
                 }
+            })
+            .catch(error => {
+                this.$Message.warning('网络错误，请刷新重试！');
             })
         },
         temSel(v,o){
