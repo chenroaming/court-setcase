@@ -416,7 +416,6 @@
             <Icon type="chevron-down" class="setStep"></Icon>
             <div class="step "  @click="goStep(4)">
                 <span>附件与确认</span>
-                
             </div>
         </div>
         <div class="content_main">
@@ -2466,6 +2465,11 @@ export default {
                                     this.liniList[i].card = this.addFormItem.identityCard;
                                     this.liniList[i].phone = this.addFormItem.litigantPhone;
                                     this.liniList[i].adress = this.addFormItem.nativePlace;
+                                }
+                            }
+                            for(let i = 0;i < this.linigantList.length;i++){
+                                if(this.linigantList[i].id == res.data.onlineLitigant.id){
+                                    this.linigantList[i].name = res.data.onlineLitigant.litigantName;
                                 }
                             }
                             this.proofModal = false;
