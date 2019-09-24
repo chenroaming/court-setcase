@@ -1,14 +1,14 @@
 <style lang="less">
-@import "./login.less";
+    @import "./login.less";
 </style>
 
 <template>
     <div class="login" @keydown.enter="handleSubmit">
         <div class="login-con">
-          <div class="login-title">
-              <img src="../images/lo-logo.png" width="384px" style="margin: 0 auto">
-          </div>
-          <Card :bordered="false" style="background: rgba(255,255,255,.6);box-shadow: 0 1px 6px rgba(0,0,0,.2);">
+            <div class="login-title">
+                <img src="../images/lo-logo.png" width="384px" style="margin: 0 auto">
+            </div>
+            <Card :bordered="false" style="background: rgba(255,255,255,.6);box-shadow: 0 1px 6px rgba(0,0,0,.2);">
                 <div class="tabs">
                     <h3 class="judge-tab" v-show="!qrShow && !isSelectRole">
                         <!-- <span style="padding: 0.5em 0;display:block;font-size:20px">微信扫码登录</span> -->
@@ -60,18 +60,18 @@
                     <p class="login-tip">本网站只支持IE9+等现代浏览器</p>
                 </div>
                 <div class="form-con" v-show="isSelectRole" style="width:388px;height:254px;position: relative;text-align: left;">
-                  <Button type="primary" v-for="item in roleList"  @click="selRole(item.type,item.id)" style="margin-top: 10px;width:45%;margin-right:10px;">{{item.name}}</Button>
+                    <Button type="primary" v-for="item in roleList"  @click="selRole(item.type,item.id)" style="margin-top: 10px;width:45%;margin-right:10px;">{{item.name}}</Button>
                 </div>
                 <div class="form-con" v-show="qrShow && !isSelectRole">
-                  <Form :model="userInfo1" :rules="rules" v-show="userType == 'litigant'">
-                      <FormItem prop="phone">
-                          <Input v-model="userInfo1.idCard" placeholder="请输入身份证号">
-                              <span slot="prepend">
-                                  <Icon :size="16" type="person"></Icon>
-                              </span>
-                          </Input>
-                      </FormItem>
-                       <FormItem prop="password">
+                    <Form :model="userInfo1" :rules="rules" v-show="userType == 'litigant'">
+                        <FormItem prop="phone">
+                            <Input v-model="userInfo1.idCard" placeholder="请输入身份证号">
+                                <span slot="prepend">
+                                    <Icon :size="16" type="person"></Icon>
+                                </span>
+                            </Input>
+                        </FormItem>
+                        <FormItem prop="password">
                             <Input type="password" v-model="userInfo1.password" placeholder="请输入密码">
                                 <span slot="prepend">
                                     <Icon :size="14" type="locked"></Icon>
@@ -84,10 +84,10 @@
                                 <img height="32px" style="vertical-align: middle;" :src="userCodeSrc" alt="验证码">
                             </span>
                         </FormItem>
-                      <FormItem>
-                          <Button @click="phoneSubmit" type="primary" long>登录</Button>
-                      </FormItem>
-                  </Form>
+                        <FormItem>
+                            <Button @click="phoneSubmit" type="primary" long>登录</Button>
+                        </FormItem>
+                    </Form>
                 <Form ref="loginForm" :model="userInfo" :rules="rules" v-show="userType == 'judge'">
                     <FormItem prop="userName">
                         <Input v-model="userInfo.userName" placeholder="请输入用户名">
@@ -114,8 +114,8 @@
                     </FormItem>
                 </Form>
 
-                 <!-- <p class="login-tip register" @click="register">注册</p> -->
-                  <p class="login-tip">本网站只支持IE9+等现代浏览器</p>
+                    <!-- <p class="login-tip register" @click="register">注册</p> -->
+                    <p class="login-tip">本网站只支持IE9+等现代浏览器</p>
                 </div>
             </Card>
         </div>
@@ -126,17 +126,17 @@
             width="450px"
             @on-ok="asyncOK('addFormItem')">
             <h3 style="text-align:center;margin-bottom:10px">当前登陆密码为初始密码，请修改后再登录</h3>
-              <Form :model="addFormItem" ref="addFormItem" :rules='ruleValidate' :label-width="100" inline>
-                  <FormItem label="当前登录密码:" style="width: 400px;">
-                      <Input v-model="addFormItem.oldpwd" type="password" placeholder="请输入当前登录密码"></Input>
-                  </FormItem>
-                  <FormItem label="新密码:" style="width: 400px;" prop="newpwd1">
-                      <Input v-model="addFormItem.newpwd1" type="password" placeholder="请输入新密码"></Input>
-                  </FormItem>
-                  <FormItem label="确认新密码:" style="width: 400px;" prop="newpwd2">
-                      <Input v-model="addFormItem.newpwd2" type="password" placeholder="请输入新密码"></Input>
-                  </FormItem>
-              </Form>
+                <Form :model="addFormItem" ref="addFormItem" :rules='ruleValidate' :label-width="100" inline>
+                    <FormItem label="当前登录密码:" style="width: 400px;">
+                        <Input v-model="addFormItem.oldpwd" type="password" placeholder="请输入当前登录密码"></Input>
+                    </FormItem>
+                    <FormItem label="新密码:" style="width: 400px;" prop="newpwd1">
+                        <Input v-model="addFormItem.newpwd1" type="password" placeholder="请输入新密码"></Input>
+                    </FormItem>
+                    <FormItem label="确认新密码:" style="width: 400px;" prop="newpwd2">
+                        <Input v-model="addFormItem.newpwd2" type="password" placeholder="请输入新密码"></Input>
+                    </FormItem>
+                </Form>
         </Modal>
         <Certification ref="cer"></Certification>
     </div>
@@ -202,7 +202,7 @@ export default {
                 ],
                 password: [{ required: true, message: '密码不能为空', trigger: 'blur' }]
             },
-             ruleValidate:{
+                ruleValidate:{
                 newpwd1:[{validator:validatepsw, trigger:'blur' },{min:8,message:'请输入最少8位'}],  
                 
             },
@@ -248,6 +248,7 @@ export default {
                                 this.PwdModel = true;
                                 }else{
                                 if(ele.roles){
+                                    console.log(ele.roles);
                                     if(ele.roles.length == 1){
                                     optionRole(ele.roles[0].type,"").then(resp => {
                                         if(res.data.state == 100){
@@ -436,22 +437,24 @@ export default {
                     }else{
                         Cookies.set("user", this.userInfo1.idCard);
                         if(ele.roles){
+                            console.log(ele.roles);
                             if(ele.roles.length == 1){
-                            optionRole(ele.roles[0].type,"").then(resp => {
-                                if(res.data.state == 100){
-                                Cookies.set("user", this.userInfo1.idCard);
-                                localStorage.setItem('roleIdToken',ele.roles[0].id);
-                                this.$router.push({
-                                        name: 'home_index'
+                                optionRole(ele.roles[0].type,"").then(resp => {
+                                    if(res.data.state == 100){
+                                    Cookies.set("user", this.userInfo1.idCard);
+                                    localStorage.setItem('roleIdToken',ele.roles[0].id);
+                                    util.initRouter(this);//初始化路由存储信息
+                                    this.$router.push({
+                                            name: 'home_index'
+                                    });
+                                    }else{
+                                    this.$Message.info(res.data.message)
+                                    }
                                 });
-                                }else{
-                                this.$Message.info(res.data.message)
-                                }
-                            })
                             }else{
-                            this.roleList = ele.roles;
-                            console.log(this.roleList)
-                            this.isSelectRole = true;
+                                this.roleList = ele.roles;
+                                console.log(this.roleList)
+                                this.isSelectRole = true;
                             }
                         }else{
                             that.$Message.error("暂无权限,登录失败");
@@ -486,7 +489,7 @@ export default {
             this.codeSrc = '/api/main/code.jhtml?tm=' + Math.random();
         },
         changeUserCode(){
-           this.userCodeSrc = '/api/main/code.jhtml?tm=' + Math.random();
+            this.userCodeSrc = '/api/main/code.jhtml?tm=' + Math.random();
         },
         changeEntrance () {
             this.courtLogin = !this.courtLogin;
@@ -525,7 +528,7 @@ export default {
 
 <style>
 .code-wrapper {
-  cursor: pointer;
+    cursor: pointer;
 }
 .bgd{
     position: absolute;
@@ -539,48 +542,49 @@ export default {
     margin-left: -75px;
 }
 .entrance {
-  color: #40a9ff;
-  cursor: pointer;
-  font-size: 12px;
-  text-align: center;
+    color: #40a9ff;
+    cursor: pointer;
+    font-size: 12px;
+    text-align: center;
 }
 .tabs {
-  overflow: hidden;
+    overflow: hidden;
 }
 .tabs * {
-  -webkit-transition: 0.25s ease-in-out;
-  -moz-transition: 0.25s ease-in-out;
-  -o-transition: 0.25s ease-in-out;
-  transition: 0.25s ease-in-out;
+    -webkit-transition: 0.25s ease-in-out;
+    -moz-transition: 0.25s ease-in-out;
+    -o-transition: 0.25s ease-in-out;
+    transition: 0.25s ease-in-out;
 }
 
 .tabs h3 {
-  float: left;
-  width: 32%;
-  cursor: pointer;
+    float: left;
+    width: 32%;
+    cursor: pointer;
 }
 .tabs img{
     float: right;
     cursor: pointer;
 }
 .tabs h3 a {
-  padding: 0.5em 0;
-  text-align: center;
-  font-weight: 400;
-  display: block;
-  color: #666;
-  border: 0;
+    padding: 0.5em 0;
+    text-align: center;
+    font-weight: 400;
+    display: block;
+    color: #666;
+    border: 0;
 }
 .tabs h3 a.active {
-  color: #000;
+    color: #000;
 }
 .tabs h3 a.active span {
-  padding-bottom: 4px;
-  border-bottom: 1px solid #40a9ff;
+    padding-bottom: 4px;
+    border-bottom: 1px solid #40a9ff;
 }
 .tabs-content {
-  padding: 1.5em 3em;
-  text-align: left;
-  width: auto;
+    padding: 1.5em 3em;
+    text-align: left;
+    width: auto;
 }
 </style>
+        

@@ -1,12 +1,20 @@
 <style>
 .icoDs{
-    width: 450px;
+    display: flex;
+    width: 525px;
     height: 200px;
-    left: 50%;
-    position: relative;
-    margin-left: -225px;
-    top: 20%;
+    margin: 0 auto;
+    text-align: center;
 }
+
+.icoDs-box {
+    display: flex;
+    padding: 20px 10px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
 .icoDs .ivu-icon{
     color:black;
     font-size: 160px;
@@ -18,33 +26,36 @@
     font-weight: 600;
 }
 .icoDs .leftIcon{
-    position: relative;
     text-align: center;
-    width: 160px;
-    float: left;
+    width: 50%;
     cursor: pointer;
+    display: inline-block;
+    margin: 0 auto;
 }
 .icoDs .rightIcon{
-    position: relative;
     text-align: center;
-    width: 160px;
-    float: right;
+    width: 50%;
     cursor: pointer;
+    display: inline-block;
+    margin: 0 auto;
 }
 .icoDs .centerIcon{
+    width: 50%;
+    display: inline-block;
     text-align: center;
     cursor: pointer;
+    margin: 0 auto;
 }
 </style>
 
 <template>
-    <div style="padding:10px;padding-top:20px;padding-bottom:20px;height:100%">
+    <div class="icoDs-box">
         <div class="icoDs" v-show="show">
             <div class="leftIcon" @click="gotoSetCase" v-if="access">
                 <Icon  style="color:#40A9FF" type="ios-monitor-outline"></Icon>
                 <span style="color:#40A9FF">在线立案</span>
             </div>
-             <div class="rightIcon" @click="gotoCaseList" v-if="access">
+             <div class="rightIcon" @click="gotoCaseList" v-if="access2">
                  <Icon  style="color:#40A9FF" type="ios-briefcase"></Icon>
                  <span  style="color:#40A9FF">已申请案件</span>
             </div>
@@ -62,33 +73,40 @@ export default {
     data () {
         return {
             access:false,
+            access2:false,
             show:false,
             court:false,
         };
     },
     mounted () {
         var that=this
-        setTimeout( function(){
+        setTimeout( () => {
             getUserInfo().then(response => {
                 console.log(565356262)
                 const data = response.data;
                 console.log(that.$store.state.app.menuList)
                 if(data.state == 100) {
-                    // console.log(that.$store.state.app.menuList);
-                    let ary = that.$store.state.app.menuList;
-                    if(data.roleName == '当事人' || data.roleName == '代理人'){
-                        that.access = true;
-                        that.court = false;
+                    console.log(that.$store.state.app.menuList);
+                    let ary = this.$store.state.app.menuList;
+                    if((data.roleName == '当事人' || data.roleName == '代理人') && data.result.name != '厦门农商总账号'){
+                        this.access = true;
+                        this.access2 = true;
+                        this.court = false;
+                    }else if(ary[0].title == '案件信息'){
+                        this.access = false;
+                        this.access2 = false;
+                        this.court = true;
                     }
-                    else if(ary[0].title == '案件信息'){
-                        that.access = false;
-                        that.court = true;
+                    if(data.result.name == '厦门农商总账号'){
+                        this.access2 = true;
+                        this.court = false;
+                        this.access = false;
                     }
                     // else if(ary[0].title == '案件信息'){
                     //     this.access = false;
                     //     this.court = true;
                     // }
-                    that.show = true;
+                    this.show = true;
                 } else {
                     Cookies.set('user', '');
                 }

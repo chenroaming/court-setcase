@@ -1292,7 +1292,7 @@
             :mask-closable="false"
             title="选择常用当事人">
             <div style="height:350px;overflow-x:hidden; overflow-y:visible">
-                <Table :columns="columnsUsual" disabled-hover="true" highlight-row @on-current-change="temSel"   :data="usualList"></Table>
+                <Table :columns="columnsUsual" highlight-row @on-current-change="temSel"   :data="usualList"></Table>
             </div>
              <div style="margin-top: 10px; " slot="footer">
                 <Button type="info"  @click="optUsual"  >确定</Button>
@@ -1305,7 +1305,7 @@
             :mask-closable="false"
             title="选择常用代理人">
             <div style="height:350px;overflow-x:hidden; overflow-y:visible">
-                <Table :columns="columnsUsualLaw" disabled-hover="true" highlight-row @on-current-change="temSel"  :data="usualList"></Table>
+                <Table :columns="columnsUsualLaw" highlight-row @on-current-change="temSel"  :data="usualList"></Table>
             </div>
             <div>
                 <span>请选择当事人：</span>

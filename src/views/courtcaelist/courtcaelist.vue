@@ -1692,9 +1692,9 @@ export default {
                         let defendant = '';
                         console.log(item)
                         item.onlineLitigants.map(it => {
-                            if(it.litigationStatus.name == '原告'){
+                            if(it.litigationStatus.name == '原告' && it.enable){
                                 plainTiffs = plainTiffs + it.litigantName + "、"
-                            }else if(it.litigationStatus.name == '被告'){
+                            }else if(it.litigationStatus.name == '被告' && it.enable){
                                 defendant = defendant + it.litigantName + "、"
                             }
                         })

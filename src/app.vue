@@ -4,6 +4,7 @@
   /* background: #007fd5; */
   position: relative;
   overflow: hidden;
+  overflow-y: scroll;
   -webkit-animation: sky_background 50s ease-out infinite;
   -moz-animation: sky_background 50s ease-out infinite;
   -o-animation: sky_background 50s ease-out infinite;

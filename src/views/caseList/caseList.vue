@@ -152,7 +152,7 @@
                     <FormItem label="回执编号：" >
                         <Input v-model="code" @on-enter="searchList" icon="" placeholder="请输入回执编号" style="width: 100%"></Input>
                     </FormItem>
-                    <FormItem label="被告姓名：" >
+                    <FormItem label="当事人：" >
                         <Input v-model="codeDenfent" @on-enter="searchList" icon="" placeholder="请输入被告关键字" style="width: 100%"></Input>
                     </FormItem>
                     <FormItem label="案由：">
@@ -172,7 +172,7 @@
                         </Select>
                     </FormItem>
                     
-                    <Button @click="searchList"  type="primary" style="width:220px;margin-left:20px">查询</Button>
+                    <Button @click="searchList" :loading="loading1"  type="primary" style="width:220px;margin-left:20px">查询</Button>
                 </Form>
             
             </div>
@@ -200,7 +200,7 @@
             </div>
             <div slot="footer">
                 <Button @click="closeGF"  type="dashed" size="large">关闭</Button>
-                <Button @click="gotoContinue"  type="primary" size="large">重新编辑</Button>
+                <Button @click="gotoContinue"  type="primary" size="large" v-if="isSpecialUser">重新编辑</Button>
             </div>
         </Modal>
         <Modal
@@ -650,6 +650,7 @@
     </div>
 </template>
 <script>
+import Cookies from 'js-cookie';
 import { caseList, getPath,downFiles} from '@/api/courtcaselist.js';
 import { formatDate } from "@/libs/date";
 import { ClipLoader } from 'vue-spinner/dist/vue-spinner.min.js';
@@ -677,6 +678,8 @@ export default {
     data () {
         var width = window.innerWidth - 430;
         return {
+            loading1:false,
+            isSpecialUser:true,
             viewEvidence:false,
             filePathAry:[],
             modalWidth:width,
@@ -1056,7 +1059,7 @@ export default {
                             },
                             style:{
                                 padding:'0px 7px',
-                                display:params.row.state == '已撤回' ? "inline-block" : "none"
+                                display:params.row.state == '已撤回' && this.isSpecialUser == true ? "inline-block" : "none"
                             },
                             on: {
                                 click: () => {
@@ -1433,6 +1436,7 @@ export default {
             })
         },
         searchList(){
+            this.loading1 = true;
             if (this.applyDate.length == 2) {
                 if (this.applyDate[0] == null) {
                     this.startDate = ''
@@ -1456,6 +1460,9 @@ export default {
                 this.typeData = "";
             }
             this.getList(1);
+            if(Cookies.get('user') == '厦门农商总账号'){
+                this.isSpecialUser = false;
+            }
         },
         getList(page){
             this.pageNumber = page;
@@ -1528,6 +1535,7 @@ export default {
                         this.connectedData.push(data)
                     })
                     this.totalPage = res.data.result.totalPages;
+                    this.loading1 = false;
                 }
             })
         },
