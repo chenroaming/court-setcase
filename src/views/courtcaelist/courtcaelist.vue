@@ -1108,7 +1108,7 @@ export default {
                                                             this.applyPeople2 = this.applyPeople2 + item.litigantName + '、'
                                                         }
                                                     }) 
-                                                    this.litigantContent = "原告" + plainffStr.substr(0, plainffStr.length - 1) + '与被告' + defgStr.substr(0, defgStr.length - 1);
+                                                    this.litigantContent = "原告" + plainffStr.substr(0, plainffStr.length - 1) + '与被告' + defgStr.substr(0, defgStr.length - 1) + this.briefName;
                                                 }
                                             });
                                             this.getMaxCaseNum();

@@ -353,12 +353,16 @@ margin-top: 7px;
     <Icon type="chevron-down" class="setStep"></Icon>
     <div class="step" @click="goStep(3)">
         <span>代理人信息</span>
-        
     </div>
     <Icon type="chevron-down" class="setStep"></Icon>
-    <div class="step " @click="goStep(4)">
+
+    <div class="step"  @click="goStep(4)" v-show="isRight == true">
+        <span>要素信息</span>
+    </div>
+    <Icon type="chevron-down" class="setStep" v-show="isRight == true"></Icon>
+    
+    <div class="step " @click="goStep(5)">
         <span>附件与确认</span>
-        
     </div>
 </div>
 <div class="content_main">
@@ -409,7 +413,7 @@ right: -20px;">元</span>
         </FormItem>
         <div>
             <!-- <a href="#" style="float:left;line-height: 40px;padding-left: 30px;" @click="backHome">返回主页</a> -->
-            <Button @click="nextStep(1)"  type="primary" style="width:100px;float:right;margin-right:20px">下一步</Button>
+            <Button :loading="nextLoading" @click="nextStep(1)"  type="primary" style="width:100px;float:right;margin-right:20px">下一步</Button>
         </div>
         
     </Form>
@@ -512,7 +516,7 @@ right: -20px;">元</span>
         </div> -->
     </div>
     <div v-show="liniAdd">
-        <Button @click="nextStep(2)"  type="primary" style="width:100px;float:right;margin-right:20px">下一步</Button>
+        <Button @click="nextStep(2)" :loading="nextLoading" type="primary" style="width:100px;float:right;margin-right:20px">下一步</Button>
         <Button @click="upstep(1)"   style="width:100px;float:right;margin-right:20px">上一步</Button>
     </div>
 
@@ -540,9 +544,19 @@ right: -20px;">元</span>
         </div>
     </div>
     <div v-show="dailiAdd">
-        <Button @click="nextStep(3)"  type="primary" style="width:100px;float:right;margin-right:20px">下一步</Button>
+        <Button @click="nextStep(3)" :loading="nextLoading" type="primary" style="width:100px;float:right;margin-right:20px">下一步</Button>
         <Button @click="upstep(2)"   style="width:100px;float:right;margin-right:20px">上一步</Button>
     </div>
+
+    <!-- 要素信息 -->
+    <div class="over_flo" v-show="elementAdd">
+        <elementInfo></elementInfo>
+    </div>
+    <div v-show="elementAdd">
+        <Button @click="nextStep(4)" :loading="nextLoading" type="primary" style="width:100px;float:right;margin-right:20px">下一步</Button>
+        <Button @click="upstep(3)"   style="width:100px;float:right;margin-right:20px">上一步</Button>
+    </div>
+
     <!-- 附件信息 -->
     <div class="over_flo" v-show="fileAdd" style="height:450px;">
         <div style="height:170px;">
@@ -711,7 +725,7 @@ right: -20px;">元</span>
             </div>
         </div>
         </div>
-        <div>
+        <div style="width:100%">
             <p class="sdw">
                 证据材料：
                 <span @click="dowmModel" style="float:right;margin-right:10px;cursor:pointer"><Icon type="md-arrow-down" />下载模板</span>
@@ -1367,56 +1381,59 @@ display: inline-block;'>文件最大支持30M</span>
 </template>
 <script>
 import { 
-
-
-updateLawCaseInfo, 
-saveLitigantInfo, 
-saveLawyerInfo, 
-upFiles, 
-downFiles, 
-saveFiles, 
-getOnlineLawCaseEdit, 
-getLitigantInfo, 
-getLitigantLawyerList, 
-getFilesList,
-getOneLitigant,
-updateLitigantInfo,
-addCommonPerson,
-getCmInfo,
-optCommonPerson,
-addCommonLawyer,
-uploadEvidenceSingle,
-getCLInfo,
-optCommonLawyer,
-getLawyerInfo,
-updateLawyerInfo,
-userlitigant,
-delFiles,
-getFiles,
-deleteLitigantInfo,
-deleteLawyerInfo,
-commitCae,
-getOnlineLitigantInfo,
-saveEvidence,
-briefMenu,
-delEvidence,
-getContacts,
-getOnlineBrief,
-getMateBrief,
-getCaesState,
-findLitigantEvidence} from '@/api/caseInfo.js';
+    updateLawCaseInfo, 
+    saveLitigantInfo, 
+    saveLawyerInfo, 
+    upFiles, 
+    downFiles, 
+    saveFiles, 
+    getOnlineLawCaseEdit, 
+    getLitigantInfo, 
+    getLitigantLawyerList, 
+    getFilesList,
+    getOneLitigant,
+    updateLitigantInfo,
+    addCommonPerson,
+    getCmInfo,
+    optCommonPerson,
+    addCommonLawyer,
+    uploadEvidenceSingle,
+    getCLInfo,
+    optCommonLawyer,
+    getLawyerInfo,
+    updateLawyerInfo,
+    userlitigant,
+    delFiles,
+    getFiles,
+    deleteLitigantInfo,
+    deleteLawyerInfo,
+    commitCae,
+    getOnlineLitigantInfo,
+    saveEvidence,
+    briefMenu,
+    delEvidence,
+    getContacts,
+    getOnlineBrief,
+    getMateBrief,
+    getCaesState,
+    findLitigantEvidence} from '@/api/caseInfo.js';
 import { formatDate } from '@/libs/date';
 import {
-NetworkKyc,
-findAgent
+    NetworkKyc,
+    findAgent
 } from '@/api/case';
 import tecShow from '@/components/diplomas/tecShow.vue';
+import elementInfo from '@/components/elementInfo/elementInfo.vue';
 export default {
-components: {
-tecShow
-},
+    components: {
+    tecShow,
+    elementInfo
+    },
 data () {
 return {
+    nextLoading:false,
+    isRight:false,
+    elementAdd:false,
     addNewPhone:'',
     isDisabled:true,
     litigantPhoneSelect:'',
@@ -1915,6 +1932,8 @@ mounted() {
 //  })
 this.caseId = this.$route.params.lawCaseId? this.$route.params.lawCaseId : window.localStorage.getItem('lawCaseId');
 this.process = this.$route.params.process? this.$route.params.process : window.localStorage.getItem('process');
+this.isRight = this.$route.params.briefId? (this.$route.params.briefId== 'fa86bd7e1af811e9b39a00163e0af9c6' || this.$route.params.briefId == 'fa86bdfb1af811e9b39a00163e0af9c6' ? true : false) : (window.localStorage.getItem('continueIsRight') == 'fa86bd7e1af811e9b39a00163e0af9c6' || window.localStorage.getItem('continueIsRight') == 'fa86bdfb1af811e9b39a00163e0af9c6' ? true : false);
+console.log(this.isRight);
 let sted = document.getElementsByClassName("step");
 let setStep = document.getElementsByClassName("setStep");
 console.log(sted)
@@ -2059,6 +2078,7 @@ changeStep(){
     this.liniAdd = false;
     this.dailiAdd =false;
     this.fileAdd = false;
+    this.elementAdd = false;
     let sted = document.getElementsByClassName("step");
     for( let i=0;i<sted.length;i++){
         sted[i].classList.remove('active');
@@ -2074,18 +2094,12 @@ goStep(num){
             nextN = 1
         }
     }
-    if(nextN == 0){
-        return false;
+    if(nextN){
+        let sted = document.getElementsByClassName("step");
+        this.changeStep();
+        this.upstep(num);
     }else{
-            if(num == 4){
-            var sted = document.getElementsByClassName("step");
-            this.changeStep();
-            this.fileAdd = true;
-            sted[2].classList.remove('active');
-            sted[3].classList.add('active');
-            }else{
-                this.upstep(num);
-            }
+        return false;
     }
 },
 dowmModel(){
@@ -3120,13 +3134,14 @@ nextStepSure(){
     var sted = document.getElementsByClassName("step");
     this.liniAdd = false;
     this.dailiAdd = true;
-        var setStep = document.getElementsByClassName("setStep");
+    var setStep = document.getElementsByClassName("setStep");
     setStep[1].classList.add('setActive');
     sted[1].classList.remove('active');
     sted[2].classList.add('active');
-    this.upstep(3);
-    this.stepNum.push(3);
+    this.stepNum = 3;
+    this.showSureMo = 1;
     this.sureMol = false;
+    this.nextLoading = false;
 },
 nextStepSure2(){
     var sted = document.getElementsByClassName("step");
@@ -3134,11 +3149,19 @@ nextStepSure2(){
     this.getFilesL();
     setStep[2].classList.add('setActive');
     this.dailiAdd = false;
-    this.fileAdd = true;
-    sted[2].classList.remove('active');
-    sted[3].classList.add('active');
+    if(this.isRight){
+        this.elementAdd = true;
+        sted[3].classList.add('active');
+        sted[2].classList.remove('active');
+    }else{
+        this.fileAdd = true;
+        sted[4].classList.add('active');
+        sted[2].classList.remove('active');
+    }
     this.isOpenevidenceMol = true;
     this.evidenceMol = false;
+    this.stepNum = 4;
+    this.nextLoading = false;
     // this.stepNum.push(4);
 },
 selectSure(){
@@ -3163,7 +3186,7 @@ selectSure2(){
 },
 nextStep(dex){
     let op = 1;
-    
+    this.nextLoading = true;
     for(let i=0;i<this.stepNum.length;i++){
         if(dex+1 == this.stepNum[i]){
             op = 0;
@@ -3190,9 +3213,18 @@ nextStep(dex){
         // sted[1].classList.add('active');
 
         updateLawCaseInfo(params).then(res => {
+            this.nextLoading = false;
             if(res.data.state == 100){
                 this.$Message.success('修改成功');
                 this.caseId = res.data.onlineLawCase.id;
+                if(this.onlineBriefId == 'fa86bd7e1af811e9b39a00163e0af9c6' || this.onlineBriefId == 'fa86bdfb1af811e9b39a00163e0af9c6'){
+                    this.isRight = true;
+                    window.localStorage.setItem('isRight',true);
+                }else{
+                    this.elementAdd = false;
+                    this.isRight = false;
+                    window.localStorage.setItem('isRight',false);
+                }
                 // this.success = false;
                 // this.liniAdd = true;
                 // sted[0].classList.remove('active');
@@ -3207,11 +3239,10 @@ nextStep(dex){
         this.single = false;
         var that = this;
         console.log(7777)
-        if(this.stepNum.length > 2){
-            this.nextStepSure()
-            return false;
-        }
-        console.log(8888)
+        // if(this.stepNum.length > 2){
+        //     this.nextStepSure()
+        //     return false;
+        // }
         userlitigant(this.caseId).then(res => {
             if(res.data.state == 100){
                     getOnlineLitigantInfo(this.caseId).then(ress => {
@@ -3284,7 +3315,6 @@ nextStep(dex){
             let timer = setInterval(()=>{
                 this.disabled = true;
                 this.buttonStr ="已经阅读（" +  this.ten +"）";
-                
                 if(this.ten ===0) {
                     clearInterval(timer);
                     this.disabled = false;
@@ -3292,11 +3322,25 @@ nextStep(dex){
                 }else{this.ten = this.ten - 1;}
             },1000)
         }else{
-            this.nextStepSure2();
+            if(this.isRight){
+                this.elementAdd = true;
+                this.dailiAdd = false;
+                sted[3].classList.add('active');
+                sted[2].classList.remove('active');
+            }else{
+                this.nextStepSure2();
+            }
         }
-        
-    }
-    
+    }else if(dex == 4){
+        window.localStorage.setItem('newItemStep',dex);
+        sted[3].classList.remove('active');
+        sted[4].classList.add('active');
+        setStep[3].classList.add('setActive');
+        this.stepNum = 5;
+        this.fileAdd = true;
+        this.elementAdd = false;
+        this.nextLoading = false;
+    }  
 },
 getbrief(){
     briefMenu().then(res => {
@@ -3331,6 +3375,21 @@ upstep(dex){
         this.dailiAdd = true ;
         sted[3].classList.remove('active');
         sted[2].classList.add('active');
+    }else if(dex == 4){
+        this.changeStep();
+        if(this.isRight == true){
+            this.elementAdd = true;
+            sted[4].classList.remove('active');
+            sted[3].classList.add('active');
+        }else{
+            this.dailiAdd = true;
+            sted[4].classList.remove('active');
+            sted[2].classList.add('active');
+        }
+    }else if(dex == 5){
+        this.changeStep();
+        this.fileAdd = true;
+        sted[4].classList.add('active');
     }
 },
 clearAddfortem(){

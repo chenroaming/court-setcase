@@ -247,7 +247,11 @@
                 return true;
             },
             backHome(){
-                // alert(1)
+                window.localStorage.removeItem('lawCaseId');
+                window.localStorage.removeItem('process');
+                window.localStorage.removeItem('newCaseId');
+                window.localStorage.removeItem('newItemStep');
+                window.localStorage.removeItem('isRight');
                 this.$router.push({
                     name: 'home_index'
                 });

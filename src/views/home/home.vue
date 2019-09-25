@@ -177,11 +177,13 @@ data () {
                             },
                             on: {
                                 click: () => {
+                                    console.log(params.row);
                                     window.localStorage.setItem('lawCaseId',params.row.lawCaseId);
                                     window.localStorage.setItem('process',params.row.process);
+                                    window.localStorage.setItem('continueIsRight',params.row.briefId);
                                     this.$router.push({
                                         name: "caseInfoContinue",
-                                        params: { lawCaseId: params.row.lawCaseId, process: params.row.process}
+                                        params: { lawCaseId: params.row.lawCaseId, process: params.row.process, briefId:params.row.briefId}
                                     });
                                 }
                             }
@@ -235,7 +237,8 @@ methods: {
                     plaintiffName: '',
                     defendantName: '',
                     lawCaseId:item.id,
-                    process:item.process
+                    process:item.process,
+                    briefId:item.onlineBrief.id
                 };
                 const plaintiffName = item.onlineLitigants.map(member=>{
                     return member.litigationStatus.name == '原告' && member.enable ? obj.plaintiffName = obj.plaintiffName+member.litigantName+'  ' : (member.litigationStatus.name == '被告' && member.enable ? obj.defendantName = obj.defendantName+member.litigantName+'  ' : false);
@@ -266,10 +269,17 @@ methods: {
                         });
                     },
                     onCancel: () => {
+                        window.localStorage.removeItem('newCaseId');
+                        window.localStorage.removeItem('newItemStep');
+                        window.localStorage.removeItem('isRight');
                         this.$router.push({
                             name: 'caseInfo_index'
                         });
                     }
+                });
+            }else if(res.data.total == 0){
+                this.$router.push({
+                    name: 'caseInfo_index'
                 });
             }else{
                 this.loading1 = true;
@@ -282,7 +292,8 @@ methods: {
                         plaintiffName: '',
                         defendantName: '',
                         lawCaseId:item.id,
-                        process:item.process
+                        process:item.process,
+                        briefId:item.onlineBrief.id
                     };
                     const plaintiffName = item.onlineLitigants.map(member=>{
                         return member.litigationStatus.name == '原告' && member.enable ? obj.plaintiffName = obj.plaintiffName+member.litigantName+'  ' : (member.litigationStatus.name == '被告' && member.enable ? obj.defendantName = obj.defendantName+member.litigantName+'  ' : false);
@@ -293,6 +304,7 @@ methods: {
             }
         })
         .catch(error => {
+            console.log(error);
             this.$Message.warning('网络错误！请刷新重试！');
         })
         // this.$Message.info({
