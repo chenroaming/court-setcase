@@ -150,24 +150,24 @@
                 
                 <Form :label-width="85" label-position="left">
                     <FormItem label="回执编号：" >
-                        <Input v-model="code" @on-enter="searchList" icon="" placeholder="请输入回执编号" style="width: 100%"></Input>
+                        <Input v-model="code" @on-enter="searchList" icon="" placeholder="请输入回执编号" style="width: 175px"></Input>
                     </FormItem>
                     <FormItem label="当事人：" >
-                        <Input v-model="codeDenfent" @on-enter="searchList" icon="" placeholder="请输入被告关键字" style="width: 100%"></Input>
+                        <Input v-model="codeDenfent" @on-enter="searchList" icon="" placeholder="请输入被告关键字" style="width: 175px"></Input>
                     </FormItem>
                     <FormItem label="案由：">
-                        <Input v-model="brief" clearable style="width:165px" placeholder="请输入案由"></Input>
+                        <Input v-model="brief" clearable style="width:175px" placeholder="请输入案由"></Input>
                     </FormItem>
                     <FormItem label="申请时间：">
-                        <DatePicker v-model="applyDate" format="yyyy/MM/dd" type="daterange" placement="bottom-start" placeholder="请选择日期" style="width: 165px"></DatePicker>
+                        <DatePicker v-model="applyDate" format="yyyy/MM/dd" type="daterange" placement="bottom-start" placeholder="请选择日期" style="width: 175px"></DatePicker>
                     </FormItem>
                     <FormItem label="状态：" >
-                        <Select v-model="stateData" style="width:165px">
+                        <Select v-model="stateData" style="width:175px">
                             <Option v-for="item in stateList" :value="item.value" :key="item.value">{{ item.label }}</Option>
                         </Select>
                     </FormItem>
                     <FormItem label="类别：">
-                        <Select v-model="typeData" style="width:165px">
+                        <Select v-model="typeData" style="width:175px">
                             <Option v-for="item in typeList" :value="item.value" :key="item.value">{{ item.label }}</Option>
                         </Select>
                     </FormItem>

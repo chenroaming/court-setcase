@@ -375,10 +375,14 @@ export function onlineLawCaseList (params) {
 /** 
  * 是否有保存过的案件
  */
-export function getCaesState () {
+export function getCaesState (pageNumber = '') {
+    const params = {
+        pageNumber
+    };
     return service({
         url: '/online/lawCase/getLitigantLatelyLawCaseInfo.jhtml',
         method: 'GET',
+        params
     });
 }
 
@@ -616,6 +620,20 @@ export function handlingWithdrawal (state,path,reason,onlineLawCaseId) {
     };
     return service({
         url: '/online/lawCase/handlingWithdrawal.jhtml',
+        method: 'GET',
+        params
+    });
+}
+
+/**
+ * 检测当事人是否有证据
+ */
+export function findLitigantEvidence (onlineLitigantId) {
+    const params = {
+        onlineLitigantId
+    };
+    return service({
+        url: '/online/litigant/findLitigantEvidence.jhtml',
         method: 'GET',
         params
     });

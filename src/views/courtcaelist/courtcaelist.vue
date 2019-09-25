@@ -79,33 +79,33 @@
             <div style="margin-bottom: 16px;width: 220px;margin-top:20px">
                 <Form :label-width="85">
                     <FormItem label="申请人：">
-                        <Input v-model="applyPeople" clearable style="width:165px" placeholder="请输入申请人"></Input>
+                        <Input v-model="applyPeople" clearable style="width:175px" placeholder="请输入申请人"></Input>
                     </FormItem>
                     <FormItem label="当事人：">
-                        <Input v-model="defendantName" clearable style="width:165px" placeholder="请输入当事人"></Input>
+                        <Input v-model="defendantName" clearable style="width:175px" placeholder="请输入当事人"></Input>
                     </FormItem>
                     <FormItem label="类型：">
-                        <Select v-model="briefType" clearable style="width:165px">
+                        <Select v-model="briefType" clearable style="width:175px">
                             <Option value="0">涉网案件</Option>
                             <Option value="1" >涉金融案件</Option>
                             <Option value="2">其他案件</Option>
                         </Select>
                     </FormItem>
                     <FormItem label="案由：">
-                        <Input v-model="brief" clearable style="width:165px" placeholder="请输入案由"></Input>
+                        <Input v-model="brief" clearable style="width:175px" placeholder="请输入案由"></Input>
                     </FormItem>
                     <FormItem label="状态：">
-                        <Select v-model="stateData" clearable style="width:165px">
+                        <Select v-model="stateData" clearable style="width:175px">
                             <Option v-for="item in stateList" :value="item.value" :key="item.value">{{ item.label }}</Option>
                         </Select>
                     </FormItem>
                     <FormItem label="类别：">
-                        <Select v-model="typeData" clearable style="width:165px">
+                        <Select v-model="typeData" clearable style="width:175px">
                             <Option v-for="item in typeList" :value="item.value" :key="item.value">{{ item.label }}</Option>
                         </Select>
                     </FormItem>
                     <FormItem label="申请时间：">
-                        <DatePicker v-model="applyDate" format="yyyy/MM/dd" type="daterange" placement="bottom-start" placeholder="请选择日期" style="width: 165px"></DatePicker>
+                        <DatePicker v-model="applyDate" format="yyyy/MM/dd" type="daterange" placement="bottom-start" placeholder="请选择日期" style="width: 175px"></DatePicker>
                     </FormItem>
                     <Button @click="searchList"  type="primary" style="width:220px;margin-left:20px">查询</Button>
                 </Form>
@@ -113,7 +113,7 @@
             </div>
         </div>
         <div class="content_main">
-            <Input v-model="code" @on-enter="searchList" icon="search" placeholder="回执编号" style="width: 100%"></Input>
+            <Input v-model="code" search @on-search="searchList" icon="ios-search" @on-click="searchList" @on-enter="searchList" placeholder="回执编号" style="width: 100%"></Input>
             <div style="overflow-y:auto;max-height:85%;">
                 <Table ref="selection" :loading="loading"  :columns="connectedCol" :data="connectedData"  style="margin-top: 10px;"></Table>
             </div>
