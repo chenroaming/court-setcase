@@ -444,10 +444,10 @@
                     </div>
                     <Icon type="chevron-down" class="setStep"></Icon> 
 
-                    <div class="step"  @click="goStep(4)" v-show="isRight == true">
+                    <div class="step"  @click="goStep(4)" v-show="isRight === true">
                         <span>要素信息</span>
                     </div>
-                    <Icon type="chevron-down" class="setStep" v-show="isRight == true"></Icon>
+                    <Icon type="chevron-down" class="setStep" v-show="isRight === true"></Icon>
 
                     <div class="step"  @click="goStep(5)">
                         <span>附件与确认</span>
@@ -627,7 +627,7 @@
 
                     <!-- 要素信息 -->
                     <div class="over_flo" v-show="elementAdd">
-                        <elementInfo></elementInfo>
+                        <elementInfo ref="element"></elementInfo>
                     </div>
                     <div v-show="elementAdd">
                         <Button @click="nextStep(4)" :loading="nextLoading" type="primary" style="width:100px;float:right;margin-right:20px">下一步</Button>
@@ -939,10 +939,10 @@
                                 <Input v-model="addFormItem.email" placeholder="请输入电子邮箱"></Input>
                             </FormItem>
                             <FormItem :label="addFormItem.litigantType == '自然人' ? '户籍地址*' : '公司注册地址*'" style="width: 505px">
-                                <Input v-model="addFormItem.nativePlace" placeholder="请输入户籍地址"></Input>
+                                <Input v-model="addFormItem.nativePlace" :placeholder="addFormItem.litigantType == '自然人' ? '请输入居住地址' : '请输入公司注册地址'"></Input>
                             </FormItem>
                             <FormItem :label="addFormItem.litigantType == '自然人' ? '经常居住地址*' : '公司经营地址*'" style="width: 505px">
-                                <Input v-model="addFormItem.address" placeholder="请输入经常居住地址"></Input>
+                                <Input v-model="addFormItem.address" :placeholder="addFormItem.litigantType == '自然人' ? '请输入经常居住地址' : '请输入公司经营地址'"></Input>
                             </FormItem>
                             <FormItem :label="addFormItem.litigantType == '自然人' ? '确认送达地址*' : '确认送达地址*'" style="width: 505px">
                                 <Input v-model="addFormItem.sendAddress" placeholder="请输入送达地址"></Input>
@@ -1972,8 +1972,7 @@
             mounted () {
                 this.caseId = window.localStorage.getItem('newCaseId') || '';
                 this.stepNum = window.localStorage.getItem('newItemStep') || 0;
-                this.isRight = window.localStorage.getItem('isRight') || false;
-                console.log(this.isRight);
+                this.isRight = window.localStorage.getItem('isRight') == 'true' ? true : false;
                 let sted = document.getElementsByClassName("step");
                 let setStep = document.getElementsByClassName("setStep");
                 if (this.caseId != ''){ 
@@ -2197,6 +2196,9 @@
                                     this.qisuSh = false;
                                 }
                             });
+                        }else{
+                            this.$Message.warning(res.data.message);
+                            return false;
                         }
                     })
                 },
@@ -3251,6 +3253,7 @@
                         this.single = false;
                         var that = this;
                         userlitigant(this.caseId).then(res => {
+                            this.nextLoading = false;
                             if(res.data.state == 100){
                                 getOnlineLitigantInfo(this.caseId).then(ress => {
                                     if(ress.data.state == 100){
@@ -3336,6 +3339,7 @@
                             }else{
                                 this.nextStepSure2();
                             }
+                            this.nextLoading = false;
                         }
                         window.localStorage.setItem('newItemStep',dex);
                     }else if(dex == 4){

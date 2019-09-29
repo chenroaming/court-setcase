@@ -756,7 +756,7 @@ right: -20px;">元</span>
             <span  style="font-size:14px;font-weight:600;color:black">，下载文书参考模板</span>
         </span> -->
         <Button @click="completeCase"  type="primary" style="width:100px;float:right;margin-right:20px">完成</Button>
-        <Button @click="upstep(3)"   style="width:100px;float:right;margin-right:20px">上一步</Button>
+        <Button @click="upstep(4)"   style="width:100px;float:right;margin-right:20px">上一步</Button>
     </div>
 <!-- 添加/修改当事人 -->
 <Modal
@@ -883,10 +883,10 @@ right: -20px;">元</span>
                 <Input v-model="addFormItem.email" placeholder="请输入电子邮箱"></Input>
             </FormItem>
             <FormItem :label="addFormItem.litigantType == '自然人' ? '户籍地址*' : '公司注册地址*'" style="width: 505px">
-                <Input v-model="addFormItem.nativePlace" placeholder="请输入户籍地址"></Input>
+                <Input v-model="addFormItem.nativePlace" :placeholder="addFormItem.litigantType == '自然人' ? '请输入居住地址' : '请输入公司注册地址'"></Input>
             </FormItem>
             <FormItem :label="addFormItem.litigantType == '自然人' ? '经常居住地址*' : '公司经营地址*'" style="width: 505px">
-                <Input v-model="addFormItem.address" placeholder="请输入经常居住地址"></Input>
+                <Input v-model="addFormItem.address" :placeholder="addFormItem.litigantType == '自然人' ? '请输入经常居住地址' : '请输入公司经营地址'"></Input>
             </FormItem>
             <FormItem :label="addFormItem.litigantType == '自然人' ? '确认送达地址*' : '确认送达地址*'" style="width: 505px">
                 <Input v-model="addFormItem.sendAddress" placeholder="请输入送达地址"></Input>
@@ -1931,40 +1931,46 @@ mounted() {
 //     })
 //  })
 this.caseId = this.$route.params.lawCaseId? this.$route.params.lawCaseId : window.localStorage.getItem('lawCaseId');
-this.process = this.$route.params.process? this.$route.params.process : window.localStorage.getItem('process');
+this.stepNum = this.$route.params.process? this.$route.params.process : window.localStorage.getItem('process');
 this.isRight = this.$route.params.briefId? (this.$route.params.briefId== 'fa86bd7e1af811e9b39a00163e0af9c6' || this.$route.params.briefId == 'fa86bdfb1af811e9b39a00163e0af9c6' ? true : false) : (window.localStorage.getItem('continueIsRight') == 'fa86bd7e1af811e9b39a00163e0af9c6' || window.localStorage.getItem('continueIsRight') == 'fa86bdfb1af811e9b39a00163e0af9c6' ? true : false);
 console.log(this.isRight);
 let sted = document.getElementsByClassName("step");
 let setStep = document.getElementsByClassName("setStep");
 console.log(sted)
 sted[0].classList.remove('active');
-sted[this.process].classList.add('active');
-if(this.process == 1){
+sted[this.stepNum].classList.add('active');
+if(this.stepNum == 1){
     this.getLiniList();
     this.success = false;
     this.liniAdd = true;
-    this.stepNum.push(2);
+    this.stepNum = 2;
     setStep[0].classList.add('setActive');
-}else if(this.process == 2){
+}else if(this.stepNum == 2){
     this.getlawyerLis();
     this.getLiniList();
     this.success = false;
     this.dailiAdd = true;
-    this.stepNum.push(2)                                                
-    this.stepNum.push(3)  
+    this.stepNum = 3;                                                 
     setStep[0].classList.add('setActive');
     setStep[1].classList.add('setActive');                      
-}else if(this.process == 3 || this.process == 4){
+}else if(this.stepNum == 3){
     this.getFilesL();
     this.getLiniList();
     this.success = false;
-    this.fileAdd = true;
-    this.stepNum.push(2)                                                
-    this.stepNum.push(3)
-    this.stepNum.push(4)
+    this.elementAdd = true;
+    this.stepNum = 4;
     setStep[0].classList.add('setActive');
     setStep[1].classList.add('setActive');
     setStep[2].classList.add('setActive');
+}else if(this.stepNum == 4){
+    this.getLiniList();
+    this.success = false;
+    this.fileAdd = true;
+    this.stepNum = 5;
+    setStep[0].classList.add('setActive');
+    setStep[1].classList.add('setActive');
+    setStep[2].classList.add('setActive');
+    setStep[3].classList.add('setActive');
 }
 getContacts(this.caseId).then(res=>{
     console.log(res)
@@ -2085,14 +2091,12 @@ changeStep(){
     }
 },
 goStep(num){
-    if(this.stepNum.length == 0){
+    if(this.stepNum == 0){
         return false;
     }
-    let nextN = 0;
-    for(let i=0;i<this.stepNum.length;i++){
-        if(num == this.stepNum[i]){
-            nextN = 1
-        }
+    let nextN = false;
+    if(num <= this.stepNum){
+        nextN = true;
     }
     if(nextN){
         let sted = document.getElementsByClassName("step");
@@ -2407,6 +2411,9 @@ getFilesL(){
                     this.qisuSh = false;
                 }
             });
+        }else{
+            this.$Message.warning(res.data.message);
+            return false;
         }
     })
 },
@@ -2579,6 +2586,7 @@ lastSubmit(){
 submitCasecancel(){
     // alert(1)
     this.ten= 0;
+    this.nextLoading = false;
 },
 
 submitCase(){
@@ -3142,6 +3150,7 @@ nextStepSure(){
     this.showSureMo = 1;
     this.sureMol = false;
     this.nextLoading = false;
+    window.localStorage.setItem('process',2);
 },
 nextStepSure2(){
     var sted = document.getElementsByClassName("step");
@@ -3162,6 +3171,7 @@ nextStepSure2(){
     this.evidenceMol = false;
     this.stepNum = 4;
     this.nextLoading = false;
+    window.localStorage.setItem('process',3);
     // this.stepNum.push(4);
 },
 selectSure(){
@@ -3185,16 +3195,16 @@ selectSure2(){
     }
 },
 nextStep(dex){
-    let op = 1;
+    // let op = 1;
+    // for(let i=0;i<this.stepNum.length;i++){
+    //     if(dex+1 == this.stepNum[i]){
+    //         op = 0;
+    //     }
+    // }
+    // if(op == 1){
+    //     this.stepNum.push(dex + 1);
+    // }
     this.nextLoading = true;
-    for(let i=0;i<this.stepNum.length;i++){
-        if(dex+1 == this.stepNum[i]){
-            op = 0;
-        }
-    }
-    if(op == 1){
-        this.stepNum.push(dex + 1);
-    }
     var sted = document.getElementsByClassName("step");
     var setStep = document.getElementsByClassName("setStep");
     if(dex == 1){
@@ -3217,6 +3227,7 @@ nextStep(dex){
             if(res.data.state == 100){
                 this.$Message.success('修改成功');
                 this.caseId = res.data.onlineLawCase.id;
+                window.localStorage.setItem('process',dex);
                 if(this.onlineBriefId == 'fa86bd7e1af811e9b39a00163e0af9c6' || this.onlineBriefId == 'fa86bdfb1af811e9b39a00163e0af9c6'){
                     this.isRight = true;
                     window.localStorage.setItem('isRight',true);
@@ -3244,6 +3255,7 @@ nextStep(dex){
         //     return false;
         // }
         userlitigant(this.caseId).then(res => {
+            this.nextLoading = false;
             if(res.data.state == 100){
                     getOnlineLitigantInfo(this.caseId).then(ress => {
                     if(ress.data.state == 100){
@@ -3330,6 +3342,7 @@ nextStep(dex){
             }else{
                 this.nextStepSure2();
             }
+            this.nextLoading = false;
         }
     }else if(dex == 4){
         window.localStorage.setItem('newItemStep',dex);
