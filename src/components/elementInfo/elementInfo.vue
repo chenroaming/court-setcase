@@ -149,7 +149,154 @@
             <FormItem label="保全财产情况">
                 <Input type="textarea" v-model="litigation.preservationStatus" :row="5" placeholder="请输入保全财产情况" style="width: 300px" />
             </FormItem>
-        </Form> 
+        </Form>
+        <Modal
+            v-model="modal1"
+            :title=titleArr[titleIndex]
+            @on-ok="ok"
+            @on-cancel="cancel">
+            <Form label-position="right" :label-width="155" v-show="titleIndex == 0">
+                <FormItem label="授信合同名称">
+                    <Input v-model="litigation.preservationStatus" :row="5" placeholder="请输入授信合同名称" style="width: 300px" />
+                </FormItem>
+                <FormItem label="是否诉请解除该授信合同">
+                    <RadioGroup v-model="isRelease">
+                        <Radio label="yes">
+                            <span>是</span>
+                        </Radio>
+                        <Radio label="no">
+                            <span>否</span>
+                        </Radio>
+                    </RadioGroup>
+                </FormItem>
+                <FormItem label="授信人">
+                    <Input v-model="litigation.preservationStatus" :row="5" placeholder="请输入授信合同名称" style="width: 300px" />
+                </FormItem>
+                <FormItem label="授信合同签订时间">
+                    <DatePicker type="date" v-model="litigation.rulingTime" placeholder="请选择授信合同时间" style="width: 300px"></DatePicker>
+                </FormItem>
+                <FormItem label="授信合同期间">
+                    <Input v-model="litigation.preservationStatus" :row="5" placeholder="请输入授信合同名称" style="width: 300px" />
+                </FormItem>
+                <FormItem label="授信金额">
+                    <Input v-model="litigation.preservationStatus" :row="5" placeholder="请输入授信合同名称" style="width: 300px" />
+                </FormItem>
+            </Form>
+            <Form label-position="right" :label-width="155" v-show="titleIndex == 1">
+                <FormItem label="借款合同名称">
+                    <Input v-model="litigation.preservationStatus" :row="5" placeholder="请输入借款合同名称" style="width: 300px" />
+                </FormItem>
+                <FormItem label="借款人">
+                    <Input v-model="litigation.preservationStatus" :row="5" placeholder="请输入借款人" style="width: 300px" />
+                </FormItem>
+                <FormItem label="是否诉请解除该借款合同">
+                    <RadioGroup v-model="isRelease">
+                        <Radio label="yes">
+                            <span>是</span>
+                        </Radio>
+                        <Radio label="no">
+                            <span>否</span>
+                        </Radio>
+                    </RadioGroup>
+                </FormItem>
+                <FormItem label="签订借款合同时间">
+                    <DatePicker type="date" v-model="litigation.rulingTime" placeholder="请选择借款合同时间" style="width: 300px"></DatePicker>
+                </FormItem>
+                <FormItem label="借款本金">
+                    <Input v-model="litigation.preservationStatus" :row="5" placeholder="请输入借款本金" style="width: 300px" />
+                </FormItem>
+                <FormItem label="借款期限">
+                    <DatePicker type="daterange" placement="bottom-end" placeholder="请选择借款期限" style="width: 200px"></DatePicker>
+                </FormItem>
+                <FormItem label="还款方式">
+                    <Input v-model="litigation.preservationStatus" :row="5" placeholder="请输入还款方式" style="width: 300px" />
+                </FormItem>
+                <FormItem label="借款利率">
+                    <Input v-model="litigation.preservationStatus" :row="5" placeholder="请输入借款利率" style="width: 300px" />
+                </FormItem>
+                <FormItem label="罚息利率">
+                    <Input v-model="litigation.preservationStatus" :row="5" placeholder="请输入罚息利率" style="width: 300px" />
+                </FormItem>
+                <FormItem label="复利利率">
+                    <Input v-model="litigation.preservationStatus" :row="5" placeholder="请输入复利利率" style="width: 300px" />
+                </FormItem>
+                <FormItem label="罚息/复利约定">
+                    <Input v-model="litigation.preservationStatus" :row="5" placeholder="请输入约定" style="width: 300px" />
+                </FormItem>
+                <FormItem label="解除合同或提前收贷约定">
+                    <Input v-model="litigation.preservationStatus" :row="5" placeholder="请输入约定" style="width: 300px" />
+                </FormItem>
+                <FormItem label="违约金约定">
+                    <Input v-model="litigation.preservationStatus" :row="5" placeholder="请输入约定" style="width: 300px" />
+                </FormItem>
+                <FormItem label="实现债券费用的约定">
+                    <Input v-model="litigation.preservationStatus" :row="5" placeholder="请输入约定" style="width: 300px" />
+                </FormItem>
+                <FormItem label="送达约定">
+                    <Input v-model="litigation.preservationStatus" :row="5" placeholder="请输入约定" style="width: 300px" />
+                </FormItem>
+            </Form>
+            <Form label-position="right" :label-width="155" v-show="titleIndex == 2">
+                <FormItem label="保证合同名称">
+                    <Input v-model="litigation.preservationStatus" :row="5" placeholder="请输入保证合同名称" style="width: 300px" />
+                </FormItem>
+                <FormItem label="保证人">
+                    <Input v-model="litigation.preservationStatus" :row="5" placeholder="请输入保证人" style="width: 300px" />
+                </FormItem>
+                <FormItem label="保证方式">
+                    <Input v-model="litigation.preservationStatus" :row="5" placeholder="请输入保证方式" style="width: 300px" />
+                </FormItem>
+                <FormItem label="保证期间">
+                    <DatePicker type="daterange" placement="bottom-end" placeholder="请选择保证期间" style="width: 200px"></DatePicker>
+                </FormItem>
+                <FormItem label="保证合同签订时间">
+                    <DatePicker type="date" placement="bottom-end" placeholder="请选择签订时间" style="width: 200px"></DatePicker>
+                </FormItem>
+                <FormItem label="保证范围">
+                    <Input v-model="litigation.preservationStatus" :row="5" placeholder="请输入保证范围" style="width: 300px" />
+                </FormItem>
+            </Form>
+            <Form label-position="right" :label-width="155" v-show="titleIndex == 3">
+                <FormItem label="抵押合同名称">
+                    <Input v-model="litigation.preservationStatus" :row="5" placeholder="请输入保证合同名称" style="width: 300px" />
+                </FormItem>
+                <FormItem label="抵押合同签订时间">
+                    <DatePicker type="date" placement="bottom-end" placeholder="请选择签订时间" style="width: 200px"></DatePicker>
+                </FormItem>
+                <FormItem label="抵押物权属">
+                    <Input v-model="litigation.preservationStatus" :row="5" placeholder="请输入抵押物权属" style="width: 300px" />
+                </FormItem>
+                <FormItem label="抵押物名称">
+                    <Input v-model="litigation.preservationStatus" :row="5" placeholder="请输入抵押物名称" style="width: 300px" />
+                </FormItem>
+                <FormItem label="抵押担保范围">
+                    <Input v-model="litigation.preservationStatus" :row="5" placeholder="请输入担保范围" style="width: 300px" />
+                </FormItem>
+                <FormItem label="办理抵押登记时间">
+                    <DatePicker type="date" placement="bottom-end" placeholder="请选择登记时间" style="width: 200px"></DatePicker>
+                </FormItem>
+            </Form>
+            <Form label-position="right" :label-width="155" v-show="titleIndex == 4">
+                <FormItem label="质押合同名称">
+                    <Input v-model="litigation.preservationStatus" :row="5" placeholder="请输入质押合同名称" style="width: 300px" />
+                </FormItem>
+                <FormItem label="质押合同签订时间">
+                    <DatePicker type="date" placement="bottom-end" placeholder="请选择签订时间" style="width: 200px"></DatePicker>
+                </FormItem>
+                <FormItem label="质押物权属">
+                    <Input v-model="litigation.preservationStatus" :row="5" placeholder="请输入质押物权属" style="width: 300px" />
+                </FormItem>
+                <FormItem label="质押物名称">
+                    <Input v-model="litigation.preservationStatus" :row="5" placeholder="请输入质押物名称" style="width: 300px" />
+                </FormItem>
+                <FormItem label="质押担保范围">
+                    <Input v-model="litigation.preservationStatus" :row="5" placeholder="请输入质押担保范围" style="width: 300px" />
+                </FormItem>
+                <FormItem label="办理质押登记时间">
+                    <DatePicker type="date" placement="bottom-end" placeholder="请选择质押登记时间" style="width: 200px"></DatePicker>
+                </FormItem>
+            </Form>
+        </Modal>
     </div>
 </template>
 
@@ -158,6 +305,8 @@ export default {
     name: 'elementInfo',
     data () {
         return {
+            modal1:false,
+            titleIndex:0,
             litigation:{
                 amount:'',
                 request:'',
@@ -190,38 +339,54 @@ export default {
                 releasePreservation:'',
                 preservationStatus:'',
             },
+            titleArr:['添加授信合同信息','添加借款合同信息','添加保证合同信息','添加抵押合同信息','添加质押合同信息'],
             creditContract:[
-                {name:"授信合同1",id:'1'},
+                {name:'添加新的合同信息',id:'合0'},
+                {name:"授信合同0",id:'1'},
                 {name:"授信合同2",id:'2'},
                 {name:"授信合同3",id:'3'},
             ],
             loanContract:[
+                {name:'添加新的合同信息',id:'合1'},
                 {name:"借款合同1" ,id:'1'},
                 {name:"借款合同2",id:'2'},
                 {name:"借款合同3",id:'3'},
             ],
             guaranteeContract:[
+                {name:'添加新的合同信息',id:'合2'},
                 {name:'guaranteeContract1',id:'1'},
                 {name:'guaranteeContract2',id:'2'},
                 {name:'guaranteeContract3',id:'3'},
             ],
             mortgageContract:[
+                {name:'添加新的合同信息',id:'合3'},
                 {name:'抵押合同1',id:'1'},
                 {name:'抵押合同2',id:'2'},
                 {name:'抵押合同3',id:'3'},
             ],
             pledgeContract:[
+                {name:'添加新的合同信息',id:'合4'},
                 {name:'质押合同1',id:'1'},
                 {name:'质押合同2',id:'2'},
                 {name:'质押合同3',id:'3'},
             ],
             isPublic:'no',
+            isRelease:'',
         };
     },
     methods: {
         choice(name){
-            console.log(name);
+            if(name[0] == '合'){
+                this.titleIndex = name[1];
+                this.modal1 = true;
+            }
         },
+        ok (){
+
+        },
+        cancel (){
+
+        }
     },
     mounted () {
         

@@ -1962,7 +1962,7 @@ export default {
     float: left;
 }
 .info{
-    font-size: 0.2rem;
+    font-size: 12px;
     color: #000;
     overflow:hidden; 
     word-wrap:break-word;
