@@ -671,6 +671,7 @@
               <zh-viewer :viewerId="'1'" :fileUrls="filePathAry"></zh-viewer>
             </div>
             <div slot="footer">
+                <Button @click="checkEvidence()" type="primary" size="large" v-if="isChecked == true">点击确认审核</Button>
                 <Button @click="viewEvidence = false"   type="dashed" size="large">关闭</Button>
             </div>
         </Modal>
@@ -756,7 +757,8 @@ deleteLawyerInfo,
 deleteLitigantInfo,
 getTimeline,
 getOnlineLawCaseFiles,
-getMaxCaseNo//获取引调号的api接口
+getMaxCaseNo,//获取引调号的api接口
+checkEvidence
 } from '@/api/caseInfo.js';
 import { formatDate } from "@/libs/date";
 import myStep from "@/components/step";
@@ -777,6 +779,7 @@ export default {
         var width2 = window.innerWidth - 600;
         var ueWidth = width - 40 + 'px';
         return {
+            isChecked:false,
             nowUrlFrist:'',
             nowUrl:"",
             backFill:{},
@@ -942,6 +945,11 @@ export default {
               {
                 title: "证据来源",
                 key: "where",
+                align: "center",
+              },
+              {
+                title: "是否已核对",
+                key: "checkParam",
                 align: "center",
               },
               {
@@ -1143,6 +1151,21 @@ export default {
         this.searchList();
     },
     methods: {
+        checkEvidence(){
+            this.$Modal.confirm({
+                title: '提示',
+                content: '是否确认审核？',
+                okText: '是',
+                closable:true,
+                cancelText: '否',
+                onOk: () => {
+                    
+                },
+                onCancel: () => {
+                    
+                }
+            });
+        },
         //案件时间轴
         getstep(){
             this.stepShow = true;
@@ -1824,8 +1847,10 @@ export default {
                                 proves:item.eviProve,
                                 where:item.eviSource,
                                 filePa:item.path,
-                                id:item.id
+                                id:item.id,
+                                checkParam:item.original == true ? '是' : '否'
                             }
+                            this.isChecked = item.original == true ? false : true;
                             this.EviList.push(data);
                         }else if(item.type == 4){
                             if(item.applyType == 1){

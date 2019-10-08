@@ -550,7 +550,8 @@ right: -20px;">元</span>
 
     <!-- 要素信息 -->
     <div class="over_flo" v-show="elementAdd">
-        <elementInfo></elementInfo>
+        <elementInfo ref="element" v-if="isElement == 1"></elementInfo>
+        <elementInfo2 ref="element2" v-if="isElement == 2"></elementInfo2>
     </div>
     <div v-show="elementAdd">
         <Button @click="nextStep(4)" :loading="nextLoading" type="primary" style="width:100px;float:right;margin-right:20px">下一步</Button>
@@ -1322,6 +1323,16 @@ v-clipboard:error="onError" style="font-size: 18px;margin-left: 10px;cursor: poi
         <FormItem label="*证据来源:"  style="width: 435px">
             <Input v-model="addFormItemEvi.evidenceWhere" placeholder="请输入证据来源"  ></Input>
         </FormItem>
+        <FormItem label="*有无原件:"  style="width: 435px">
+            <RadioGroup v-model="addFormItemEvi.original">
+                <Radio label="1">
+                    <span>有</span>
+                </Radio>
+                <Radio label="0">
+                    <span>无</span>
+                </Radio>
+            </RadioGroup>
+        </FormItem>
         <FormItem label="*附件:"  style="width: 435px">
             <a href="javascript:;" class="a-upload">
                 <input type="file"  name="" @change="getFile($event)" id="upfil">点击这里上传文件
@@ -1424,13 +1435,16 @@ import {
 } from '@/api/case';
 import tecShow from '@/components/diplomas/tecShow.vue';
 import elementInfo from '@/components/elementInfo/elementInfo.vue';
+import elementInfo2 from '@/components/elementInfo/elementInfo2.vue';
 export default {
     components: {
     tecShow,
-    elementInfo
+    elementInfo,
+    elementInfo2
     },
 data () {
 return {
+    isElement:2,
     nextLoading:false,
     isRight:false,
     elementAdd:false,
@@ -1526,7 +1540,8 @@ return {
         evidenceName:'',
         pageNum:'',
         evidenceObject:'',
-        evidenceWhere:''
+        evidenceWhere:'',
+        original:''
     },
     fileNlist:[],
     files:[],
@@ -2204,6 +2219,7 @@ submitEvi(){
         this.addFormItemEvi.pageNum,
         this.addFormItemEvi.evidenceObject,
         this.addFormItemEvi.evidenceWhere,
+        this.addFormItemEvi.original,
         this.fileNlist[0].id).then(res => {
             if(res.data.state == 100){
                 const data = {

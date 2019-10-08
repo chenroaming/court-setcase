@@ -639,6 +639,17 @@ export function findLitigantEvidence (onlineLitigantId) {
     });
 }
 
+/**
+ * 原件核对接口
+ */
+export function checkEvidence (data) {
+    return service({
+        url: '/online/evidenceAttachment/checkEvidence.jhtml',
+        method: 'post',
+        data
+    });
+}
+
 // export function getWithdrawalInfo (caseNo) {
 //     const params = {
 //         caseNo
