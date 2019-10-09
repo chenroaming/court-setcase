@@ -550,7 +550,7 @@ right: -20px;">元</span>
 
     <!-- 要素信息 -->
     <div class="over_flo" v-show="elementAdd">
-        <elementInfo ref="element" v-if="isElement == 1"></elementInfo>
+        <elementInfo ref="element" v-if="isElement == 1" :lawCaseId="caseId"></elementInfo>
         <elementInfo2 ref="element2" v-if="isElement == 2"></elementInfo2>
     </div>
     <div v-show="elementAdd">
@@ -1444,7 +1444,8 @@ export default {
     },
 data () {
 return {
-    isElement:2,
+    // partId:'',
+    isElement:0,
     nextLoading:false,
     isRight:false,
     elementAdd:false,
@@ -1712,7 +1713,7 @@ return {
         }
     ],
     EviList:[],
-    caseId:"",
+    caseId:this.$route.params.lawCaseId? this.$route.params.lawCaseId : window.localStorage.getItem('lawCaseId'),
     code:"",
     standardMoney:"",
     file:"",
@@ -1948,12 +1949,16 @@ mounted() {
 this.caseId = this.$route.params.lawCaseId? this.$route.params.lawCaseId : window.localStorage.getItem('lawCaseId');
 this.stepNum = this.$route.params.process? this.$route.params.process : window.localStorage.getItem('process');
 this.isRight = this.$route.params.briefId? (this.$route.params.briefId== 'fa86bd7e1af811e9b39a00163e0af9c6' || this.$route.params.briefId == 'fa86bdfb1af811e9b39a00163e0af9c6' ? true : false) : (window.localStorage.getItem('continueIsRight') == 'fa86bd7e1af811e9b39a00163e0af9c6' || window.localStorage.getItem('continueIsRight') == 'fa86bdfb1af811e9b39a00163e0af9c6' ? true : false);
-console.log(this.isRight);
 let sted = document.getElementsByClassName("step");
 let setStep = document.getElementsByClassName("setStep");
-console.log(sted)
 sted[0].classList.remove('active');
 sted[this.stepNum].classList.add('active');
+this.onlineBriefId = this.$route.params.briefId || window.localStorage.getItem('continueIsRight');
+if(this.onlineBriefId == 'fa86bd7e1af811e9b39a00163e0af9c6'){
+    this.isElement = 1;
+}else if(this.onlineBriefId == 'fa86bdfb1af811e9b39a00163e0af9c6'){
+    this.isElement = 2;
+}
 if(this.stepNum == 1){
     this.getLiniList();
     this.success = false;
@@ -3244,7 +3249,20 @@ nextStep(dex){
                 this.$Message.success('修改成功');
                 this.caseId = res.data.onlineLawCase.id;
                 window.localStorage.setItem('process',dex);
-                if(this.onlineBriefId == 'fa86bd7e1af811e9b39a00163e0af9c6' || this.onlineBriefId == 'fa86bdfb1af811e9b39a00163e0af9c6'){
+                // if(this.onlineBriefId == 'fa86bd7e1af811e9b39a00163e0af9c6' || this.onlineBriefId == 'fa86bdfb1af811e9b39a00163e0af9c6'){
+                //     this.isRight = true;
+                //     window.localStorage.setItem('isRight',true);
+                // }else{
+                //     this.elementAdd = false;
+                //     this.isRight = false;
+                //     window.localStorage.setItem('isRight',false);
+                // }
+                if(this.onlineBriefId == 'fa86bd7e1af811e9b39a00163e0af9c6'){
+                    this.isElement = 1;
+                    this.isRight = true;
+                    window.localStorage.setItem('isRight',true);
+                }else if(this.onlineBriefId == 'fa86bdfb1af811e9b39a00163e0af9c6'){
+                    this.isElement = 2;
                     this.isRight = true;
                     window.localStorage.setItem('isRight',true);
                 }else{

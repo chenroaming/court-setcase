@@ -27,31 +27,51 @@
                         <template slot="title">
                             授信合同信息
                         </template>
-                        <MenuItem :name="item.id" v-for="(item,index) in creditContract">{{item.name}}</MenuItem>
+                        <MenuItem :name="item.id" v-for="(item,index) in creditContract">{{item.name}}
+                            <span v-if="item.id[0] != '合'" @click="del('cc')" @click.stop="choice">
+                                <Icon title="删除该合同信息" type="ios-close" />
+                            </span>
+                        </MenuItem>
                     </Submenu>
                     <Submenu name="2">
                         <template slot="title">
                             借款合同信息
                         </template>
-                        <MenuItem :name="item.id" v-for="(item,index) in loanContract">{{item.name}}</MenuItem>
+                        <MenuItem :name="item.id" v-for="(item,index) in loanContract">{{item.name}}
+                            <span @click="del('lc')" v-if="item.id[0] != '合'" @click.stop="choice">
+                                <Icon title="删除该合同信息" type="ios-close" />
+                            </span>
+                        </MenuItem>
                     </Submenu>
                     <Submenu name="3">
                         <template slot="title">
                             保证合同信息
                         </template>
-                        <MenuItem :name="item.id" v-for="(item,index) in guaranteeContract">{{item.name}}</MenuItem>
+                        <MenuItem :name="item.id" v-for="(item,index) in guaranteeContract">{{item.name}}
+                            <span @click="del('gc')" v-if="item.id[0] != '合'" @click.stop="choice">
+                                <Icon title="删除该合同信息" type="ios-close" />
+                            </span>
+                        </MenuItem>
                     </Submenu>
                     <Submenu name="4">
                         <template slot="title">
                             抵押合同信息
                         </template>
-                        <MenuItem :name="item.id" v-for="(item,index) in mortgageContract">{{item.name}}</MenuItem>
+                        <MenuItem :name="item.id" v-for="(item,index) in mortgageContract">{{item.name}}
+                            <span @click="del('mc')" v-if="item.id[0] != '合'" @click.stop="choice">
+                                <Icon title="删除该合同信息" type="ios-close" />
+                            </span>
+                        </MenuItem>
                     </Submenu>
                     <Submenu name="5">
                         <template slot="title">
                             质押合同信息
                         </template>
-                        <MenuItem :name="item.id" v-for="(item,index) in pledgeContract">{{item.name}}</MenuItem>
+                        <MenuItem :name="item.id" v-for="(item,index) in pledgeContract">{{item.name}}
+                            <span @click="del('pc')" v-if="item.id[0] != '合'" @click.stop="choice">
+                                <Icon title="删除该合同信息" type="ios-close" />
+                            </span>
+                        </MenuItem>
                     </Submenu>
                 </Menu>
             </FormItem>
@@ -301,8 +321,22 @@
 </template>
 
 <script>
+    import {
+        addOrUpdateCtInfo,
+        addOrUpdateLoanCtInfo,
+        addOrUpdateGcInfo,
+        addOrUpdateMcInfo,
+        addOrUpdatePcInfo,
+        getContractInfo,
+        getCtInfo,
+        delCtInfo,
+        getDelCtInfo,
+        addUpdateCardInfo,
+        getPartId
+    } from '@/api/contract.js';
 export default {
     name: 'elementInfo',
+    props:['lawCaseId'],
     data () {
         return {
             modal1:false,
@@ -431,14 +465,65 @@ export default {
             }
         },
         ok (){
+            switch(this.titleIndex){
+                case '0':
+                    const data = {
+                        name:this.credit.name,
+                        isRelieve:this.credit.isRelease,
+                        creditGrantor:this.credit.creditPeople,
+                        signTime:this.credit.creditTime,
+                        periodRange:this.credit.creditRange,
+                        amount:this.credit.creditMoney,
+                        creditContractId:'',
+                        lawId:this.lawCaseId,
+                        partId:'',
+                    }
+                    addOrUpdateCtInfo(data).then(res => {
+                        console.log(res.data);
+                    });
+                break;
+                case '1':
 
+                break;
+                case '2':
+
+                break;
+                case '3':
+
+                break;
+                case '4':
+
+                break;
+            }
         },
         cancel (){
 
+        },
+        del(infoType){
+            this.$Modal.confirm({
+                title: '提示',
+                content: '是否确认删除该合同信息？',
+                loading: true,
+                onOk: () => {
+                    this.$Message.info('删除中，请稍后');
+                    setTimeout(()  => {
+                        this.$Modal.remove();
+                    },2000);
+                },
+                onCancel: () => {
+                    this.$Message.info('Clicked cancel');
+                }
+            });
         }
     },
     mounted () {
-        
+        console.log(this.lawCaseId);
+        getPartId(this.lawCaseId).then(res => {
+            console.log(res.data);
+        })
+        // getContractInfo(this.lawCaseId).then(res => {
+        //     console.log(res);
+        // })
     }
 };
 </script>

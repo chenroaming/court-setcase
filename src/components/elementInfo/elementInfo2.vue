@@ -203,6 +203,19 @@
 </template>
 
 <script>
+    import {
+        addOrUpdateCtInfo,
+        addOrUpdateLoanCtInfo,
+        addOrUpdateGcInfo,
+        addOrUpdateMcInfo,
+        addOrUpdatePcInfo,
+        getContractInfo,
+        getCtInfo,
+        delCtInfo,
+        getDelCtInfo,
+        addUpdateCardInfo,
+        getPartId
+    } from '@/api/contract.js';
 export default {
     name: 'elementInfo2',
     data () {

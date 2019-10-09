@@ -758,7 +758,7 @@ deleteLitigantInfo,
 getTimeline,
 getOnlineLawCaseFiles,
 getMaxCaseNo,//获取引调号的api接口
-checkEvidence
+checkEvidence//审核案件证据的接口
 } from '@/api/caseInfo.js';
 import { formatDate } from "@/libs/date";
 import myStep from "@/components/step";
@@ -779,6 +779,7 @@ export default {
         var width2 = window.innerWidth - 600;
         var ueWidth = width - 40 + 'px';
         return {
+            eviId:'',
             isChecked:false,
             nowUrlFrist:'',
             nowUrl:"",
@@ -973,6 +974,8 @@ export default {
                             on: {
                                 click: () => {
                                    var fileStr = params.row.filePa;
+                                   this.eviId = params.row.id;
+                                   console.log(this.eviId);
                                     if(fileStr == null){
                                         this.$Message.info("暂无附件");
                                         return false;
@@ -1159,7 +1162,13 @@ export default {
                 closable:true,
                 cancelText: '否',
                 onOk: () => {
-                    
+                    const data = {
+                        eviId:this.eviId
+                        // checkParam:1
+                    }
+                    checkEvidence(data).then(res => {
+                        console.log(res);
+                    })
                 },
                 onCancel: () => {
                     
@@ -1848,9 +1857,10 @@ export default {
                                 where:item.eviSource,
                                 filePa:item.path,
                                 id:item.id,
-                                checkParam:item.original == true ? '是' : '否'
+                                checkParam:item.original == true ? '已核对' : '未核对'
                             }
-                            this.isChecked = item.original == true ? false : true;
+                            // this.eviId = item.id;
+                            this.isChecked = item.original == true ? false : true;//改变审核按钮的状态
                             this.EviList.push(data);
                         }else if(item.type == 4){
                             if(item.applyType == 1){

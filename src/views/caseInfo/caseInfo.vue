@@ -627,7 +627,7 @@
 
                     <!-- 要素信息 -->
                     <div class="over_flo" v-show="elementAdd">
-                        <elementInfo ref="element" v-if="isElement == 1"></elementInfo>
+                        <elementInfo ref="element" v-if="isElement == 1" :lawCaseId="caseId"></elementInfo>
                         <elementInfo2 ref="element2" v-if="isElement == 2"></elementInfo2>
                     </div>
                     <div v-show="elementAdd">
@@ -1494,7 +1494,8 @@
             },
             data () {
                 return {
-                    isElement:1,
+                    // partId:'',
+                    isElement:0,
                     nextLoading:false,
                     isRight:false,
                     elementAdd:false,
@@ -1601,7 +1602,7 @@
                    caseType:"",
                    noFALES:false,
                    caseTypes:'',
-                   caseId:"",
+                   caseId:window.localStorage.getItem('newCaseId') || '',
                    standardMoney:"",
                    closeM:false,
                    single:false,
@@ -1990,6 +1991,23 @@
                 this.isRight = window.localStorage.getItem('isRight') == 'true' ? true : false;
                 let sted = document.getElementsByClassName("step");
                 let setStep = document.getElementsByClassName("setStep");
+                getOnlineLawCaseEdit(this.caseId).then(res => {
+                    if(res.data.state == 100){
+                        this.onlineBriefId = res.data.result.onlineBrief.id;
+                        if(this.onlineBriefId == 'fa86bd7e1af811e9b39a00163e0af9c6'){
+                            this.isElement = 1;
+                            this.isRight = true;
+                            window.localStorage.setItem('isRight',true);
+                        }else if(this.onlineBriefId == 'fa86bdfb1af811e9b39a00163e0af9c6'){
+                            this.isElement = 2;
+                            this.isRight = true;
+                            window.localStorage.setItem('isRight',true);
+                        }else{
+                            this.isRight = false;
+                            window.localStorage.setItem('isRight',false);
+                        }
+                    }
+                })
                 if (this.caseId != ''){ 
                     console.log(setStep,sted);
                     this.nexts = false;
@@ -3249,10 +3267,16 @@
                                 setStep[0].classList.add('setActive');
                                 window.localStorage.setItem('newCaseId',this.caseId);
                                 window.localStorage.setItem('newItemStep',dex);
-                                if(this.onlineBriefId == 'fa86bd7e1af811e9b39a00163e0af9c6' || this.onlineBriefId == 'fa86bdfb1af811e9b39a00163e0af9c6'){
+                                if(this.onlineBriefId == 'fa86bd7e1af811e9b39a00163e0af9c6'){
+                                    this.isElement = 1;
+                                    this.isRight = true;
+                                    window.localStorage.setItem('isRight',true);
+                                }else if(this.onlineBriefId == 'fa86bdfb1af811e9b39a00163e0af9c6'){
+                                    this.isElement = 2;
                                     this.isRight = true;
                                     window.localStorage.setItem('isRight',true);
                                 }else{
+                                    this.elementAdd = false;
                                     this.isRight = false;
                                     window.localStorage.setItem('isRight',false);
                                 }
