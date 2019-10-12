@@ -220,7 +220,7 @@
             :mask-closable="false"
             :loading="isAdd2"
             @on-cancel="cancel">
-            <Form :model="guaranteeContract" label-position="right" :label-width="155">
+            <Form ref="guaranteeContract" :model="guaranteeContract" label-position="right" :label-width="155">
                 <FormItem label="保证合同名称" prop="name">
                     <Input v-model="guaranteeContract.name" :row="5" placeholder="请输入合同名称" style="width: 300px" /> 
                 </FormItem>
