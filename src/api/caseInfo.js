@@ -270,12 +270,13 @@ export function delEvidence (onlineEAId) {
 /** 
  * 添加证据信息
  */
-export function saveEvidence (eviName,eviPage,eviProve,eviSource,onlineEAId) {
+export function saveEvidence (eviName,eviPage,eviProve,eviSource,original,onlineEAId) {
     const params = {
         eviName,
         eviPage,
         eviProve,
         eviSource,
+        original,
         onlineEAId
     };
     return service({
@@ -642,11 +643,22 @@ export function findLitigantEvidence (onlineLitigantId) {
 /**
  * 原件核对接口
  */
-export function checkEvidence (data) {
+// export function checkEvidence (data) {
+//     return service({
+//         url: '/online/evidenceAttachment/checkEvidence.jhtml',
+//         method: 'post',
+//         data
+//     });
+// }
+
+export function checkEvidence (eviId) {
+    const params = {
+        eviId,
+    }
     return service({
         url: '/online/evidenceAttachment/checkEvidence.jhtml',
-        method: 'post',
-        data
+        method: 'GET',
+        params
     });
 }
 

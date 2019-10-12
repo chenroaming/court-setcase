@@ -550,8 +550,8 @@ right: -20px;">元</span>
 
     <!-- 要素信息 -->
     <div class="over_flo" v-show="elementAdd">
-        <elementInfo ref="element" v-if="isElement == 1" :lawCaseId="caseId"></elementInfo>
-        <elementInfo2 ref="element2" v-if="isElement == 2"></elementInfo2>
+        <elementInfo ref="element" v-if="isElement == 1" :lawCaseId="caseId" :partId="partId"></elementInfo>
+        <elementInfo2 ref="element2" v-if="isElement == 2" :lawCaseId="caseId" :partId="partId"></elementInfo2>
     </div>
     <div v-show="elementAdd">
         <Button @click="nextStep(4)" :loading="nextLoading" type="primary" style="width:100px;float:right;margin-right:20px">下一步</Button>
@@ -1444,7 +1444,7 @@ export default {
     },
 data () {
 return {
-    // partId:'',
+    partId:'',
     isElement:0,
     nextLoading:false,
     isRight:false,
@@ -1868,7 +1868,7 @@ nationList:["汉族","蒙古族","回族","藏族","维吾尔族","苗族","彝�
     pathList:[],
     typeList:[],
     process:"",
-    stepNum:[1],
+    stepNum:0,
     lawerType: [
         {
             value: 1,
@@ -2219,6 +2219,7 @@ submitEvi(){
         return false;
     }
     this.loading = true;
+    console.log(this.addFormItemEvi.original,this.fileNlist[0].id);
     saveEvidence(
         this.addFormItemEvi.evidenceName,
         this.addFormItemEvi.pageNum,
@@ -3261,9 +3262,11 @@ nextStep(dex){
                     this.isElement = 1;
                     this.isRight = true;
                     window.localStorage.setItem('isRight',true);
+                    this.partId = res.data.partId;
                 }else if(this.onlineBriefId == 'fa86bdfb1af811e9b39a00163e0af9c6'){
                     this.isElement = 2;
                     this.isRight = true;
+                    this.partId = res.data.partCardId;
                     window.localStorage.setItem('isRight',true);
                 }else{
                     this.elementAdd = false;
@@ -3379,13 +3382,16 @@ nextStep(dex){
             this.nextLoading = false;
         }
     }else if(dex == 4){
-        window.localStorage.setItem('newItemStep',dex);
-        sted[3].classList.remove('active');
-        sted[4].classList.add('active');
-        setStep[3].classList.add('setActive');
-        this.stepNum = 5;
-        this.fileAdd = true;
-        this.elementAdd = false;
+        const res = this.isElement == 1 ? this.$refs.element.submit() : this.$refs.element2.submitLoan();//根据要素信息或者信用卡信息从而进行是否下一步的判断
+        if(res){
+            window.localStorage.setItem('newItemStep',dex);
+            sted[3].classList.remove('active');
+            sted[4].classList.add('active');
+            setStep[3].classList.add('setActive');
+            this.stepNum = 5;
+            this.fileAdd = true;
+            this.elementAdd = false; 
+        }
         this.nextLoading = false;
     }  
 },

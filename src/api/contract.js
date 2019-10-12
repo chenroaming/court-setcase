@@ -5,55 +5,84 @@ const service = Util.ajax;
 /** 
  * 添加/修改授信合同信息
  */
-export function addOrUpdateCtInfo (data) {
+export function addOrUpdateCtInfo (name,isRelieve,creditGrantor,signTime,periodRange,amount,creditContractId,lawId,partId) {
+    const params = {
+        name,isRelieve,creditGrantor,signTime,periodRange,amount,creditContractId,lawId,partId
+    };
     return service({
         url: '/online/part/addOrUpdateCtInfo.jhtml',
-        method: 'post',
-        data
+        method: 'GET',
+        params
+    });
+}
+
+/** 
+ * 添加/修改金融合同要素信息
+ */
+export function updatePLoan (partOfLoanId,loanTime,paymentTime,overdueRepaymentTime,ldlfTime,ppArrears,interestParam,plInterest,cInterest,nInterest,npInterest,ncdInterest,cioArrears,ldDamages,dExpense,lyFees,ptFee,acFee,adExpense,joint,marriageTime,divorceTime,legalProvisions,lawAndRegulations,preservationCaseNo,preservationRespondent,afpTime,pstAmount,pvtAmountFee,pvtTime,frvTime,PreservationSituation) {
+    const params = {
+        partOfLoanId,loanTime,paymentTime,overdueRepaymentTime,ldlfTime,ppArrears,interestParam,plInterest,cInterest,nInterest,npInterest,ncdInterest,cioArrears,ldDamages,dExpense,lyFees,ptFee,acFee,adExpense,joint,marriageTime,divorceTime,legalProvisions,lawAndRegulations,preservationCaseNo,preservationRespondent,afpTime,pstAmount,pvtAmountFee,pvtTime,frvTime,PreservationSituation
+    };
+    return service({
+        url: '/online/part/updatePLoan.jhtml',
+        method: 'GET',
+        params
     });
 }
 
 /** 
  * 添加/修改借款合同信息
  */
-export function addOrUpdateLoanCtInfo (data) {
+export function addOrUpdateLoanCtInfo (loanCtId,name,borrower,isRelieve,signTime,amount,askTime,repaymentMethod,borrowingRate,penaltyRate,compoundRate,pcAppointment,rpAppointment,vfAppointment,bfAppointment,sendAppointment,lawId,partId) {
+    const params = {
+        loanCtId,name,borrower,isRelieve,signTime,amount,askTime,repaymentMethod,borrowingRate,penaltyRate,compoundRate,pcAppointment,rpAppointment,vfAppointment,bfAppointment,sendAppointment,lawId,partId
+    }
     return service({
         url: '/online/part/addOrUpdateLoanCtInfo.jhtml',
-        method: 'post',
-        data
+        method: 'GET',
+        params
     });
 }
 
 /** 
  * 添加/修改保证合同信息
  */
-export function addOrUpdateGcInfo (data) {
+export function addOrUpdateGcInfo (gcInfoId,name,guarantor,method,guarantorDate,signTime,scope,lawId,partId) {
+    const params = {
+        gcInfoId,name,guarantor,method,guarantorDate,signTime,scope,lawId,partId
+    }
     return service({
         url: '/online/part/addOrUpdateGcInfo.jhtml',
-        method: 'post',
-        data
+        method: 'GET',
+        params
     });
 }
 
 /** 
  * 添加/修改抵押合同信息
  */
-export function addOrUpdateMcInfo (data) {
+export function addOrUpdateMcInfo (mcInfoId,name,signTime,ownership,collateral,mortgageRange,mortgageTime,lawId,partId) {
+    const params = {
+        mcInfoId,name,signTime,ownership,collateral,mortgageRange,mortgageTime,lawId,partId
+    }
     return service({
         url: '/online/part/addOrUpdateMcInfo.jhtml',
-        method: 'post',
-        data
+        method: 'GET',
+        params
     });
 }
 
 /** 
  * 添加/修改质押合同信息
  */
-export function addOrUpdatePcInfo (data) {
+export function addOrUpdatePcInfo (pcInfoId,name,signTime,ownership,pledge,pledgeRange,pledgeTime,lawId,partId) {
+    const params = {
+        pcInfoId,name,signTime,ownership,pledge,pledgeRange,pledgeTime,lawId,partId
+    }
     return service({
         url: '/online/part/addOrUpdatePcInfo.jhtml',
-        method: 'post',
-        data
+        method: 'GET',
+        params
     });
 }
 
@@ -137,6 +166,20 @@ export function getPartId (lawCaseId) {
     };
     return service({
         url: '/online/part/getPartId.jhtml',
+        method: 'GET',
+        params
+    });
+}
+
+/** 
+ * 获取全部合同信息
+ */
+export function getPart (lawId) {
+    const params = {
+        lawId
+    };
+    return service({
+        url: '/online/part/getPart.jhtml',
         method: 'GET',
         params
     });

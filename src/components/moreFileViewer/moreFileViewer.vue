@@ -156,17 +156,25 @@ export default {
                 let url=item.indexOf('http://')>=0 || item.indexOf('https://')>=0 ? item : this.allHost+item;//过滤文件路径
                 switch (fileType) {
                     case 'pdf':
+                    case 'PDF':
                         this.PTFurls.push({url:url,loading:true,id:Math.random().toString(36).substr(2)});
                     break;
                     case 'xlsx':
+                    case 'XLSX':
                     case 'xls':
+                    case 'XLS':
                     case 'docx':
+                    case 'DOCX': 
                     case 'doc':
+                    case 'DOC':
                         this.DOCurls.push({url:url,loading:false,id:Math.random().toString(36).substr(2)});
                     break;
                     case 'jpg':
+                    case 'JPG':
+                    case 'PNG':
                     case 'png':
                     case 'jpeg':
+                    case 'JPEG':
                         this.Imgurls.push({url:url,loading:false,id:Math.random().toString(36).substr(2)});
                     break;
                 }

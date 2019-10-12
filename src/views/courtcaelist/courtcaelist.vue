@@ -671,7 +671,7 @@
               <zh-viewer :viewerId="'1'" :fileUrls="filePathAry"></zh-viewer>
             </div>
             <div slot="footer">
-                <Button @click="checkEvidence()" type="primary" size="large" v-if="isChecked == true">点击确认审核</Button>
+                <Button @click="checkEvidenceMethod" type="primary" size="large" v-if="isChecked == true">点击确认审核</Button>
                 <Button @click="viewEvidence = false"   type="dashed" size="large">关闭</Button>
             </div>
         </Modal>
@@ -975,11 +975,11 @@ export default {
                                 click: () => {
                                    var fileStr = params.row.filePa;
                                    this.eviId = params.row.id;
-                                   console.log(this.eviId);
                                     if(fileStr == null){
                                         this.$Message.info("暂无附件");
                                         return false;
                                     }
+                                    this.isChecked = params.row.checkParam == "已核对" ? false : true;//改变审核按钮状态
                                     this.filePathAry = [];
                                     this.filePathAry.push(fileStr);
                                     this.viewEvidence = true;
@@ -1154,7 +1154,7 @@ export default {
         this.searchList();
     },
     methods: {
-        checkEvidence(){
+        checkEvidenceMethod(){
             this.$Modal.confirm({
                 title: '提示',
                 content: '是否确认审核？',
@@ -1162,12 +1162,37 @@ export default {
                 closable:true,
                 cancelText: '否',
                 onOk: () => {
-                    const data = {
-                        eviId:this.eviId
-                        // checkParam:1
-                    }
-                    checkEvidence(data).then(res => {
-                        console.log(res);
+                    checkEvidence(this.eviId).then(res => {
+                        if(res.data.state == 100){
+                            this.$Message.success(res.data.message);
+                            this.isChecked = false;
+                            setTimeout(() => {//延迟一秒后再调用重新渲染PDF文件
+                                this.filePathAry = [];
+                                this.filePathAry.push(res.data.address);
+                            },1000)
+                            otherGetFiles(this.lawcaseId).then(res => {
+                                if(res.data.state == 100){
+                                    this.EviList = [];
+                                    res.data.file.map(item => {
+                                        if(item.type == 3){
+                                            const data = {
+                                                name:item.eviName,
+                                                proves:item.eviProve,
+                                                where:item.eviSource,
+                                                filePa:item.path,
+                                                id:item.id,
+                                                checkParam:item.checked == true ? '已核对' : '未核对'
+                                            }
+                                            this.EviList.push(data);
+                                        }
+                                    })
+                                }
+                            })
+                        }else{
+                            this.$Message.warning(res.data.message);
+                        }
+                    }).catch(error => {
+                        this.$Message.warning('网络错误，请刷新重试！');
                     })
                 },
                 onCancel: () => {
@@ -1857,10 +1882,9 @@ export default {
                                 where:item.eviSource,
                                 filePa:item.path,
                                 id:item.id,
-                                checkParam:item.original == true ? '已核对' : '未核对'
+                                checkParam:item.checked == true ? '已核对' : '未核对'
                             }
                             // this.eviId = item.id;
-                            this.isChecked = item.original == true ? false : true;//改变审核按钮的状态
                             this.EviList.push(data);
                         }else if(item.type == 4){
                             if(item.applyType == 1){
