@@ -272,6 +272,7 @@ methods: {
                         window.localStorage.removeItem('newCaseId');
                         window.localStorage.removeItem('newItemStep');
                         window.localStorage.removeItem('isRight');
+                        window.localStorage.removeItem('continueIsRight');
                         this.$router.push({
                             name: 'caseInfo_index'
                         });

@@ -5,9 +5,9 @@ const service = Util.ajax;
 /** 
  * 添加/修改信用卡信息
  */
-export function addUpdateCardInfo (partCardId,cardNo,contractName,interestAgreement,ldlTime,nowAmount,nowInterest,nowLFee,annualFeeStr,byStagesFeeStr,proAndFee,lateFeeAppointment,bondFeeAppointment,lawyerFeeStr,pFee,annouFee,enFee,anotherApponintment,nowInterestStandard,nowLateFeeStandard,gcInfoIds) {
+export function addUpdateCardInfo (cardId,partCardId,cardNo,contractName,interestAgreement,ldlTime,nowAmount,nowInterest,nowLFee,annualFeeStr,byStagesFeeStr,proAndFee,lateFeeAppointment,bondFeeAppointment,lawyerFeeStr,pFee,annouFee,enFee,anotherApponintment,nowInterestStandard,nowLateFeeStandard,gcInfoIds) {
     const params = {
-        partCardId,cardNo,contractName,interestAgreement,ldlTime,nowAmount,nowInterest,nowLFee,annualFeeStr,byStagesFeeStr,proAndFee,lateFeeAppointment,bondFeeAppointment,lawyerFeeStr,pFee,annouFee,enFee,anotherApponintment,nowInterestStandard,nowLateFeeStandard,gcInfoIds
+        cardId,partCardId,cardNo,contractName,interestAgreement,ldlTime,nowAmount,nowInterest,nowLFee,annualFeeStr,byStagesFeeStr,proAndFee,lateFeeAppointment,bondFeeAppointment,lawyerFeeStr,pFee,annouFee,enFee,anotherApponintment,nowInterestStandard,nowLateFeeStandard,gcInfoIds
     };
     return service({
         url: '/online/part/addUpdateCardInfo.jhtml',
@@ -40,12 +40,13 @@ export function upPartOfCard (partCardId,contractName,signTime,
 /** 
  * 查询保证合同纠纷要素信息
  */
-export function getContractInfo (lawId,partId,infoType,cdInfoId) {
+export function getContractInfo (lawId,partId,infoType,cdInfoId,gcIds) {
     const params = {
         lawId,
         partId,
         infoType,
-        cdInfoId
+        cdInfoId,
+        gcIds
     };
     return service({
         url: '/online/part/getContractInfo.jhtml',

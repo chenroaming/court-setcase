@@ -146,16 +146,16 @@ export function getDelCtInfo (lawId) {
     });
 }
 
-/** 
- * 添加/修改信用卡信息
- */
-export function addUpdateCardInfo (data) {
-    return service({
-        url: '/online/part/addUpdateCardInfo.jhtml',
-        method: 'post',
-        data
-    });
-}
+// /** 
+//  * 添加/修改信用卡信息
+//  */
+// export function addUpdateCardInfo (data) {
+//     return service({
+//         url: '/online/part/addUpdateCardInfo.jhtml',
+//         method: 'post',
+//         data
+//     });
+// }
 
 /** 
  * 获取partId

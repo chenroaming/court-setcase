@@ -627,8 +627,8 @@
 
                     <!-- 要素信息 -->
                     <div class="over_flo" v-show="elementAdd">
-                        <elementInfo ref="element" v-if="isElement == 1" :lawCaseId="caseId" :partId="partId"></elementInfo>
-                        <elementInfo2 ref="element2" v-if="isElement == 2" :lawCaseId="caseId" :partId="partId"></elementInfo2>
+                        <elementInfo ref="element" v-if="isElement == 1" :lawCaseId="caseId" :partId="partId" v-on:listenToChildEvent="receive"></elementInfo>
+                        <elementInfo2 ref="element2" v-if="isElement == 2" :lawCaseId="caseId" :partId="partId" v-on:listenToChildEvent="receive"></elementInfo2>
                     </div>
                     <div v-show="elementAdd">
                         <Button @click="nextStep(4)" :loading="nextLoading" type="primary" style="width:100px;float:right;margin-right:20px">下一步</Button>
@@ -948,6 +948,13 @@
                             <FormItem :label="addFormItem.litigantType == '自然人' ? '确认送达地址*' : '确认送达地址*'" style="width: 505px">
                                 <Input v-model="addFormItem.sendAddress" placeholder="请输入送达地址"></Input>
                             </FormItem>
+                            <!-- <FormItem v-show="addFormItem.litigantType == '自然人'" label="个人证明" style="width: 505px">
+                                <Upload
+                                 :before-upload="upLoadPf"
+                                 action="/online/litigant/saveLitigantInfo.jhtml">
+                                 <Button icon="ios-cloud-upload-outline">选择上传个人证明</Button>
+                                </Upload>
+                            </FormItem> -->
                             <FormItem label="其他送达地址" style="width: 505px" v-for="(item,key) in addFormItem.otherAddressArr">
                                 <Input v-model="item.otherAddress" placeholder="请输入其他送达地址" style="width:90%"></Input><Icon @click.native='delOtherAddress(key)' style="width:10%;text-align:center;font-size:22px" type="ios-trash" />
                             </FormItem>
@@ -1477,7 +1484,8 @@
         getLitigantInfo,
         getLitigantLawyerList,
         getFiles,
-        getOnlineLawCaseEdit} from '@/api/caseInfo.js';
+        getOnlineLawCaseEdit,
+        saveOrUpdateProof} from '@/api/caseInfo.js';
         import { formatDate } from '@/libs/date';
         import {
             NetworkKyc,
@@ -1983,6 +1991,7 @@
                     uploadIngSpinchangeFileShen5:false,
                     uploadIngSpinchangeFileShen4:false,
                     uploadIngSpinchangeFileShen3:false,
+                    pf:null,
                 };
             },
             mounted () {
@@ -2002,7 +2011,7 @@
                         }else if(this.onlineBriefId == 'fa86bdfb1af811e9b39a00163e0af9c6'){
                             this.isElement = 2;
                             this.isRight = true;
-                            this.partId = res.data.partCardId;
+                            this.partId = res.data.partId;
                             window.localStorage.setItem('isRight',true);
                         }else{
                             this.isRight = false;
@@ -2082,6 +2091,24 @@
         // 　　　　},
             },
             methods: {
+                receive:function(data){
+                    const sted = document.getElementsByClassName("step");
+                    const setStep = document.getElementsByClassName("setStep");
+                    if(data == '1'){//根据要素信息或者信用卡信息从而进行是否下一步的判断
+                        window.localStorage.setItem('newItemStep',4);
+                        sted[3].classList.remove('active');
+                        sted[4].classList.add('active');
+                        setStep[3].classList.add('setActive');
+                        this.stepNum = 5;
+                        this.fileAdd = true;
+                        this.elementAdd = false;
+                    }
+                    this.nextLoading = false;
+                },
+                upLoadPf(file){
+                    this.pf = file;
+                    return false;
+                },
                 changePhone (index){
                     this.litigantPhoneSelect = this.addFormItem.litigantPhone[index];
                     this.phoneIndex = index;
@@ -3385,18 +3412,8 @@
                         }
                         window.localStorage.setItem('newItemStep',dex);
                     }else if(dex == 4){
-                        const res = this.isElement == 1 ? this.$refs.element.submit() : this.$refs.element2.submitLoan();//根据要素信息或者信用卡信息从而进行是否下一步的判断
-                        if(res){
-                            window.localStorage.setItem('newItemStep',dex);
-                            sted[3].classList.remove('active');
-                            sted[4].classList.add('active');
-                            setStep[3].classList.add('setActive');
-                            this.stepNum = 5;
-                            this.fileAdd = true;
-                            this.elementAdd = false;
-                        }
-                        this.nextLoading = false;
-                    }  
+                        this.isElement == 1 ? this.$refs.element.submit() : this.$refs.element2.submitLoan();
+                    }
                 },
                 nextStepSure2(){
                     var sted = document.getElementsByClassName("step");

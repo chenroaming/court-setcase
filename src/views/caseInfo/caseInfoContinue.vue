@@ -550,8 +550,8 @@ right: -20px;">元</span>
 
     <!-- 要素信息 -->
     <div class="over_flo" v-show="elementAdd">
-        <elementInfo ref="element" v-if="isElement == 1" :lawCaseId="caseId" :partId="partId"></elementInfo>
-        <elementInfo2 ref="element2" v-if="isElement == 2" :lawCaseId="caseId" :partId="partId"></elementInfo2>
+        <elementInfo ref="element" v-if="isElement == 1" :lawCaseId="caseId" :partId="partId" v-on:listenToChildEvent="receive"></elementInfo>
+        <elementInfo2 ref="element2" v-if="isElement == 2" :lawCaseId="caseId" :partId="partId" v-on:listenToChildEvent="receive"></elementInfo2>
     </div>
     <div v-show="elementAdd">
         <Button @click="nextStep(4)" :loading="nextLoading" type="primary" style="width:100px;float:right;margin-right:20px">下一步</Button>
@@ -892,6 +892,14 @@ right: -20px;">元</span>
             <FormItem :label="addFormItem.litigantType == '自然人' ? '确认送达地址*' : '确认送达地址*'" style="width: 505px">
                 <Input v-model="addFormItem.sendAddress" placeholder="请输入送达地址"></Input>
             </FormItem>
+            <!-- <FormItem v-show="addFormItem.litigantType == '自然人'" label="个人证明" style="width: 505px">
+                <a href="javascript:;" class="a-upload">
+                    <input type="file"  name="" @change="personalFile($event)" id="upfil">点击这里上传文件
+                </a>                                                                        
+                <div style="padding: 4px 10px;display:block;position: relative;top:-10px" v-if="personalFileName != ''">
+                    <p>{{personalFileName}}<span @click="delPersonFile"><Icon type="close-circled"  style="cursor:pointer;margin-left:10px;"></Icon></span></p>
+                </div>
+            </FormItem> -->
             <FormItem label="其他送达地址" style="width: 505px" v-for="(item,key) in addFormItem.otherAddressArr">
                 <Input v-model="item.address" placeholder="请输入其他送达地址" style="width:90%"></Input><Icon @click.native='delOtherAddress(key)' style="width:10%;text-align:center;font-size:22px" type="ios-trash" />
             </FormItem>
@@ -1427,7 +1435,8 @@ import {
     getOnlineBrief,
     getMateBrief,
     getCaesState,
-    findLitigantEvidence} from '@/api/caseInfo.js';
+    findLitigantEvidence,
+    saveOrUpdateProof} from '@/api/caseInfo.js';
 import { formatDate } from '@/libs/date';
 import {
     NetworkKyc,
@@ -1444,6 +1453,7 @@ export default {
     },
 data () {
 return {
+    personalFileName:'',
     partId:'',
     isElement:0,
     nextLoading:false,
@@ -2020,6 +2030,47 @@ mediatePeople(curVal,oldVal){
 　　　　},
 },
 methods: {
+    personalFile(event){
+        this.personalFileName = event.target.files[0].name;
+        upFiles(event.target.files[0],3,this.caseId, '').then(res => {
+            if(res.data.state == 100){
+                this.$Message.success(res.data.message);
+                this.personalFileId = res.data.evident.id;
+
+            }else{
+                this.$Message.info(res.data.message);
+            }
+        })
+    },
+    delPersonFile(){
+        delFiles(this.personalFileId, this.caseId).then(res => {
+            if(res.data.state == 100){
+                this.$Message.success("删除成功");
+                for(var i=0;i<this.fileNlist.length;i++){
+                    if(id==this.fileNlist[i].id){
+                        this.fileNlist.splice(i,1)
+                    }
+                }
+            }else{
+                this.$Message.info(res.data.message);
+            }
+        }) 
+    },
+receive:function(data){//要素信息接收子组件传值并判断是否进行下一步
+    const sted = document.getElementsByClassName("step");
+    const setStep = document.getElementsByClassName("setStep");
+    if(data == '1'){
+        window.localStorage.setItem('newItemStep',4);
+        sted[3].classList.remove('active');
+        sted[4].classList.add('active');
+        setStep[3].classList.add('setActive');
+        this.stepNum = 5;
+        this.fileAdd = true;
+        this.elementAdd = false;
+        this.nextLoading = false;
+    }
+    this.nextLoading = false;
+},
 changePhone (index){
     this.litigantPhoneSelect = this.addFormItem.litigantPhone[index];
     this.phoneIndex = index;
@@ -2745,7 +2796,8 @@ submit(){   //添加当事人
             nationality:this.addFormItem.nationality,
             // politicalStatus:this.addFormItem.politicalStatus,
             education:this.addFormItem.education,
-            otherAddress:otherAddressStr
+            otherAddress:otherAddressStr,
+            pfId:'',
         }
     }else{
         if(this.addFormItem.litigantType == '法人'){
@@ -3262,12 +3314,14 @@ nextStep(dex){
                     this.isElement = 1;
                     this.isRight = true;
                     window.localStorage.setItem('isRight',true);
+                    window.localStorage.setItem('continueIsRight',this.onlineBriefId);
                     this.partId = res.data.partId;
                 }else if(this.onlineBriefId == 'fa86bdfb1af811e9b39a00163e0af9c6'){
                     this.isElement = 2;
                     this.isRight = true;
-                    this.partId = res.data.partCardId;
+                    this.partId = res.data.partId;
                     window.localStorage.setItem('isRight',true);
+                    window.localStorage.setItem('continueIsRight',this.onlineBriefId);
                 }else{
                     this.elementAdd = false;
                     this.isRight = false;
@@ -3382,17 +3436,7 @@ nextStep(dex){
             this.nextLoading = false;
         }
     }else if(dex == 4){
-        const res = this.isElement == 1 ? this.$refs.element.submit() : this.$refs.element2.submitLoan();//根据要素信息或者信用卡信息从而进行是否下一步的判断
-        if(res){
-            window.localStorage.setItem('newItemStep',dex);
-            sted[3].classList.remove('active');
-            sted[4].classList.add('active');
-            setStep[3].classList.add('setActive');
-            this.stepNum = 5;
-            this.fileAdd = true;
-            this.elementAdd = false; 
-        }
-        this.nextLoading = false;
+        this.isElement == 1 ? this.$refs.element.submit() : this.$refs.element2.submitLoan();
     }  
 },
 getbrief(){

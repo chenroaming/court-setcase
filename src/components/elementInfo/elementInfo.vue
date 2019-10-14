@@ -339,7 +339,6 @@
                 </FormItem>
             </Form>
         </Modal>
-        <Button type="primary" @click="submit">提交</Button>
     </div>
 </template>
 
@@ -481,7 +480,7 @@ export default {
                             this.credit.isRelease = res.data.data.relieve == true ? 'yes' : 'no';
                             this.credit.creditPeople = res.data.data.creditGrantor;
                             this.credit.creditTime = this.time(res.data.data.sign);
-                            this.credit.creditRange = res.data.data.periodRange.replace('至',' - ');
+                            this.credit.creditRange = res.data.data.periodRange == null ? '' :res.data.data.periodRange.replace('至',' - ');
                             this.credit.creditMoney = res.data.data.amount;
                         })
                     break;
@@ -494,7 +493,7 @@ export default {
                             this.loan.isRelease = res.data.data.isRelieve == true ? 'yes' : 'no';
                             this.loan.time = this.time(res.data.data.signTime);
                             this.loan.money = res.data.data.amount;
-                            this.loan.range = res.data.data.askTime.replace('至',' - ');
+                            this.loan.range = res.data.data.askTime == null ? '' : res.data.data.askTime.replace('至',' - ');
                             this.loan.methods = res.data.data.repaymentMethod;
                             this.loan.loanRate = res.data.data.borrowingRate;
                             this.loan.penaltyRate = res.data.data.penaltyRate;
@@ -512,7 +511,7 @@ export default {
                             this.guarantee.name = res.data.data.name;
                             this.guarantee.guaranteePeople = res.data.data.guarantor;
                             this.guarantee.methods = res.data.data.guarantorMethod;
-                            this.guarantee.timeRange = res.data.data.guarantorDate.replace('至',' - ');
+                            this.guarantee.timeRange = res.data.data.guarantorDate == null ? '' : res.data.data.guarantorDate.replace('至',' - ');
                             this.guarantee.time = res.data.data.signTime;
                             this.guarantee.guaranteeRange = res.data.data.guaranteeScope;
                         })
@@ -550,8 +549,8 @@ export default {
                     addOrUpdateCtInfo(this.credit.name,
                     this.credit.isRelease == 'yes' ? true : false,
                     this.credit.creditPeople,
-                    typeof(this.credit.creditTime) == 'number' ? this.time(this.credit.creditTime) : this.credit.creditTime.getFullYear()+'-'+(this.credit.creditTime.getMonth()+1)+'-'+this.credit.creditTime.getDate(),
-                    this.credit.creditRange[0].getFullYear()+'-'+(this.credit.creditRange[0].getMonth()+1)+'-'+this.credit.creditRange[0].getDate()+'至'+this.credit.creditRange[1].getFullYear()+'-'+(this.credit.creditRange[1].getMonth()+1)+'-'+this.credit.creditRange[1].getDate(),
+                    this.credit.creditTime == '' ? this.credit.creditTime : typeof(this.credit.creditTime) == 'number' ? this.time(this.credit.creditTime) : this.credit.creditTime.getFullYear()+'-'+(this.credit.creditTime.getMonth()+1)+'-'+this.credit.creditTime.getDate(),
+                    this.credit.creditRange[0] == null || this.credit.creditRange.length == 0 ? '' : this.credit.creditRange[0].getFullYear()+'-'+(this.credit.creditRange[0].getMonth()+1)+'-'+this.credit.creditRange[0].getDate()+'至'+this.credit.creditRange[1].getFullYear()+'-'+(this.credit.creditRange[1].getMonth()+1)+'-'+this.credit.creditRange[1].getDate(),
                     this.credit.creditMoney,
                     this.infoId,
                     this.lawCaseId,
@@ -574,9 +573,9 @@ export default {
                     this.loan.name,
                     this.loan.creditPeople,
                     this.loan.isRelease == 'yes' ? true : false,
-                    typeof(this.loan.time) == 'number' ? this.time(this.loan.time) : this.loan.time.getFullYear()+'-'+(this.loan.time.getMonth()+1)+'-'+this.loan.time.getDate(),
+                    this.loan.time == '' ? this.loan.time : typeof(this.loan.time) == 'number' ? this.time(this.loan.time) : this.loan.time.getFullYear()+'-'+(this.loan.time.getMonth()+1)+'-'+this.loan.time.getDate(),
                     this.loan.money,
-                    this.loan.range[0].getFullYear()+'-'+(this.loan.range[0].getMonth()+1)+'-'+this.loan.range[0].getDate()+'至'+this.loan.range[1].getFullYear()+'-'+(this.loan.range[1].getMonth()+1)+'-'+this.loan.range[1].getDate(),
+                    this.loan.range[0] == null || this.loan.range.length == 0 ? '' : this.loan.range[0].getFullYear()+'-'+(this.loan.range[0].getMonth()+1)+'-'+this.loan.range[0].getDate()+'至'+this.loan.range[1].getFullYear()+'-'+(this.loan.range[1].getMonth()+1)+'-'+this.loan.range[1].getDate(),
                     this.loan.methods,
                     this.loan.loanRate,
                     this.loan.penaltyRate,
@@ -608,8 +607,8 @@ export default {
                     this.guarantee.name,
                     this.guarantee.guaranteePeople,
                     this.guarantee.methods,
-                    this.guarantee.timeRange[0].getFullYear()+'-'+(this.guarantee.timeRange[0].getMonth()+1)+'-'+this.guarantee.timeRange[0].getDate()+'至'+this.guarantee.timeRange[1].getFullYear()+'-'+(this.guarantee.timeRange[1].getMonth()+1)+'-'+this.guarantee.timeRange[1].getDate(),
-                    typeof(this.guarantee.time) == 'number' ? this.time(this.guarantee.time) : this.guarantee.time.getFullYear()+'-'+(this.guarantee.time.getMonth()+1)+'-'+this.guarantee.time.getDate(),
+                    this.guarantee.timeRange[0] == null || this.guarantee.timeRange.length == 0 ? '' : this.guarantee.timeRange[0].getFullYear()+'-'+(this.guarantee.timeRange[0].getMonth()+1)+'-'+this.guarantee.timeRange[0].getDate()+'至'+this.guarantee.timeRange[1].getFullYear()+'-'+(this.guarantee.timeRange[1].getMonth()+1)+'-'+this.guarantee.timeRange[1].getDate(),
+                    this.guarantee.time == '' ? this.guarantee.time : typeof(this.guarantee.time) == 'number' ? this.time(this.guarantee.time) : this.guarantee.time.getFullYear()+'-'+(this.guarantee.time.getMonth()+1)+'-'+this.guarantee.time.getDate(),
                     this.guarantee.guaranteeRange,
                     this.lawCaseId,
                     this.myPartId).then(res => {
@@ -629,11 +628,11 @@ export default {
                 case '3':
                     addOrUpdateMcInfo(this.infoId,
                     this.mortgage.name,
-                    typeof(this.mortgage.time) == 'number' ? this.time(this.mortgage.time) : this.mortgage.time.getFullYear()+'-'+(this.mortgage.time.getMonth()+1)+'-'+this.mortgage.time.getDate(),
+                    this.mortgage.time == '' ? this.mortgage.time : typeof(this.mortgage.time) == 'number' ? this.time(this.mortgage.time) : this.mortgage.time.getFullYear()+'-'+(this.mortgage.time.getMonth()+1)+'-'+this.mortgage.time.getDate(),
                     this.mortgage.ownership,
                     this.mortgage.articleName,
                     this.mortgage.range,
-                    typeof(this.mortgage.handletime) == 'number' ? this.time(this.mortgage.handletime) : this.mortgage.handletime.getFullYear()+'-'+(this.mortgage.handletime.getMonth()+1)+'-'+this.mortgage.handletime.getDate(),
+                    this.mortgage.handletime == '' ? this.mortgage.handletime : typeof(this.mortgage.handletime) == 'number' ? this.time(this.mortgage.handletime) : this.mortgage.handletime.getFullYear()+'-'+(this.mortgage.handletime.getMonth()+1)+'-'+this.mortgage.handletime.getDate(),
                     this.lawCaseId,
                     this.myPartId).then(res => {
                         this.isAdd = true;
@@ -652,11 +651,11 @@ export default {
                 case '4':
                     addOrUpdatePcInfo(this.infoId,
                     this.pledge.name,
-                    typeof(this.pledge.time) == 'number' ? this.time(this.pledge.time) : this.pledge.time.getFullYear()+'-'+(this.pledge.time.getMonth()+1)+'-'+this.pledge.time.getDate(),
+                    this.pledge.time == '' ? this.pledge.time : typeof(this.pledge.time) == 'number' ? this.time(this.pledge.time) : this.pledge.time.getFullYear()+'-'+(this.pledge.time.getMonth()+1)+'-'+this.pledge.time.getDate(),
                     this.pledge.ownership,
                     this.pledge.articleName,
                     this.pledge.range,
-                    typeof(this.pledge.handletime) == 'number' ? this.time(this.pledge.handletime) : this.pledge.handletime.getFullYear()+'-'+(this.pledge.handletime.getMonth()+1)+'-'+this.pledge.handletime.getDate(),
+                    this.pledge.handletime == '' ? this.pledge.handletime : typeof(this.pledge.handletime) == 'number' ? this.time(this.pledge.handletime) : this.pledge.handletime.getFullYear()+'-'+(this.pledge.handletime.getMonth()+1)+'-'+this.pledge.handletime.getDate(),
                     this.lawCaseId,
                     this.myPartId
                     ).then(res => {
@@ -705,11 +704,11 @@ export default {
             })
         },
         submit(){
-            updatePLoan(this.myPartId,
-            this.litigation.loan,
-            this.litigation.maturity,
-            this.litigation.overdue,
-            this.litigation.cutoff,
+            const request = updatePLoan(this.myPartId,
+            this.litigation.loan == '' ? this.litigation.loan : typeof(this.litigation.loan) == 'number' ? this.time(this.litigation.loan) : this.litigation.loan.getFullYear()+'-'+(this.litigation.loan.getMonth()+1)+'-'+this.litigation.loan.getDate(),
+            this.litigation.maturity == '' ? this.litigation.maturity : typeof(this.litigation.maturity) == 'number' ? this.time(this.litigation.maturity) : this.litigation.maturity.getFullYear()+'-'+(this.litigation.maturity.getMonth()+1)+'-'+this.litigation.maturity.getDate(),
+            this.litigation.overdue == '' ? this.litigation.overdue : typeof(this.litigation.overdue) == 'number' ? this.time(this.litigation.overdue) : this.litigation.overdue.getFullYear()+'-'+(this.litigation.overdue.getMonth()+1)+'-'+this.litigation.overdue.getDate(),
+            this.litigation.cutoff == '' ? this.litigation.cutoff : typeof(this.litigation.cutoff) == 'number' ? this.time(this.litigation.cutoff) : this.litigation.cutoff.getFullYear()+'-'+(this.litigation.cutoff.getMonth()+1)+'-'+this.litigation.cutoff.getDate(),
             this.litigation.arrears,
             this.litigation.interest,
             this.litigation.penaltyInterest,
@@ -725,22 +724,27 @@ export default {
             this.litigation.announcementFee,
             this.litigation.otherFee,
             this.isPublic,
-            this.litigation.marryTime,
-            this.litigation.divorceTime,
+            this.litigation.marryTime == '' ? this.litigation.marryTime : typeof(this.litigation.marryTime) == 'number' ? this.time(this.litigation.marryTime) : this.litigation.marryTime.getFullYear()+'-'+(this.litigation.marryTime.getMonth()+1)+'-'+this.litigation.marryTime.getDate(),
+            this.litigation.divorceTime == '' ? this.litigation.divorceTime : typeof(this.litigation.divorceTime) == 'number' ? this.time(this.litigation.divorceTime) : this.litigation.divorceTime.getFullYear()+'-'+(this.litigation.divorceTime.getMonth()+1)+'-'+this.litigation.divorceTime.getDate(),
             this.litigation.legalProvisions,
             this.litigation.regulations,
             this.litigation.caseNumber,
             this.litigation.preservationMan,
-            this.litigation.preservationTime,
+            this.litigation.preservationTime == '' ? this.litigation.preservationTime : typeof(this.litigation.preservationTime) == 'number' ? this.time(this.litigation.preservationTime) : this.litigation.preservationTime.getFullYear()+'-'+(this.litigation.preservationTime.getMonth()+1)+'-'+this.litigation.preservationTime.getDate(),
             this.litigation.preservationMoney,
             this.litigation.preservationFee,
-            this.litigation.rulingTime,
-            this.litigation.releasePreservation,
+            this.litigation.rulingTime == '' ? this.litigation.rulingTime : typeof(this.litigation.rulingTime) == 'number' ? this.time(this.litigation.rulingTime) : this.litigation.rulingTime.getFullYear()+'-'+(this.litigation.rulingTime.getMonth()+1)+'-'+this.litigation.rulingTime.getDate(),
+            this.litigation.releasePreservation == '' ? this.litigation.releasePreservation : typeof(this.litigation.releasePreservation) == 'number' ? this.time(this.litigation.releasePreservation) : this.litigation.releasePreservation.getFullYear()+'-'+(this.litigation.releasePreservation.getMonth()+1)+'-'+this.litigation.releasePreservation.getDate(),
             this.litigation.preservationStatus
-            ).then(res => {
-                console.log(res.data);
+            ).then(res2 => {
+                if(res2.data.state == 100){
+                    this.$Message.success(res2.data.message);
+                    this.$emit('listenToChildEvent','1');
+                }else{
+                    this.$Message.warning(res2.data.message);
+                    this.$emit('listenToChildEvent','0');
+                }
             })
-            // return false;
         }
     },
     mounted () {
@@ -765,6 +769,37 @@ export default {
             res.data.loan.pledgeContractInformations.map(item => {
                 return item.enable == true ? this.pledgeContract.push(item) : false;
             });
+            this.litigation.loan = res.data.loan.loan == null ? '' : this.time(res.data.loan.loan);
+            this.litigation.maturity = res.data.loan.payment == null ? '' : this.time(res.data.loan.payment);
+            this.litigation.overdue = res.data.loan.overdueRepayment == null ? '' : this.time(res.data.loan.overdueRepayment);
+            this.litigation.cutoff = res.data.loan.latestDeadLineForArrears == null ? '' : this.time(res.data.loan.latestDeadLineForArrears);
+            this.litigation.arrears = res.data.loan.principalArrears;
+            this.litigation.interest = res.data.loan.interest;
+            this.litigation.penaltyInterest = res.data.loan.penaltyInterest;
+            this.litigation.compoundInterest = res.data.loan.compoundInterest;
+            this.litigation.nInterest = res.data.loan.nowInterest;
+            this.litigation.npInterest = res.data.loan.nowPenaltyInterest;
+            this.litigation.ncdInterest = res.data.loan.nowCompoundInterest;
+            this.litigation.newArrears = res.data.loan.nowInterestOnArrears;
+            this.litigation.liquidatedDamages = res.data.loan.liquidatedDamages;
+            this.litigation.claim = res.data.loan.debtExpense;
+            this.litigation.lawyerFee = res.data.loan.lawyerFees;
+            this.litigation.securityFee = res.data.loan.preservationFee;
+            this.litigation.announcementFee = res.data.loan.announcementFee;
+            this.litigation.otherFee = res.data.loan.anotherDebtExpense;
+            this.isPublic = res.data.loan.jointDebts == true ? 'yes' : 'no';
+            this.litigation.marryTime = res.data.loan.marriage == null ? '' : this.time(res.data.loan.marriage);
+            this.litigation.divorceTime = res.data.loan.divorce == null ? '' : this.time(res.data.loan.divorce);
+            this.litigation.legalProvisions = res.data.loan.legalProvisions;
+            this.litigation.regulations = res.data.loan.lawAndRegulations;
+            this.litigation.caseNumber = res.data.loan.preservationCaseNo;
+            this.litigation.preservationMan = res.data.loan.preservationRespondent;
+            this.litigation.preservationTime = res.data.loan.applyForPreservation == null ? '' : this.time(res.data.loan.applyForPreservation);
+            this.litigation.preservationMoney = res.data.loan.preservationAmount;
+            this.litigation.preservationFee = res.data.loan.preservationAmountFee;
+            this.litigation.rulingTime = res.data.loan.preservationTime == null ? '' : this.time(res.data.loan.preservationTime);
+            this.litigation.releasePreservation = res.data.loan.firePreservationTime == null ? '' : this.time(res.data.loan.firePreservationTime);
+            this.litigation.preservationStatus = res.data.loan.PreservationSituation;
         })
     }
 };

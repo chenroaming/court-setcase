@@ -79,7 +79,6 @@
             <FormItem label="终结督促程序的原因">
                 <Input v-model="endProcess.reason" :row="5" placeholder="请输入原因" style="width: 300px" />
             </FormItem>
-            <Button type="primary" @click="submitLoan">提交</Button>
         </Form>
         <Modal
             v-model="modal1"
@@ -162,57 +161,6 @@
                     </Menu>
                 </FormItem>
             </Form>
-            <!-- <Form ref="couple" :model="couple" label-position="right" :label-width="155" v-show="titleIndex == 1">
-                <FormItem>
-                    <FormItem label="是否支持夫妻共同债">
-                        <RadioGroup v-model="couple.isPublic">
-                            <Radio label="yes">
-                                <span>是</span>
-                            </Radio>
-                            <Radio label="no">
-                                <span>否</span>
-                            </Radio>
-                        </RadioGroup>
-                    </FormItem>
-                </FormItem>
-                <FormItem label="结婚登记时间">
-                    <DatePicker type="date" v-model="couple.marry" placeholder="请选择时间" style="width: 300px"></DatePicker>
-                </FormItem>
-                <FormItem label="离婚登记时间">
-                    <DatePicker type="date" v-model="couple.divorce" placeholder="请选择时间" style="width: 300px"></DatePicker>
-                </FormItem>
-            </Form>
-            <Form ref="pay" :model="pay" label-position="right" :label-width="155" v-show="titleIndex == 2">
-                <FormItem label="请求支付的事实与理由">
-                    <Input v-model="pay.reason" :row="5" placeholder="请输入理由" style="width: 300px" />
-                </FormItem>
-                <FormItem label="申请支付金额（元）">
-                    <Input v-model="pay.money" :row="5" placeholder="请输入金额" style="width: 300px" />
-                </FormItem>
-                <FormItem label="有价证券">
-                    <Input v-model="pay.securities" :row="5" placeholder="请输入金额" style="width: 300px" />
-                </FormItem>
-                <FormItem label="支付令申请费（元）">
-                    <Input v-model="pay.applicationFee" :row="5" placeholder="请输入金额" style="width: 300px" />
-                </FormItem>
-                <FormItem label="申请支付令时">
-                    <DatePicker type="date" v-model="pay.applyTime" placeholder="请选择时间" style="width: 300px"></DatePicker>
-                </FormItem>
-                <FormItem label="作出支付令时间">
-                    <DatePicker type="date" v-model="pay.completeTime" placeholder="请选择时间" style="width: 300px"></DatePicker>
-                </FormItem>
-            </Form>
-            <Form ref="endProcess" :model="endProcess" label-position="right" :label-width="155" v-show="titleIndex == 3">
-                <FormItem label="终结督促程序申请费（元）">
-                    <Input v-model="endProcess.fee" :row="5" placeholder="请输入金额" style="width: 300px" />
-                </FormItem>
-                <FormItem label="终结督促程序裁定作出时间">
-                    <DatePicker type="date" v-model="endProcess.time" placeholder="请选择时间" style="width: 300px"></DatePicker>
-                </FormItem>
-                <FormItem label="终结督促程序的原因">
-                    <Input v-model="endProcess.reason" :row="5" placeholder="请输入原因" style="width: 300px" />
-                </FormItem>
-            </Form> -->
         </Modal>
         <Modal v-model="modal2"
             title="保证合同信息"
@@ -335,9 +283,15 @@ export default {
         },
         choice(name){
             this.modal1 = true;
+            this.guarantee = [];
             if(name[0] == '合'){
                 this.handleReset2('creditCard');
                 this.cardId = '';
+                getContractInfo(this.lawCaseId,this.partCardId,'gc',this.cardId,this.gcIdList).then(res => {
+                    if(res.data.state == 100){
+                        this.guarantee = res.data.nameList;
+                    }
+                })
             }else{
                 this.cardId = name;
                 getCtInfo('cdInfo',name).then(res =>{
@@ -384,7 +338,8 @@ export default {
         },
         ok (){
             this.isAdd = false;
-            addUpdateCardInfo(this.partCardId,
+            addUpdateCardInfo(this.cardId,
+                this.partCardId,
                 this.creditCard.num,
                 this.creditCard.name,
                 this.creditCard.interestAgreement,
@@ -410,13 +365,19 @@ export default {
                 if(res.data.state = 100){
                     this.handleReset2('creditCard');
                     this.modal1 = false;
+                    this.$Message.success(res.data.message);
+                    this.gcIdList = '';
                     getPart(this.lawCaseId).then(res => {
                         this.creditInfo = [];
                         res.data.creditCard.creditCardInformations.map(item => {
                             return item.enable == true ? this.creditInfo.push(item) : false;
                         });
                     })
+                    return;
+                }else{
+                    this.$Message.warning(res.data.message);
                 }
+                this.$Message.warning(res.data.message);
             })
         },
         cancel (){
@@ -438,15 +399,21 @@ export default {
                 this.isAdd2 = true;
                 if(res.data.state == 100){
                     this.gcIdList = this.gcIdList == '' ? this.gcIdList + res.data.gcId : this.gcIdList + ',' + res.data.gcId;
+  
+                    getContractInfo(this.lawCaseId,this.partCardId,'gc',this.cardId,this.gcIdList).then(res => {
+                        this.guarantee = res.data.nameList;
+                    })
+                    
+                    this.modal2 = false;
                     this.$Message.success(res.data.message);
-                }else{
-                    this.$Message.warning(res.data.message);
+                    return; 
                 }
+                this.$Message.warning(res.data.message);
             })
-        },  
+        }, 
         submitLoan(){
-            let res = true;
-            upPartOfCard(this.partCardId,
+            let res = null;
+            const request = upPartOfCard(this.partCardId,
             this.contract.name,
             this.contract.time == '' ? this.contract.time : typeof(this.contract.time) == 'number' ? this.time(this.contract.time) : this.contract.time.getFullYear()+'-'+(this.contract.time.getMonth()+1)+'-'+this.contract.time.getDate(),
             this.couple.isPublic == 'yes' ? true : false,
@@ -461,11 +428,15 @@ export default {
             this.endProcess.fee,
             this.endProcess.time == '' ? this.endProcess.time : typeof(this.endProcess.time) == 'number' ? this.time(this.endProcess.time) : this.endProcess.time.getFullYear()+'-'+(this.endProcess.time.getMonth()+1)+'-'+this.endProcess.time.getDate(),
             this.endProcess.reason
-            ).then(res => {
-                res = res.data.state == 100 ? true : false;
-                this.$Message.info(res.data.message);
+            ).then(res2 => {
+                if(res2.data.state == 100){
+                    this.$Message.success(res2.data.message);
+                    this.$emit('listenToChildEvent','1');
+                }else{
+                    this.$Message.warning(res2.data.message);
+                    this.$emit('listenToChildEvent','0');
+                }
             })
-            return res;
         },
         delCreditCard($event,infoType,infoId){
             this.$Modal.confirm({
@@ -521,18 +492,18 @@ export default {
                 return item.enable == true ? this.creditInfo.push(item) : false;
             });
             this.contract.name = res.data.creditCard.contractName;
-            this.contract.time = res.data.creditCard.signContractTime == '' ? res.data.creditCard.signContractTime : this.time(res.data.creditCard.signContractTime);
+            this.contract.time = res.data.creditCard.signContractTime == null ? '' : this.time(res.data.creditCard.signContractTime);
             this.couple.isPublic = res.data.creditCard.jointdebts == null ? '' : (res.data.creditCard.jointdebts == true ? 'yes' : 'no');
-            this.couple.marry = res.data.creditCard.marriageTime == '' ? res.data.creditCard.marriageTime : this.time(res.data.creditCard.marriageTime);
-            this.couple.divorce = res.data.creditCard.divorceTime == '' ? res.data.creditCard.divorceTime : this.time(res.data.creditCard.divorceTime);
+            this.couple.marry = res.data.creditCard.marriageTime == null ? '' : this.time(res.data.creditCard.marriageTime);
+            this.couple.divorce = res.data.creditCard.divorceTime == null ? '' : this.time(res.data.creditCard.divorceTime);
             this.pay.reason = res.data.creditCard.reasonContent;
             this.pay.money = res.data.creditCard.applyAmount;
             this.pay.securities = res.data.creditCard.securities;
             this.pay.applicationFee = res.data.creditCard.applyFee;
-            this.pay.applyTime = res.data.creditCard.applyTime == '' ? res.data.creditCard.applyTime : this.time(res.data.creditCard.applyTime);
-            this.pay.completeTime = res.data.creditCard.makeApplyTime == '' ? res.data.creditCard.makeApplyTime : this.time(res.data.creditCard.makeApplyTime);
+            this.pay.applyTime = res.data.creditCard.applyTime == null ? '' : this.time(res.data.creditCard.applyTime);
+            this.pay.completeTime = res.data.creditCard.makeApplyTime == null ? '' : this.time(res.data.creditCard.makeApplyTime);
             this.endProcess.fee = res.data.creditCard.endApplyFee;
-            this.endProcess.time = res.data.creditCard.endMakeTime == '' ? res.data.creditCard.endMakeTime : this.time(res.data.creditCard.endMakeTime);
+            this.endProcess.time = res.data.creditCard.endMakeTime == null ? '' : this.time(res.data.creditCard.endMakeTime);
             this.endProcess.reason = res.data.creditCard.endReason;
         })
     }
