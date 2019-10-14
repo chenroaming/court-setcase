@@ -1893,7 +1893,7 @@ export default {
         },
         choice(name){
             this.titleIndex = name[1];
-            this.modal3 = true;
+            this.modal6 = true;
             switch(name.substring(0,2)){
                 case 'c0':
                     this.infoId = name.substring(2);
