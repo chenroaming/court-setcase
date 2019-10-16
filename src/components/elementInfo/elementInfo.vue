@@ -256,7 +256,7 @@
                 <FormItem label="借款利率" prop="loanRate">
                     <Input v-model="loan.loanRate" :row="5" placeholder="请输入借款利率" style="width: 300px" />
                 </FormItem>
-                <FormItem label="罚息利率" prop="penaltyInterest">
+                <FormItem label="罚息利率" prop="penaltyRate">
                     <Input v-model="loan.penaltyRate" :row="5" placeholder="请输入罚息利率" style="width: 300px" />
                 </FormItem>
                 <FormItem label="复利利率" prop="compoundRate">
@@ -532,7 +532,7 @@ export default {
                         getCtInfo('pc',this.infoId).then(res => {
                             console.log(res.data.data);
                             this.pledge.name = res.data.data.name;
-                            this.pledge.time = res.data.data.signTime;
+                            this.pledge.time = res.data.data.signTime == null ? '' : this.time(res.data.data.signTime);
                             this.pledge.ownership = res.data.data.ownership;
                             this.pledge.articleName = res.data.data.pledge;
                             this.pledge.range = res.data.data.pledgeRange;
@@ -723,7 +723,7 @@ export default {
             this.litigation.securityFee,
             this.litigation.announcementFee,
             this.litigation.otherFee,
-            this.isPublic,
+            this.isPublic == 'yes' ? true : false,
             this.litigation.marryTime == '' ? this.litigation.marryTime : typeof(this.litigation.marryTime) == 'number' ? this.time(this.litigation.marryTime) : this.litigation.marryTime.getFullYear()+'-'+(this.litigation.marryTime.getMonth()+1)+'-'+this.litigation.marryTime.getDate(),
             this.litigation.divorceTime == '' ? this.litigation.divorceTime : typeof(this.litigation.divorceTime) == 'number' ? this.time(this.litigation.divorceTime) : this.litigation.divorceTime.getFullYear()+'-'+(this.litigation.divorceTime.getMonth()+1)+'-'+this.litigation.divorceTime.getDate(),
             this.litigation.legalProvisions,

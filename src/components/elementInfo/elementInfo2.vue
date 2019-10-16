@@ -299,7 +299,7 @@ export default {
                     this.creditCard.num = res.data.data.cardNo;
                     this.creditCard.name = res.data.data.contractName;
                     this.creditCard.interestAgreement = res.data.data.interestAgreement;
-                    this.creditCard.deadline = res.data.data.latestDeadLineForArrears == '' ? res.data.data.latestDeadLineForArrears : this.time(res.data.data.latestDeadLineForArrears);
+                    this.creditCard.deadline = res.data.data.latestDeadLineForArrears == null ? '' : this.time(res.data.data.latestDeadLineForArrears);
                     this.creditCard.principal = res.data.data.nowArrearsAmount;
                     this.creditCard.interest = res.data.data.nowArrearsInterest;
                     this.creditCard.latePayment = res.data.data.nowLateFee;
@@ -325,14 +325,16 @@ export default {
             this.modal2 = true;
             if(name[0] == '保'){
                 this.handleReset2('guaranteeContract');
+                this.gcId = '';
             }else{
+                this.gcId = name;
                 getCtInfo('gc',name).then(res => {
                     this.guaranteeContract.name = res.data.data.name;
                     this.guaranteeContract.time = res.data.data.signTime;
                     this.guaranteeContract.people = res.data.data.guarantor;
                     this.guaranteeContract.timeRange = res.data.data.guarantorDate == null ? '' : res.data.data.guarantorDate.replace('至',' - ');
                     this.guaranteeContract.methods = res.data.data.guarantorMethod;
-                    this.guaranteeContract.range = res.data.data.GuaranteeScope;
+                    this.guaranteeContract.range = res.data.data.guaranteeScope;
                 })
             }
         },
@@ -389,8 +391,8 @@ export default {
             this.guaranteeContract.name,
             this.guaranteeContract.people,
             this.guaranteeContract.methods,
-            this.guaranteeContract.timeRange,
-            this.guaranteeContract.time,
+            this.guaranteeContract.timeRange[0] == null || this.guaranteeContract.timeRange.length == 0 ? '' : this.guaranteeContract.timeRange[0].getFullYear()+'-'+(this.guaranteeContract.timeRange[0].getMonth()+1)+'-'+this.guaranteeContract.timeRange[0].getDate()+'至'+this.guaranteeContract.timeRange[1].getFullYear()+'-'+(this.guaranteeContract.timeRange[1].getMonth()+1)+'-'+this.guaranteeContract.timeRange[1].getDate(),
+            this.guaranteeContract.time == '' ? this.guaranteeContract.time : typeof(this.guaranteeContract.time) == 'number' ? this.time(this.guaranteeContract.time) : this.guaranteeContract.time.getFullYear()+'-'+(this.guaranteeContract.time.getMonth()+1)+'-'+this.guaranteeContract.time.getDate(),
             this.guaranteeContract.range,
             this.lawCaseId,
             this.partCardId,
@@ -399,11 +401,10 @@ export default {
                 this.isAdd2 = true;
                 if(res.data.state == 100){
                     this.gcIdList = this.gcIdList == '' ? this.gcIdList + res.data.gcId : this.gcIdList + ',' + res.data.gcId;
-  
+                    this.gcIdList = this.cardId != '' ? this.gcIdList = '' : this.gcIdList;
                     getContractInfo(this.lawCaseId,this.partCardId,'gc',this.cardId,this.gcIdList).then(res => {
                         this.guarantee = res.data.nameList;
                     })
-                    
                     this.modal2 = false;
                     this.$Message.success(res.data.message);
                     return; 
@@ -487,7 +488,6 @@ export default {
             })
         }
         getPart(this.lawCaseId).then(res => {
-            console.log(res.data);
             res.data.creditCard.creditCardInformations.map(item => {
                 return item.enable == true ? this.creditInfo.push(item) : false;
             });

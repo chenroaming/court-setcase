@@ -67,6 +67,10 @@
 .ivu-auto-complete.ivu-select-dropdown {
     max-height: 160px;
 }
+.loan-Box{
+    width: 90%;
+    margin: 0 auto;
+}
 </style>
 
 <template>
@@ -643,19 +647,19 @@
                                 </FormItem>
                             </Form>
                         </div>
-                        <div v-if="element == 2">
-                            <Form label-position="right" :label-width="130">
+                        <div v-if="element == 2" class="loan-Box">
+                            <Form label-position="left" :label-width="130">
                                 <FormItem label="合同名称" prop="name">
                                         {{contract.name}}
                                 </FormItem>
                                 <FormItem label="合同签订时间">
                                     {{contract.time}}
                                 </FormItem>
-                                <FormItem>
+                                <FormItem label="信用卡信息">
                                     <Menu @on-select="creditChoice" style="width: 300px;">
                                         <Submenu name="1">
                                             <template slot="title">
-                                                信用卡信息
+                                                点击展开信用卡信息
                                             </template>
                                             <MenuItem :name="item.id" v-for="(item,index) in creditInfo">{{item.contractName}}</MenuItem>
                                         </Submenu>
@@ -687,35 +691,27 @@
                                 </FormItem>
                                 <FormItem label="申请支付金额（元）">
                                     {{pay.money}}
-                                    
                                 </FormItem>
                                 <FormItem label="有价证券">
                                     {{pay.securities}}
-                                    
                                 </FormItem>
                                 <FormItem label="支付令申请费（元）">
                                     {{pay.applicationFee}}
-                                    
                                 </FormItem>
                                 <FormItem label="申请支付令时">
                                     {{pay.applyTime}}
-                                    
                                 </FormItem>
                                 <FormItem label="作出支付令时间">
                                     {{pay.completeTime}}
-                                    
                                 </FormItem>
                                 <FormItem label="终结督促程序申请费（元）">
                                     {{endProcess.fee}}
-                                    
                                 </FormItem>
                                 <FormItem label="终结督促程序裁定作出时间">
                                     {{endProcess.time}}
-                                    
                                 </FormItem>
                                 <FormItem label="终结督促程序的原因">
-                                    {{endProcess.reason}}
-                                    
+                                    {{endProcess.reason}}  
                                 </FormItem>
                             </Form>
                         </div>
@@ -839,8 +835,9 @@
         <Modal
             v-model="modal5"
             title="查看信用卡信息"
+            footer-hide
             >
-            <Form label-position="right" :label-width="155">
+            <Form label-position="left" :label-width="155">
                 <FormItem label="信用卡卡号" prop="num">
                     {{creditCard.num}}
                     
@@ -930,33 +927,35 @@
             </Form>
         </Modal>
         <Modal v-model="modal7"
-            title="保证合同信息">
-            <Form label-position="right" :label-width="155">
+            title="保证合同信息"
+            footer-hide>
+            <Form label-position="left" :label-width="155">
                 <FormItem label="保证合同名称:" prop="name">
-                    {{guaranteeContract.name}}
+                    {{guaranteeContract2.name}}
                 </FormItem>
                 <FormItem label="合同签订时间:" prop="time">
-                    {{guaranteeContract.time}}
+                    {{guaranteeContract2.time}}
                 </FormItem>
                 <FormItem label="保证人:" prop="people">
-                    {{guaranteeContract.people}}
+                    {{guaranteeContract2.people}}
                 </FormItem>
                 <FormItem label="保证期间:" prop="timeRange">
-                    {{guaranteeContract.timeRange}}
+                    {{guaranteeContract2.timeRange}}
                 </FormItem>
                 <FormItem label="保证方式:" prop="methods">
-                    {{guaranteeContract.methods}}
+                    {{guaranteeContract2.methods}}
                 </FormItem>
                 <FormItem label="保证范围:" prop="range">
-                    {{guaranteeContract.range}}
+                    {{guaranteeContract2.range}}
                 </FormItem>
             </Form>
         </Modal>
         <Modal
             v-model="modal6"
             :title=titleArr[titleIndex]
+            footer-hide
             >
-            <Form label-position="right" :label-width="155" v-show="titleIndex == 0">
+            <Form label-position="left" :label-width="155" v-show="titleIndex == 0">
                 <FormItem label="授信合同名称：" prop="name">
                     {{credit.name}}
                 </FormItem>
@@ -985,7 +984,7 @@
                     {{credit.creditMoney}}
                 </FormItem>
             </Form>
-            <Form label-position="right" :label-width="155" v-show="titleIndex == 1">
+            <Form label-position="left" :label-width="155" v-show="titleIndex == 1">
                 <FormItem label="借款合同名称：" prop="name">
                     {{loan.name}}
                 </FormItem>
@@ -1050,7 +1049,7 @@
                     
                 </FormItem>
             </Form>
-            <Form label-position="right" :label-width="155" v-show="titleIndex == 2">
+            <Form label-position="left" :label-width="155" v-show="titleIndex == 2">
                 <FormItem label="保证合同名称：" prop="name">
                         {{guarantee.name}}
                     
@@ -1076,7 +1075,7 @@
                     
                 </FormItem>
             </Form>
-            <Form label-position="right" :label-width="155" v-show="titleIndex == 3">
+            <Form label-position="left" :label-width="155" v-show="titleIndex == 3">
                 <FormItem label="抵押合同名称：" prop="name">
                     {{mortgage.name}}
                    
@@ -1102,7 +1101,7 @@
                     
                 </FormItem>
             </Form>
-            <Form label-position="right" :label-width="155" v-show="titleIndex == 4">
+            <Form label-position="left" :label-width="155" v-show="titleIndex == 4">
                 <FormItem label="质押合同名称：" prop="name">
                     {{pledge.name}}
                    
@@ -1463,7 +1462,7 @@ export default {
                 endStandard:'',
                 endFeeStandard:''  
             },
-            guaranteeContract:{
+            guaranteeContract2:{
                 name:'',
                 time:'',
                 people:'',
@@ -1805,9 +1804,9 @@ export default {
                                                 if(res.data.state == 100){
 
                                                     if(res.data.result.onlineBrief.id == 'fa86bd7e1af811e9b39a00163e0af9c6'){
-                                                        this.element = 1;
+                                                        this.element = 0;//修改要素信息
                                                     }else if(res.data.result.onlineBrief.id == 'fa86bdfb1af811e9b39a00163e0af9c6'){
-                                                        this.element = 2;
+                                                        this.element = 0;//修改要素信息
                                                     }else{
                                                         this.element = 0;
                                                     }
@@ -1883,12 +1882,12 @@ export default {
         guaranteeChioce(name){
             this.modal7 = true;
             getCtInfo('gc',name).then(res => {
-                this.guaranteeContract.name = res.data.data.name;
-                this.guaranteeContract.time = res.data.data.signTime == null ? '' : this.time(res.data.data.signTime);
-                this.guaranteeContract.people = res.data.data.guarantor;
-                this.guaranteeContract.timeRange = res.data.data.guarantorDate == null ? '' : res.data.data.guarantorDate.replace('至',' - ');
-                this.guaranteeContract.methods = res.data.data.guarantorMethod;
-                this.guaranteeContract.range = res.data.data.GuaranteeScope;
+                this.guaranteeContract2.name = res.data.data.name;
+                this.guaranteeContract2.time = res.data.data.signTime == null ? '' : this.time(res.data.data.signTime);
+                this.guaranteeContract2.people = res.data.data.guarantor;
+                this.guaranteeContract2.timeRange = res.data.data.guarantorDate == null ? '' : res.data.data.guarantorDate.replace('至',' - ');
+                this.guaranteeContract2.methods = res.data.data.guarantorMethod;
+                this.guaranteeContract2.range = res.data.data.guaranteeScope;
             })
         },
         choice(name){
@@ -1901,7 +1900,7 @@ export default {
                         this.credit.name = res.data.data.name;
                         this.credit.isRelease = res.data.data.relieve == true ? 'yes' : 'no';
                         this.credit.creditPeople = res.data.data.creditGrantor;
-                        this.credit.creditTime = this.time(res.data.data.sign);
+                        this.credit.creditTime = res.data.data.sign == null ? '' : this.time(res.data.data.sign);
                         this.credit.creditRange = res.data.data.periodRange == null ? '' :res.data.data.periodRange.replace('至',' - ');
                         this.credit.creditMoney = res.data.data.amount;
                     })
@@ -1912,8 +1911,8 @@ export default {
                         console.log(res.data.data);
                         this.loan.name = res.data.data.name;
                         this.loan.creditPeople = res.data.data.borrower;
-                        this.loan.isRelease = res.data.data.isRelieve == true ? 'yes' : 'no';
-                        this.loan.time = this.time(res.data.data.signTime);
+                        this.loan.isRelease = res.data.data.relieve == true ? 'yes' : 'no';
+                        this.loan.time = res.data.data.signTime == null ? '' : this.time(res.data.data.signTime);
                         this.loan.money = res.data.data.amount;
                         this.loan.range = res.data.data.askTime == null ? '' : res.data.data.askTime.replace('至',' - ');
                         this.loan.methods = res.data.data.repaymentMethod;
@@ -2871,7 +2870,7 @@ export default {
                         this.litigation.preservationFee = res.data.loan.preservationAmountFee;
                         this.litigation.rulingTime = res.data.loan.preservationTime == null ? '' : this.time(res.data.loan.preservationTime);
                         this.litigation.releasePreservation = res.data.loan.firePreservationTime == null ? '' : this.time(res.data.loan.firePreservationTime);
-                        this.litigation.preservationStatus = res.data.loan.PreservationSituation;
+                        this.litigation.preservationStatus = res.data.loan.preservationSituation;
                     })
                 }else{
                     getPart(this.lawcaseId).then(res => {

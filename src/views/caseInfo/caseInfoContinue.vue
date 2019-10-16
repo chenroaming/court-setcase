@@ -356,10 +356,10 @@ margin-top: 7px;
     </div>
     <Icon type="chevron-down" class="setStep"></Icon>
 
-    <div class="step"  @click="goStep(4)" v-show="isRight == true">
+    <!--要素信息注释 <div class="step"  @click="goStep(4)" v-show="isRight == true">
         <span>要素信息</span>
     </div>
-    <Icon type="chevron-down" class="setStep" v-show="isRight == true"></Icon>
+    <Icon type="chevron-down" class="setStep" v-show="isRight == true"></Icon> -->
     
     <div class="step " @click="goStep(5)">
         <span>附件与确认</span>
@@ -549,14 +549,14 @@ right: -20px;">元</span>
     </div>
 
     <!-- 要素信息 -->
-    <div class="over_flo" v-show="elementAdd">
+    <!-- <div class="over_flo" v-show="elementAdd">
         <elementInfo ref="element" v-if="isElement == 1" :lawCaseId="caseId" :partId="partId" v-on:listenToChildEvent="receive"></elementInfo>
         <elementInfo2 ref="element2" v-if="isElement == 2" :lawCaseId="caseId" :partId="partId" v-on:listenToChildEvent="receive"></elementInfo2>
     </div>
     <div v-show="elementAdd">
         <Button @click="nextStep(4)" :loading="nextLoading" type="primary" style="width:100px;float:right;margin-right:20px">下一步</Button>
         <Button @click="upstep(3)"   style="width:100px;float:right;margin-right:20px">上一步</Button>
-    </div>
+    </div> -->
 
     <!-- 附件信息 -->
     <div class="over_flo" v-show="fileAdd" style="height:450px;">
@@ -3232,15 +3232,19 @@ nextStepSure2(){
     this.getFilesL();
     setStep[2].classList.add('setActive');
     this.dailiAdd = false;
-    if(this.isRight){
-        this.elementAdd = true;
-        sted[3].classList.add('active');
-        sted[2].classList.remove('active');
-    }else{
-        this.fileAdd = true;
-        sted[4].classList.add('active');
-        sted[2].classList.remove('active');
-    }
+    //要素信息注释 if(this.isRight){
+    //     this.elementAdd = true;
+    //     sted[3].classList.add('active');
+    //     sted[2].classList.remove('active');
+    // }else{
+    //     this.fileAdd = true;
+    //     sted[4].classList.add('active');
+    //     sted[2].classList.remove('active');
+    // }
+    this.fileAdd = true;
+    sted[3].classList.add('active');
+    sted[2].classList.remove('active');//要素信息注释后
+
     this.isOpenevidenceMol = true;
     this.evidenceMol = false;
     this.stepNum = 4;
@@ -3425,14 +3429,15 @@ nextStep(dex){
                 }else{this.ten = this.ten - 1;}
             },1000)
         }else{
-            if(this.isRight){
-                this.elementAdd = true;
-                this.dailiAdd = false;
-                sted[3].classList.add('active');
-                sted[2].classList.remove('active');
-            }else{
-                this.nextStepSure2();
-            }
+            //要素信息注释 if(this.isRight){
+            //     this.elementAdd = true;
+            //     this.dailiAdd = false;
+            //     sted[3].classList.add('active');
+            //     sted[2].classList.remove('active');
+            // }else{
+            //     this.nextStepSure2();
+            // }
+            this.nextStepSure2();
             this.nextLoading = false;
         }
     }else if(dex == 4){

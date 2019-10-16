@@ -19,9 +19,9 @@ export function addOrUpdateCtInfo (name,isRelieve,creditGrantor,signTime,periodR
 /** 
  * 添加/修改金融合同要素信息
  */
-export function updatePLoan (partOfLoanId,loanTime,paymentTime,overdueRepaymentTime,ldlfTime,ppArrears,interestParam,plInterest,cInterest,nInterest,npInterest,ncdInterest,cioArrears,ldDamages,dExpense,lyFees,ptFee,acFee,adExpense,joint,marriageTime,divorceTime,legalProvisions,lawAndRegulations,preservationCaseNo,preservationRespondent,afpTime,pstAmount,pvtAmountFee,pvtTime,frvTime,PreservationSituation) {
+export function updatePLoan (partOfLoanId,loanTime,paymentTime,overdueRepaymentTime,ldlfTime,ppArrears,interestParam,plInterest,cInterest,nInterest,npInterest,ncdInterest,cioArrears,ldDamages,dExpense,lyFees,ptFee,acFee,adExpense,joint,marriageTime,divorceTime,legalProvisions,lawAndRegulations,preservationCaseNo,preservationRespondent,afpTime,pstAmount,pvtAmountFee,pvtTime,frvTime,preservationSituation) {
     const params = {
-        partOfLoanId,loanTime,paymentTime,overdueRepaymentTime,ldlfTime,ppArrears,interestParam,plInterest,cInterest,nInterest,npInterest,ncdInterest,cioArrears,ldDamages,dExpense,lyFees,ptFee,acFee,adExpense,joint,marriageTime,divorceTime,legalProvisions,lawAndRegulations,preservationCaseNo,preservationRespondent,afpTime,pstAmount,pvtAmountFee,pvtTime,frvTime,PreservationSituation
+        partOfLoanId,loanTime,paymentTime,overdueRepaymentTime,ldlfTime,ppArrears,interestParam,plInterest,cInterest,nInterest,npInterest,ncdInterest,cioArrears,ldDamages,dExpense,lyFees,ptFee,acFee,adExpense,joint,marriageTime,divorceTime,legalProvisions,lawAndRegulations,preservationCaseNo,preservationRespondent,afpTime,pstAmount,pvtAmountFee,pvtTime,frvTime,preservationSituation
     };
     return service({
         url: '/online/part/updatePLoan.jhtml',
