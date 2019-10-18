@@ -34,17 +34,15 @@
                     </Submenu>
                 </Menu>
             </FormItem>
-            <FormItem>
-                <FormItem label="是否支持夫妻共同债">
-                    <RadioGroup v-model="couple.isPublic">
-                        <Radio label="yes">
-                            <span>是</span>
-                        </Radio>
-                        <Radio label="no">
-                            <span>否</span>
-                        </Radio>
-                    </RadioGroup>
-                </FormItem>
+            <FormItem label="是否支持夫妻共同债">
+                <RadioGroup v-model="couple.isPublic">
+                    <Radio label="yes">
+                        <span>是</span>
+                    </Radio>
+                    <Radio label="no">
+                        <span>否</span>
+                    </Radio>
+                </RadioGroup>
             </FormItem>
             <FormItem label="结婚登记时间">
                 <DatePicker type="date" v-model="couple.marry" placeholder="请选择时间" style="width: 300px"></DatePicker>
@@ -469,7 +467,7 @@ export default {
                 onOk: () => {
                     delCtInfo(infoType,infoId).then(res => {
                         if(res.data.state == 100){
-                            getContractInfo(this.lawCaseId,this.partCardId,'gc',this.cardId).then(res => {
+                            getContractInfo(this.lawCaseId,this.partCardId,'gc',this.cardId,this.gcIdList).then(res => {
                                 this.guarantee = res.data.nameList;
                             })
                             this.$Modal.remove();

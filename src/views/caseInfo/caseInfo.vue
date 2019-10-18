@@ -444,10 +444,10 @@
                     </div>
                     <Icon type="chevron-down" class="setStep"></Icon> 
 
-                    <!--要素信息注释 <div class="step"  @click="goStep(4)" v-show="isRight === true">
+                    <div class="step"  @click="goStep(4)" v-show="isRight === true">
                         <span>要素信息</span>
                     </div>
-                    <Icon type="chevron-down" class="setStep" v-show="isRight === true"></Icon> -->
+                    <Icon type="chevron-down" class="setStep" v-show="isRight === true"></Icon>
 
                     <div class="step"  @click="goStep(5)">
                         <span>附件与确认</span>
@@ -626,14 +626,15 @@
                     </div>
 
                     <!-- 要素信息 -->
-                    <!-- <div class="over_flo" v-show="elementAdd">
+                    <div class="over_flo" v-show="elementAdd">
                         <elementInfo ref="element" v-if="isElement == 1" :lawCaseId="caseId" :partId="partId" v-on:listenToChildEvent="receive"></elementInfo>
                         <elementInfo2 ref="element2" v-if="isElement == 2" :lawCaseId="caseId" :partId="partId" v-on:listenToChildEvent="receive"></elementInfo2>
                     </div>
                     <div v-show="elementAdd">
                         <Button @click="nextStep(4)" :loading="nextLoading" type="primary" style="width:100px;float:right;margin-right:20px">下一步</Button>
                         <Button @click="upstep(3)"   style="width:100px;float:right;margin-right:20px">上一步</Button>
-                    </div>      -->
+                    </div>
+
                     <!-- 附件信息 -->
                     <div class="over_flo" v-show="fileAdd">
                         <div style="height:170px;">
@@ -2095,13 +2096,28 @@
                     const sted = document.getElementsByClassName("step");
                     const setStep = document.getElementsByClassName("setStep");
                     if(data == '1'){//根据要素信息或者信用卡信息从而进行是否下一步的判断
-                        window.localStorage.setItem('newItemStep',4);
-                        sted[3].classList.remove('active');
-                        sted[4].classList.add('active');
-                        setStep[3].classList.add('setActive');
-                        this.stepNum = 5;
-                        this.fileAdd = true;
-                        this.elementAdd = false;
+                        if(!this.isOpenevidenceMol){
+                            this.evidenceMol = true;
+                            this.ten = 10;
+                            let timer = setInterval(()=>{
+                                this.disabled = true;
+                                this.buttonStr ="已经阅读（" +  this.ten +"）";
+                                if(this.ten ===0) {
+                                    clearInterval(timer);
+                                    this.disabled = false;
+                                    this.buttonStr = `已经阅读`;
+                                }else{this.ten = this.ten - 1;}
+                            },1000)
+                        }else{
+                            window.localStorage.setItem('newItemStep',4);
+                            sted[3].classList.remove('active');
+                            sted[4].classList.add('active');
+                            setStep[3].classList.add('setActive');
+                            this.stepNum = 5;
+                            this.fileAdd = true;
+                            this.elementAdd = false;
+                            this.nextLoading = false;
+                        }
                     }
                     this.nextLoading = false;
                 },
@@ -2420,12 +2436,11 @@
                   })
                 },
                 dowmModel(){
-                    window.open('https://court1.ptnetwork001.com/' + '/upload/evidenceAttachment/model/证据材料模板.xlsx')
+                    window.open('https://dq.hlcourt.gov.cn' + '/upload/evidenceAttachment/model/证据材料模板.xlsx')
                 },
                 handleSuccess2(res, file){
-                    console.log(res)
-                    console.log(file)
                     if(res.state == 100){
+                        this.$Message.success(res.message);
                         res.onlineEvidenceAttachmentList.map(item => {
                             const data = {
                                 name:item.eviName,
@@ -2436,7 +2451,8 @@
                             }
                             this.EviList.push(data)
                         })
-                        
+                    }else{
+                        this.$Message.warning(res.message);
                     }
                 },
                 handleUpload(){
@@ -3259,8 +3275,15 @@
                                     sted[1].classList.add('active');
                                     setStep[0].classList.add('setActive');
                                     window.localStorage.setItem('newItemStep',dex);
-                                    if(this.onlineBriefId == 'fa86bd7e1af811e9b39a00163e0af9c6' || this.onlineBriefId == 'fa86bdfb1af811e9b39a00163e0af9c6'){
+                                    if(this.onlineBriefId == 'fa86bd7e1af811e9b39a00163e0af9c6'){
+                                        this.isElement = 1;
                                         this.isRight = true;
+                                        window.localStorage.setItem('isRight',true);
+                                        this.partId = res.data.partId;
+                                    }else if(this.onlineBriefId == 'fa86bdfb1af811e9b39a00163e0af9c6'){
+                                        this.isElement = 2;
+                                        this.isRight = true;
+                                        this.partId = res.data.partId;
                                         window.localStorage.setItem('isRight',true);
                                     }else{
                                         this.elementAdd = false;
@@ -3268,6 +3291,8 @@
                                         window.localStorage.setItem('isRight',false);
                                     }
                                 }else{
+                                    this.elementAdd = false;
+                                    this.isRight = false;
                                     this.$Message.info(res.data.message);
                                 }
                             })
@@ -3387,7 +3412,14 @@
                             }
                         }) 
                     }else if(dex == 3){
-                        if(!this.isOpenevidenceMol){
+                        this.nextLoading = false;
+                        if(this.isRight){
+                            this.elementAdd = true;
+                            this.dailiAdd = false;
+                            sted[3].classList.add('active');
+                            sted[2].classList.remove('active');
+                        }else{
+                            if(!this.isOpenevidenceMol){
                             this.evidenceMol = true;
                             this.ten = 10;
                             let timer = setInterval(()=>{
@@ -3400,16 +3432,17 @@
                                 }else{this.ten = this.ten - 1;}
                             },1000)
                         }else{
-                            // 要素信息注释if(this.isRight){
-                            //     this.elementAdd = true;
-                            //     this.dailiAdd = false;
-                            //     sted[3].classList.add('active');
-                            //     sted[2].classList.remove('active');
-                            // }else{
-                            //     this.nextStepSure2();
-                            // }
-                            this.nextStepSure2();
+                            if(this.isRight){
+                                this.elementAdd = true;
+                                this.dailiAdd = false;
+                                sted[3].classList.add('active');
+                                sted[2].classList.remove('active');
+                            }else{
+                                this.nextStepSure2();
+                            }
+                            // this.nextStepSure2();
                             this.nextLoading = false;
+                        }
                         }
                         window.localStorage.setItem('newItemStep',dex);
                     }else if(dex == 4){
@@ -3426,19 +3459,22 @@
                     })
                     setStep[2].classList.add('setActive');
                     this.dailiAdd = false;
-                    //要素信息注释 if(this.isRight){
-                    //     this.elementAdd = true;
-                    //     sted[3].classList.add('active');
-                    //     sted[2].classList.remove('active');
-                    // }else{
-                    //     this.fileAdd = true;
-                    //     sted[4].classList.add('active');
-                    //     sted[2].classList.remove('active');
-                    // }
-                    this.fileAdd = true;
-                    sted[3].classList.add('active');
-                    sted[2].classList.remove('active');//要素信息注释后
-
+                    if(this.isRight){
+                        // this.fileAdd = true;
+                        // sted[4].classList.add('active');
+                        // sted[2].classList.remove('active');
+                        window.localStorage.setItem('newItemStep',4);
+                        sted[3].classList.remove('active');
+                        sted[4].classList.add('active');
+                        setStep[3].classList.add('setActive');
+                        this.stepNum = 5;
+                        this.fileAdd = true;
+                        this.elementAdd = false;
+                    }else{
+                        this.fileAdd = true;
+                        sted[4].classList.add('active');
+                        sted[2].classList.remove('active');
+                    }
                     this.isOpenevidenceMol = true;
                     this.evidenceMol = false;
                     this.stepNum = 4;

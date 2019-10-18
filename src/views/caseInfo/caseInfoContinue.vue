@@ -356,10 +356,10 @@ margin-top: 7px;
     </div>
     <Icon type="chevron-down" class="setStep"></Icon>
 
-    <!--要素信息注释 <div class="step"  @click="goStep(4)" v-show="isRight == true">
+    <div class="step"  @click="goStep(4)" v-show="isRight == true">
         <span>要素信息</span>
     </div>
-    <Icon type="chevron-down" class="setStep" v-show="isRight == true"></Icon> -->
+    <Icon type="chevron-down" class="setStep" v-show="isRight == true"></Icon>
     
     <div class="step " @click="goStep(5)">
         <span>附件与确认</span>
@@ -549,14 +549,14 @@ right: -20px;">元</span>
     </div>
 
     <!-- 要素信息 -->
-    <!-- <div class="over_flo" v-show="elementAdd">
+    <div class="over_flo" v-show="elementAdd">
         <elementInfo ref="element" v-if="isElement == 1" :lawCaseId="caseId" :partId="partId" v-on:listenToChildEvent="receive"></elementInfo>
         <elementInfo2 ref="element2" v-if="isElement == 2" :lawCaseId="caseId" :partId="partId" v-on:listenToChildEvent="receive"></elementInfo2>
     </div>
     <div v-show="elementAdd">
         <Button @click="nextStep(4)" :loading="nextLoading" type="primary" style="width:100px;float:right;margin-right:20px">下一步</Button>
         <Button @click="upstep(3)"   style="width:100px;float:right;margin-right:20px">上一步</Button>
-    </div> -->
+    </div>
 
     <!-- 附件信息 -->
     <div class="over_flo" v-show="fileAdd" style="height:450px;">
@@ -2060,14 +2060,35 @@ receive:function(data){//要素信息接收子组件传值并判断是否进行�
     const sted = document.getElementsByClassName("step");
     const setStep = document.getElementsByClassName("setStep");
     if(data == '1'){
-        window.localStorage.setItem('newItemStep',4);
-        sted[3].classList.remove('active');
-        sted[4].classList.add('active');
-        setStep[3].classList.add('setActive');
-        this.stepNum = 5;
-        this.fileAdd = true;
-        this.elementAdd = false;
-        this.nextLoading = false;
+        // window.localStorage.setItem('newItemStep',4);
+        // sted[3].classList.remove('active');
+        // sted[4].classList.add('active');
+        // setStep[3].classList.add('setActive');
+        // this.stepNum = 5;
+        // this.fileAdd = true;
+        // this.elementAdd = false;
+        // this.nextLoading = false;
+        if(!this.isOpenevidenceMol){
+            this.evidenceMol = true;
+            this.ten = 10;
+            let timer = setInterval(()=>{
+                this.disabled = true;
+                this.buttonStr ="已经阅读（" +  this.ten +"）";
+                if(this.ten ===0) {
+                    clearInterval(timer);
+                    this.disabled = false;
+                    this.buttonStr = `已经阅读`;
+                }else{this.ten = this.ten - 1;}
+            },1000)
+        }else{
+            window.localStorage.setItem('process',4);
+            sted[3].classList.remove('active');
+            sted[4].classList.add('active');
+            setStep[3].classList.add('setActive');
+            this.stepNum = 5;
+            this.fileAdd = true;
+            this.elementAdd = false;
+        }
     }
     this.nextLoading = false;
 },
@@ -2178,15 +2199,14 @@ goStep(num){
     }
 },
 dowmModel(){
-    window.open('https://court1.ptnetwork001.com/' + '/upload/evidenceAttachment/model/证据材料模板.xlsx')
+    window.open('https://dq.hlcourt.gov.cn' + '/upload/evidenceAttachment/model/证据材料模板.xlsx')
 },
 handleUpload(){
 
 },
 handleSuccess2(res, file){
-    console.log(res)
-    console.log(file)
     if(res.state == 100){
+        this.$Message.success(res.message);
         res.onlineEvidenceAttachmentList.map(item => {
             const data = {
                 name:item.eviName,
@@ -2196,8 +2216,9 @@ handleSuccess2(res, file){
                 id:item.id
             }
             this.EviList.push(data)
-        })
-        
+        })    
+    }else{
+        this.$Message.warning(res.message);
     }
 },
 showAddModel(){
@@ -3232,19 +3253,21 @@ nextStepSure2(){
     this.getFilesL();
     setStep[2].classList.add('setActive');
     this.dailiAdd = false;
-    //要素信息注释 if(this.isRight){
-    //     this.elementAdd = true;
-    //     sted[3].classList.add('active');
-    //     sted[2].classList.remove('active');
-    // }else{
-    //     this.fileAdd = true;
-    //     sted[4].classList.add('active');
-    //     sted[2].classList.remove('active');
-    // }
-    this.fileAdd = true;
-    sted[3].classList.add('active');
-    sted[2].classList.remove('active');//要素信息注释后
-
+    if(this.isRight){
+        // this.elementAdd = true;
+        // sted[3].classList.add('active');
+        // sted[2].classList.remove('active');
+        sted[3].classList.remove('active');
+        sted[4].classList.add('active');
+        setStep[3].classList.add('setActive');
+        this.stepNum = 5;
+        this.fileAdd = true;
+        this.elementAdd = false;
+    }else{
+        this.fileAdd = true;
+        sted[4].classList.add('active');
+        sted[2].classList.remove('active');
+    }
     this.isOpenevidenceMol = true;
     this.evidenceMol = false;
     this.stepNum = 4;
@@ -3416,7 +3439,37 @@ nextStep(dex){
             }
         })
     }else if(dex == 3){
-        if(!this.isOpenevidenceMol){
+        // if(!this.isOpenevidenceMol){
+        //     this.evidenceMol = true;
+        //     this.ten = 10;
+        //     let timer = setInterval(()=>{
+        //         this.disabled = true;
+        //         this.buttonStr ="已经阅读（" +  this.ten +"）";
+        //         if(this.ten ===0) {
+        //             clearInterval(timer);
+        //             this.disabled = false;
+        //             this.buttonStr = `已经阅读`;
+        //         }else{this.ten = this.ten - 1;}
+        //     },1000)
+        // }else{
+        //     if(this.isRight){
+        //         this.elementAdd = true;
+        //         this.dailiAdd = false;
+        //         sted[3].classList.add('active');
+        //         sted[2].classList.remove('active');
+        //     }else{
+        //         this.nextStepSure2();
+        //     }
+        //     this.nextLoading = false;
+        // }
+        this.nextLoading = false;
+        if(this.isRight){
+            this.elementAdd = true;
+            this.dailiAdd = false;
+            sted[3].classList.add('active');
+            sted[2].classList.remove('active');
+        }else{
+            if(!this.isOpenevidenceMol){
             this.evidenceMol = true;
             this.ten = 10;
             let timer = setInterval(()=>{
@@ -3429,16 +3482,17 @@ nextStep(dex){
                 }else{this.ten = this.ten - 1;}
             },1000)
         }else{
-            //要素信息注释 if(this.isRight){
-            //     this.elementAdd = true;
-            //     this.dailiAdd = false;
-            //     sted[3].classList.add('active');
-            //     sted[2].classList.remove('active');
-            // }else{
-            //     this.nextStepSure2();
-            // }
-            this.nextStepSure2();
+            if(this.isRight){
+                this.elementAdd = true;
+                this.dailiAdd = false;
+                sted[3].classList.add('active');
+                sted[2].classList.remove('active');
+            }else{
+                this.nextStepSure2();
+            }
+            // this.nextStepSure2();
             this.nextLoading = false;
+        }
         }
     }else if(dex == 4){
         this.isElement == 1 ? this.$refs.element.submit() : this.$refs.element2.submitLoan();

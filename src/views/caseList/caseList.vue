@@ -583,14 +583,14 @@
                             </Form>
                         </div>
                         <div v-if="element == 2" class="loan-Box">
-                            <Form label-position="left" :label-width="130">
-                                <FormItem label="合同名称" prop="name">
+                            <Form label-position="left" :label-width="170">
+                                <FormItem label="合同名称：" prop="name">
                                         {{contract.name}}
                                 </FormItem>
-                                <FormItem label="合同签订时间">
+                                <FormItem label="合同签订时间：">
                                     {{contract.time}}
                                 </FormItem>
-                                <FormItem label="信用卡信息">
+                                <FormItem label="信用卡信息：">
                                     <Menu @on-select="creditChoice" style="width: 300px;">
                                         <Submenu name="1">
                                             <template slot="title">
@@ -600,7 +600,7 @@
                                         </Submenu>
                                     </Menu>
                                 </FormItem>
-                                <FormItem label="是否支持夫妻共同债">
+                                <FormItem label="是否支持夫妻共同债：">
                                     <RadioGroup v-model="couple.isPublic">
                                         <Radio disabled label="yes">
                                             <span>是</span>
@@ -610,47 +610,47 @@
                                         </Radio>
                                     </RadioGroup>
                                 </FormItem>
-                                <FormItem label="结婚登记时间">
+                                <FormItem label="结婚登记时间：">
                                         {{couple.marry}}
                                     
                                 </FormItem>
-                                <FormItem label="离婚登记时间">
+                                <FormItem label="离婚登记时间：">
                                     {{couple.divorce}}
                                    
                                 </FormItem>
-                                <FormItem label="请求支付的事实与理由">
+                                <FormItem label="请求支付的事实与理由：">
                                     {{pay.reason}}
                                    
                                 </FormItem>
-                                <FormItem label="申请支付金额（元）">
+                                <FormItem label="申请支付金额（元）：">
                                     {{pay.money}}
                                    
                                 </FormItem>
-                                <FormItem label="有价证券">
+                                <FormItem label="有价证券：">
                                     {{pay.securities}}
                                    
                                 </FormItem>
-                                <FormItem label="支付令申请费（元）">
+                                <FormItem label="支付令申请费（元）：">
                                     {{pay.applicationFee}}
                                    
                                 </FormItem>
-                                <FormItem label="申请支付令时">
+                                <FormItem label="申请支付令时：">
                                     {{pay.applyTime}}
                                    
                                 </FormItem>
-                                <FormItem label="作出支付令时间">
+                                <FormItem label="作出支付令时间：">
                                     {{pay.completeTime}}
                                    
                                 </FormItem>
-                                <FormItem label="终结督促程序申请费（元）">
+                                <FormItem label="终结督促程序申请费（元）：">
                                     {{endProcess.fee}}
                                    
                                 </FormItem>
-                                <FormItem label="终结督促程序裁定作出时间">
+                                <FormItem label="终结督促程序裁定作出时间：">
                                     {{endProcess.time}}
                                    
                                 </FormItem>
-                                <FormItem label="终结督促程序的原因">
+                                <FormItem label="终结督促程序的原因：">
                                     {{endProcess.reason}}
                                     
                                 </FormItem>
@@ -746,8 +746,9 @@
             v-model="modal5"
             title="查看信用卡信息"
             footer-hide
+            width="700px"
             >
-            <Form label-position="left" :label-width="155">
+            <Form label-position="right" :label-width="315">
                 <FormItem label="信用卡卡号" prop="num">
                     {{creditCard.num}}
                     
@@ -838,8 +839,10 @@
         </Modal>
         <Modal v-model="modal2"
             title="保证合同信息"
-            footer-hide>
-            <Form label-position="left" :label-width="155">
+            footer-hide
+            width="700px"
+        >
+            <Form label-position="right" :label-width="155">
                 <FormItem label="保证合同名称:" prop="name">
                     {{guaranteeContract2.name}}
                 </FormItem>
@@ -864,8 +867,9 @@
             v-model="modal1"
             :title=titleArr[titleIndex]
             footer-hide
+            width="700px"
             >
-            <Form label-position="left" :label-width="155" v-show="titleIndex == 0">
+            <Form label-position="left" :label-width="180" v-show="titleIndex == 0">
                 <FormItem label="授信合同名称：" prop="name">
                     {{credit.name}}
                 </FormItem>
@@ -894,7 +898,7 @@
                     {{credit.creditMoney}}
                 </FormItem>
             </Form>
-            <Form label-position="left" :label-width="155" v-show="titleIndex == 1">
+            <Form label-position="left" :label-width="180" v-show="titleIndex == 1">
                 <FormItem label="借款合同名称：" prop="name">
                     {{loan.name}}
                 </FormItem>
@@ -959,7 +963,7 @@
                     
                 </FormItem>
             </Form>
-            <Form label-position="left" :label-width="155" v-show="titleIndex == 2">
+            <Form label-position="left" :label-width="180" v-show="titleIndex == 2">
                 <FormItem label="保证合同名称：" prop="name">
                         {{guarantee.name}}
                     
@@ -985,7 +989,7 @@
                     
                 </FormItem>
             </Form>
-            <Form label-position="left" :label-width="155" v-show="titleIndex == 3">
+            <Form label-position="left" :label-width="180" v-show="titleIndex == 3">
                 <FormItem label="抵押合同名称：" prop="name">
                     {{mortgage.name}}
                    
@@ -1011,7 +1015,7 @@
                     
                 </FormItem>
             </Form>
-            <Form label-position="left" :label-width="155" v-show="titleIndex == 4">
+            <Form label-position="left" :label-width="180" v-show="titleIndex == 4">
                 <FormItem label="质押合同名称：" prop="name">
                     {{pledge.name}}
                    
@@ -1792,9 +1796,9 @@ export default {
                                     getOnlineLawCaseEdit(params.row.id).then(res => {
                                         if(res.data.state == 100){
                                             if(res.data.result.onlineBrief.id == 'fa86bd7e1af811e9b39a00163e0af9c6'){
-                                                this.element = 0;//修改要素信息
+                                                this.element = 1;//修改要素信息
                                             }else if(res.data.result.onlineBrief.id == 'fa86bdfb1af811e9b39a00163e0af9c6'){
-                                                this.element = 0;
+                                                this.element = 2;//修改要素信息
                                             }else{
                                                 this.element = 0;
                                             }
@@ -2298,7 +2302,7 @@ export default {
                 this.typeData = "";
             }
             this.getList(1);
-            if(Cookies.get('user') == '厦门农商总账号'){
+            if(Cookies.get('user') == '农商行总帐号' || Cookies.get('user') == '农商金控总账号'){
                 this.isSpecialUser = false;
             }
         },

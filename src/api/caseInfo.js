@@ -672,3 +672,62 @@ export function checkEvidence (eviId) {
 //         params
 //     });
 // }
+
+/**
+ * 保存证明文件
+ */
+
+export function saveOrUpdateProof (Path,proofId) {
+    const params = {
+        Path,proofId
+    }
+    return service({
+        url: '/online/proof/saveOrUpdateProof.jhtml',
+        method: 'GET',
+        params
+    });
+}
+
+/**
+ * 查询证明材料
+ */
+
+export function getProofInfo (ownType,oneId) {
+    const params = {
+        ownType,oneId
+    }
+    return service({
+        url: '/online/proof/getProofInfo.jhtml',
+        method: 'GET',
+        params
+    });
+}
+
+/**
+ * 查询被告角色
+ */
+
+export function getRoles (ownType,oneId) {
+    const params = {
+        ownType,oneId
+    }
+    return service({
+        url: '/online/litigantRole/getRoles.jhtml',
+        method: 'GET',
+        params
+    });
+}
+
+/**
+ * 更改在线证据原件状态
+ */
+export function changeOriginal (eviId,oriType,newOriType) {
+    const params = {
+        eviId,oriType,newOriType
+    }
+    return service({
+        url: '/online/lawCase/changeOriginal.jhtml',
+        method: 'GET',
+        params
+    });
+}

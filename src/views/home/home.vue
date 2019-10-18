@@ -109,6 +109,7 @@ margin-top: 20px;
 </div>
 </template>
 <script>
+import Cookies from 'js-cookie';
 import { getCaesState} from '@/api/caseInfo.js';
 import { getUserInfo } from '@/api/user';
 export default {
@@ -196,13 +197,15 @@ data () {
     };
 },
 mounted () {
+    console.log(Cookies.get('user'));
     setTimeout( ()=>{
         getUserInfo().then(response => {
             console.log(565356262);
             const data = response.data;
             if(data.state == 100) {
                 let ary = this.$store.state.app.menuList;
-                if((data.roleName == '当事人' || data.roleName == '代理人') && data.result.name != '厦门农商总账号'){
+                console.log(data.result.name);
+                if((data.roleName == '当事人' || data.roleName == '代理人') && (data.result.name != '农商行总账号' || data.result.name != '农商金控总账号')){
                     this.access = true;
                     this.access2 = true;
                     this.court = false;
@@ -211,7 +214,7 @@ mounted () {
                     this.access2 = false;
                     this.court = true;
                 }
-                if(data.result.name == '厦门农商总账号'){
+                if(data.result.name == '农商行总账号' || data.result.name == '农商金控总账号'){
                     this.access2 = true;
                     this.court = false;
                     this.access = false;

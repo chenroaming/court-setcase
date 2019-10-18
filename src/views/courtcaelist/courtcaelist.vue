@@ -648,14 +648,14 @@
                             </Form>
                         </div>
                         <div v-if="element == 2" class="loan-Box">
-                            <Form label-position="left" :label-width="130">
-                                <FormItem label="合同名称" prop="name">
+                            <Form label-position="left" :label-width="170">
+                                <FormItem label="合同名称：" prop="name">
                                         {{contract.name}}
                                 </FormItem>
-                                <FormItem label="合同签订时间">
+                                <FormItem label="合同签订时间：">
                                     {{contract.time}}
                                 </FormItem>
-                                <FormItem label="信用卡信息">
+                                <FormItem label="信用卡信息：">
                                     <Menu @on-select="creditChoice" style="width: 300px;">
                                         <Submenu name="1">
                                             <template slot="title">
@@ -665,52 +665,50 @@
                                         </Submenu>
                                     </Menu>
                                 </FormItem>
-                                <FormItem>
-                                    <FormItem label="是否支持夫妻共同债">
-                                        <RadioGroup v-model="couple.isPublic">
-                                            <Radio disabled label="yes">
-                                                <span>是</span>
-                                            </Radio>
-                                            <Radio disabled label="no">
-                                                <span>否</span>
-                                            </Radio>
-                                        </RadioGroup>
-                                    </FormItem>
+                                <FormItem label="是否支持夫妻共同债：">
+                                    <RadioGroup v-model="couple.isPublic">
+                                        <Radio disabled label="yes">
+                                            <span>是</span>
+                                        </Radio>
+                                        <Radio disabled label="no">
+                                            <span>否</span>
+                                        </Radio>
+                                    </RadioGroup>
                                 </FormItem>
-                                <FormItem label="结婚登记时间">
+                                <FormItem label="结婚登记时间：">
                                         {{couple.marry}}
                                     
                                 </FormItem>
-                                <FormItem label="离婚登记时间">
+                                <FormItem label="离婚登记时间：">
                                     {{couple.divorce}}
                                     
                                 </FormItem>
-                                <FormItem label="请求支付的事实与理由">
+                                <FormItem label="请求支付的事实与理由：">
                                     {{pay.reason}}
                                     
                                 </FormItem>
-                                <FormItem label="申请支付金额（元）">
+                                <FormItem label="申请支付金额（元）：">
                                     {{pay.money}}
                                 </FormItem>
-                                <FormItem label="有价证券">
+                                <FormItem label="有价证券：">
                                     {{pay.securities}}
                                 </FormItem>
-                                <FormItem label="支付令申请费（元）">
+                                <FormItem label="支付令申请费（元）：">
                                     {{pay.applicationFee}}
                                 </FormItem>
-                                <FormItem label="申请支付令时">
+                                <FormItem label="申请支付令时：">
                                     {{pay.applyTime}}
                                 </FormItem>
-                                <FormItem label="作出支付令时间">
+                                <FormItem label="作出支付令时间：">
                                     {{pay.completeTime}}
                                 </FormItem>
-                                <FormItem label="终结督促程序申请费（元）">
+                                <FormItem label="终结督促程序申请费（元）：">
                                     {{endProcess.fee}}
                                 </FormItem>
-                                <FormItem label="终结督促程序裁定作出时间">
+                                <FormItem label="终结督促程序裁定作出时间：">
                                     {{endProcess.time}}
                                 </FormItem>
-                                <FormItem label="终结督促程序的原因">
+                                <FormItem label="终结督促程序的原因：">
                                     {{endProcess.reason}}  
                                 </FormItem>
                             </Form>
@@ -745,7 +743,8 @@
             :loading="loading"
             width="560px"
             :mask-closable="closeM"
-            title="当事人信息">
+            title="当事人信息"
+            >
             <div>
                 <Form :model="addFormItem" :label-width="100" inline>
                     <FormItem :label="addFormItem.litigantType == '自然人'? '姓名:' : '公司名称:'" style="width: 505px;">
@@ -836,100 +835,106 @@
             v-model="modal5"
             title="查看信用卡信息"
             footer-hide
+            width="700px"
             >
-            <Form label-position="left" :label-width="155">
-                <FormItem label="信用卡卡号" prop="num">
-                    {{creditCard.num}}
-                    
-                </FormItem>
-                <FormItem label="信用卡合约名称" prop="name">
-                    {{creditCard.name}}
-                    
-                </FormItem>
-                <FormItem label="利息约定" prop="interestAgreement">
-                    {{creditCard.interestAgreement}}
-                    
-                </FormItem>
-                <FormItem label="信用卡欠款最新截至时间" prop="deadline">
-                    {{creditCard.deadline}}
-                </FormItem>
-                <FormItem label="信用卡最新欠款本金（元）" prop="principal">
-                    {{creditCard.principal}}
-                    
-                </FormItem>
-                <FormItem label="信用卡最新欠款利息（元）" prop="interest">
-                    {{creditCard.interest}}
-                    
-                </FormItem>
-                <FormItem label="信用卡最新欠款滞纳金（违约金）（元）" prop="latePayment">
-                    {{creditCard.latePayment}}
-                    
-                </FormItem>
-                <FormItem label="信用卡年费（元）" prop="annualFee">
-                    {{creditCard.annualFee}}
-                    
-                </FormItem>
-                <FormItem label="信用卡分期手续费（元）" prop="handlingFee">
-                    {{creditCard.handlingFee}}
-                    
-                </FormItem>
-                <FormItem label="其他费用项目及金额（元）" prop="otherFee">
-                    {{creditCard.otherFee}}
-                    
-                </FormItem>
-                <FormItem label="违约金约定" prop="defaultAgreement">
-                    {{creditCard.defaultAgreement}}
-                    
-                </FormItem>
-                <FormItem label="实现债权费用的约定" prop="feeAgreement">
-                    {{creditCard.feeAgreement}}
-                    
-                </FormItem>
-                <FormItem label="律师费（元）" prop="lawyerFee">
-                    {{creditCard.lawyerFee}}
-                    
-                </FormItem>
-                <FormItem label="保全费（元）" prop="securityFee">
-                    {{creditCard.securityFee}}
-                    
-                </FormItem>
-                <FormItem label="公告费（元）" prop="announcementFee">
-                    {{creditCard.announcementFee}}
-                    
-                </FormItem>
-                <FormItem label="信用卡取现手续费（元）" prop="cashFee">
-                    {{creditCard.cashFee}}
-                    
-                </FormItem>
-                <FormItem label="其他项目费用（年费、取现手续费、分期手续费）的约定" prop="otherProjectFee">
-                    {{creditCard.otherProjectFee}}
-                    
-                </FormItem>
-                <FormItem label="最新截止时间后利息计算标准" prop="endStandard">
-                    {{creditCard.endStandard}}
-                    
-                </FormItem>
-                <FormItem label="最新截止时间后违约金（滞纳金）计算标准" prop="endFeeStandard">
-                    {{creditCard.endFeeStandard}}
-                    
-                </FormItem>
-                <FormItem>
-                    <Menu @on-select="guaranteeChioce" style="width: 300px;">
-                        <Submenu name="1">
-                            <template slot="title">
-                                保证合同信息
-                            </template>
-                            <MenuItem :name="item.id" v-for="(item,index) in guarantee2">{{item.name}}
-                            </MenuItem>
-                        </Submenu>
-                    </Menu>
-                </FormItem>
-            </Form>
+            <div class="loan-box">
+                <Form label-position="right" :label-width="315">
+                    <FormItem label="信用卡卡号" prop="num">
+                        {{creditCard.num}}
+                        
+                    </FormItem>
+                    <FormItem label="信用卡合约名称" prop="name">
+                        {{creditCard.name}}
+                        
+                    </FormItem>
+                    <FormItem label="利息约定" prop="interestAgreement">
+                        {{creditCard.interestAgreement}}
+                        
+                    </FormItem>
+                    <FormItem label="信用卡欠款最新截至时间" prop="deadline">
+                        {{creditCard.deadline}}
+                    </FormItem>
+                    <FormItem label="信用卡最新欠款本金（元）" prop="principal">
+                        {{creditCard.principal}}
+                        
+                    </FormItem>
+                    <FormItem label="信用卡最新欠款利息（元）" prop="interest">
+                        {{creditCard.interest}}
+                        
+                    </FormItem>
+                    <FormItem label="信用卡最新欠款滞纳金（违约金）（元）" prop="latePayment">
+                        {{creditCard.latePayment}}
+                        
+                    </FormItem>
+                    <FormItem label="信用卡年费（元）" prop="annualFee">
+                        {{creditCard.annualFee}}
+                        
+                    </FormItem>
+                    <FormItem label="信用卡分期手续费（元）" prop="handlingFee">
+                        {{creditCard.handlingFee}}
+                        
+                    </FormItem>
+                    <FormItem label="其他费用项目及金额（元）" prop="otherFee">
+                        {{creditCard.otherFee}}
+                        
+                    </FormItem>
+                    <FormItem label="违约金约定" prop="defaultAgreement">
+                        {{creditCard.defaultAgreement}}
+                        
+                    </FormItem>
+                    <FormItem label="实现债权费用的约定" prop="feeAgreement">
+                        {{creditCard.feeAgreement}}
+                        
+                    </FormItem>
+                    <FormItem label="律师费（元）" prop="lawyerFee">
+                        {{creditCard.lawyerFee}}
+                        
+                    </FormItem>
+                    <FormItem label="保全费（元）" prop="securityFee">
+                        {{creditCard.securityFee}}
+                        
+                    </FormItem>
+                    <FormItem label="公告费（元）" prop="announcementFee">
+                        {{creditCard.announcementFee}}
+                        
+                    </FormItem>
+                    <FormItem label="信用卡取现手续费（元）" prop="cashFee">
+                        {{creditCard.cashFee}}
+                        
+                    </FormItem>
+                    <FormItem label="其他项目费用（年费、取现手续费、分期手续费）的约定" prop="otherProjectFee">
+                        {{creditCard.otherProjectFee}}
+                        
+                    </FormItem>
+                    <FormItem label="最新截止时间后利息计算标准" prop="endStandard">
+                        {{creditCard.endStandard}}
+                        
+                    </FormItem>
+                    <FormItem label="最新截止时间后违约金（滞纳金）计算标准" prop="endFeeStandard">
+                        {{creditCard.endFeeStandard}}
+                        
+                    </FormItem>
+                    <FormItem>
+                        <Menu @on-select="guaranteeChioce" style="width: 300px;">
+                            <Submenu name="1">
+                                <template slot="title">
+                                    保证合同信息
+                                </template>
+                                <MenuItem :name="item.id" v-for="(item,index) in guarantee2">{{item.name}}
+                                </MenuItem>
+                            </Submenu>
+                        </Menu>
+                    </FormItem>
+                </Form>
+            </div>
+            
         </Modal>
         <Modal v-model="modal7"
             title="保证合同信息"
-            footer-hide>
-            <Form label-position="left" :label-width="155">
+            footer-hide
+            width="700px"
+        >
+            <Form label-position="right" :label-width="155">
                 <FormItem label="保证合同名称:" prop="name">
                     {{guaranteeContract2.name}}
                 </FormItem>
@@ -954,8 +959,9 @@
             v-model="modal6"
             :title=titleArr[titleIndex]
             footer-hide
+            width="700px"
             >
-            <Form label-position="left" :label-width="155" v-show="titleIndex == 0">
+            <Form label-position="left" :label-width="180" v-show="titleIndex == 0">
                 <FormItem label="授信合同名称：" prop="name">
                     {{credit.name}}
                 </FormItem>
@@ -984,7 +990,7 @@
                     {{credit.creditMoney}}
                 </FormItem>
             </Form>
-            <Form label-position="left" :label-width="155" v-show="titleIndex == 1">
+            <Form label-position="left" :label-width="180" v-show="titleIndex == 1">
                 <FormItem label="借款合同名称：" prop="name">
                     {{loan.name}}
                 </FormItem>
@@ -1049,7 +1055,7 @@
                     
                 </FormItem>
             </Form>
-            <Form label-position="left" :label-width="155" v-show="titleIndex == 2">
+            <Form label-position="left" :label-width="180" v-show="titleIndex == 2">
                 <FormItem label="保证合同名称：" prop="name">
                         {{guarantee.name}}
                     
@@ -1075,7 +1081,7 @@
                     
                 </FormItem>
             </Form>
-            <Form label-position="left" :label-width="155" v-show="titleIndex == 3">
+            <Form label-position="left" :label-width="180" v-show="titleIndex == 3">
                 <FormItem label="抵押合同名称：" prop="name">
                     {{mortgage.name}}
                    
@@ -1101,7 +1107,7 @@
                     
                 </FormItem>
             </Form>
-            <Form label-position="left" :label-width="155" v-show="titleIndex == 4">
+            <Form label-position="left" :label-width="180" v-show="titleIndex == 4">
                 <FormItem label="质押合同名称：" prop="name">
                     {{pledge.name}}
                    
@@ -1286,6 +1292,31 @@
                 <Button @click="modal2 = false"   type="dashed" size="large">关闭</Button>
             </div>
         </Modal>
+        <Modal
+            v-model="filesModal"
+            width="560px"
+            :mask-closable="false"
+            
+            title="有无原件审核">
+            <div >
+                <Form  :label-width="160" inline >
+                    <FormItem label="有无原件：" style="width: 505px;">
+                        <RadioGroup v-model="originalSh" >
+                            <Radio label="0">
+                                <span>无原件</span>
+                            </Radio>
+                            <Radio label="1">
+                                <span>有原件</span>
+                            </Radio>
+                        </RadioGroup>
+                    </FormItem>
+                </Form>
+            </div>
+            <div slot="footer"> 
+                <Button @click="filesModal = false"  type="dashed" size="large">关闭</Button>
+                <Button @click="subOri" :loading="filaeLoading"  type="primary" size="large">提交</Button>
+            </div>
+        </Modal>
     </div>
 </template>
 <script>
@@ -1303,7 +1334,8 @@ deleteLitigantInfo,
 getTimeline,
 getOnlineLawCaseFiles,
 getMaxCaseNo,//获取引调号的api接口
-checkEvidence//审核案件证据的接口
+checkEvidence,//审核案件证据的接口
+changeOriginal,//修改是否有原件接口
 } from '@/api/caseInfo.js';
 import {addOrUpdateCtInfo,addOrUpdateLoanCtInfo,addOrUpdateMcInfo,addOrUpdatePcInfo,
         getDelCtInfo,
@@ -1338,6 +1370,11 @@ export default {
         var width2 = window.innerWidth - 600;
         var ueWidth = width - 40 + 'px';
         return {
+            filesModal:false,
+            originalSh:'',
+            fileStatus:true,
+            filaeLoading:false,//原件审核相关data
+
             element:0,
             titleArr:['查看授信合同信息','查看借款合同信息','查看保证合同信息','查看抵押合同信息','查看质押合同信息'],
             cardId:'',
@@ -1660,6 +1697,37 @@ export default {
                 align: "center",
               },
               {
+                title: "是否有原件",
+                key: "isOrigin",
+                align: "center",
+                render: (h, params) => {
+                    return h("div", [
+                        h(
+                            "Button",
+                            {
+                            props: {
+                                type: "text",
+                                size: "small"
+                            },
+                            style: {
+                                color:'#10ADF5'
+                            },
+                            on: {
+                                click: () => {//查看并审核证据
+                                    console.log(params.row);
+                                    this.eviId = params.row.id;
+                                    this.fileStatus = params.row.isOrigin == '有' ? true : false;
+                                    this.filesModal = true;
+                                    this.originalSh = params.row.isOrigin == '有' ? '1' : '0';
+                                }
+                            }
+                            },
+                            params.row.isOrigin
+                        )
+                    ]);
+                }
+              },
+              {
                 title: "是否已核对",
                 key: "checkParam",
                 align: "center",
@@ -1804,9 +1872,9 @@ export default {
                                                 if(res.data.state == 100){
 
                                                     if(res.data.result.onlineBrief.id == 'fa86bd7e1af811e9b39a00163e0af9c6'){
-                                                        this.element = 0;//修改要素信息
+                                                        this.element = 1;//修改要素信息
                                                     }else if(res.data.result.onlineBrief.id == 'fa86bdfb1af811e9b39a00163e0af9c6'){
-                                                        this.element = 0;//修改要素信息
+                                                        this.element = 2;//修改要素信息
                                                     }else{
                                                         this.element = 0;
                                                     }
@@ -1874,7 +1942,40 @@ export default {
         this.searchList();
     },
     methods: {
-
+        subOri(){//有无原件状态变更
+            const newStatus = this.originalSh == '1' ? true : false;
+            this.filaeLoading = true;
+            changeOriginal(this.eviId,this.fileStatus,newStatus).then(res => {
+                this.filaeLoading = false;
+                this.filesModal = false;
+                if(res.data.state == 100){
+                    this.$Message.success(res.data.message);
+                    otherGetFiles(this.lawcaseId).then(res => {
+                        if(res.data.state == 100){
+                            this.EviList = [];
+                            res.data.file.map(item => {
+                                if(item.type == 3){
+                                    const data = {
+                                        name:item.eviName,
+                                        proves:item.eviProve,
+                                        where:item.eviSource,
+                                        filePa:item.path,
+                                        id:item.id,
+                                        checkParam:item.checked == true ? '已核对' : '未核对',
+                                        isOrigin:item.original == true ? '有' : '无'
+                                    }
+                                    this.EviList.push(data);
+                                }
+                            })
+                        }
+                    })
+                }else{
+                    this.$Message.warning(res.data.message);
+                }
+            }).catch(error => {
+                this.$Message.warning('网络错误，请刷新重试！');
+            })
+        },
         time(time = +new Date()) {//时间戳转换函数
             var date = new Date(time + 8 * 3600 * 1000); // 增加8小时
             return date.toJSON().substr(0, 19).replace('T', ' ').substring(0,10);
@@ -2023,7 +2124,8 @@ export default {
                                                 where:item.eviSource,
                                                 filePa:item.path,
                                                 id:item.id,
-                                                checkParam:item.checked == true ? '已核对' : '未核对'
+                                                checkParam:item.checked == true ? '已核对' : '未核对',
+                                                isOrigin:item.original == true ? '有' : '无'
                                             }
                                             this.EviList.push(data);
                                         }
@@ -2724,7 +2826,8 @@ export default {
                                 where:item.eviSource,
                                 filePa:item.path,
                                 id:item.id,
-                                checkParam:item.checked == true ? '已核对' : '未核对'
+                                checkParam:item.checked == true ? '已核对' : '未核对',
+                                isOrigin:item.original == true ? '有' : '无'
                             }
                             // this.eviId = item.id;
                             this.EviList.push(data);
