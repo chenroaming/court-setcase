@@ -479,7 +479,7 @@ export default {
                             this.credit.name = res.data.data.name;
                             this.credit.isRelease = res.data.data.relieve == true ? 'yes' : 'no';
                             this.credit.creditPeople = res.data.data.creditGrantor;
-                            this.credit.creditTime = this.time(res.data.data.sign);
+                            this.credit.creditTime = res.data.data.sign == null ? '' : this.time(res.data.data.sign);
                             this.credit.creditRange = res.data.data.periodRange == null ? '' :res.data.data.periodRange.replace('至',' - ');
                             this.credit.creditMoney = res.data.data.amount;
                         })
@@ -491,7 +491,7 @@ export default {
                             this.loan.name = res.data.data.name;
                             this.loan.creditPeople = res.data.data.borrower;
                             this.loan.isRelease = res.data.data.isRelieve == true ? 'yes' : 'no';
-                            this.loan.time = this.time(res.data.data.signTime);
+                            this.loan.time = res.data.data.signTime == null ? '' : this.time(res.data.data.signTime);
                             this.loan.money = res.data.data.amount;
                             this.loan.range = res.data.data.askTime == null ? '' : res.data.data.askTime.replace('至',' - ');
                             this.loan.methods = res.data.data.repaymentMethod;
@@ -512,7 +512,7 @@ export default {
                             this.guarantee.guaranteePeople = res.data.data.guarantor;
                             this.guarantee.methods = res.data.data.guarantorMethod;
                             this.guarantee.timeRange = res.data.data.guarantorDate == null ? '' : res.data.data.guarantorDate.replace('至',' - ');
-                            this.guarantee.time = res.data.data.signTime;
+                            this.guarantee.time = res.data.data.signTime == null ? '' : this.time(res.data.data.signTime);
                             this.guarantee.guaranteeRange = res.data.data.guaranteeScope;
                         })
                     break;
@@ -520,11 +520,11 @@ export default {
                         this.infoId = name.substring(2);
                         getCtInfo('mc',this.infoId).then(res => {
                                 this.mortgage.name = res.data.data.name;
-                                this.mortgage.time = this.time(res.data.data.signTime);
+                                this.mortgage.time = res.data.data.signTime == null ? '' : this.time(res.data.data.signTime);
                                 this.mortgage.ownership = res.data.data.ownership;
                                 this.mortgage.articleName = res.data.data.collateral;
                                 this.mortgage.range = res.data.data.mortgageRange;
-                                this.mortgage.handletime = this.time(res.data.data.mortgageTime);
+                                this.mortgage.handletime = res.data.data.mortgageTime == null ? '' : this.time(res.data.data.mortgageTime);
                             })
                     break;
                     case 'p4':
@@ -536,7 +536,7 @@ export default {
                             this.pledge.ownership = res.data.data.ownership;
                             this.pledge.articleName = res.data.data.pledge;
                             this.pledge.range = res.data.data.pledgeRange;
-                            this.pledge.handletime = res.data.data.pledgeTime;
+                            this.pledge.handletime = res.data.data.pledgeTime == null ? '' : this.time(res.data.data.pledgeTime);
                         })
                     break;
                 }
