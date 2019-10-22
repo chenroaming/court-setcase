@@ -2420,7 +2420,7 @@ getLiniList(){
                     type:item.litigantType==0 ? "自然人" : (item.litigantType==1 ? "法人" : "非法人组织"),
                     typeStatus:item.litigationStatus.name,
                     card:item.identityCard,
-                    phone:item.litigantPhone,
+                    phone:item.litigantType == 0 ? item.litigantPhone : item.legalManPhone,
                     adress:item.nativePlace,
                     id:item.id,
                 }
