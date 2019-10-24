@@ -309,7 +309,8 @@
                                             v-model="briefId"
                                             placeholder="请选择"
                                             style="width:230px" >
-                                            <Option v-for="(item,index) in bridfList" :value="item.name" :key="item.name"></Option>
+                                            <!-- 修复key值不唯一的报错 -->
+                                            <Option v-for="(item,index) in bridfList" :value="item.name" :key="index"></Option>
                                         </AutoComplete>
                                     </FormItem>
                                     <FormItem label="承办部门:" style="width: 245px;" >
@@ -1244,7 +1245,8 @@
                                 v-model="briefId"
                                 placeholder="请选择"
                                 style="width:230px" >
-                                <Option v-for="(item,index) in bridfList" :value="item.name" :key="item.name"></Option>
+                                <!-- 修复key值不唯一的报错 -->
+                                <Option v-for="(item,index) in bridfList" :value="item.name" :key="index"></Option>
                             </AutoComplete>
                         </FormItem>
                         <FormItem label="承办部门:" style="width: 245px;" >
@@ -2744,7 +2746,7 @@ export default {
                                 type:item.litigantType==0 ? "原告" : (item.litigantType==1 ? "被告" : "第三人"),
                                 typeStatus:item.litigationStatus.name,
                                 card:item.identityCard,
-                                phone:item.litigantPhone,
+                                phone:item.litigantPhone || item.legalManPhone,
                                 adress:item.nativePlace,
                                 id:item.id,
                             }

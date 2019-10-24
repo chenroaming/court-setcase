@@ -178,7 +178,7 @@ data () {
                             },
                             on: {
                                 click: () => {
-                                    console.log(params.row);
+                                    
                                     window.localStorage.setItem('lawCaseId',params.row.lawCaseId);
                                     window.localStorage.setItem('process',params.row.process);
                                     window.localStorage.setItem('continueIsRight',params.row.briefId);
@@ -197,14 +197,14 @@ data () {
     };
 },
 mounted () {
-    console.log(Cookies.get('user'));
+    
     setTimeout( ()=>{
         getUserInfo().then(response => {
             console.log(565356262);
             const data = response.data;
             if(data.state == 100) {
                 let ary = this.$store.state.app.menuList;
-                console.log(data.result.name);
+                
                 if((data.roleName == '当事人' || data.roleName == '代理人') && (data.result.name != '农商行总账号' || data.result.name != '农商金控总账号')){
                     this.access = true;
                     this.access2 = true;
@@ -264,11 +264,12 @@ methods: {
                     closable:true,
                     cancelText: '立新案件',
                     onOk: () => {
+                        const process = res.data.onlineLawCase[0].process;
                         window.localStorage.setItem('lawCaseId',res.data.onlineLawCase[0].id);
-                        window.localStorage.setItem('process',res.data.onlineLawCase[0].process);
+                        window.localStorage.setItem('process',process);
                         this.$router.push({
                             name: "caseInfoContinue",
-                            params: { lawCaseId: res.data.onlineLawCase[0].id, process:res.data.onlineLawCase[0].process}
+                            params: { lawCaseId: res.data.onlineLawCase[0].id, process:process}
                         });
                     },
                     onCancel: () => {

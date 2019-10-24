@@ -140,6 +140,7 @@
             left: 0;
             text-align: center;
             cursor: pointer;
+            opacity: 0;
         }
         .bmbox .title{
             opacity: 0;
@@ -156,6 +157,10 @@
         .info:hover .title,
         .info:hover .clico,
         .info:hover .post{
+            opacity: 1;
+            transition-delay: 0.7s;
+        }
+        .bmbox:hover {
             opacity: 1;
             transition-delay: 0.7s;
         }
@@ -1187,7 +1192,7 @@
                                     <AutoComplete
                                         v-model="mediatePeople"
                                         placeholder="请输入原告方联系人"
-                                        style="width:230px" @on-change="mediatePeopleChange(mediatePeople)">
+                                        style="width:230px">
                                         
                                         <Option v-for="item in mediatePeopleArr" :value="item.name" :key="item.name"></Option>
                                     </AutoComplete>
@@ -1421,7 +1426,9 @@
                     :mask-closable="false"
                     title="选择常用当事人">
                     <div style="height:350px;overflow-x:hidden; overflow-y:visible">
-                        <Table :columns="columnsUsual" highlight-row @on-current-change="temSel"   :data="usualList"></Table>
+                        <Table :loading="usualLoading" :columns="columnsUsual" highlight-row @on-current-change="temSel"   :data="usualList"></Table>
+                        <br/>
+                        <Page :total="dataTotal" :page-size="pageSize" @on-change="pageChange" />
                     </div>
                      <div style="margin-top: 10px; " slot="footer">
                         <Button type="info"  @click="optUsual"  >确定</Button>
@@ -1503,6 +1510,9 @@
             },
             data () {
                 return {
+                    usualLoading:false,
+                    dataTotal:1,
+                    pageSize:5,
                     partId:'',
                     isElement:0,
                     nextLoading:false,
@@ -2092,6 +2102,11 @@
         // 　　　　},
             },
             methods: {
+                pageChange(nowPage){
+                    this.usualLoading = true;
+                    this.nowPage = nowPage;
+                    this.gerUsualPeople(this.statusNow,this.nowPage);
+                },
                 receive:function(data){
                     const sted = document.getElementsByClassName("step");
                     const setStep = document.getElementsByClassName("setStep");
@@ -2486,23 +2501,29 @@
                                 onCancel: () => {}
                             });
                         }else{
-                            deleteLitigantInfo(id).then(res => {
-                                if(res.data.state == 100){
-                                    this.$Message.success('删除成功');
-                                    for(var i=0;i<this.liniList.length;i++){
-                                        if(this.liniList[i].id == id){
-                                            this.liniList.splice(i,1);
+                            this.$Modal.confirm({
+                                title: '提示',
+                                content: '<p>确定删除当前当事人吗？</p>',
+                                onOk: () => {
+                                deleteLitigantInfo(id).then(res => {
+                                    if(res.data.state == 100){
+                                            this.$Message.success('删除成功');
+                                            for(var i=0;i<this.liniList.length;i++){
+                                                if(this.liniList[i].id == id){
+                                                    this.liniList.splice(i,1);
+                                                }
+                                            }
+                                            for(var i=0;i<this.linigantList.length;i++){
+                                                if(this.linigantList[i].id == id){
+                                                    this.linigantList.splice(i,1);
+                                                }
+                                            }
+                                        }else{
+                                            this.$Message.info(res.data.message);
                                         }
-                                    }
-                                    for(var i=0;i<this.linigantList.length;i++){
-                                        if(this.linigantList[i].id == id){
-                                            this.linigantList.splice(i,1);
-                                        }
-                                    }
-                                }else{
-                                    this.$Message.info(res.data.message);
-                                }
-                            })
+                                    })
+                                },
+                            });
                         }
                     }); 
                 },
@@ -2628,7 +2649,6 @@
                     
                 },
                 submitCasecancel(){
-                    // alert(1)
                     this.ten= 0;
                     this.nextLoading = false;
                 },
@@ -2638,14 +2658,13 @@
                         if (this.mediatePeople!=''&&this.meidatePhone!='') {
                             let re = /^[0-9]*$/; //判断字符串是否为数字 //判断正整数 /^[1-9]+[0-9]*]*$/ 
                             // alert(1)
-                            if (!re.test(this.meidatePhone)) {
-                        　　　　this.$Modal.warning({
-                                title: '提示',
-                                content: '电话必须为数字'
-                            });
-                        // 　　　　document.getElementById(input).value = "";
-                        　　　　return false;
-                        　　}
+                        //     if (!re.test(this.meidatePhone)) {
+                        // 　　　　this.$Modal.warning({
+                        //             title: '提示',
+                        //             content: '电话必须为数字'
+                        //         });
+                        // 　　　　return false;
+                        // 　　}
                             this.changeLoading();
                             this.sqKnow = true;
                             this.disabled1 = true;
@@ -2886,7 +2905,7 @@
                                     type:this.addFormItem.litigantType,
                                     typeStatus:this.addFormItem.litigantStatus,
                                     card:this.addFormItem.identityCard,
-                                    phone:this.addNewPhone,
+                                    phone:this.addNewPhone || this.addFormItem.legalManPhone,
                                     adress:this.addFormItem.nativePlace,
                                     id:res.data.onlineLitigant.id,
                                 }
@@ -3673,8 +3692,10 @@
                 gerUsualPeople(str){
                     this.statusNow = str;
                     this.usualId = "";
-                    getCmInfo().then(res => {
+                    getCmInfo(this.nowPage,5).then(res => {
+                        this.usualLoading = false;
                         if(res.data.state == 100){
+                            this.dataTotal = res.data.cpPage.total;
                             let arr = [];
                             res.data.cpPage.content.map(item => {
                                 let data = {
@@ -3707,13 +3728,12 @@
                             // this.goStep(2)
                             let tem = res.data.onlineLitigant;
                             this.$Message.success('添加成功');
-                            console.log(tem);
                             const data={
                                 name:tem.litigantName,
                                 type:tem.litigantType==0 ? "自然人" : (tem.litigantType==1 ? "法人" : "非法人组织"),
                                 typeStatus:tem.litigationStatus.name,
                                 card:tem.identityCard,
-                                phone:tem.litigantPhone,
+                                phone:tem.litigantType == 0? tem.litigantPhone : tem.legalManPhone,
                                 adress:tem.nativePlace,
                                 id:tem.id,
                             }

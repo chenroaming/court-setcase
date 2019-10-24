@@ -14,9 +14,17 @@
 <template>
     <div class="content-main" style="">
         <p>常用当事人信息</p>
-        <Table :columns="columnsUsual" highlight-row :data="usualList"></Table><br/><br/>
+        <Table :loading="isLoading" :columns="columnsUsual" highlight-row :data="usualList"></Table>
+        <br/>
+        <Page :total="dataTotal"
+        :page-size="pageSize" @on-change="pageChange" />
+        <br/><br/>
         <p>常用代理人信息</p>
-        <Table :columns="columnsUsualLaw" highlight-row :data="usualListLaw"></Table><br/><br/>
+        <Table :loading="isLoading2" :columns="columnsUsualLaw" highlight-row :data="usualListLaw"></Table>
+        <br/>
+        <Page :total="dataTotal2"
+        :page-size="pageSize2" @on-change="pageChange2" />
+        <br/><br/>
         <!-- 添加/修改常用当事人 -->
         <Modal
             v-model="proofModal"
@@ -207,6 +215,14 @@ import {
 export default {
     data(){
         return {
+            dataTotal:0,//常用当事人数据条数
+            pageSize:5,//常用当事人一页显示条数
+            nowPage:1,//当前页
+            dataTotal2:0,//常用当事人数据条数
+            pageSize2:5,//常用当事人一页显示条数
+            nowPage2:1,//当前页
+            isLoading:false,
+            isLoading2:false,
             columnsUsual:[
                 {
                     type: 'index',
@@ -530,18 +546,22 @@ export default {
         }
     },
     mounted () {
-        
-        getCmInfo().then(res=>{
+        this.isLoading = true;
+        this.isLoading2 = true;
+        getCmInfo(1,5).then(res=>{
+            this.isLoading = false;
             if(res.data.state == 100){
                 let dt = res.data.cpPage.content;
+                this.dataTotal = res.data.cpPage.total;
                 dt.map(item => {
                     item.liType = item.litigantType==0 ? "自然人" : (item.litigantType==1 ? "法人" : "非法人组织");
                 })
                 this.usualList = dt;
             }
-            return getCLInfo();
+            return getCLInfo(1,5);
         }).then(res => {
             if(res.data.state == 100){
+                this.isLoading2 = false;
                 let dt = res.data.clPage.content;
                 
                 dt.map(item => {
@@ -559,6 +579,16 @@ export default {
 
     },
     methods:{
+        pageChange(nowPage){
+            this.nowPage = nowPage;
+            this.isLoading = true;
+            this.resetLitiList();
+        },
+        pageChange2(nowPage){
+            this.nowPage2 = nowPage;
+            this.isLoading2 = true;
+            this.resetLitiListlAW();
+        },
         submit(){
             if(this.addFormItem.birthday != ''){
                 var birthday = new Date(this.addFormItem.birthday).getTime();
@@ -655,9 +685,11 @@ export default {
 
         },
         resetLitiList(){
-            getCmInfo().then(res=>{
+            getCmInfo(this.nowPage,5).then(res=>{
+                this.isLoading = false;
                 if(res.data.state == 100){
                     let dt = res.data.cpPage.content;
+                    this.dataTotal = res.data.cpPage.total;
                     dt.map(item => {
                         item.liType = item.litigantType==0 ? "自然人" : (item.litigantType==1 ? "法人" : "非法人组织");
                     })
@@ -737,8 +769,9 @@ export default {
             // updateClInfo
         },
         resetLitiListlAW(){
-            getCLInfo().then(res => {
+            getCLInfo(this.nowPage2,5).then(res => {
                 if(res.data.state == 100){
+                    this.isLoading2 = false;
                     let dt = res.data.clPage.content;
                     dt.map(item => {
                         let str = '';

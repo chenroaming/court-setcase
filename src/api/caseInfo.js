@@ -55,10 +55,15 @@ export function updateLitigantInfo (params) {
 /** 
  * 查询常用当事人
  */
-export function getCmInfo () {
+export function getCmInfo (pageNum,pageSize) {
+    const params = {
+        pageNum,
+        pageSize
+    }
     return service({
         url: '/court/common/getCmInfo.jhtml',
         method: 'get',
+        params
     });
 }
 
@@ -135,10 +140,15 @@ export function updateClInfo (params) {
 /** 
  * 查询常用代理人
  */
-export function getCLInfo () {
+export function getCLInfo (pageNum,pageSize) {
+    const params = {
+        pageNum,
+        pageSize
+    }
     return service({
         url: '/court/commonLawyer/getCLInfo.jhtml',
         method: 'get',
+        params
     });
 }
 /** 

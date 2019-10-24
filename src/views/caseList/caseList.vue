@@ -182,7 +182,7 @@
         </div>
         <div class="content_main1" style="width:750px">
             <div style="overflow-y:auto;max-height:92%;">
-            <Table ref="selection" width=""  :columns="connectedCol"  :data="connectedData"  style="margin-top: 10px;"></Table>
+            <Table ref="selection" width="" :loading="listLoading"  :columns="connectedCol"  :data="connectedData"  style="margin-top: 10px;"></Table>
             </div>
             <div style="margin: 10px;overflow: hidden">
                 <div style="float: right;">
@@ -1238,12 +1238,13 @@ export default {
     data () {
         var width = window.innerWidth - 430;
         return {
+            listLoading:false,//表格加载状态
             element:0,
             modal1:false,
             cardId:'',
             titleArr:['查看授信合同信息','查看借款合同信息','查看保证合同信息','查看抵押合同信息','查看质押合同信息'],
             titleIndex:0,
-            litigation:{
+            litigation:{//金融要素信息查看列表
                 amount:'',
                 request:'',
                 loan:'',
@@ -1278,7 +1279,7 @@ export default {
                 releasePreservation:'',
                 preservationStatus:'',
             },
-            credit:{
+            credit:{//授信合同
                 name:'',
                 isRelease:'',
                 creditPeople:'',
@@ -1286,7 +1287,7 @@ export default {
                 creditRange:'',
                 creditMoney:''
             },
-            loan:{
+            loan:{//借款合同
                 name:'',
                 creditPeople:'',
                 isRelease:'',
@@ -1303,7 +1304,7 @@ export default {
                 feeAgreement:'',
                 sendAgreement:''
             },
-            guarantee:{
+            guarantee:{//保证合同
                 name:'',
                 guaranteePeople:'',
                 methods:'',
@@ -1311,7 +1312,7 @@ export default {
                 time:'',
                 guaranteeRange:''
             },
-            mortgage:{
+            mortgage:{//抵押合同
                 name:'',
                 time:'',
                 ownership:'',
@@ -1319,7 +1320,7 @@ export default {
                 range:'',
                 handletime:''
             },
-            pledge:{
+            pledge:{//质押合同
                 name:'',
                 time:'',
                 ownership:'',
@@ -1343,7 +1344,7 @@ export default {
                 time:'',
                 reason:''
             },
-            creditCard:{
+            creditCard:{//信用卡信息
                 num:'',
                 name:'',
                 interestAgreement:'',
@@ -1364,7 +1365,7 @@ export default {
                 endStandard:'',
                 endFeeStandard:''  
             },
-            guaranteeContract2:{
+            guaranteeContract2:{//信用卡保证合同信息
                 name:'',
                 time:'',
                 people:'',
@@ -1372,7 +1373,7 @@ export default {
                 methods:'',
                 range:''
             },
-            pay:{
+            pay:{//支付信息
                 reason:'',
                 money:'',
                 securities:'',
@@ -1381,7 +1382,7 @@ export default {
                 completeTime:'' 
             },
             guarantee2:[],
-            couple:{
+            couple:{//是否夫妻共同债信息
                 isPublic:'',
                 marry:'',
                 divorce:''
@@ -2246,9 +2247,11 @@ export default {
             this.suggessMol = false
         },
         gotoContinue(){
+            window.localStorage.setItem('lawCaseId',this.lawCaseId);
+            window.localStorage.setItem('process','0');
             this.$router.push({
                 name: "caseInfoContinue",
-                params: { lawCaseId: this.lawCaseId, process:this.process}
+                params: { lawCaseId: this.lawCaseId, process:'0'}
             });
         },
         subApply(){
@@ -2267,6 +2270,7 @@ export default {
                 if(res.data.state == 100){
                     this.$Message.success(res.data.message);
                     this.applyShow = false;
+                    this.getList(this.pageNumber);
                 }else{
                     this.$Message.info(res.data.message);
                 }
@@ -2307,6 +2311,7 @@ export default {
             }
         },
         getList(page){
+            this.listLoading = true;
             this.pageNumber = page;
             this.connectedData = [];
             var params = {
@@ -2321,6 +2326,7 @@ export default {
                 brief:this.brief
             }
             caseList(params).then(res => {
+                this.listLoading = false;
                 if(res.data.state == 100){
                     res.data.result.content.map(item => {
                         var status;
@@ -2380,6 +2386,9 @@ export default {
                     this.loading1 = false;
                 }
             })
+            .catch(error => {
+                this.$Message.warning('网络错误！请刷新重试！');
+            })
         },
 
         changeTab(e){
@@ -2408,7 +2417,7 @@ export default {
                                 type:item.litigantType==0 ? "原告" : (item.litigantType==1 ? "被告" : "第三人"),
                                 typeStatus:item.litigationStatus.name,
                                 card:item.identityCard,
-                                phone:item.litigantPhone,
+                                phone:item.litigantPhone || item.legalManPhone,
                                 adress:item.nativePlace,
                                 id:item.id,
                             }

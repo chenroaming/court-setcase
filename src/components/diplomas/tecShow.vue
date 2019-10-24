@@ -34,6 +34,10 @@
                      &emsp;&emsp;
                    6.作为证据材料提交的数码照片应当通过jpg、jpeg、bmp、png格式上传，上传数码照片时应当根据内容规范命名，同时标注相应文字说明。
                 </div>
+                <div class="lineHeight">
+                      &emsp;&emsp;
+                    7.在线立案事实与理由限制字数2000。
+                </div>
                 <!-- <Row>
                     <Col span="8" push="18" class="maininfo-col headerCase" style="margin-top:36px;">
                         <p>{{backFill.noticeTime}}</p>

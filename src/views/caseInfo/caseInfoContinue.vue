@@ -128,14 +128,15 @@ left: 0;
 opacity: 0.5;
 }
 .bmbox{
-width: 100%;
-padding: 14px 18px;
-color: #fff;
-position: absolute;
-/* top: 38%; */
-left: 0;
-text-align: center;
-cursor: pointer;
+    width: 100%;
+    padding: 14px 18px;
+    color: #fff;
+    position: absolute;
+    /* top: 38%; */
+    left: 0;
+    text-align: center;
+    cursor: pointer;
+    opacity: 0;
 }
 .bmbox .title{
 opacity: 0;
@@ -151,8 +152,12 @@ opacity: 0;
 .bmbox .ivu-icon,
 .info:hover .title,
 .info:hover .post{
-opacity: 1;
-transition-delay: 0.7s;
+    opacity: 1;
+    transition-delay: 0.7s;
+}
+.bmbox:hover {
+    opacity: 1;
+    transition-delay: 0.7s;
 }
 .labelNmae{
 display: block;
@@ -342,26 +347,27 @@ margin-top: 7px;
 <template>
 <div style="padding:10px;padding-top:20px;padding-bottom:20px;height:100%">
 <div class="steps">
-    <div class="step active" @click="goStep(1)">
+    <div class="step" :class="{'active':stepNum == '0'}" @click="goStep(1)">
         <span>案件信息</span>    
     </div>
     <Icon type="chevron-down" class="setStep"></Icon>
-    <div class="step " @click="goStep(2)">
-        <span>当事人信息</span>
-        
+
+    <div class="step " :class="{'active':stepNum == 1}" @click="goStep(2)">
+        <span>当事人信息</span> 
     </div>
     <Icon type="chevron-down" class="setStep"></Icon>
-    <div class="step" @click="goStep(3)">
+
+    <div class="step" :class="{'active':stepNum == 2}" @click="goStep(3)">
         <span>代理人信息</span>
     </div>
     <Icon type="chevron-down" class="setStep"></Icon>
 
-    <div class="step"  @click="goStep(4)" v-show="isRight == true">
+    <div class="step" :class="{'active':stepNum == 3}" @click="goStep(4)" v-show="isRight == true">
         <span>要素信息</span>
     </div>
     <Icon type="chevron-down" class="setStep" v-show="isRight == true"></Icon>
     
-    <div class="step " @click="goStep(5)">
+    <div class="step " :class="{'active':stepNum == 4 || (stepNum == 3 && isRight == false)}" @click="goStep(5)">
         <span>附件与确认</span>
     </div>
 </div>
@@ -1135,8 +1141,8 @@ right: -20px;">元</span>
                         v-model="mediatePeople"
                         placeholder="请输入原告方联系人"
                         style="width:230px" @on-change="mediatePeopleChange(mediatePeople)">
-                        
-                        <Option v-for="item in mediatePeopleArr" :value="item.name" :key="item.name"></Option>
+                        <!-- 修改key不为唯一值的报错 -->
+                        <Option v-for="(item,index) in mediatePeopleArr" :value="item.name" :key="index"></Option>
                     </AutoComplete>
                     <!-- <Input v-model="mediatePeople" placeholder="请输入起诉方联系人" style="width: 230px;margin-right:20px" /> -->
                     *电话：<Input v-model="meidatePhone" placeholder="请输入电话" style="width: 230px" />
@@ -1369,7 +1375,9 @@ display: inline-block;'>文件最大支持30M</span>
     :mask-closable="false"
     title="选择常用当事人">
     <div style="height:350px;overflow-x:hidden; overflow-y:visible">
-        <Table :columns="columnsUsual" highlight-row @on-current-change="temSel"   :data="usualList"></Table>
+        <Table :loading="usualLoading" :columns="columnsUsual" highlight-row @on-current-change="temSel"   :data="usualList"></Table>
+        <br/>
+        <Page :total="dataTotal" :page-size="pageSize" @on-change="pageChange" />
     </div>
         <div style="margin-top: 10px; " slot="footer">
         <Button type="info"  @click="optUsual"  >确定</Button>
@@ -1453,6 +1461,10 @@ export default {
     },
 data () {
 return {
+    nowPage:1,
+    usualLoading:false,
+    dataTotal:1,
+    pageSize:5,
     personalFileName:'',
     partId:'',
     isElement:0,
@@ -1602,8 +1614,6 @@ return {
                             let uploads = document.createElement("input");
                             uploads.type = "file";
                             uploads.click();
-                            console.log(this.caseId)
-                            
                             uploads.onchange = function(){
                                 var file = uploads.files[0];
                                 const msg = that.$Message.loading({
@@ -1913,103 +1923,98 @@ nationList:["汉族","蒙古族","回族","藏族","维吾尔族","苗族","彝�
 };
 },
 mounted() {
-    console.log(this.$route.params);
-//  getCaesState().then((res)=>{
-//     this.caseId = res.data.onlineLawCase.id;
-//     this.process = res.data.onlineLawCase.process;
-//     const sted = document.getElementsByClassName("step");
-//     const setStep = document.getElementsByClassName("setStep");
-//     console.log(sted)
-//     sted[0].classList.remove('active');
-//     sted[this.process].classList.add('active');
-//     if(this.process == 1){
-//         this.getLiniList();
-//         this.success = false;
-//         this.liniAdd = true;
-//         this.stepNum.push(2);
-//         setStep[0].classList.add('setActive');
-//     }else if(this.process == 2){
-//         this.getlawyerLis();
-//         this.getLiniList();
-//         this.success = false;
-//         this.dailiAdd = true;
-//         this.stepNum.push(2)                                                
-//         this.stepNum.push(3)  
-//         setStep[0].classList.add('setActive');
-//         setStep[1].classList.add('setActive');                      
-//     }else if(this.process == 3 || this.process == 4){
-//         this.getFilesL();
-//         this.getLiniList();
-//         this.success = false;
-//         this.fileAdd = true;
-//         this.stepNum.push(2)                                                
-//         this.stepNum.push(3)
-//         this.stepNum.push(4)
-//         setStep[0].classList.add('setActive');
-//         setStep[1].classList.add('setActive');
-//         setStep[2].classList.add('setActive');
-//     }
-//     getContacts(this.caseId).then(res=>{
-//         console.log(res)
-//         if (res.data.state==100) {
-//             this.mediatePeopleArr=res.data.data
-//         }
-//     })
-//  })
-this.caseId = this.$route.params.lawCaseId? this.$route.params.lawCaseId : window.localStorage.getItem('lawCaseId');
-this.stepNum = this.$route.params.process? this.$route.params.process : window.localStorage.getItem('process');
-this.isRight = this.$route.params.briefId? (this.$route.params.briefId== 'fa86bd7e1af811e9b39a00163e0af9c6' || this.$route.params.briefId == 'fa86bdfb1af811e9b39a00163e0af9c6' ? true : false) : (window.localStorage.getItem('continueIsRight') == 'fa86bd7e1af811e9b39a00163e0af9c6' || window.localStorage.getItem('continueIsRight') == 'fa86bdfb1af811e9b39a00163e0af9c6' ? true : false);
-let sted = document.getElementsByClassName("step");
-let setStep = document.getElementsByClassName("setStep");
-sted[0].classList.remove('active');
-sted[this.stepNum].classList.add('active');
-this.onlineBriefId = this.$route.params.briefId || window.localStorage.getItem('continueIsRight');
-if(this.onlineBriefId == 'fa86bd7e1af811e9b39a00163e0af9c6'){
-    this.isElement = 1;
-}else if(this.onlineBriefId == 'fa86bdfb1af811e9b39a00163e0af9c6'){
-    this.isElement = 2;
-}
-if(this.stepNum == 1){
-    this.getLiniList();
-    this.success = false;
-    this.liniAdd = true;
-    this.stepNum = 2;
-    setStep[0].classList.add('setActive');
-}else if(this.stepNum == 2){
-    this.getlawyerLis();
-    this.getLiniList();
-    this.success = false;
-    this.dailiAdd = true;
-    this.stepNum = 3;                                                 
-    setStep[0].classList.add('setActive');
-    setStep[1].classList.add('setActive');                      
-}else if(this.stepNum == 3){
-    this.getFilesL();
-    this.getLiniList();
-    this.success = false;
-    this.elementAdd = true;
-    this.stepNum = 4;
-    setStep[0].classList.add('setActive');
-    setStep[1].classList.add('setActive');
-    setStep[2].classList.add('setActive');
-}else if(this.stepNum == 4){
-    this.getLiniList();
-    this.success = false;
-    this.fileAdd = true;
-    this.stepNum = 5;
-    setStep[0].classList.add('setActive');
-    setStep[1].classList.add('setActive');
-    setStep[2].classList.add('setActive');
-    setStep[3].classList.add('setActive');
-}
-getContacts(this.caseId).then(res=>{
-    console.log(res)
-    if (res.data.state==100) {
-        this.mediatePeopleArr=res.data.data
+    this.caseId = this.$route.params.lawCaseId? this.$route.params.lawCaseId : window.localStorage.getItem('lawCaseId');
+    this.stepNum = this.$route.params.process? this.$route.params.process : window.localStorage.getItem('process');
+    this.isRight = this.$route.params.briefId? (this.$route.params.briefId== 'fa86bd7e1af811e9b39a00163e0af9c6' || this.$route.params.briefId == 'fa86bdfb1af811e9b39a00163e0af9c6' ? true : false) : (window.localStorage.getItem('continueIsRight') == 'fa86bd7e1af811e9b39a00163e0af9c6' || window.localStorage.getItem('continueIsRight') == 'fa86bdfb1af811e9b39a00163e0af9c6' ? true : false);
+    const sted = document.getElementsByClassName("step");
+    const setStep = document.getElementsByClassName("setStep");
+    // sted[0].classList.remove('active');
+    // sted[this.stepNum].classList.add('active');
+    this.onlineBriefId = this.$route.params.briefId || window.localStorage.getItem('continueIsRight');
+    this.isElement = this.onlineBriefId == 'fa86bd7e1af811e9b39a00163e0af9c6' ? 1 : (this.onlineBriefId == 'fa86bdfb1af811e9b39a00163e0af9c6' ? 2 : 0);
+    switch(Number(this.stepNum)){
+        case 0:
+            this.getCaseInfo();
+            
+            break;
+        case 1:
+            this.getLiniList();
+            this.success = false;
+            this.liniAdd = true;
+            
+            setStep[0].classList.add('setActive');
+            break;
+        case 2:
+            this.getlawyerLis();
+            this.getLiniList();
+            this.success = false;
+            this.dailiAdd = true;                                                   
+            setStep[0].classList.add('setActive');
+            setStep[1].classList.add('setActive');
+            break;
+        case 3:
+            this.getFilesL();
+            this.getLiniList();
+            this.success = false;
+            if(this.isRight){
+                this.elementAdd = true;
+            }else{
+                this.fileAdd = true;
+            }
+            setStep[0].classList.add('setActive');
+            setStep[1].classList.add('setActive');
+            setStep[2].classList.add('setActive');
+            break;
+        case 4:
+            this.getLiniList();
+            this.success = false;
+            this.fileAdd = true;   
+            setStep[0].classList.add('setActive');
+            setStep[1].classList.add('setActive');
+            setStep[2].classList.add('setActive');
+            setStep[3].classList.add('setActive');
+            break;
     }
-})
+// if(this.stepNum == 1){
+//     this.getLiniList();
+//     this.success = false;
+//     this.liniAdd = true;
+//     this.stepNum = 2;
+//     setStep[0].classList.add('setActive');
+// }else if(this.stepNum == 2){
+//     this.getlawyerLis();
+//     this.getLiniList();
+//     this.success = false;
+//     this.dailiAdd = true;
+//     this.stepNum = 3;                                                 
+//     setStep[0].classList.add('setActive');
+//     setStep[1].classList.add('setActive');                      
+// }else if(this.stepNum == 3){
+//     this.getFilesL();
+//     this.getLiniList();
+//     this.success = false;
+//     this.elementAdd = true;
+//     this.stepNum = 4;
+//     setStep[0].classList.add('setActive');
+//     setStep[1].classList.add('setActive');
+//     setStep[2].classList.add('setActive');
+// }else if(this.stepNum == 4){
+//     this.getLiniList();
+//     this.success = false;
+//     this.fileAdd = true;
+//     this.stepNum = 5;
+//     setStep[0].classList.add('setActive');
+//     setStep[1].classList.add('setActive');
+//     setStep[2].classList.add('setActive');
+//     setStep[3].classList.add('setActive');
+// }
+    getContacts(this.caseId).then(res=>{
+        if (res.data.state==100) {
+            this.mediatePeopleArr=res.data.data
+        }
+    })
 
-this.getbrief();
+    this.getbrief();
 
 // getOnlineBrief().then(res => {
 //     const data = res.data.briefList.map(item => {
@@ -2021,7 +2026,8 @@ this.getbrief();
 },
 watch: {
 mediatePeople(curVal,oldVal){
-　　　　　　console.log(curVal,oldVal);
+
+        
     for (let index = 0; index < this.mediatePeopleArr.length; index++) {
         if (this.mediatePeopleArr[index].name==curVal) {
             this.meidatePhone=this.mediatePeopleArr[index].phone
@@ -2030,6 +2036,11 @@ mediatePeople(curVal,oldVal){
 　　　　},
 },
 methods: {
+    pageChange(nowPage){
+        this.usualLoading = true;
+        this.nowPage = nowPage;
+        this.gerUsualPeople(this.statusNow,this.nowPage);
+    },
     personalFile(event){
         this.personalFileName = event.target.files[0].name;
         upFiles(event.target.files[0],3,this.caseId, '').then(res => {
@@ -2145,7 +2156,7 @@ remoteMethod (){//输入时动态改变树形菜单
     }
 },
 mediatePeopleChange(value){
-    // console.log(value)
+
     
     // this.meidatePhone=value
 },
@@ -2153,11 +2164,11 @@ filterMethod (value, option) {
         return option.toUpperCase().indexOf(value.toUpperCase()) !== -1;
     },
 onCopy(e){
-    console.log(e)
+
     this.$Message.info('回执编号复制成功！');
 },
 onError(e){
-    console.log(e)
+
 },
 delOtherAddress(key){
     this.addFormItem.otherAddressArr.splice(key,1); 
@@ -2183,6 +2194,7 @@ changeStep(){
     }
 },
 goStep(num){
+
     if(this.stepNum == 0){
         return false;
     }
@@ -2291,7 +2303,6 @@ submitEvi(){
         return false;
     }
     this.loading = true;
-    console.log(this.addFormItemEvi.original,this.fileNlist[0].id);
     saveEvidence(
         this.addFormItemEvi.evidenceName,
         this.addFormItemEvi.pageNum,
@@ -2326,6 +2337,30 @@ deleLiti(id){   //删除当事人
         if(res.data.haveEvidence == 1){
             this.$Modal.confirm({
                 title: '提示',
+                content: '<p>该当事人存在证据，确定删除当前当事人吗？</p>',
+                onOk: () => {
+                deleteLitigantInfo(id).then(res => {
+                    if(res.data.state == 100){
+                            this.$Message.success('删除成功');
+                            for(var i=0;i<this.liniList.length;i++){
+                                if(this.liniList[i].id == id){
+                                    this.liniList.splice(i,1);
+                                }
+                            }
+                            for(var i=0;i<this.linigantList.length;i++){
+                                if(this.linigantList[i].id == id){
+                                    this.linigantList.splice(i,1);
+                                }
+                            }
+                        }else{
+                            this.$Message.info(res.data.message);
+                        }
+                    })
+                },
+            });
+        }else{
+            this.$Modal.confirm({
+                title: '提示',
                 content: '<p>确定删除当前当事人吗？</p>',
                 onOk: () => {
                 deleteLitigantInfo(id).then(res => {
@@ -2346,26 +2381,7 @@ deleLiti(id){   //删除当事人
                         }
                     })
                 },
-                onCancel: () => {}
             });
-        }else{
-            deleteLitigantInfo(id).then(res => {
-                if(res.data.state == 100){
-                    this.$Message.success('删除成功');
-                    for(var i=0;i<this.liniList.length;i++){
-                        if(this.liniList[i].id == id){
-                            this.liniList.splice(i,1);
-                        }
-                    }
-                    for(var i=0;i<this.linigantList.length;i++){
-                        if(this.linigantList[i].id == id){
-                            this.linigantList.splice(i,1);
-                        }
-                    }
-                }else{
-                    this.$Message.info(res.data.message);
-                }
-            })
         }
     });
         
@@ -2402,7 +2418,6 @@ getCaseInfo(){
             }else{
                 this.caseType = "2";
             }
-            console.log(this.caseType)
             this.standardMoney = res.data.result.standardMoney;
             this.factContent = res.data.result.factContent;
             this.reasonContent = res.data.result.reasonContent;
@@ -2424,7 +2439,6 @@ getLiniList(){
                     adress:item.nativePlace,
                     id:item.id,
                 }
-                console.log(data.phone);
                 this.liniList.push(data);
                 const data2 = {
                     name:item.litigantName,
@@ -2513,7 +2527,6 @@ getFilesL(){
 },
 completeCase(){
     getContacts(this.caseId).then(res=>{
-        console.log(res)
         if (res.data.state==100) {
             this.mediatePeopleArr=res.data.data
         }
@@ -2538,7 +2551,7 @@ completeCase(){
                     const data = {
                         litigantName:item.litigantName,
                         identityCard:item.identityCard,
-                        litigantPhone:item.litigantType == 0 ? item.litigantPhone : item.litigantTelPhone,
+                        litigantPhone:item.litigantType == 0 ? item.litigantPhone : (item.litigantType == 1 ? item.legalManPhone : item.litigantTelPhone),
                         address:item.address,
                     }
                     this.plaintiffList.push(data);
@@ -2546,13 +2559,12 @@ completeCase(){
                     const data = {
                         litigantName:item.litigantName,
                         identityCard:item.identityCard,
-                        litigantPhone:item.litigantType == 0 ? item.litigantPhone : item.litigantTelPhone,
+                        litigantPhone:item.litigantType == 0 ? item.litigantPhone : (item.litigantType == 1 ? item.legalManPhone : item.litigantTelPhone),
                         address:item.address,
                     }
                     this.defendantList.push(data);
                 }
                 if(item.onlineLawyers.length != 0){
-                    console.log(15188888)
                     const das = {
                         litigantName:item.onlineLawyers[0].name,
                         identityCard:item.onlineLawyers[0].identicard,
@@ -2613,7 +2625,7 @@ lastSubmit(){
         this.mediateState = 1;
         if (this.mediatePeople!=''&&this.meidatePhone!='') {
             let re = /^[0-9]+.?[0-9]*$/; //判断字符串是否为数字 //判断正整数 /^[1-9]+[0-9]*]*$/ 
-            // alert(1)
+
             if (!re.test(this.meidatePhone)) {
         　　　　this.$Modal.warning({
                 title: '提示',
@@ -2678,7 +2690,7 @@ lastSubmit(){
 },
 // @on-cancel="cancel"
 submitCasecancel(){
-    // alert(1)
+
     this.ten= 0;
     this.nextLoading = false;
 },
@@ -2688,15 +2700,14 @@ submitCase(){
         this.mediateState = 1;
         if (this.mediatePeople!=''&&this.meidatePhone!='') {
             let re = /^[0-9]*$/; //判断字符串是否为数字 //判断正整数 /^[1-9]+[0-9]*]*$/ 
-            // alert(1)
-            if (!re.test(this.meidatePhone)) {
-        　　　　this.$Modal.warning({
-                title: '提示',
-                content: '电话必须为数字'
-            });
-        // 　　　　document.getElementById(input).value = "";
-        　　　　return false;
-        　　}
+ 
+        //     if (!re.test(this.meidatePhone)) {
+        // 　　　　this.$Modal.warning({
+        //             title: '提示',
+        //             content: '电话必须为数字'
+        //         });
+        // 　　　　return false;
+        // 　　}
             this.changeLoading();
             this.sqKnow = true;
             this.disabled1 = true;
@@ -2918,7 +2929,7 @@ submit(){   //添加当事人
                     type:this.addFormItem.litigantType,
                     typeStatus:this.addFormItem.litigantStatus,
                     card:this.addFormItem.identityCard,
-                    phone:this.addNewPhone,
+                    phone:this.addNewPhone || this.addFormItem.legalManPhone,
                     adress:this.addFormItem.nativePlace,
                     id:res.data.onlineLitigant.id,
                 }
@@ -2996,8 +3007,7 @@ submitLawyer(){ //添加代理人
     var regMobile=/^1[3456789]\d{9}$/;
     var regPhone =/^((0\d{2,3}-\d{7,8})|(1[3584]\d{9}))$/;
     var regIdNo = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/;  
-    var regNum=/(^[A-Za-z0-9]+$)/
-    console.log(this.addFormItem.email)
+    var regNum=/(^[A-Za-z0-9]+$)/;
     // if(!reg.test(this.addFormItem.email)){
     //     this.$Message.warning('邮箱格式有误，请检查');
     //     this.changeLoading();
@@ -3153,19 +3163,14 @@ downLoadF(){
     // window.open("api/online/evidenceAttachment/downFiles.jhtml")
 },
 selectName (value) {
-    console.log(value)
     this.addFormItem.lawerName = "";
     
     var showName = value.split('(')
-    console.log(showName)
     this.addFormItem.lawerName = showName[0];
-    console.log(this.addFormItem.lawerName)
     var index = this.arr1.indexOf(value);
     this.addFormItem.agentId = this.idData1[index];
-    console.log('agentId为' + this.agentId)
     this.addFormItem.lawermobile = this.phoneData1[index];
     this.addFormItem.lawIdentiCard = this.numData1[index];
-    console.log('phone为' + this.addFormItem.lawIdentiCard)
 },
 actins(value){
     clearTimeout(this.queryAgent1.timer);
@@ -3230,7 +3235,6 @@ changeDate (date) {
     this.addFormItem.birthday = new Date(date).getTime();
 },
 changeDate2(date){
-    console.log(date)
     this.addFormItem.birthday2 = new Date(date).getTime();
 },
 nextStepSure(){
@@ -3241,7 +3245,7 @@ nextStepSure(){
     setStep[1].classList.add('setActive');
     sted[1].classList.remove('active');
     sted[2].classList.add('active');
-    this.stepNum = 3;
+    this.stepNum = 2;
     this.showSureMo = 1;
     this.sureMol = false;
     this.nextLoading = false;
@@ -3353,6 +3357,7 @@ nextStep(dex){
                     this.elementAdd = false;
                     this.isRight = false;
                     window.localStorage.setItem('isRight',false);
+                    window.localStorage.setItem('continueIsRight',this.onlineBriefId);
                 }
                 // this.success = false;
                 // this.liniAdd = true;
@@ -3367,7 +3372,6 @@ nextStep(dex){
         this.disabled = true;
         this.single = false;
         var that = this;
-        console.log(7777)
         // if(this.stepNum.length > 2){
         //     this.nextStepSure()
         //     return false;
@@ -3508,6 +3512,7 @@ getbrief(){
     })
 },
 upstep(dex){
+
     var sted = document.getElementsByClassName("step");
     if(dex == 1){
         this.getCaseInfo();
@@ -3624,7 +3629,6 @@ gerUsualLawyer(){
                 arr.push(data)       
             })
             this.usualList = arr;
-            console.log(this.usualList)
             this.selUsualLaw = true;
         }else{
             this.$Message.info(res.data.message);
@@ -3670,8 +3674,10 @@ gerUsualPeople(str){
     this.statusNow = str;
     this.usualId = "";
     this.usualList = [];
-    getCmInfo().then(res => {
+    getCmInfo(this.nowPage,5).then(res => {
+        this.usualLoading = false;
         if(res.data.state == 100){
+            this.dataTotal = res.data.cpPage.total;
             // let arr = [];
             // res.data.cpPage.content.map(item => {
             //     let data = {
@@ -3696,13 +3702,12 @@ gerUsualPeople(str){
     })
 },
 temSel(v,o){
-    console.log(v)
-    console.log(o)
+
     this.usualId = v.id;
     
 },
 temsSelect(v){
-    console.log(v)
+
 },
 optUsual(){
     if(this.usualId == ""){
@@ -3711,7 +3716,8 @@ optUsual(){
     }
     optCommonPerson(this.usualId,this.caseId,this.statusNow).then(res => {
         if(res.data.state == 100){
-            this.goStep(2)
+            this.$Message.success(res.data.message);
+            this.upstep(2);
             this.selUsualPeo = false;
         }else{
             this.$Message.info(res.data.message);
