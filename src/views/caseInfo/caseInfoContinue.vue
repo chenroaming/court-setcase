@@ -128,27 +128,23 @@ left: 0;
 opacity: 0.5;
 }
 .bmbox{
+    position:absolute;
     width: 100%;
     padding: 14px 18px;
     color: #fff;
-    position: absolute;
-    /* top: 38%; */
-    left: 0;
     text-align: center;
     cursor: pointer;
     opacity: 0;
 }
 .bmbox .title{
-opacity: 0;
-/* padding-top: 40px; */
-display: inline-block;
-/* padding-bottom: 20px; */
+    opacity: 0;
+    display: inline-block;
 }
 .bmbox .ivu-icon{
-font-size: 18px;
-margin-top: 20px;
-opacity: 0;
-}
+    font-size: 18px;
+    margin-top: 20px;
+    opacity: 0; 
+}   
 .bmbox .ivu-icon,
 .info:hover .title,
 .info:hover .post{
@@ -350,22 +346,22 @@ margin-top: 7px;
     <div class="step" :class="{'active':stepNum == '0'}" @click="goStep(1)">
         <span>案件信息</span>    
     </div>
-    <Icon type="chevron-down" class="setStep"></Icon>
+    <Icon type="chevron-down" class="setStep" :class="{'setActive':stepNum == 1}"></Icon>
 
     <div class="step " :class="{'active':stepNum == 1}" @click="goStep(2)">
         <span>当事人信息</span> 
     </div>
-    <Icon type="chevron-down" class="setStep"></Icon>
+    <Icon type="chevron-down" class="setStep" :class="{'setActive':stepNum == 2}"></Icon>
 
     <div class="step" :class="{'active':stepNum == 2}" @click="goStep(3)">
         <span>代理人信息</span>
     </div>
-    <Icon type="chevron-down" class="setStep"></Icon>
+    <Icon type="chevron-down" class="setStep" :class="{'setActive':stepNum == 3}"></Icon>
 
     <div class="step" :class="{'active':stepNum == 3}" @click="goStep(4)" v-show="isRight == true">
         <span>要素信息</span>
     </div>
-    <Icon type="chevron-down" class="setStep" v-show="isRight == true"></Icon>
+    <Icon type="chevron-down" class="setStep" v-show="isRight == true" :class="{'setActive':stepNum == 4}"></Icon>
     
     <div class="step " :class="{'active':stepNum == 4 || (stepNum == 3 && isRight == false)}" @click="goStep(5)">
         <span>附件与确认</span>
@@ -1926,10 +1922,6 @@ mounted() {
     this.caseId = this.$route.params.lawCaseId? this.$route.params.lawCaseId : window.localStorage.getItem('lawCaseId');
     this.stepNum = this.$route.params.process? this.$route.params.process : window.localStorage.getItem('process');
     this.isRight = this.$route.params.briefId? (this.$route.params.briefId== 'fa86bd7e1af811e9b39a00163e0af9c6' || this.$route.params.briefId == 'fa86bdfb1af811e9b39a00163e0af9c6' ? true : false) : (window.localStorage.getItem('continueIsRight') == 'fa86bd7e1af811e9b39a00163e0af9c6' || window.localStorage.getItem('continueIsRight') == 'fa86bdfb1af811e9b39a00163e0af9c6' ? true : false);
-    const sted = document.getElementsByClassName("step");
-    const setStep = document.getElementsByClassName("setStep");
-    // sted[0].classList.remove('active');
-    // sted[this.stepNum].classList.add('active');
     this.onlineBriefId = this.$route.params.briefId || window.localStorage.getItem('continueIsRight');
     this.isElement = this.onlineBriefId == 'fa86bd7e1af811e9b39a00163e0af9c6' ? 1 : (this.onlineBriefId == 'fa86bdfb1af811e9b39a00163e0af9c6' ? 2 : 0);
     switch(Number(this.stepNum)){
@@ -1941,16 +1933,12 @@ mounted() {
             this.getLiniList();
             this.success = false;
             this.liniAdd = true;
-            
-            setStep[0].classList.add('setActive');
             break;
         case 2:
             this.getlawyerLis();
             this.getLiniList();
             this.success = false;
-            this.dailiAdd = true;                                                   
-            setStep[0].classList.add('setActive');
-            setStep[1].classList.add('setActive');
+            this.dailiAdd = true;
             break;
         case 3:
             this.getFilesL();
@@ -1961,53 +1949,13 @@ mounted() {
             }else{
                 this.fileAdd = true;
             }
-            setStep[0].classList.add('setActive');
-            setStep[1].classList.add('setActive');
-            setStep[2].classList.add('setActive');
             break;
         case 4:
             this.getLiniList();
             this.success = false;
-            this.fileAdd = true;   
-            setStep[0].classList.add('setActive');
-            setStep[1].classList.add('setActive');
-            setStep[2].classList.add('setActive');
-            setStep[3].classList.add('setActive');
+            this.fileAdd = true;
             break;
     }
-// if(this.stepNum == 1){
-//     this.getLiniList();
-//     this.success = false;
-//     this.liniAdd = true;
-//     this.stepNum = 2;
-//     setStep[0].classList.add('setActive');
-// }else if(this.stepNum == 2){
-//     this.getlawyerLis();
-//     this.getLiniList();
-//     this.success = false;
-//     this.dailiAdd = true;
-//     this.stepNum = 3;                                                 
-//     setStep[0].classList.add('setActive');
-//     setStep[1].classList.add('setActive');                      
-// }else if(this.stepNum == 3){
-//     this.getFilesL();
-//     this.getLiniList();
-//     this.success = false;
-//     this.elementAdd = true;
-//     this.stepNum = 4;
-//     setStep[0].classList.add('setActive');
-//     setStep[1].classList.add('setActive');
-//     setStep[2].classList.add('setActive');
-// }else if(this.stepNum == 4){
-//     this.getLiniList();
-//     this.success = false;
-//     this.fileAdd = true;
-//     this.stepNum = 5;
-//     setStep[0].classList.add('setActive');
-//     setStep[1].classList.add('setActive');
-//     setStep[2].classList.add('setActive');
-//     setStep[3].classList.add('setActive');
-// }
     getContacts(this.caseId).then(res=>{
         if (res.data.state==100) {
             this.mediatePeopleArr=res.data.data
@@ -2068,17 +2016,7 @@ methods: {
         }) 
     },
 receive:function(data){//要素信息接收子组件传值并判断是否进行下一步
-    const sted = document.getElementsByClassName("step");
-    const setStep = document.getElementsByClassName("setStep");
     if(data == '1'){
-        // window.localStorage.setItem('newItemStep',4);
-        // sted[3].classList.remove('active');
-        // sted[4].classList.add('active');
-        // setStep[3].classList.add('setActive');
-        // this.stepNum = 5;
-        // this.fileAdd = true;
-        // this.elementAdd = false;
-        // this.nextLoading = false;
         if(!this.isOpenevidenceMol){
             this.evidenceMol = true;
             this.ten = 10;
@@ -2093,10 +2031,7 @@ receive:function(data){//要素信息接收子组件传值并判断是否进行�
             },1000)
         }else{
             window.localStorage.setItem('process',4);
-            sted[3].classList.remove('active');
-            sted[4].classList.add('active');
-            setStep[3].classList.add('setActive');
-            this.stepNum = 5;
+            this.stepNum = 4;
             this.fileAdd = true;
             this.elementAdd = false;
         }
@@ -2188,10 +2123,6 @@ changeStep(){
     this.dailiAdd =false;
     this.fileAdd = false;
     this.elementAdd = false;
-    let sted = document.getElementsByClassName("step");
-    for( let i=0;i<sted.length;i++){
-        sted[i].classList.remove('active');
-    }
 },
 goStep(num){
 
@@ -3238,13 +3169,8 @@ changeDate2(date){
     this.addFormItem.birthday2 = new Date(date).getTime();
 },
 nextStepSure(){
-    var sted = document.getElementsByClassName("step");
     this.liniAdd = false;
     this.dailiAdd = true;
-    var setStep = document.getElementsByClassName("setStep");
-    setStep[1].classList.add('setActive');
-    sted[1].classList.remove('active');
-    sted[2].classList.add('active');
     this.stepNum = 2;
     this.showSureMo = 1;
     this.sureMol = false;
@@ -3252,32 +3178,21 @@ nextStepSure(){
     window.localStorage.setItem('process',2);
 },
 nextStepSure2(){
-    var sted = document.getElementsByClassName("step");
-    var setStep = document.getElementsByClassName("setStep");  
     this.getFilesL();
-    setStep[2].classList.add('setActive');
     this.dailiAdd = false;
     if(this.isRight){
-        // this.elementAdd = true;
-        // sted[3].classList.add('active');
-        // sted[2].classList.remove('active');
-        sted[3].classList.remove('active');
-        sted[4].classList.add('active');
-        setStep[3].classList.add('setActive');
-        this.stepNum = 5;
+        this.stepNum = 4;
         this.fileAdd = true;
         this.elementAdd = false;
     }else{
+        this.stepNum = 4;
         this.fileAdd = true;
-        sted[4].classList.add('active');
-        sted[2].classList.remove('active');
     }
     this.isOpenevidenceMol = true;
     this.evidenceMol = false;
     this.stepNum = 4;
     this.nextLoading = false;
     window.localStorage.setItem('process',3);
-    // this.stepNum.push(4);
 },
 selectSure(){
     if(this.buttonStr != "同意并继续"){
@@ -3300,20 +3215,8 @@ selectSure2(){
     }
 },
 nextStep(dex){
-    // let op = 1;
-    // for(let i=0;i<this.stepNum.length;i++){
-    //     if(dex+1 == this.stepNum[i]){
-    //         op = 0;
-    //     }
-    // }
-    // if(op == 1){
-    //     this.stepNum.push(dex + 1);
-    // }
     this.nextLoading = true;
-    var sted = document.getElementsByClassName("step");
-    var setStep = document.getElementsByClassName("setStep");
     if(dex == 1){
-        setStep[0].classList.add('setActive');
         const params = {
             onlineLawCaseId:this.caseId,
             type:this.caseType,
@@ -3322,10 +3225,6 @@ nextStep(dex){
             factContent:this.factContent,
             reasonContent:this.reasonContent,
         }
-        // this.success = false;
-        // this.liniAdd = true;
-        // sted[0].classList.remove('active');
-        // sted[1].classList.add('active');
 
         updateLawCaseInfo(params).then(res => {
             this.nextLoading = false;
@@ -3333,14 +3232,6 @@ nextStep(dex){
                 this.$Message.success('修改成功');
                 this.caseId = res.data.onlineLawCase.id;
                 window.localStorage.setItem('process',dex);
-                // if(this.onlineBriefId == 'fa86bd7e1af811e9b39a00163e0af9c6' || this.onlineBriefId == 'fa86bdfb1af811e9b39a00163e0af9c6'){
-                //     this.isRight = true;
-                //     window.localStorage.setItem('isRight',true);
-                // }else{
-                //     this.elementAdd = false;
-                //     this.isRight = false;
-                //     window.localStorage.setItem('isRight',false);
-                // }
                 if(this.onlineBriefId == 'fa86bd7e1af811e9b39a00163e0af9c6'){
                     this.isElement = 1;
                     this.isRight = true;
@@ -3359,10 +3250,6 @@ nextStep(dex){
                     window.localStorage.setItem('isRight',false);
                     window.localStorage.setItem('continueIsRight',this.onlineBriefId);
                 }
-                // this.success = false;
-                // this.liniAdd = true;
-                // sted[0].classList.remove('active');
-                // sted[1].classList.add('active');
                 this.upstep(2);
             }else{
                 this.$Message.info(res.data.message);
@@ -3443,35 +3330,12 @@ nextStep(dex){
             }
         })
     }else if(dex == 3){
-        // if(!this.isOpenevidenceMol){
-        //     this.evidenceMol = true;
-        //     this.ten = 10;
-        //     let timer = setInterval(()=>{
-        //         this.disabled = true;
-        //         this.buttonStr ="已经阅读（" +  this.ten +"）";
-        //         if(this.ten ===0) {
-        //             clearInterval(timer);
-        //             this.disabled = false;
-        //             this.buttonStr = `已经阅读`;
-        //         }else{this.ten = this.ten - 1;}
-        //     },1000)
-        // }else{
-        //     if(this.isRight){
-        //         this.elementAdd = true;
-        //         this.dailiAdd = false;
-        //         sted[3].classList.add('active');
-        //         sted[2].classList.remove('active');
-        //     }else{
-        //         this.nextStepSure2();
-        //     }
-        //     this.nextLoading = false;
-        // }
+        
         this.nextLoading = false;
         if(this.isRight){
             this.elementAdd = true;
             this.dailiAdd = false;
-            sted[3].classList.add('active');
-            sted[2].classList.remove('active');
+            this.stepNum = 3;
         }else{
             if(!this.isOpenevidenceMol){
             this.evidenceMol = true;
@@ -3485,18 +3349,16 @@ nextStep(dex){
                     this.buttonStr = `已经阅读`;
                 }else{this.ten = this.ten - 1;}
             },1000)
-        }else{
-            if(this.isRight){
-                this.elementAdd = true;
-                this.dailiAdd = false;
-                sted[3].classList.add('active');
-                sted[2].classList.remove('active');
             }else{
-                this.nextStepSure2();
+                if(this.isRight){
+                    this.elementAdd = true;
+                    this.dailiAdd = false;
+                }else{
+                    this.nextStepSure2();
+                }
+                // this.nextStepSure2();
+                this.nextLoading = false;
             }
-            // this.nextStepSure2();
-            this.nextLoading = false;
-        }
         }
     }else if(dex == 4){
         this.isElement == 1 ? this.$refs.element.submit() : this.$refs.element2.submitLoan();
@@ -3512,45 +3374,38 @@ getbrief(){
     })
 },
 upstep(dex){
-
-    var sted = document.getElementsByClassName("step");
     if(dex == 1){
         this.getCaseInfo();
         this.changeStep();
         this.getbrief();
         this.success =true;
-        sted[1].classList.remove('active');
-        sted[0].classList.add('active');
+        this.stepNum = '0';
     }else if(dex == 2){
         this.liniList = [];
         this.linigantList = [];
         this.getLiniList();
         this.changeStep();
         this.liniAdd = true ;
-        sted[2].classList.remove('active');
-        sted[1].classList.add('active');
+        this.stepNum = 1;
     }else if(dex == 3){
         this.lawyerList = [];
         this.getlawyerLis();
         this.changeStep();
         this.dailiAdd = true ;
-        sted[3].classList.remove('active');
-        sted[2].classList.add('active');
+        this.stepNum = 2;
     }else if(dex == 4){
         this.changeStep();
         if(this.isRight == true){
             this.elementAdd = true;
-            sted[4].classList.remove('active');
-            sted[3].classList.add('active');
+            this.stepNum = 3;
         }else{
             this.dailiAdd = true;
-            sted[4].classList.remove('active');
-            sted[2].classList.add('active');
+            this.stepNum = 2;
         }
     }else if(dex == 5){
         this.changeStep();
         this.fileAdd = true;
-        sted[4].classList.add('active');
+        this.stepNum = 4;
     }
 },
 clearAddfortem(){

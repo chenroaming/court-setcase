@@ -1510,6 +1510,7 @@
             },
             data () {
                 return {
+                    nowPage:1,
                     usualLoading:false,
                     dataTotal:1,
                     pageSize:5,
@@ -3696,9 +3697,9 @@
                         this.usualLoading = false;
                         if(res.data.state == 100){
                             this.dataTotal = res.data.cpPage.total;
-                            let arr = [];
+                            const arr = [];
                             res.data.cpPage.content.map(item => {
-                                let data = {
+                                const data = {
                                     litigantName:item.litigantName,
                                     identityCard:item.identityCard,
                                     id:item.id,

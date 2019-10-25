@@ -197,10 +197,10 @@ data () {
     };
 },
 mounted () {
-    
+    this.$Spin.show();
     setTimeout( ()=>{
         getUserInfo().then(response => {
-            console.log(565356262);
+            this.$Spin.hide();
             const data = response.data;
             if(data.state == 100) {
                 let ary = this.$store.state.app.menuList;
@@ -255,7 +255,9 @@ methods: {
         })
     },
     gotoSetCase(){
+        this.$Spin.show();
         getCaesState().then(res => {
+            this.$Spin.hide();
             if(res.data.total == 1){
                 this.$Modal.confirm({
                     title: '提示',
@@ -312,50 +314,6 @@ methods: {
             console.log(error);
             this.$Message.warning('网络错误！请刷新重试！');
         })
-        // this.$Message.info({
-        //     content:'立案功能维护中...',
-        //     duration:5
-        // });
-        // return false
-        // getCaesState().then(res => {
-        //     if(res.data.state == 100){
-        //         if(res.data.onlineLawCase != null){
-        //             console.log(111)
-        //             if(res.data.onlineLawCase.process != 4){
-        //                 this.$Modal.confirm({
-        //                     title: '提示',
-        //                     content: '<p>当前有未完成提交案件，是否继续？</p>',
-        //                     okText: '继续填写',
-        //                     cancelText: '立新案件',
-        //                     onOk: () => {
-        //                         this.$router.push({
-        //                             name: "caseInfoContinue",
-        //                             params: { lawCaseId: res.data.onlineLawCase.id, process:res.data.onlineLawCase.process}
-        //                         });
-        //                     },
-        //                     onCancel: () => {
-        //                         this.$router.push({
-        //                             name: 'caseInfo_index'
-        //                         });
-        //                     }
-        //                 });
-        //             }else{
-        //                 this.$router.push({
-        //                     name: 'caseInfo_index'
-        //                 });
-        //             }
-        //         }else{
-        //              this.$router.push({
-        //                 name: 'caseInfo_index'
-        //             });
-        //         }
-                
-        //     }else{
-        //         this.$router.push({
-        //             name: 'caseInfo_index'
-        //         });
-        //     }
-        // })
     },
     close (){
 
