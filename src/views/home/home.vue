@@ -9,75 +9,63 @@ top: 20%;
 } */
 
 .icoDs-box {
-display: flex;
-padding: 20px 10px;
-height: 100%;
-display: flex;
-align-items: center;
+    display: flex;
+    padding: 20px 10px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    position: relative;
 }
 .icoDs{
-display: flex;
-width: 525px;
-height: 200px;
-margin: 0 auto;
-text-align: center;
+    display: flex;
+    width: 525px;
+    height: 200px;
+    margin: 0 auto;
+    text-align: center;
 }
 
 .icoDs .ivu-icon{
-color:black;
-font-size: 160px;
-display: block;
+    color:black;
+    font-size: 160px;
+    display: block;
 }
 .icoDs span{
-color: black;
-font-size: 20px;
-font-weight: 600;
+    color: black;
+    font-size: 20px;
+    font-weight: 600;
 }
-/* .icoDs .leftIcon{
-position: relative;
-text-align: center;
-width: 160px;
-float: left;
-cursor: pointer;
-}
-.icoDs .rightIcon{
-position: relative;
-text-align: center;
-width: 160px;
-float: right;
-cursor: pointer;
-} */
 
 .icoDs .leftIcon{
-text-align: center;
-width: 50%;
-cursor: pointer;
-display: inline-block;
-margin: 0 auto;
+    text-align: center;
+    width: 50%;
+    cursor: pointer;
+    display: inline-block;
+    margin: 0 auto;
 }
 
 .icoDs .rightIcon{
-text-align: center;
-width: 50%;
-cursor: pointer;
-display: inline-block;
-margin: 0 auto;
+    text-align: center;
+    width: 50%;
+    cursor: pointer;
+    display: inline-block;
+    margin: 0 auto;
 }
 
 .icoDs .centerIcon{
-width: 50%;
-display: inline-block;
-text-align: center;
-cursor: pointer;
-margin: 0 auto;
+    width: 50%;
+    display: inline-block;
+    text-align: center;
+    cursor: pointer;
+    margin: 0 auto;
 }
 .page-box {
-margin-top: 20px;
+    margin-top: 20px;
 }
 </style>
 
 <template>
 <div class="icoDs-box">
+    <Spin fix v-if="isLoading"></Spin>
     <div class="icoDs" v-show="show">
         <div class="leftIcon" @click="gotoSetCase" v-if="access">
             <Icon  style="color:#40A9FF" type="ios-monitor-outline"></Icon>
@@ -115,6 +103,7 @@ import { getUserInfo } from '@/api/user';
 export default {
 data () {
     return {
+        isLoading:true,
         loading1:false,
         modal1:false,
         access:false,
@@ -197,10 +186,9 @@ data () {
     };
 },
 mounted () {
-    this.$Spin.show();
     setTimeout( ()=>{
         getUserInfo().then(response => {
-            this.$Spin.hide();
+            this.isLoading = false;
             const data = response.data;
             if(data.state == 100) {
                 let ary = this.$store.state.app.menuList;
@@ -255,9 +243,9 @@ methods: {
         })
     },
     gotoSetCase(){
-        this.$Spin.show();
+        this.isLoading = true;
         getCaesState().then(res => {
-            this.$Spin.hide();
+            this.isLoading = false;
             if(res.data.total == 1){
                 this.$Modal.confirm({
                     title: '提示',

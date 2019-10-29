@@ -3181,11 +3181,9 @@ nextStepSure2(){
     this.getFilesL();
     this.dailiAdd = false;
     if(this.isRight){
-        this.stepNum = 4;
         this.fileAdd = true;
         this.elementAdd = false;
     }else{
-        this.stepNum = 4;
         this.fileAdd = true;
     }
     this.isOpenevidenceMol = true;
@@ -3356,7 +3354,6 @@ nextStep(dex){
                 }else{
                     this.nextStepSure2();
                 }
-                // this.nextStepSure2();
                 this.nextLoading = false;
             }
         }

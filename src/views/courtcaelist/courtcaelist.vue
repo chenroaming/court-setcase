@@ -481,7 +481,7 @@
 
 
                     <TabPane label="要素信息" v-if="element != 0">
-                        <div v-if="element == 1" class="loan-Box">
+                        <div v-if="element == 1 && elementSw" class="loan-Box">
                             <Menu @on-select="choice" style="width: 300px;">
                                 <Submenu name="1">
                                     <template slot="title">
@@ -648,7 +648,7 @@
                                 </FormItem>
                             </Form>
                         </div>
-                        <div v-if="element == 2" class="loan-Box">
+                        <div v-if="element == 2 && elementSw" class="loan-Box">
                             <Form label-position="left" :label-width="170">
                                 <FormItem label="合同名称：" prop="name">
                                         {{contract.name}}
@@ -1378,6 +1378,7 @@ export default {
             filaeLoading:false,//原件审核相关data
 
             element:0,
+            elementSw:false,//要素信息显示开关，避免要素信息过长影响布局
             titleArr:['查看授信合同信息','查看借款合同信息','查看保证合同信息','查看抵押合同信息','查看质押合同信息'],
             cardId:'',
             titleIndex:0,
@@ -2724,6 +2725,7 @@ export default {
             })
         },
         changeTab(e){
+            this.elementSw = false;
             if(e == 0){
                 if(this.caInfo == false){
                     this.caInfo = true;
@@ -2923,6 +2925,7 @@ export default {
                     }
                 })
             }else if (e == 5){  //查看要素
+                this.elementSw = true;
                 if(this.element == 1){
                     getPart(this.lawcaseId).then(res => {
                         this.creditContract = [];

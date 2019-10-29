@@ -434,27 +434,27 @@
         
             <div v-show="nexts==false " style="padding:10px;padding-top:20px;padding-bottom:20px;height:100%">
                 <div class="steps">
-                    <div class="step active" @click="goStep(1)">
-                        <span>案件信息</span>    
+                    <div class="step" :class="{'active':stepNum == 0}" @click="goStep(1)">
+                        <span>案件信息</span>
                     </div>
-                    <Icon type="chevron-down" class="setStep"></Icon>
+                    <Icon type="chevron-down" class="setStep" :class="{'setActive':stepNum == 1}"></Icon>
 
-                    <div class="step"  @click="goStep(2)">
+                    <div class="step" :class="{'active':stepNum == 1}"   @click="goStep(2)">
                         <span>当事人信息</span>
                     </div>
-                    <Icon type="chevron-down" class="setStep"></Icon>
+                    <Icon type="chevron-down" class="setStep" :class="{'setActive':stepNum == 2}"></Icon>
 
-                    <div class="step"  @click="goStep(3)">
+                    <div class="step" :class="{'active':stepNum == 2}"  @click="goStep(3)">
                         <span>代理人信息</span>
                     </div>
-                    <Icon type="chevron-down" class="setStep"></Icon> 
+                    <Icon type="chevron-down" class="setStep" :class="{'setActive':stepNum == 3}"></Icon> 
 
-                    <div class="step"  @click="goStep(4)" v-show="isRight === true">
+                    <div class="step" :class="{'active':stepNum == 3}"  @click="goStep(4)" v-show="isRight === true">
                         <span>要素信息</span>
                     </div>
-                    <Icon type="chevron-down" class="setStep" v-show="isRight === true"></Icon>
+                    <Icon type="chevron-down" class="setStep" :class="{'setActive':stepNum == 4}" v-show="isRight === true"></Icon>
 
-                    <div class="step"  @click="goStep(5)">
+                    <div class="step" :class="{'active':stepNum == 4 || (stepNum == 3 && isRight == false)}"  @click="goStep(5)">
                         <span>附件与确认</span>
                     </div>
                 </div>
@@ -2010,8 +2010,6 @@
                 this.caseId = window.localStorage.getItem('newCaseId') || '';
                 this.stepNum = window.localStorage.getItem('newItemStep') || 0;
                 this.isRight = window.localStorage.getItem('isRight') == 'true' ? true : false;
-                let sted = document.getElementsByClassName("step");
-                let setStep = document.getElementsByClassName("setStep");
                 getOnlineLawCaseEdit(this.caseId).then(res => {
                     if(res.data.state == 100){
                         this.onlineBriefId = res.data.result.onlineBrief.id;
@@ -2032,42 +2030,25 @@
                     }
                 })
                 if (this.caseId != ''){ 
-                    console.log(setStep,sted);
                     this.nexts = false;
-                    sted[0].classList.remove('active');
-                    sted[this.stepNum].classList.add('active');
                     if(this.stepNum == 1){
                         this.getLiniList();
                         this.success = false;
                         this.liniAdd = true;
-                        this.stepNum = 2;
-                        setStep[0].classList.add('setActive');
                     }else if(this.stepNum == 2){
                         this.getlawyerLis();
                         this.getLiniList();
                         this.success = false;
-                        this.dailiAdd = true;
-                        this.stepNum = 3; 
-                        setStep[0].classList.add('setActive');
-                        setStep[1].classList.add('setActive');                      
+                        this.dailiAdd = true;                 
                     }else if(this.stepNum == 3){
                         this.getFilesL();
                         this.getLiniList();
                         this.success = false;
                         this.elementAdd = true;
-                        this.stepNum = 4;
-                        setStep[0].classList.add('setActive');
-                        setStep[1].classList.add('setActive');
-                        setStep[2].classList.add('setActive');
                     }else if(this.stepNum == 4){
                         this.getLiniList();
                         this.success = false;
                         this.fileAdd = true;
-                        this.stepNum = 5;
-                        setStep[0].classList.add('setActive');
-                        setStep[1].classList.add('setActive');
-                        setStep[2].classList.add('setActive');
-                        setStep[3].classList.add('setActive');
                     }
                 }
                 getContacts(this.caseId).then(res=>{
@@ -2109,8 +2090,6 @@
                     this.gerUsualPeople(this.statusNow,this.nowPage);
                 },
                 receive:function(data){
-                    const sted = document.getElementsByClassName("step");
-                    const setStep = document.getElementsByClassName("setStep");
                     if(data == '1'){//根据要素信息或者信用卡信息从而进行是否下一步的判断
                         if(!this.isOpenevidenceMol){
                             this.evidenceMol = true;
@@ -2126,10 +2105,7 @@
                             },1000)
                         }else{
                             window.localStorage.setItem('newItemStep',4);
-                            sted[3].classList.remove('active');
-                            sted[4].classList.add('active');
-                            setStep[3].classList.add('setActive');
-                            this.stepNum = 5;
+                            this.stepNum = 4;
                             this.fileAdd = true;
                             this.elementAdd = false;
                             this.nextLoading = false;
@@ -3257,22 +3233,16 @@
                     window.localStorage.setItem('newItemStep',0);
                 },
                 nextStepSure(){
-                    var sted = document.getElementsByClassName("step");
                     this.liniAdd = false;
                     this.dailiAdd = true;
-                    var setStep = document.getElementsByClassName("setStep");
-                    setStep[1].classList.add('setActive');
-                    sted[1].classList.remove('active');
-                    sted[2].classList.add('active');
-                    this.stepNum = 3;
+                    this.stepNum = 2;
                     this.showSureMo = 1;
                     this.sureMol = false;
                     this.nextLoading = false;
+                    window.localStorage.setItem('newItemStep',2);
                 },
                 nextStep(dex){
-                    this.nextLoading = true;
-                    var sted = document.getElementsByClassName("step");
-                    var setStep = document.getElementsByClassName("setStep");            
+                    this.nextLoading = true;        
                     if(dex == 1){
                         if(this.caseId != ""){
                             const params = {
@@ -3288,12 +3258,10 @@
                                 this.nextLoading = false;
                                 if(res.data.state == 100){
                                     this.$Message.success('修改成功');
+                                    this.stepNum = 1;
                                     this.caseId = res.data.onlineLawCase.id;
                                     this.success = false;
                                     this.liniAdd = true;
-                                    sted[0].classList.remove('active');
-                                    sted[1].classList.add('active');
-                                    setStep[0].classList.add('setActive');
                                     window.localStorage.setItem('newItemStep',dex);
                                     if(this.onlineBriefId == 'fa86bd7e1af811e9b39a00163e0af9c6'){
                                         this.isElement = 1;
@@ -3331,14 +3299,11 @@
                         saveLawCaseInfo(params).then(res => {
                             this.nextLoading = false;
                             if(res.data.state == 100){
+                                this.stepNum = 1;
                                 this.$Message.success(res.data.message);
                                 this.caseId = res.data.onlineLawCase.id;
                                 this.success = false;
                                 this.liniAdd = true;
-                                sted[0].classList.remove('active');
-                                sted[1].classList.add('active');
-                                this.stepNum = 2;
-                                setStep[0].classList.add('setActive');
                                 window.localStorage.setItem('newCaseId',this.caseId);
                                 window.localStorage.setItem('newItemStep',dex);
                                 if(this.onlineBriefId == 'fa86bd7e1af811e9b39a00163e0af9c6'){
@@ -3436,8 +3401,7 @@
                         if(this.isRight){
                             this.elementAdd = true;
                             this.dailiAdd = false;
-                            sted[3].classList.add('active');
-                            sted[2].classList.remove('active');
+                            this.stepNum = 3;
                         }else{
                             if(!this.isOpenevidenceMol){
                             this.evidenceMol = true;
@@ -3455,12 +3419,9 @@
                             if(this.isRight){
                                 this.elementAdd = true;
                                 this.dailiAdd = false;
-                                sted[3].classList.add('active');
-                                sted[2].classList.remove('active');
                             }else{
                                 this.nextStepSure2();
                             }
-                            // this.nextStepSure2();
                             this.nextLoading = false;
                         }
                         }
@@ -3470,30 +3431,18 @@
                     }
                 },
                 nextStepSure2(){
-                    var sted = document.getElementsByClassName("step");
-                    var setStep = document.getElementsByClassName("setStep");  
                     getContacts(this.caseId).then(res=>{
                         if (res.data.state==100) {
                             this.mediatePeopleArr=res.data.data
                         }
                     })
-                    setStep[2].classList.add('setActive');
                     this.dailiAdd = false;
                     if(this.isRight){
-                        // this.fileAdd = true;
-                        // sted[4].classList.add('active');
-                        // sted[2].classList.remove('active');
-                        window.localStorage.setItem('newItemStep',4);
-                        sted[3].classList.remove('active');
-                        sted[4].classList.add('active');
-                        setStep[3].classList.add('setActive');
-                        this.stepNum = 5;
+                        window.localStorage.setItem('newItemStep',3);
                         this.fileAdd = true;
                         this.elementAdd = false;
                     }else{
                         this.fileAdd = true;
-                        sted[4].classList.add('active');
-                        sted[2].classList.remove('active');
                     }
                     this.isOpenevidenceMol = true;
                     this.evidenceMol = false;
@@ -3506,46 +3455,36 @@
                     this.dailiAdd =false;
                     this.fileAdd = false;
                     this.elementAdd = false;
-                    let sted = document.getElementsByClassName("step");
-                    for( let i=0;i<sted.length;i++){
-                        sted[i].classList.remove('active');
-                    }
                 },
                 upstep(dex){
-                    var sted = document.getElementsByClassName("step");
                     if(dex == 1){
                         this.getCaseInfo();
                         this.changeStep();
                         this.success =true;
-                        sted[1].classList.remove('active');
-                        sted[0].classList.add('active');
+                        this.stepNum = 0;
                     }else if(dex == 2){
                         this.changeStep();
                         // this.getLiniList();
                         this.liniAdd = true ;
-                        sted[2].classList.remove('active');
-                        sted[1].classList.add('active');
+                        this.stepNum = 1;
                     }else if(dex == 3){
                         this.changeStep();
                         this.getlawyerLis();
-                        this.dailiAdd = true ;
-                        sted[3].classList.remove('active');
-                        sted[2].classList.add('active');
+                        this.dailiAdd = true;
+                        this.stepNum = 2;
                     }else if(dex == 4){
                         this.changeStep();
                         if(this.isRight == true){
                             this.elementAdd = true;
-                            sted[4].classList.remove('active');
-                            sted[3].classList.add('active');
+                            this.stepNum = 3;
                         }else{
                             this.dailiAdd = true;
-                            sted[4].classList.remove('active');
-                            sted[2].classList.add('active');
+                            this.stepNum = 2;
                         }
                     }else if(dex == 5){
                         this.changeStep();
                         this.fileAdd = true;
-                        sted[4].classList.add('active');
+                        this.stepNum = 4;
                     }
                 },
                 getCaseInfo(){

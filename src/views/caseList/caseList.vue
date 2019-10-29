@@ -415,7 +415,7 @@
                         </div>
                     </TabPane>
                     <TabPane label="要素信息" v-if="element != 0">
-                        <div v-if="element == 1" class="loan-Box">
+                        <div v-if="element == 1 && elementSw" class="loan-Box">
                             <Menu @on-select="choice" style="width: 300px;">
                                 <Submenu name="1">
                                     <template slot="title">
@@ -582,7 +582,7 @@
                                 </FormItem>
                             </Form>
                         </div>
-                        <div v-if="element == 2" class="loan-Box">
+                        <div v-if="element == 2 && elementSw" class="loan-Box">
                             <Form label-position="left" :label-width="170">
                                 <FormItem label="合同名称：" prop="name">
                                         {{contract.name}}
@@ -1240,6 +1240,7 @@ export default {
         return {
             listLoading:false,//表格加载状态
             element:0,
+            elementSw:false,//要素信息显示开关，避免要素信息过长影响布局
             modal1:false,
             cardId:'',
             titleArr:['查看授信合同信息','查看借款合同信息','查看保证合同信息','查看抵押合同信息','查看质押合同信息'],
@@ -2392,9 +2393,8 @@ export default {
         },
 
         changeTab(e){
-            console.log(e);
-            let that=this
-            console.log(this.lawCaseId)
+            this.elementSw = false;
+            let that=this;
             if(e == 0){
                 if(this.caInfo == false){
                     this.caInfo = true;
@@ -2541,6 +2541,7 @@ export default {
                 }
             })
             }else if(e == 4){
+                this.elementSw = true;
                 if(this.element == 1){
                     getPart(this.lawCaseId).then(res => {
                         this.creditContract = [];
