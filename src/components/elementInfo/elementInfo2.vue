@@ -480,7 +480,8 @@ export default {
         }
     },
     mounted () {
-        if(this.partCardId == ''){
+        
+        if(this.partCardId == undefined || this.partCardId == ''){
             getPartId(this.lawCaseId).then(res => {
                 this.partCardId = res.data.partId;
             })

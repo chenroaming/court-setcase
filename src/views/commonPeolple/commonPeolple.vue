@@ -551,10 +551,11 @@ export default {
         getCmInfo(1,5).then(res=>{
             this.isLoading = false;
             if(res.data.state == 100){
-                let dt = res.data.cpPage.content;
+                const dt = res.data.cpPage.content;
                 this.dataTotal = res.data.cpPage.total;
                 dt.map(item => {
                     item.liType = item.litigantType==0 ? "自然人" : (item.litigantType==1 ? "法人" : "非法人组织");
+                    item.litigantPhone = item.litigantPhone || item.legalManPhone;
                 })
                 this.usualList = dt;
             }
@@ -692,6 +693,7 @@ export default {
                     this.dataTotal = res.data.cpPage.total;
                     dt.map(item => {
                         item.liType = item.litigantType==0 ? "自然人" : (item.litigantType==1 ? "法人" : "非法人组织");
+                        item.litigantPhone = item.litigantPhone || item.legalManPhone;
                     })
                     this.usualList = dt;
                 }

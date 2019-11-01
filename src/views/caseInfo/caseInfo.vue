@@ -655,7 +655,7 @@
                                     <input type="file" style="display:none"  name="" @change="changeFile3($event)" id="qisu">
                                 </div>
                             </div>
-                            <p style="margin-top:10px;color:black">{{qfileName}}<span v-show="fileName1 != ''" class="cansal" @click="cancelFile(3)">X</span></p>
+                            <p style="margin-top:10px;color:black">{{qfileName}}<span v-show="qfileName != ''" class="cansal" @click="cancelFile(3)">X</span></p>
                         </div>
                         <div class="boxContent" style="width: 165px;">
                             <p class="labelNmae" style="padding-left: 0px;">身份证明及授权委托材料：</p>
@@ -1029,6 +1029,7 @@
                     v-model="caseSure"
                     width="750px"
                     :mask-closable="false"
+                    
                     title="立案信息确认">
                     <div>
                         <!-- <div style="width:100%;text-align:center"><span style="display:inline-block;height:15px;float:left;border-bottom:2px solid #000;width:40%;"></span><h3 style="display:inline-block">案件信息</h3><span style="display:inline-block;height:15px;float:right;border-bottom:2px solid #000;width:40%;"></span></div> -->
@@ -1216,6 +1217,7 @@
                     @on-ok="gotoHome"
                     width="560px"
                     :mask-closable="closeM"
+                    :closable="false"
                     title="立案信息确认" class-name="vertical-center-modal">
                     <div>
                         <div style="width:100%;text-align:center;margin-bottom:10px;margin-top: 60px;"><h2>提交成功！</h2></div>
@@ -2455,7 +2457,7 @@
                         if(res.data.haveEvidence == 1){
                             this.$Modal.confirm({
                                 title: '提示',
-                                content: '<p>确定删除当前当事人吗？</p>',
+                                content: '<p>'+res.data.message+'</p>',
                                 onOk: () => {
                                 deleteLitigantInfo(id).then(res => {
                                     if(res.data.state == 100){
@@ -3691,10 +3693,11 @@
                         }
                     })
                 },
-                openAddLini(){
+                openAddLini(str){
                     this.isUsual = false;
                     this.litigantId = "";
                     this.clearAddfortem();
+                    this.addFormItem.litigantStatus = str;
                     this.proofModal = true;
                 },
                 openAddlawyer(){

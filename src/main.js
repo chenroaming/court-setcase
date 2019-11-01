@@ -1,9 +1,9 @@
 import Vue from 'vue';
-// import Vue
 import VueClipboard from 'vue-clipboard2';
  
 
 import iView from 'iview';
+// import iView from 'view-design'//新版本iView框架
 import VueOccupy from 'vue-occupy'
 import {
     router

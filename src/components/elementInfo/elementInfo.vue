@@ -1,7 +1,6 @@
 <style lang="less">
     .elementInfo-box {
         width: 50%;
-        /* text-align: center; */
         margin: 0 auto;
     }
 </style>
@@ -10,17 +9,6 @@
 <template>
     <div class="elementInfo-box">
         <Form label-position="right" :label-width="130"> 
-            <!-- <FormItem label="诉讼金额">
-                <Input v-model="litigation.amount" placeholder="请输入诉讼标的金额" style="width: 300px" />
-            </FormItem>
-            <FormItem label="诉讼请求">
-                <Input type="textarea" v-model="litigation.request" :row="5" placeholder="请输入诉讼理由" style="width: 300px" />
-            </FormItem>
-            <FormItem label="请上传起诉状扫描件">
-                <Upload action="/api/online/evidenceAttachment/uploadEvidenceList.jhtml">
-                    <Button icon="ios-cloud-upload-outline">点击选择文件上传</Button>
-                </Upload>
-            </FormItem> -->
             <FormItem>
                 <Menu @on-select="choice" style="width: 300px;">
                     <Submenu name="1">
@@ -748,7 +736,7 @@ export default {
         }
     },
     mounted () {
-        if(this.myPartId == ''){
+        if(this.myPartId == undefined || this.myPartId == ''){
             getPartId(this.lawCaseId).then(res => {
                 this.myPartId = res.data.partId;
             })

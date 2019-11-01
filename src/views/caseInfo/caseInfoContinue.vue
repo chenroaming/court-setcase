@@ -81,51 +81,51 @@ font-size: 12px;
 cursor: pointer;
 }
 .over_flo .matrFile{
-width: 85px;
-height: 120px;
-border: 1px solid #ccc;
-display: inline-block;
-border-radius: 10px;
-margin: 10px;
-float: left;
-margin-top: 0px;
+    width: 85px;
+    height: 120px;
+    border: 1px solid #ccc;
+    display: inline-block;
+    border-radius: 10px;
+    margin: 10px;
+    float: left;
+    margin-top: 0px;
 }
 .over_flo .matrFile .ivu-icon{
-margin-top: 30px;
+    margin-top: 30px;
 }
 .add{
-cursor: pointer;
+    cursor: pointer;
 }
 .add .ivu-icon{
-color:#ccc;
-font-size: 40px;
-margin-top: 50px;
+    color:#ccc;
+    font-size: 40px;
+    margin-top: 50px;
 }
 .info{
-font-size: 12px;
-color: #000;
-overflow:hidden; 
-word-wrap:break-word;
-text-align: left;
-position: relative;
-padding: 5px;
+    font-size: 12px;
+    color: #000;
+    overflow:hidden; 
+    word-wrap:break-word;
+    text-align: left;
+    position: relative;
+    padding: 5px;
 }
 .info:before{
-content: "";
-width: 0;
-height: 100%;
-background: #000;
-padding: 14px 18px;
-position: absolute;
-top: 0;
-left: 50%;
-opacity: 0;
-transition: all 500ms cubic-bezier(0.47, 0, 0.745, 0.715) 0s;
+    content: "";
+    width: 0;
+    height: 100%;
+    background: #000;
+    padding: 14px 18px;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    opacity: 0;
+    transition: all 500ms cubic-bezier(0.47, 0, 0.745, 0.715) 0s;
 }
 .info:hover:before{
-width: 100%;
-left: 0;
-opacity: 0.5;
+    width: 100%;
+    left: 0;
+    opacity: 0.5;
 }
 .bmbox{
     position:absolute;
@@ -156,187 +156,186 @@ opacity: 0.5;
     transition-delay: 0.7s;
 }
 .labelNmae{
-display: block;
-height: 30px;
-text-align: left;
-padding-left: 15px;
+    display: block;
+    height: 30px;
+    text-align: left;
+    padding-left: 15px;
 }
 .content-col{
-padding:10px;
+    padding:10px;
 }
 .maininfo-col{
 /* border-bottom: 1px solid #e9eaec;
 border-right: 1px solid #e9eaec; */
-line-height: 20px;
+    line-height: 20px;
 }
 .top-col{
-text-align: center;
+    text-align: center;
 }
 .top-col span{
-line-height: 50px;
+    line-height: 50px;
 }
 .top-col p{
-line-height: 35px;
+    line-height: 35px;
 }
 .matrFile p{
-color: #ccc;
+    color: #ccc;
 }
 .over_flo .matrFileShen{
-width: 130px;
-height: 58px;
-border: 1px solid #ccc;
-display: inline-block;
-border-radius: 10px;
+    width: 130px;
+    height: 58px;
+    border: 1px solid #ccc;
+    display: inline-block;
+    border-radius: 10px;
 /* margin: 5px; */
-float: left;
-margin-top: 0px;
+    float: left;
+    margin-top: 0px;
 }
 .over_flo .matrShen{
-float: left;
-width: 130px;
-height: 58px;
-margin: 5px;
-margin-top:0px;
+    float: left;
+    width: 130px;
+    height: 58px;
+    margin: 5px;
+    margin-top:0px;
 }
 .matrFileShen .ivu-icon{
-color: #ccc;
-font-size: 20px;
-margin-top: 5px;
+    color: #ccc;
+    font-size: 20px;
+    margin-top: 5px;
 }
 .matrFileShen p{
-color: #ccc;
+    color: #ccc;
 }
 .a-upload {
-padding: 4px 10px;
-line-height: 20px;
-position: relative;
-cursor: pointer;
-color: #888;
-background: #fafafa;
-border: 1px solid #ddd;
-border-radius: 4px;
-overflow: hidden;
-display: inline-block;
-*display: inline;
-*zoom: 1
+    padding: 4px 10px;
+    line-height: 20px;
+    position: relative;
+    cursor: pointer;
+    color: #888;
+    background: #fafafa;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    overflow: hidden;
+    display: inline-block;
+    *display: inline;
+    *zoom: 1
 }
 .a-upload  input {
-position: absolute;
-font-size: 100px;
-right: 0;
-top: 0;
-opacity: 0;
-filter: alpha(opacity=0);
-cursor: pointer
+    position: absolute;
+    font-size: 100px;
+    right: 0;
+    top: 0;
+    opacity: 0;
+    filter: alpha(opacity=0);
+    cursor: pointer
 }
 
 .a-upload:hover {
-color: #444;
-background: #eee;
-border-color: #ccc;
-text-decoration: none
+    color: #444;
+    background: #eee;
+    border-color: #ccc;
+    text-decoration: none
 }
 .active span{
-color: #007FD5;
+    color: #007FD5;
 }
 .sdw{
-display: block;
-text-align: left;
-line-height: 40px;
-padding-left: 10px;
-background: #38B3FF;
-color: white;
+    display: block;
+    text-align: left;
+    line-height: 40px;
+    padding-left: 10px;
+    background: #38B3FF;
+    color: white;
 }
 .sdws{
-display: block;
-text-align: left;
-line-height: 40px;
+    display: block;
+    text-align: left;
+    line-height: 40px;
 /* padding-left: 10px; */
 /* border-top:1px solid #dddee1;
 border-left:1px solid #dddee1;
 border-right:1px solid #dddee1; */
 }
 .ivu-table-cell b{
-background-image:url('../../images/download.png');
-background-size: 100% 100%; 
-display:inline-block;
-cursor: pointer;
-height: 30px;
-width:30px;
+    background-image:url('../../images/download.png');
+    background-size: 100% 100%; 
+    display:inline-block;
+    cursor: pointer;
+    height: 30px;
+    width:30px;
 }
 .setStep{
-color:#ccc;
+    color:#ccc;
 }
 .setActive{
-color:#007FD5;
+    color:#007FD5;
 }
 .demo-spin-container{
-display: inline-block;
-width: 100%;
-height: 100%;
-position: relative;
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    position: relative;
 }
 .ivu-spin-fix {
-background-color: rgba(255, 255, 255, 0);
+    background-color: rgba(255, 255, 255, 0);
 }
 .maininfo-col {
 /* border-bottom: 1px solid #e9eaec;
 border-right: 1px solid #e9eaec; */
-line-height: 20px;
-border: none;
+    line-height: 20px;
+    border: none;
 }
 .add .ivu-icon {
-color: #ccc;
-font-size: 40px;
-margin-top: 10px;
+    color: #ccc;
+    font-size: 40px;
+    margin-top: 10px;
 }
 .add .ivu-icon {
-color: #ccc;
-font-size: 20px;
-margin-top: 10px;
+    color: #ccc;
+    font-size: 20px;
+    margin-top: 10px;
 }
 .ivu-form .ivu-form-item-label {
-font-size: 12px;
+    font-size: 12px;
 }
 .steps .ivu-icon {
-font-size: 27px;
+    font-size: 27px;
 }
 .ivu-modal .ivu-select-dropdown {
-position: fixed!important;
+    position: fixed!important;
 }
 .overHides{
-display:-webkit-box;
--webkit-box-orient: vertical; 
--webkit-line-clamp: 2;
-overflow:hidden;
+    display:-webkit-box;
+    -webkit-box-orient: vertical; 
+    -webkit-line-clamp: 2;
+    overflow:hidden;
 }
 .itemsd{
-min-height: 120px;
-display: block;
-width:100%;
-clear: both;
-margin-bottom: 10px;
+    min-height: 120px;
+    display: block;
+    width:100%;
+    clear: both;
+    margin-bottom: 10px;
 /* border-bottom: 1px solid #ccc; */
 }
 .left-namsa{
-width: 80px;
-display: inline-block;
-float: left;
-padding-top: 10px;
-margin-right:20px;
-height: 120px;
-
+    width: 80px;
+    display: inline-block;
+    float: left;
+    padding-top: 10px;
+    margin-right:20px;
+    height: 120px;
 }
 .handelBtns{
-width: 185px;
-height: 85px;
-/* border: 1px solid #ccc; */
-border-radius: 10px;
-margin: 10px;
-float: left;
+    width: 185px;
+    height: 85px;
+    /* border: 1px solid #ccc; */
+    border-radius: 10px;
+    margin: 10px;
+    float: left;
 }
 .handelBtns button{
-margin-top: 7px;
+    margin-top: 7px;
 }
 </style>
 
@@ -1163,6 +1162,7 @@ right: -20px;">元</span>
     @on-ok="gotoHome"
     width="560px"
     :mask-closable="closeM"
+    :closable="false"
     title="立案信息确认">
     <div>
         <div style="width:100%;text-align:center;margin-bottom:10px;margin-top: 60px;"><h2>提交成功！</h2></div>
@@ -2268,7 +2268,7 @@ deleLiti(id){   //删除当事人
         if(res.data.haveEvidence == 1){
             this.$Modal.confirm({
                 title: '提示',
-                content: '<p>该当事人存在证据，确定删除当前当事人吗？</p>',
+                content: '<p>'+res.data.message+'</p>',
                 onOk: () => {
                 deleteLitigantInfo(id).then(res => {
                     if(res.data.state == 100){
@@ -2883,6 +2883,7 @@ getOneLini(id){ //获取当事人信息
     this.litigantId = id;
     getOneLitigant(id).then(res => {
         if(res.data.state == 100){
+            console.log(res.data.onlineLitigant);
             // this.addFormItem.politicalStatus=res.data.onlineLitigant.politicalStatus;
             this.addFormItem.nationality=res.data.onlineLitigant.nationality;
             this.addFormItem.education=res.data.onlineLitigant.education;
@@ -3526,6 +3527,8 @@ gerUsualPeople(str){
     this.statusNow = str;
     this.usualId = "";
     this.usualList = [];
+    this.selUsualPeo = true;
+    this.usualLoading = true;
     getCmInfo(this.nowPage,5).then(res => {
         this.usualLoading = false;
         if(res.data.state == 100){
@@ -3543,8 +3546,7 @@ gerUsualPeople(str){
             {
                 return {litigantName,identityCard,id};
             })
-            this.usualList = arr;
-            this.selUsualPeo = true;
+            this.usualList = arr; 
         }else{
             this.$Message.info(res.data.message);
         }

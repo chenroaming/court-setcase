@@ -2872,7 +2872,8 @@ export default {
                 }
             })
             }else if(e == 4){//审查意见
-                this.tabSum=4
+                this.remark = '',
+                this.tabSum=4;
                 this.caseNo="";
                 this.briefId="";
                 this.courtId='';
