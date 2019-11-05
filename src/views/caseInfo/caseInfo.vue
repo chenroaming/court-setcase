@@ -2678,7 +2678,7 @@
                         }else{
                             this.$Modal.warning({
                                 title: '提示',
-                                content: '原告人及电话不能为空'
+                                content: '原告联系人及电话不能为空'
                             })
                             
                         }
@@ -3326,10 +3326,10 @@
                             }
                         })    
                     }else if(dex == 2){
-                        if(this.showSureMo == 1){
-                            this.nextStepSure();
-                            return false;
-                        }
+                        // if(this.showSureMo == 1){
+                        //     this.nextStepSure();
+                        //     return false;
+                        // }
                         this.disabled = true;
                         this.single = false;
                         var that = this;

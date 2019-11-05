@@ -2582,7 +2582,7 @@ lastSubmit(){
         }else{
             this.$Modal.warning({
                 title: '提示',
-                content: '原告人及电话不能为空'
+                content: '原告联系人及电话不能为空'
             });
         }
     }else{
@@ -2673,7 +2673,7 @@ submitCase(){
         }else{
             this.$Modal.warning({
                 title: '提示',
-                content: '原告人及电话不能为空'
+                content: '原告联系人及电话不能为空'
             });
         }
     }else{
