@@ -334,6 +334,11 @@
                                     <FormItem label="当事人|事由:" style="width: 505px;" >
                                         <Input v-model="litigantContent" placeholder="请输入当事人|事由"></Input>
                                     </FormItem>
+                                    <FormItem label="案件适用程序:" style="width: 245px;" >
+                                        <Select v-model="procedureId" filterable transfer placeholder="请选择">
+                                            <Option v-for="item in procedure" v-bind:value="item.id">{{item.name}}</Option>
+                                        </Select>
+                                    </FormItem>
                                     <FormItem label="诉讼费:" style="width: 305px;" >
                                         <input type="text" name="je" @input="clearNoNum" style="border: 1px solid #dddee1;border-radius: 5px;padding-left: 5px;"/>元 
                                     </FormItem>
@@ -1529,7 +1534,11 @@ export default {
             guaranteeContract:[],
             mortgageContract:[],
             pledgeContract:[],
-
+            procedure:[
+                {name:'简易程序',id:'简易程序'},
+                {name:'普通程序',id:'普通程序'}
+            ],
+            procedureId:'',//案件适用程序
             eviId:'',
             isChecked:false,
             nowUrlFrist:'',
@@ -2182,7 +2191,8 @@ export default {
                 remark:this.remark,
                 mediateNo:this.mediateNo ? this.mediateNo : "",
                 briefId:this.briefId,
-                files:this.fileNlistFormData
+                files:this.fileNlistFormData,
+                procedure:this.procedureId
             }
             if(this.audit == 1){
                 params.caseNo=this.caseNo;
@@ -2192,7 +2202,8 @@ export default {
                 params.clerkId=this.clerkId;
                 params.filingDate=this.filingDateStr;
                 params.litigantContent=this.litigantContent;
-                params.payMoney=this.payMoney*100
+                params.payMoney=this.payMoney*100;
+                params.procedure = this.procedureId;
             }
             auditOnlineLawCase(params).then(res => {
                 this.TermLoading = false;
@@ -2532,7 +2543,8 @@ export default {
                     remark:this.remark,
                     mediateNo:this.mediateNo,
                     briefId:this.briefId,
-                    files:this.fileNlistFormData
+                    files:this.fileNlistFormData,
+                    procedure:this.procedureId
                 }
                 if(this.audit == 1){
                     params.caseNo=this.caseNo;
@@ -2542,7 +2554,7 @@ export default {
                     params.clerkId=this.clerkId;
                     params.filingDate=this.filingDateStr;
                     params.litigantContent=this.litigantContent;
-                    params.payMoney=this.payMoney*100
+                    params.payMoney=this.payMoney*100;
                 }
                 if (this.audit == 6) {
                     var params ={
@@ -2564,7 +2576,6 @@ export default {
                         this.getList(this.pageNumber)
                     }else{
                         this.$Message.info(res.data.message);
-                        this.changeLoading();
                     }
                 })
             }else if (this.tabSum==5) {

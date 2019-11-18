@@ -2108,6 +2108,7 @@
                         }else{
                             window.localStorage.setItem('newItemStep',4);
                             this.stepNum = 4;
+                            this.getFilesL();
                             this.fileAdd = true;
                             this.elementAdd = false;
                             this.nextLoading = false;
@@ -2218,56 +2219,77 @@
                     this.EviList = [];
                     getFiles(this.caseId).then(res => {
                         if(res.data.state == 100){
-                            res.data.file.map(item => {
-                                if(item.type == 1){
-                                    this.fileName1 = item.name;
-                                    this.onlineEAId1 = item.id;
-                                    this.qisuShow1 = false;
-                                }else if(item.type == 2){
-                                    this.fileName2 = item.name;
-                                    this.onlineEAId2 = item.id;
-                                    this.qisuShow2 = false;
-                                }else if(item.type == 3){
-                                    const data = {
-                                        name:item.eviName,
-                                        proves:item.eviProve,
-                                        where:item.eviSource,
-                                        filePa:item.path ? item.path : "",
-                                        id:item.id
+                            if(res.data.hasOwnProperty('file')){
+                                res.data.file.map(item => {
+                                    if(item.type == 1){
+                                        this.fileName1 = item.name;
+                                        this.onlineEAId1 = item.id;
+                                        this.qisuShow1 = false;
+                                    }else if(item.type == 2){
+                                        this.fileName2 = item.name;
+                                        this.onlineEAId2 = item.id;
+                                        this.qisuShow2 = false;
+                                    }else if(item.type == 3){
+                                        const data = {
+                                            name:item.eviName,
+                                            proves:item.eviProve,
+                                            where:item.eviSource,
+                                            filePa:item.path ? item.path : "",
+                                            id:item.id
+                                        }
+                                        this.EviList.push(data);
+                                    }else if(item.type == 4){
+                                        if(item.applyType == 1){
+                                            this.fileNameShen1 = item.name;
+                                            this.qisuShowShen1 = false;
+                                            this.onlineEAIdShen1 = item.id;
+                                        }else if(item.applyType == 2){
+                                            this.fileNameShen2 = item.name;
+                                            this.qisuShowShen2 = false;
+                                            this.onlineEAIdShen2 = item.id;
+                                        }else if(item.applyType == 3){
+                                            this.fileNameShen3 = item.name;
+                                            this.qisuShowShen3 = false;
+                                            this.onlineEAIdShen3 = item.id;
+                                        }else if(item.applyType == 4){
+                                            this.fileNameShen4 = item.name;
+                                            this.qisuShowShen4= false;
+                                            this.onlineEAIdShen4 = item.id;
+                                        }else if(item.applyType == 5){
+                                            this.fileNameShen5 = item.name;
+                                            this.qisuShowShen5 = false;
+                                            this.onlineEAIdShen5 = item.id;
+                                        }else if(item.applyType == 6){
+                                            this.fileNameShen6 = item.name;
+                                            this.qisuShowShen6 = false;
+                                            this.onlineEAIdShen6 = item.id;
+                                        }
+                                    }else if(item.type == 5){
+                                        this.qfileName = item.name;
+                                        this.onlineEAId3 = item.id;
+                                        this.qisuSh = false;
                                     }
-                                    this.EviList.push(data);
-                                }else if(item.type == 4){
-                                    if(item.applyType == 1){
-                                        this.fileNameShen1 = item.name;
-                                        this.qisuShowShen1 = false;
-                                        this.onlineEAIdShen1 = item.id;
-                                    }else if(item.applyType == 2){
-                                        this.fileNameShen2 = item.name;
-                                        this.qisuShowShen2 = false;
-                                        this.onlineEAIdShen2 = item.id;
-                                    }else if(item.applyType == 3){
-                                        this.fileNameShen3 = item.name;
-                                        this.qisuShowShen3 = false;
-                                        this.onlineEAIdShen3 = item.id;
-                                    }else if(item.applyType == 4){
-                                        this.fileNameShen4 = item.name;
-                                        this.qisuShowShen4= false;
-                                        this.onlineEAIdShen4 = item.id;
-                                    }else if(item.applyType == 5){
-                                        this.fileNameShen5 = item.name;
-                                        this.qisuShowShen5 = false;
-                                        this.onlineEAIdShen5 = item.id;
-                                    }else if(item.applyType == 6){
-                                        this.fileNameShen6 = item.name;
-                                        this.qisuShowShen6 = false;
-                                        this.onlineEAIdShen6 = item.id;
-                                    }
-                                }else if(item.type == 5){
-                                    this.qfileName = item.name;
-                                    this.onlineEAId3 = item.id;
-                                    this.qisuSh = false;
-                                }
-                            });
+                                });
+                                return;
+                            }
+                            this.qfileName = '';
+                            this.fileName1 = '';
+                            this.fileName2 = '';
+                            this.fileNameShen1 = '';
+                            this.fileNameShen2 = '';
+                            this.fileNameShen3 = '';
+                            this.fileNameShen4 = '';
+                            this.fileNameShen5 = '';
+                            this.fileNameShen6 = '';
+                            this.qisuSh = true;
+                            this.qisuShow1 = true;
+                            this.qisuShow2 = true;
+                            this.qisuShowShen1 = true;
+                            this.qisuShowShen2 = true;
+                            this.qisuShowShen3 = true;
+                            this.qisuShowShen4 = true;
+                            this.qisuShowShen5 = true;
+                            this.qisuShowShen6 = true;
                         }else{
                             this.$Message.warning(res.data.message);
                             return false;
@@ -3441,11 +3463,10 @@
                     this.dailiAdd = false;
                     if(this.isRight){
                         window.localStorage.setItem('newItemStep',3);
-                        this.fileAdd = true;
                         this.elementAdd = false;
-                    }else{
-                        this.fileAdd = true;
                     }
+                    this.getFilesL();
+                    this.fileAdd = true;
                     this.isOpenevidenceMol = true;
                     this.evidenceMol = false;
                     this.stepNum = 4;
@@ -3485,6 +3506,7 @@
                         }
                     }else if(dex == 5){
                         this.changeStep();
+                        this.getFilesL();
                         this.fileAdd = true;
                         this.stepNum = 4;
                     }
@@ -3847,7 +3869,7 @@
                             this.onlineEAId1 = res.data.evident.id;
                             this.qisuShow1 = false;
                             const data = {
-                                path:res.data.result,
+                                path:res.data.evident.name,
                                 type:res.data.evident.id
                             }
                             this.pathList.push(data);
@@ -3870,7 +3892,7 @@
                             this.fileName2 = this.file.name;
                             this.onlineEAId2 = res.data.evident.id;
                             const data = {
-                                path:res.data.result,
+                                path:res.data.evident.name,
                                 id:res.data.evident.id
                             }
                             this.pathList.push(data);
@@ -3895,7 +3917,7 @@
                             this.onlineEAId3 = res.data.evident.id;
                             this.qisuSh = false;
                             const data = {
-                                path:res.data.result,
+                                path:res.data.evident.name,
                                 type:res.data.evident.id
                             }
                             this.pathList.push(data);
@@ -3918,7 +3940,7 @@
                             this.fileNameShen1 = this.file.name;
                             this.onlineEAIdShen1 = res.data.evident.id;
                             const data = {
-                                path:res.data.result,
+                                path:res.data.evident.name,
                                 id:res.data.evident.id
                             }
                             this.pathList.push(data);
@@ -3942,7 +3964,7 @@
                             this.fileNameShen2 = this.file.name;
                             this.onlineEAIdShen2 = res.data.evident.id;
                             const data = {
-                                path:res.data.result,
+                                path:res.data.evident.name,
                                 id:res.data.evident.id
                             }
                             this.pathList.push(data);
@@ -3966,7 +3988,7 @@
                             this.fileNameShen3 = this.file.name;
                             this.onlineEAIdShen3 = res.data.evident.id;
                             const data = {
-                                path:res.data.result,
+                                path:res.data.evident.name,
                                 id:res.data.evident.id
                             }
                             this.pathList.push(data);
@@ -3990,7 +4012,7 @@
                             this.fileNameShen4 = this.file.name;
                             this.onlineEAIdShen4 = res.data.evident.id;
                             const data = {
-                                path:res.data.result,
+                                path:res.data.evident.name,
                                 id:res.data.evident.id
                             }
                             this.pathList.push(data);
@@ -4014,7 +4036,7 @@
                             this.fileNameShen5 = this.file.name;
                             this.onlineEAIdShen5 = res.data.evident.id;
                             const data = {
-                                path:res.data.result,
+                                path:res.data.evident.name,
                                 id:res.data.evident.id
                             }
                             this.pathList.push(data);
@@ -4038,7 +4060,7 @@
                             this.fileNameShen6 = this.file.name;
                             this.onlineEAIdShen6 = res.data.evident.id;
                             const data = {
-                                path:res.data.result,
+                                path:res.data.evident.name,
                                 id:res.data.evident.id
                             }
                             this.pathList.push(data);

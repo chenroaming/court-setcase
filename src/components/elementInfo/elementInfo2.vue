@@ -7,6 +7,10 @@
     .ivu-select-dropdown {
         z-index: 9999;
     }
+    .collaps-content {
+        height: auto;
+        overflow-x: scroll;
+    }
 </style>
 
 
@@ -37,55 +41,61 @@
             <Collapse v-model="collapseBox">
                 <Panel name="1">
                     夫妻共同债务
-                    <FormItem slot="content" label="是否支持夫妻共同债">
-                        <RadioGroup v-model="couple.isPublic">
-                            <Radio label="yes">
-                                <span>是</span>
-                            </Radio>
-                            <Radio label="no">
-                                <span>否</span>
-                            </Radio>
-                        </RadioGroup>
-                    </FormItem>
-                    <FormItem slot="content" label="结婚登记时间">
+                    <div slot="content" class="collaps-content">
+                        <FormItem label="是否支持夫妻共同债">
+                            <RadioGroup v-model="couple.isPublic">
+                                <Radio label="yes">
+                                    <span>是</span>
+                                </Radio>
+                                <Radio label="no">
+                                    <span>否</span>
+                                </Radio>
+                            </RadioGroup>
+                        </FormItem>
+                        <FormItem label="结婚登记时间">
                             <DatePicker type="date" v-model="couple.marry" placeholder="请选择时间" style="width: 300px"></DatePicker>
-                    </FormItem>
-                    <FormItem slot="content" label="离婚登记时间">
-                        <DatePicker type="date" v-model="couple.divorce" placeholder="请选择时间" style="width: 300px"></DatePicker>
-                    </FormItem>
+                        </FormItem>
+                        <FormItem label="离婚登记时间">
+                            <DatePicker type="date" v-model="couple.divorce" placeholder="请选择时间" style="width: 300px"></DatePicker>
+                        </FormItem>
+                    </div>
                 </Panel>
                 <Panel name="2">
                     支付令
-                    <FormItem slot="content" label="请求支付的事实与理由">
-                        <Input v-model="pay.reason" :row="5" placeholder="请输入理由" style="width: 300px" />
-                    </FormItem>
-                    <FormItem slot="content" label="申请支付金额（元）">
-                        <Input v-model="pay.money" :row="5" placeholder="请输入金额" style="width: 300px" />
-                    </FormItem>
-                    <FormItem slot="content" label="有价证券">
-                        <Input v-model="pay.securities" :row="5" placeholder="请输入金额" style="width: 300px" />
-                    </FormItem>
-                    <FormItem slot="content" label="支付令申请费（元）">
-                        <Input v-model="pay.applicationFee" :row="5" placeholder="请输入金额" style="width: 300px" />
-                    </FormItem>
-                    <FormItem slot="content" label="申请支付令时">
-                        <DatePicker type="date" v-model="pay.applyTime" placeholder="请选择时间" style="width: 300px"></DatePicker>
-                    </FormItem>
-                    <FormItem slot="content" label="作出支付令时间">
-                        <DatePicker type="date" v-model="pay.completeTime" placeholder="请选择时间" style="width: 300px"></DatePicker>
-                    </FormItem>
+                    <div slot="content" class="collaps-content">
+                        <FormItem label="请求支付的事实与理由">
+                            <Input v-model="pay.reason" :row="5" placeholder="请输入理由" style="width: 300px" />
+                        </FormItem>
+                        <FormItem label="申请支付金额（元）">
+                            <Input v-model="pay.money" :row="5" placeholder="请输入金额" style="width: 300px" />
+                        </FormItem>
+                        <FormItem label="有价证券">
+                            <Input v-model="pay.securities" :row="5" placeholder="请输入金额" style="width: 300px" />
+                        </FormItem>
+                        <FormItem label="支付令申请费（元）">
+                            <Input v-model="pay.applicationFee" :row="5" placeholder="请输入金额" style="width: 300px" />
+                        </FormItem>
+                        <FormItem label="申请支付令时">
+                            <DatePicker type="date" v-model="pay.applyTime" placeholder="请选择时间" style="width: 300px"></DatePicker>
+                        </FormItem>
+                        <FormItem label="作出支付令时间">
+                            <DatePicker type="date" v-model="pay.completeTime" placeholder="请选择时间" style="width: 300px"></DatePicker>
+                        </FormItem>
+                    </div>
                 </Panel>
                 <Panel name="3">
                     终结督促程序
-                    <FormItem slot="content" label="终结督促程序申请费（元）">
-                        <Input v-model="endProcess.fee" :row="5" placeholder="请输入金额" style="width: 300px" />
-                    </FormItem>
-                    <FormItem slot="content" label="终结督促程序裁定作出时间">
-                        <DatePicker type="date" v-model="endProcess.time" placeholder="请选择时间" style="width: 300px"></DatePicker>
-                    </FormItem>
-                    <FormItem slot="content" label="终结督促程序的原因">
-                        <Input v-model="endProcess.reason" :row="5" placeholder="请输入原因" style="width: 300px" />
-                    </FormItem>
+                    <div slot="content" class="collaps-content">
+                        <FormItem label="终结督促程序申请费（元）">
+                            <Input v-model="endProcess.fee" :row="5" placeholder="请输入金额" style="width: 300px" />
+                        </FormItem>
+                        <FormItem label="终结督促程序裁定作出时间">
+                            <DatePicker type="date" v-model="endProcess.time" placeholder="请选择时间" style="width: 300px"></DatePicker>
+                        </FormItem>
+                        <FormItem label="终结督促程序的原因">
+                            <Input v-model="endProcess.reason" :row="5" placeholder="请输入原因" style="width: 300px" />
+                        </FormItem>
+                    </div>
                 </Panel>
             </Collapse>
         </Form>
@@ -217,7 +227,7 @@ export default {
     props:['lawCaseId','partId'],
     data () {
         return {
-            collapseBox:'',
+            collapseBox:'1',
             gcId:'',
             cardId:'',
             isAdd:true,
