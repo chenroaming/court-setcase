@@ -379,10 +379,10 @@ border-right: 1px solid #e9eaec; */
 right: -20px;">元</span>
         </FormItem>
         <FormItem label="案件案由" style="width: 405px;">
-            <Select v-model="onlineBriefId" filterable transfer placeholder="请选择">
+            <!-- <Select v-model="onlineBriefId" filterable transfer placeholder="请选择">
                 <Option v-for="item in bridfList" v-bind:value="item.id">{{item.name}}</Option>
-            </Select>
-            <!-- <Dropdown trigger="custom" :visible="onlineBriefListShow" style="width: 100%;">
+            </Select> -->
+            <Dropdown trigger="custom" :visible="onlineBriefListShow" style="width: 100%;">
                 <a href="javascript:void(0)" @click="handleOpen">
                     <Input v-model="selectTitle" placeholder="请选择案件案由" clearable @on-change="remoteMethod" style="width: 100%;"/>
                     <Icon type="ios-arrow-down"></Icon>
@@ -392,7 +392,7 @@ right: -20px;">元</span>
                         <Tree :data="onlineBriefList" :load-data="loadData" @on-select-change="onSelect"></Tree>
                         <Spin size="large" fix v-if="loading1"></Spin> 
                     </div>
-                </DropdownMenu> -->
+                </DropdownMenu>
             </Dropdown>
             <!-- <Dropdown trigger="custom" :visible="onlineBriefListShow" style="margin-left: 20px">
                 <a href="javascript:void(0)" @click="handleOpen">
@@ -1518,7 +1518,7 @@ return {
     ],
     usualLitiId:"",
     //结束
-
+    noewTYpe:1,
     ten:10,
     fileNlistEvi:false,
     evidenceMol:false,
@@ -1923,6 +1923,7 @@ mounted() {
     this.stepNum = this.$route.params.process? this.$route.params.process : window.localStorage.getItem('process');
     this.isRight = this.$route.params.briefId? (this.$route.params.briefId== 'fa86bd7e1af811e9b39a00163e0af9c6' || this.$route.params.briefId == 'fa86bdfb1af811e9b39a00163e0af9c6' ? true : false) : (window.localStorage.getItem('continueIsRight') == 'fa86bd7e1af811e9b39a00163e0af9c6' || window.localStorage.getItem('continueIsRight') == 'fa86bdfb1af811e9b39a00163e0af9c6' ? true : false);
     this.onlineBriefId = this.$route.params.briefId || window.localStorage.getItem('continueIsRight');
+    this.noewTYpe = window.localStorage.getItem('continuePlace');
     this.isElement = this.onlineBriefId == 'fa86bd7e1af811e9b39a00163e0af9c6' ? 1 : (this.onlineBriefId == 'fa86bdfb1af811e9b39a00163e0af9c6' ? 2 : 0);
     switch(Number(this.stepNum)){
         case 0:
@@ -1964,12 +1965,20 @@ mounted() {
 
     this.getbrief();
 
-// getOnlineBrief().then(res => {
-//     const data = res.data.briefList.map(item => {
-//         return {title:item.name,loading:false,children:[],id:item.id,type:item.type};
-//     })
-//     this.onlineBriefList = data;
-// })
+    getOnlineBrief(this.noewTYpe).then(res => {
+        // const data = res.data.briefList.map(item => {
+        //     return {title:item.name,loading:false,children:[],id:item.id,type:item.type};
+        // })
+        this.onlineBriefList = [];
+        for(const item of res.data.briefList){
+            if(item.type == 0){
+                this.onlineBriefList.push({title:item.name,id:item.id,type:item.type});
+            }else{
+                this.onlineBriefList.push({title:item.name,loading:false,children:[],id:item.id,type:item.type});
+            }
+        }
+        // this.onlineBriefList = data;
+    })
 
 },
 watch: {
@@ -2045,7 +2054,7 @@ changePhone (index){
     this.isDisabled = false;
 },
 loadData (item, callback) {//给案由信息添加子节点
-    getOnlineBrief(item.id).then(res => {
+    getOnlineBrief(this.noewTYpe,item.id).then(res => {
         let data = [];
         for (const item of res.data.briefList){
             if(item.type == 0){
@@ -2073,7 +2082,7 @@ handleOpen (){//收缩下拉菜单
 remoteMethod (){//输入时动态改变树形菜单
     this.loading1 = true;
     if (this.selectTitle !== '') {
-        getMateBrief(this.selectTitle).then((res)=>{
+        getMateBrief(this.noewTYpe,this.selectTitle).then((res)=>{
             let data = [];
             const data2 = res.data.result.map(item => {
                 return item.type == 0 ? data.push({title:item.name,id:item.id,type:item.type}) : data.push({title:item.name,loading:false,children:[],id:item.id,type:item.type});
@@ -2082,11 +2091,19 @@ remoteMethod (){//输入时动态改变树形菜单
             this.loading1 = false;
         })
     }else{
-        getOnlineBrief().then(res => {
-            const data = res.data.briefList.map(item => {
-                return {title:item.name,loading:false,children:[],id:item.id,type:item.type};
-            })
-            this.onlineBriefList = data;
+        getOnlineBrief(this.noewTYpe).then(res => {
+            // const data = res.data.briefList.map(item => {
+            //     return {title:item.name,loading:false,children:[],id:item.id,type:item.type};
+            // })
+            // this.onlineBriefList = data;
+            this.onlineBriefList = [];
+            for(const item of res.data.briefList){
+                if(item.type == 0){
+                    this.onlineBriefList.push({title:item.name,id:item.id,type:item.type});
+                }else{
+                    this.onlineBriefList.push({title:item.name,loading:false,children:[],id:item.id,type:item.type});
+                }
+            }
             this.loading1 = false;
         })
     }

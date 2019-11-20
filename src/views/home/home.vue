@@ -167,10 +167,10 @@ data () {
                             },
                             on: {
                                 click: () => {
-                                    
                                     window.localStorage.setItem('lawCaseId',params.row.lawCaseId);
                                     window.localStorage.setItem('process',params.row.process);
                                     window.localStorage.setItem('continueIsRight',params.row.briefId);
+                                    window.localStorage.setItem('continuePlace',params.row.place);
                                     this.$router.push({
                                         name: "caseInfoContinue",
                                         params: { lawCaseId: params.row.lawCaseId, process: params.row.process, briefId:params.row.briefId}
@@ -229,7 +229,8 @@ methods: {
                     defendantName: '',
                     lawCaseId:item.id,
                     process:item.process,
-                    briefId:item.onlineBrief.id
+                    briefId:item.onlineBrief.id,
+                    place:item.place
                 };
                 const plaintiffName = item.onlineLitigants.map(member=>{
                     return member.litigationStatus.name == '原告' && member.enable ? obj.plaintiffName = obj.plaintiffName+member.litigantName+'  ' : (member.litigationStatus.name == '被告' && member.enable ? obj.defendantName = obj.defendantName+member.litigantName+'  ' : false);
@@ -257,6 +258,7 @@ methods: {
                         const process = res.data.onlineLawCase[0].process;
                         window.localStorage.setItem('lawCaseId',res.data.onlineLawCase[0].id);
                         window.localStorage.setItem('process',process);
+                        window.localStorage.setItem('continuePlace',res.data.onlineLawCase[0].place);
                         this.$router.push({
                             name: "caseInfoContinue",
                             params: { lawCaseId: res.data.onlineLawCase[0].id, process:process}
@@ -288,7 +290,8 @@ methods: {
                         defendantName: '',
                         lawCaseId:item.id,
                         process:item.process,
-                        briefId:item.onlineBrief.id
+                        briefId:item.onlineBrief.id,
+                        place:item.place
                     };
                     const plaintiffName = item.onlineLitigants.map(member=>{
                         return member.litigationStatus.name == '原告' && member.enable ? obj.plaintiffName = obj.plaintiffName+member.litigantName+'  ' : (member.litigationStatus.name == '被告' && member.enable ? obj.defendantName = obj.defendantName+member.litigantName+'  ' : false);

@@ -404,9 +404,9 @@
         <template>
         <div>
             <div style="padding:10px;padding-top:20px;padding-bottom:20px;height:100%" v-if="caseId == '' && nexts == true ">
-                <!-- <h1 style="text-align:center">请选择法庭</h1>
+                <h1 style="text-align:center">请选择法庭</h1>
                 <div class="middleType">
-                    <Button :type="noewTYpe == '0' ? 'primary' : 'dashed'" class="btxa"  shape="circle"   @click="selType(0)">涉网案件</Button><br/><br/>
+                    <!-- <Button :type="noewTYpe == '0' ? 'primary' : 'dashed'" class="btxa"  shape="circle"   @click="selType(0)">涉网案件</Button><br/><br/> -->
                     <Button :type="noewTYpe == '1' ? 'primary' : 'dashed'" class="btxa" shape="circle" @click="selType(1)">
                         殿前法庭审判事物服务中心
                         <br/>
@@ -420,8 +420,8 @@
                 </div>
                 <div style="padding-right:50px;">
                     <Button @click="startAdd"  type="primary" style="width:100px;float:right;margin-right:20px">下一步</Button>
-                </div> -->
-                <h1 style="text-align:center">请选择案件类型</h1>
+                </div>
+                <!-- <h1 style="text-align:center">请选择案件类型</h1>
                 <div class="middleType">
                     <Button :type="noewTYpe == '0' ? 'primary' : 'dashed'" class="btxa"  shape="circle"   @click="selType(0)">涉网案件</Button><br/><br/>
                     <Button :type="noewTYpe == '1' ? 'primary' : 'dashed'" class="btxa" shape="circle" @click="selType(1)">涉金融案件</Button><br/><br/>
@@ -429,7 +429,7 @@
                 </div>
                 <div style="padding-right:50px;">
                     <Button @click="startAdd"  type="primary" style="width:100px;float:right;margin-right:20px">下一步</Button>
-                </div>
+                </div> -->
             </div>
         
             <div v-show="nexts==false " style="padding:10px;padding-top:20px;padding-bottom:20px;height:100%">
@@ -471,10 +471,10 @@
                             <!-- <Input oninput='standardMoney=standardMoney.replace(/[^\d]/g,'')' v-model="standardMoney" placeholder="标的金额"></Input>  -->
                         </FormItem>
                         <FormItem label="案件案由" style="width: 405px;">
-                            <Select v-model="onlineBriefId" filterable transfer placeholder="请选择">
+                            <!-- <Select v-model="onlineBriefId" filterable transfer placeholder="请选择">
                                 <Option v-for="item in bridfList" v-bind:value="item.id">{{item.name}}</Option>
-                            </Select>
-                            <!-- <Dropdown trigger="custom" :visible="onlineBriefListShow" on-clickoutside="clickOutsideClose" style="width: 100%;">
+                            </Select> -->
+                            <Dropdown trigger="custom" :visible="onlineBriefListShow" on-clickoutside="clickOutsideClose" style="width: 100%;">
                                 <a href="javascript:void(0)" @click="handleOpen">
                                     <Input v-model="selectTitle" placeholder="请选择案件案由" clearable @on-change="remoteMethod" style="width: 100%;"/>
                                     <Icon type="ios-arrow-down"></Icon>
@@ -485,7 +485,7 @@
                                         <Spin size="large" fix v-if="loading1"></Spin>
                                     </div>
                                 </DropdownMenu>
-                            </Dropdown> -->
+                            </Dropdown>
                         </FormItem>
                         <FormItem label="诉讼请求" style="width: 405px;">
                             <Input v-model="factContent" type="textarea" :autosize="{minRows: 4,maxRows: 4}" placeholder="诉讼请求"></Input>
@@ -1486,9 +1486,9 @@
         delFiles,
         delEvidence,
         briefMenu,
+        getOnlineBrief,//新版法庭立案案由
         saveEvidence,
         getContacts,
-        // getOnlineBrief,
         getMateBrief,
         findLitigantEvidence,
         getLitigantInfo,
@@ -2125,55 +2125,68 @@
                     this.phoneIndex = index;
                     this.isDisabled = false;
                 },
-                // loadData (item, callback) {//给案由信息添加子节点
-                //     getOnlineBrief(item.id).then(res => {
-                //         let data = [];
-                //         for (const item of res.data.briefList){
-                //             if(item.type == 0){
-                //                 data.push({title:item.name,id:item.id,type:item.type});
-                //             }else{
-                //                 data.push({title:item.name,loading:false,children:[],id:item.id,type:item.type});
-                //             }
-                //         }
-                //         callback(data);
-                //     })
-                // },
-                // onSelect(item, callback){//选择节点时触发
-                //     console.log(item[0].title);
-                //     this.onlineBriefListShow = !this.onlineBriefListShow;
-                //     this.selectTitle = item[0].title;
-                //     this.onlineBriefId = item[0].id;
-                //     if(item[0].type == 0){
+                loadData (item, callback) {//给案由信息添加子节点
+                    getOnlineBrief(this.noewTYpe,item.id).then(res => {
+                        let data = [];
+                        for (const item of res.data.briefList){
+                            if(item.type == 0){
+                                data.push({title:item.name,id:item.id,type:item.type});
+                            }else{
+                                data.push({title:item.name,loading:false,children:[],id:item.id,type:item.type});
+                            }
+                        }
+                        callback(data);
+                    })
+                },
+                onSelect(item, callback){//选择节点时触发
+                    console.log(item[0].title);
+                    this.onlineBriefListShow = !this.onlineBriefListShow;
+                    this.selectTitle = item[0].title;
+                    this.onlineBriefId = item[0].id;
+                    // if(item[0].type == 0){
                         
-                //     }else{
-                //         this.$Message.warning('请选择具体的案由信息！');
-                //     }
-                // },
-                // handleOpen (){//收缩下拉菜单
-                //     this.onlineBriefListShow = !this.onlineBriefListShow;
-                // },
-                // remoteMethod (){//输入时动态改变树形菜单
-                //     this.loading1 = true;
-                //     if (this.selectTitle !== '') {
-                //         this.onlineBriefListShow = true;
-                //         getMateBrief(this.selectTitle).then((res)=>{
-                //             let data = [];
-                //             const data2 = res.data.result.map(item => {
-                //                 return item.type == 0 ? data.push({title:item.name,id:item.id,type:item.type}) : data.push({title:item.name,loading:false,children:[],id:item.id,type:item.type});
-                //             })
-                //             this.onlineBriefList = data;
-                //             this.loading1 = false;
-                //         })
-                //     }else{
-                //         getOnlineBrief().then(res => {
-                //             const data = res.data.briefList.map(item => {
-                //                 return {title:item.name,loading:false,children:[],id:item.id,type:item.type};
-                //             })
-                //             this.onlineBriefList = data;
-                //             this.loading1 = false;
-                //         })
-                //     }
-                // },
+                    // }else{
+                    //     this.$Message.warning('请选择具体的案由信息！');
+                    // }
+                },
+                handleOpen (){//收缩下拉菜单
+                    this.onlineBriefListShow = !this.onlineBriefListShow;
+                },
+                remoteMethod (){//输入时动态改变树形菜单
+                    this.loading1 = true;
+                    if (this.selectTitle !== '') {
+                        this.onlineBriefListShow = true;
+                        getMateBrief(this.noewTYpe,this.selectTitle).then((res)=>{
+                            let data = [];
+                            const data2 = res.data.result.map(item => {
+                                return item.type == 0 ? data.push({title:item.name,id:item.id,type:item.type}) : data.push({title:item.name,loading:false,children:[],id:item.id,type:item.type});
+                            })
+                            this.onlineBriefList = data;
+                            this.loading1 = false;
+                        })
+                    }else{
+                        getOnlineBrief(this.noewTYpe).then(res => {
+                            this.onlineBriefList = [];
+                            for(const item of res.data.briefList){
+                                if(item.type == 0){
+                                    this.onlineBriefList.push({title:item.name,id:item.id,type:item.type});
+                                }else{
+                                    this.onlineBriefList.push({title:item.name,loading:false,children:[],id:item.id,type:item.type});
+                                }
+                            }
+                            // const data = res.data.briefList.map(item => {
+                            //     return {title:item.name,loading:false,children:[],id:item.id,type:item.type};
+                            //     if(item.type == 0){
+                            //         data.push({title:item.name,id:item.id,type:item.type});
+                            //     }else{
+                            //         data.push({title:item.name,loading:false,children:[],id:item.id,type:item.type});
+                            //     }
+                            // })
+                            // this.onlineBriefList = data;
+                            this.loading1 = false;
+                        })
+                    }
+                },
                 getLiniList(){
                     getLitigantInfo(this.caseId).then(res => {
                         if(res.data.state == 100){
@@ -3244,10 +3257,33 @@
                 selType(t){
                     this.noewTYpe = t;
                 },
+                // startAdd(){
+                //     briefMenu(this.noewTYpe).then(res => {
+                //         if(res.data.state == 100){
+                //             this.bridfList = res.data.result;
+                //         }else{
+                //             this.$Message.info(res.data.message);
+                //         }
+                //     })
+                //     this.nexts = false;
+                //     window.localStorage.removeItem('newCaseId');
+                //     window.localStorage.setItem('newItemStep',0);
+                // },
                 startAdd(){
-                    briefMenu(this.noewTYpe).then(res => {
+                    getOnlineBrief(this.noewTYpe).then(res => {
                         if(res.data.state == 100){
-                            this.bridfList = res.data.result;
+                            // const data = res.data.briefList.map(item => {
+                            //     return {title:item.name,loading:false,children:[],id:item.id,type:item.type};
+                            // })
+                            // this.onlineBriefList = data;
+                            this.onlineBriefList = [];
+                            for(const item of res.data.briefList){
+                                if(item.type == 0){
+                                    this.onlineBriefList.push({title:item.name,id:item.id,type:item.type});
+                                }else{
+                                    this.onlineBriefList.push({title:item.name,loading:false,children:[],id:item.id,type:item.type});
+                                }
+                            }
                         }else{
                             this.$Message.info(res.data.message);
                         }

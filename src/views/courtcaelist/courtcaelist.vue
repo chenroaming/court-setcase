@@ -298,6 +298,7 @@
                                 <Radio style="margin-right:20px" label="补正"></Radio>
                                 <Radio label="调解"></Radio>
                                 <Radio label="委派调解"></Radio>
+                                <Radio label="案件移送"></Radio>
                             </RadioGroup>
                             <div style="margin-top:30px;" v-show="agreeDiv">
                                 <Form  :label-width="100" inline>
@@ -362,11 +363,16 @@
                                     <span style="line-height:34px;margin-right:20px">诉前调解告知书</span> <Button type="primary" @click='createTJ()'>生成</Button>
                                 </FormItem>
                             </Form>
-                            <div style="margin-top:10px"  v-show="auditStatus != '委派调解'">
+                            <div style="margin-top:10px"  v-show="auditStatus != '委派调解' && audit != 7">
                                 <span style="display:inline-block;width:100px;text-align:right">备注：</span>
                                 <Input style="margin-left: 30px;width:80%"  v-model="remark" type="textarea" :autosize="{minRows: 3,maxRows: 3}" placeholder="备注"></Input>
                             </div>
-                            <div style="margin-top:10px;margin-left: 30px;width:80%"   v-show="auditStatus != '委派调解'">
+                            <div style="margin-top:10px;height: 100px;padding-left: 33px;"  v-show="audit == 7">
+                                <Select v-model="departmentId" style="width:200px">
+                                    <Option v-for="item in departmentList" :value="item.value" :key="item.value">{{ item.label }}</Option>
+                                </Select>
+                            </div>
+                            <div style="margin-top:10px;margin-left: 30px;width:80%"   v-show="auditStatus != '委派调解' && audit != 7">
                                 <Upload action="/api/online/audit/diploms/uploadFiles.jhtml" :show-upload-list='false' :on-success="uploadSuccess"  >
                                     <Button icon="ios-cloud-upload-outline">上传文书(可多次点击上传)</Button>
                                 </Upload>
@@ -1281,11 +1287,11 @@
                         
                     </Form>
                 </div>
-                <div style="margin-top:10px" >
+                <div style="margin-top:10px" v-show="audit != 7">
                     <span style="display:inline-block;width:100px;text-align:right">备注：</span>
                     <Input style="margin-left: 30px;width:80%"  v-model="remark" type="textarea" :autosize="{minRows: 3,maxRows: 3}" placeholder="备注"></Input>
                 </div>
-                <div style="margin-top:10px;margin-left: 30px;width:80%"   v-show="auditStatus != '委派调解'">
+                <div style="margin-top:10px;margin-left: 30px;width:80%"   v-show="auditStatus != '委派调解' && audit != 7">
                     <Upload action="/api/online/audit/diploms/uploadFiles.jhtml" :show-upload-list='false' :on-success="uploadSuccess"  >
                         <Button icon="ios-cloud-upload-outline">上传文书(可多次点击上传)</Button>
                     </Upload>
@@ -1343,6 +1349,7 @@ getOnlineLawCaseFiles,
 getMaxCaseNo,//获取引调号的api接口
 checkEvidence,//审核案件证据的接口
 changeOriginal,//修改是否有原件接口
+transferOnlineLawCase,//案件移送接口
 } from '@/api/caseInfo.js';
 import {addOrUpdateCtInfo,addOrUpdateLoanCtInfo,addOrUpdateMcInfo,addOrUpdatePcInfo,
         getDelCtInfo,
@@ -1802,6 +1809,11 @@ export default {
               },
            ],
            EviList:[],
+           departmentId:'',
+           departmentList:[
+               {value:'1',label:'殿前法庭'},
+               {value:'2',label:'立案庭'}
+           ],
           connectedCol: [
                 {
                     title: '回执编号',
@@ -2510,6 +2522,8 @@ export default {
                 this.audit = 5;
             }else if(e == "委派调解"){
                 this.audit = 6;
+            }else if(e == '案件移送'){
+                this.audit = 7;
             }
         },
         clearNoNum(e){  
@@ -2568,6 +2582,22 @@ export default {
                         judgeId:this.judgeId,
                         clerkIds:this.clerkIds.join(',')
                     }
+                }
+                if (this.audit == 7){
+                    const params = {
+                        onLawcaseId:this.lawcaseId,
+                        place:this.departmentId 
+                    }
+                    transferOnlineLawCase(params).then(res => {
+                        if(res.data.state == 100){
+                            this.$Message.success('提交成功');
+                            this.infoMol = false;
+                            this.getList(this.pageNumber);
+                        }else if(res.data.state == 101){
+                            this.$Message.info(res.data.message);
+                        }
+                    })
+                    return;
                 }
                 auditOnlineLawCase(params).then(res => {
                     if(res.data.state == 100){

@@ -741,3 +741,44 @@ export function changeOriginal (eviId,oriType,newOriType) {
         params
     });
 }
+
+/** 
+ * 案件移送
+ */
+export function transferOnlineLawCase (params) {
+    return service({
+        url: '/online/lawCase/transferOnlineLawCase.jhtml',
+        method: 'post',
+        params
+    });
+}
+
+/** 
+ * 新版案件案由
+ */
+export function getOnlineBrief (place,parentId) {
+    const params = {
+        place,
+        parentId
+    }
+    return service({
+        url: '/online/brief/getOnlineBrief.jhtml',
+        method: 'get',
+        params
+    });
+}
+
+/**
+ * 获取子路由
+ */
+export function getMateBrief (place,briefName = '') {
+    const params = {
+        place,
+        briefName
+    }
+    return service({
+        url: '/online/brief/getMateBrief.jhtml',
+        method: 'GET',
+        params
+    });
+}

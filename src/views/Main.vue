@@ -253,6 +253,7 @@
                 window.localStorage.removeItem('newItemStep');
                 window.localStorage.removeItem('isRight');
                 window.localStorage.removeItem('continueIsRight');
+                window.localStorage.removeItem('continuePlace');
                 this.$router.push({
                     name: 'home_index'
                 });
