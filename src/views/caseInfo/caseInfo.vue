@@ -3353,7 +3353,7 @@
                             standardMoney:this.standardMoney,
                             factContent:this.factContent,
                             reasonContent:this.reasonContent,
-                            // place:this.noewTYpe
+                            place:this.noewTYpe
                         }
         
                         saveLawCaseInfo(params).then(res => {
@@ -3895,6 +3895,7 @@
                 },
                 changeFile1(event){
                     this.file = event.target.files[0];
+                    console.log(this.file);
                     let applyType = "";
                     this.uploadIngSpinchangeFile1=true
                     upFiles(this.file,1,this.caseId, applyType).then(res => {
