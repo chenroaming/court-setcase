@@ -43,6 +43,7 @@
      
      <script type="text/javascript">
      import { createMediationNotice } from '@/api/diplomas.js';
+     import { getUserInfo } from '@/api/user';
      export default {
          data(){
              return{
@@ -64,10 +65,19 @@
          },
          methods: {
              getInfo(ob){
-                 this.backFill = JSON.parse(JSON.stringify(ob));
-                 this.backFill.judge = '沈春福';
-                 this.backFill.judgePhone = '0592-2621015';
-                 this.backFill.courtPhone = '0592-2612690';
+                getUserInfo().then(res => {
+                    if(res.data.court.name == '殿前法庭'){
+                        this.backFill = JSON.parse(JSON.stringify(ob));
+                        this.backFill.judge = '沈春福';
+                        this.backFill.judgePhone = '0592-2621015';
+                        this.backFill.courtPhone = '0592-2612690';
+                        return;
+                    }
+                    this.backFill = JSON.parse(JSON.stringify(ob));
+                    this.backFill.judge = '徐烽';
+                    this.backFill.judgePhone = '0592-5308445';
+                    this.backFill.courtPhone = '0592-5308423';
+                })
              },
              dipPro(){
                  // var _this = this;
