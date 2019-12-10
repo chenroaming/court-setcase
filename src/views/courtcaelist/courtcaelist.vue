@@ -306,13 +306,14 @@
                                         <Input v-model="caseNo" placeholder="请输入案件编号"></Input>
                                     </FormItem>
                                     <FormItem label="案由名称:" style="width: 245px;">
-                                        <AutoComplete
+                                        <Select
                                             v-model="briefId"
                                             placeholder="请选择"
-                                            style="width:230px" >
+                                            style="width:230px"
+                                            @on-change="selectBrief">
                                             <!-- 修复key值不唯一的报错 -->
                                             <Option v-for="(item,index) in bridfList" :value="item.name" :key="index"></Option>
-                                        </AutoComplete>
+                                        </Select>
                                     </FormItem>
                                     <FormItem label="承办部门:" style="width: 245px;" >
                                         <Select v-model="courtId" filterable transfer placeholder="请选择">
@@ -1388,7 +1389,7 @@ export default {
             originalSh:'',
             fileStatus:true,
             filaeLoading:false,//原件审核相关data
-
+            firstWord:'',
             element:0,
             elementSw:false,//要素信息显示开关，避免要素信息过长影响布局
             titleArr:['查看授信合同信息','查看借款合同信息','查看保证合同信息','查看抵押合同信息','查看质押合同信息'],
@@ -1930,7 +1931,8 @@ export default {
                                                             plainffStr = plainffStr + item.litigantName + '、';
                                                             this.applyPeople2 = this.applyPeople2 + item.litigantName + '、'
                                                         }
-                                                    }) 
+                                                    })
+                                                    this.firstWord = "原告" + plainffStr.substr(0, plainffStr.length - 1) + '与被告' + defgStr.substr(0, defgStr.length - 1);
                                                     this.litigantContent = "原告" + plainffStr.substr(0, plainffStr.length - 1) + '与被告' + defgStr.substr(0, defgStr.length - 1) + this.briefName;
                                                 }
                                             });
@@ -1966,6 +1968,9 @@ export default {
         this.searchList();
     },
     methods: {
+        selectBrief(){
+            this.litigantContent = this.firstWord + this.briefId;
+        },
         subOri(){//有无原件状态变更
             const newStatus = this.originalSh == '1' ? true : false;
             this.filaeLoading = true;
@@ -2588,7 +2593,9 @@ export default {
                         onLawcaseId:this.lawcaseId,
                         place:this.departmentId 
                     }
+                    this.$Spin.show();
                     transferOnlineLawCase(params).then(res => {
+                        this.$Spin.hide();
                         if(res.data.state == 100){
                             this.$Message.success('提交成功');
                             this.infoMol = false;
@@ -2599,7 +2606,9 @@ export default {
                     })
                     return;
                 }
+                this.$Spin.show();
                 auditOnlineLawCase(params).then(res => {
+                    this.$Spin.hide();
                     if(res.data.state == 100){
                         this.$Message.success('提交成功');
                         this.infoMol = false;
@@ -2616,7 +2625,9 @@ export default {
                     category_id:this.MediateSortOneId,
                     dispute_id:this.MediateSortTwoId,
                 }
+                this.$Spin.show();
                 auditOnlineLawCase(params).then(res => {
+                    this.$Spin.hide();
                     if(res.data.state == 100){
                         this.$Message.success('提交成功');
                         this.infoMol = false;
