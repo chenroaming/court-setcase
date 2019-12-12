@@ -767,13 +767,16 @@ right: -20px;">元</span>
     :loading="loading"
     ok-text="提交"
     @on-ok="submit"
-    width="560px"
+    width="600px"
     :mask-closable="false"
     :title="this.litigantId == '' ? '添加当事人' : '查看/修改当事人'">
     <div>
-        <Form :model="addFormItem" :label-width="100" inline>
-            <FormItem :label="addFormItem.litigantType == '自然人'? '姓名*' : '公司名称*'" style="width: 505px;">
-                <Input v-model="addFormItem.litigantName" placeholder="请输入当事人"></Input>
+        <Form :model="addFormItem" :label-width="145" inline>
+            <FormItem style="width: 505px;">
+                <p>请完整填写所知详尽信息，以便法院传唤、文书送达</p>
+            </FormItem>
+            <FormItem :label="addFormItem.litigantType == '自然人'? '姓名*' : '名称*'" style="width: 505px;">
+                <Input v-model="addFormItem.litigantName" :placeholder="addFormItem.litigantType == '自然人'? '请输入当事人' : '请输入名称'"></Input>
             </FormItem>
             <FormItem label="类型*" style="width: 245px;">
                 <Select v-model="addFormItem.litigantType" transfer placeholder="请选择">
@@ -792,6 +795,18 @@ right: -20px;">元</span>
             <FormItem :label="addFormItem.litigantType == '自然人' ? '身份证号码*' : '统一信用代码*'" style="width: 505px;">
                 <Input v-model="addFormItem.identityCard" @on-blur="idCardtoBirth" placeholder="请输入"></Input>
             </FormItem>
+            <!-- <FormItem v-show="addFormItem.litigantStatus == '被告'" label="角色" style="width: 505px;">
+                <Select v-model="addFormItem.role" multiple transfer placeholder="请选择">
+                    <Option value="贷款人">贷款人</Option>
+                    <Option value="借款人">借款人</Option>
+                    <Option value="配偶">配偶</Option>
+                    <Option value="保证人">保证人</Option>
+                    <Option value="抵押人">抵押人</Option>
+                    <Option value="质押人">质押人</Option>
+                    <Option value="第三方平台">第三方平台</Option>
+                    <Option value="投保人">投保人</Option>
+                </Select>
+            </FormItem> -->
             <FormItem label="出生日期*" style="width: 245px;" v-show="addFormItem.litigantType == '自然人'">
                 <DatePicker type="date" transfer :value="addFormItem.birthday" @on-change="changeDate"></DatePicker>
             </FormItem>
@@ -844,7 +859,9 @@ right: -20px;">元</span>
                     <Option v-for="item in this.data" :value="item.id" :key="item.litigantName">{{ item.litigantName }}</Option>
                 </Select>
             </FormItem>
-
+            <FormItem label="固定电话" style="width: 245px;" v-show="addFormItem.litigantType != '法人' && addFormItem.litigantType != '非法人组织'" >
+                <Input v-model="addFormItem.fixedPhone" placeholder="请输入固话号码"></Input>
+            </FormItem>
             <!-- <FormItem :label="addFormItem.litigantType == '自然人' ?'固定电话' : '固定电话*'" style="width: 245px;">
                 <Input v-model="addFormItem.litigantTelPhone" placeholder="请输入固定电话"></Input>
             </FormItem>
@@ -853,17 +870,20 @@ right: -20px;">元</span>
             </FormItem> -->
 
             <FormItem label="手机号码*" style="width: 245px;" v-show="addFormItem.litigantType != '法人' && addFormItem.litigantType != '非法人组织'">
-                    <Dropdown @on-click="changePhone" v-if="this.litigantId != ''">
-                        <Input v-model="litigantPhoneSelect" :disabled="isDisabled" placeholder="请选择手机号" @on-change></Input>
-                        <DropdownMenu slot="list">
-                            <DropdownItem v-for="(item,index) in addFormItem.litigantPhone" :name="index">{{item}}</DropdownItem>
-                        </DropdownMenu>
-                    </Dropdown>
-                    <Input v-model="addNewPhone" placeholder="请输入手机号" v-if="this.litigantId == ''"></Input>
-                    <div style="color: #ed3f14;position:absolute;top:28px;" v-if="this.litigantId == ''">多个手机号码请用逗号分隔</div>
+                <Dropdown @on-click="changePhone" v-if="this.litigantId != ''">
+                    <Input v-model="litigantPhoneSelect" :disabled="isDisabled" placeholder="请选择手机号" @on-change></Input>
+                    <DropdownMenu slot="list">
+                        <DropdownItem v-for="(item,index) in addFormItem.litigantPhone" :name="index">{{item}}</DropdownItem>
+                    </DropdownMenu>
+                </Dropdown>
+                <Input v-model="addNewPhone" placeholder="请输入手机号" v-if="this.litigantId == ''"></Input>
+                <div style="color: #ed3f14;position:absolute;top:28px;" v-if="this.litigantId == ''">多个手机号码请用逗号分隔</div>
             </FormItem>
             <FormItem v-bind:label="addFormItem.litigantType == '法人' ? '法定代表人*' : '负责人*'" style="width: 505px;" v-show="addFormItem.litigantType != '自然人'">
                 <Input v-model="addFormItem.legalManName" v-bind:placeholder="addFormItem.litigantType == '法人' ? '请输入法定代表人姓名' : '请输入负责人姓名'" width="100px;"></Input>
+            </FormItem>
+            <FormItem v-show="addFormItem.litigantType != '自然人'" :label="addFormItem.litigantType == '法人' ? '法定代表人身份证号码':'负责人身份证号码'" style="width: 505px">
+                <Input v-model="addFormItem.corpManId" :placeholder="addFormItem.litigantType == '法人' ? '请输入法定代表人身份证号码':'请输入负责人身份证号码'" width="100px;"></Input>
             </FormItem>
             <FormItem v-bind:label="addFormItem.litigantType == '法人' ? '联系方式*' : '联系方式*'" style="width: 505px;" v-show="addFormItem.litigantType != '自然人'">
                 <Input v-model="addFormItem.legalManPhone"  placeholder="请输入联系方式" width="100px;"></Input>
@@ -884,14 +904,14 @@ right: -20px;">元</span>
             <FormItem label="电子邮箱*" style="width: 505px" v-show="addFormItem.litigantType == '自然人'">
                 <Input v-model="addFormItem.email" placeholder="请输入电子邮箱"></Input>
             </FormItem>
-            <FormItem :label="addFormItem.litigantType == '自然人' ? '户籍地址*' : '公司注册地址*'" style="width: 505px">
-                <Input v-model="addFormItem.nativePlace" :placeholder="addFormItem.litigantType == '自然人' ? '请输入居住地址' : '请输入公司注册地址'"></Input>
+            <FormItem :label="addFormItem.litigantType == '自然人' ? '户籍地址*' : '注册地址*'" style="width: 505px">
+                <Input v-model="addFormItem.nativePlace" :placeholder="addFormItem.litigantType == '自然人' ? '请输入户籍地址' : '请输入注册地址'"></Input>
             </FormItem>
-            <FormItem :label="addFormItem.litigantType == '自然人' ? '经常居住地址*' : '公司经营地址*'" style="width: 505px">
-                <Input v-model="addFormItem.address" :placeholder="addFormItem.litigantType == '自然人' ? '请输入经常居住地址' : '请输入公司经营地址'"></Input>
+            <FormItem :label="addFormItem.litigantType == '自然人' ? '现居地址*' : '经营地址*'" style="width: 505px">
+                <Input v-model="addFormItem.address" :placeholder="addFormItem.litigantType == '自然人' ? '请输入除户籍地址外满一年的现居地址' : '请输入经营地址'"></Input>
             </FormItem>
             <FormItem :label="addFormItem.litigantType == '自然人' ? '确认送达地址*' : '确认送达地址*'" style="width: 505px">
-                <Input v-model="addFormItem.sendAddress" placeholder="请输入送达地址"></Input>
+                <Input v-model="addFormItem.sendAddress" placeholder="请输入当事人送达地址"></Input>
             </FormItem>
             <!-- <FormItem v-show="addFormItem.litigantType == '自然人'" label="个人证明" style="width: 505px">
                 <a href="javascript:;" class="a-upload">
@@ -901,6 +921,39 @@ right: -20px;">元</span>
                     <p>{{personalFileName}}<span @click="delPersonFile"><Icon type="close-circled"  style="cursor:pointer;margin-left:10px;"></Icon></span></p>
                 </div>
             </FormItem> -->
+            <!-- <FormItem v-show="addFormItem.litigantType != '自然人'" label="公司证明文件" style="width: 505px">
+                    <Upload
+                        :before-upload="upLoadPf"
+                        action="/online/litigant/saveLitigantInfo.jhtml">
+                        <Button icon="ios-cloud-upload-outline">选择上传公司证明文件</Button>
+                    </Upload>
+                </FormItem>
+                <FormItem v-show="addFormItem.litigantType != '自然人'" label="公司固定电话" style="width: 505px">
+                    <Input v-model="addFormItem.corpPhone" placeholder="请输入公司固定电话"></Input>
+                </FormItem>
+                <FormItem v-show="addFormItem.litigantType != '自然人'" label="公司电子邮箱" style="width: 505px">
+                    <Input v-model="addFormItem.corpMail" placeholder="请输入公司电子邮箱"></Input>
+                </FormItem>
+                <FormItem v-show="addFormItem.litigantType != '自然人'" :label="addFormItem.litigantType == '法人' ? '法定代表人身份证号码':'负责人身份证号码'" style="width: 505px">
+                    <Input v-model="addFormItem.corpManId" placeholder="法定代表人身份证号码"></Input>
+                </FormItem>
+                <FormItem v-show="addFormItem.litigantType != '自然人'" :label="addFormItem.litigantType == '法人' ? '法定代表人身份证明文件' : '负责人身份证明文件'" style="width: 505px">
+                    <Upload
+                        :before-upload="upLoadPf"
+                        action="/online/litigant/saveLitigantInfo.jhtml">
+                        <Button icon="ios-cloud-upload-outline">选择上传法定代表人身份证明文件</Button>
+                    </Upload>
+                </FormItem> -->
+                <!-- <FormItem v-show="addFormItem.litigantType == '非法人组织'" label="法定代表人身份证号码" style="width: 505px">
+                    <Input v-model="addFormItem.corpManId" placeholder="法定代表人身份证号码"></Input>
+                </FormItem>
+                <FormItem v-show="addFormItem.litigantType == '非法人组织'" label="法定代表人身份证明文件" style="width: 505px">
+                    <Upload
+                        :before-upload="upLoadPf"
+                        action="/online/litigant/saveLitigantInfo.jhtml">
+                        <Button icon="ios-cloud-upload-outline">选择上传法定代表人身份证明文件</Button>
+                    </Upload>
+                </FormItem> -->
             <FormItem label="其他送达地址" style="width: 505px" v-for="(item,key) in addFormItem.otherAddressArr">
                 <Input v-model="item.address" placeholder="请输入其他送达地址" style="width:90%"></Input><Icon @click.native='delOtherAddress(key)' style="width:10%;text-align:center;font-size:22px" type="ios-trash" />
             </FormItem>
@@ -967,7 +1020,7 @@ right: -20px;">元</span>
             </FormItem>
             <FormItem label="联系地址"  style="width: 505px;">
                 <!-- <Input v-model="addFormItem.lawerNum" placeholder="请输入代理人联系地址"  ></Input> -->
-                <AutoComplete v-model="addFormItem.address"  placeholder="请输入代理人联系地址" transfer></AutoComplete>
+                <AutoComplete v-model="addFormItem.address"  placeholder="请输入代理人确认送达地址" transfer></AutoComplete>
             </FormItem>
         </Form>
     </div>
@@ -1322,7 +1375,7 @@ v-clipboard:error="onError" style="font-size: 18px;margin-left: 10px;cursor: poi
     style="z-index:9999999">
     <Form :model="addFormItemEvi" :label-width="85" inline>
         <FormItem label="*证据名称:"  style="width: 435px">
-            <Input v-model="addFormItemEvi.evidenceName" placeholder="请输入证据名称" ></Input>
+            <Input v-model="addFormItemEvi.evidenceName" :maxlength="wordLength" placeholder="请输入证据名称(限制60字)" ></Input>
         </FormItem>
         <FormItem label="页数:"  style="width: 435px">
             <Input v-model="addFormItemEvi.pageNum" placeholder="请输入页数"></Input>
@@ -1457,6 +1510,7 @@ export default {
     },
 data () {
 return {
+    wordLength:60,
     nowPage:1,
     usualLoading:false,
     dataTotal:1,
@@ -1879,6 +1933,11 @@ nationList:["汉族","蒙古族","回族","藏族","维吾尔族","苗族","彝�
         lawIdentiCard1: "",
         lawerNum1: "",
         otherAddressArr:[],
+        corpPhone:'',
+        corpMail:'',
+        corpManId:'',
+        role:[],
+        fixedPhone:'',
     },
     linigantList:[],
     pathList:[],

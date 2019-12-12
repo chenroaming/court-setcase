@@ -453,142 +453,148 @@
                                     </MenuItem>
                                 </Submenu>
                             </Menu>
-                            <Form label-position="left">
+                            <Form label-position="left" :label-width="130">
                                 <FormItem label="放款日期:">
-                                    {{litigation.loan}}
-                                    
+                                    <!-- {{litigation.loan}} -->
+                                    <DatePicker type="date" v-model="litigation.loan" placeholder="请选择放款日期" style="width: 300px"></DatePicker>
                                 </FormItem>
                                 <FormItem label="实际到期日期:">
-                                        {{litigation.maturity}}
-
+                                    <!-- {{litigation.maturity}} -->
+                                    <DatePicker type="date" v-model="litigation.maturity" placeholder="请选择到期日期" style="width: 300px"></DatePicker>
                                 </FormItem>
                                 <FormItem label="逾期还款日期:">
-                                    {{litigation.overdue}}
-                                    
+                                    <!-- {{litigation.overdue}} -->
+                                    <DatePicker type="date" v-model="litigation.overdue" placeholder="请选择还款日期" style="width: 300px"></DatePicker>
                                 </FormItem>
                                 <FormItem label="欠款最新截至时间:">
-                                        {{litigation.cutoff}}
-                                    
+                                    <!-- {{litigation.cutoff}} -->
+                                    <DatePicker type="date" v-model="litigation.cutoff" placeholder="请选择截至日期" style="width: 300px"></DatePicker>
                                 </FormItem>
                                 <FormItem label="欠款本金:">
-                                       {{litigation.arrears}}
+                                       <!-- {{litigation.arrears}} -->
+                                    <Input v-model="litigation.arrears" placeholder="请输入欠款本金" style="width: 300px" />
                                 </FormItem>
                                 <FormItem label="利息:">
-                                    {{litigation.interest}}
+                                    <!-- {{litigation.interest}} -->
+                                    <Input v-model="litigation.interest" placeholder="请输入利息" style="width: 300px" />
                                 </FormItem>
                                 <FormItem label="罚息:">
-                                    {{litigation.penaltyInterest}}
-                                    
+                                    <!-- {{litigation.penaltyInterest}} -->
+                                    <Input v-model="litigation.penaltyInterest" placeholder="请输入罚息" style="width: 300px" />
                                 </FormItem>
                                 <FormItem label="复利:">
-                                    {{litigation.compoundInterest}}
+                                    <!-- {{litigation.compoundInterest}} -->
+                                    <Input v-model="litigation.compoundInterest" placeholder="请输入复利" style="width: 300px" />
                                 </FormItem>
                                 <FormItem label="最新欠款利息:">
-                                        {{litigation.nInterest}}
-                                   
+                                    <!-- {{litigation.nInterest}} -->
+                                    <Input v-model="litigation.nInterest" placeholder="请输入最新的利息" style="width: 300px" />
                                 </FormItem>
                                 <FormItem label="最新欠款罚息:">
-                                    {{litigation.npInterest}}
-                                   
+                                    <!-- {{litigation.npInterest}} -->
+                                    <Input v-model="litigation.npInterest" placeholder="请输入最新的利息" style="width: 300px" />
                                 </FormItem>
                                 <FormItem label="最新欠款复利:">
-                                    {{litigation.ncdInterest}}
-                                    
+                                    <!-- {{litigation.ncdInterest}} -->
+                                    <Input v-model="litigation.ncdInterest" placeholder="请输入最新的利息" style="width: 300px" />
                                 </FormItem>
                                 <FormItem label="最新欠款利息等:">
-                                    {{litigation.newArrears}}
+                                    <!-- {{litigation.newArrears}} -->
+                                    <Input v-model="litigation.newArrears" placeholder="请输入最新欠款利息" style="width: 300px" />
                                 </FormItem>
                                 <FormItem label="违约金金额:">
-                                    {{litigation.liquidatedDamages}}
-                                   
+                                    <!-- {{litigation.liquidatedDamages}} -->
+                                    <Input v-model="litigation.liquidatedDamages" placeholder="请输入违约金额" style="width: 300px" />
                                 </FormItem>
                                 <FormItem label="实现债权的费用:">
-                                    {{litigation.claim}}
-                    
+                                    <!-- {{litigation.claim}} -->
+                                    <Input v-model="litigation.claim" placeholder="请输入债权费用" style="width: 300px" />
                                 </FormItem>
                                 <FormItem label="律师费:">
-                                    {{litigation.lawyerFee}}
-              
+                                    <!-- {{litigation.lawyerFee}} -->
+                                    <Input v-model="litigation.lawyerFee" placeholder="请输入律师费" style="width: 300px" />
                                 </FormItem>
                                 <FormItem label="保全费:">
-                                    {{litigation.securityFee}}
-                                    
+                                    <!-- {{litigation.securityFee}} -->
+                                    <Input v-model="litigation.securityFee" placeholder="请输入保全费" style="width: 300px" />
                                 </FormItem>
                                 <FormItem label="公告费:">
-                                    {{litigation.announcementFee}}
-                                    
+                                    <!-- {{litigation.announcementFee}} -->
+                                    <Input v-model="litigation.announcementFee" placeholder="请输入公告费" style="width: 300px" />
                                 </FormItem>
                                 <FormItem label="债权其他费用:">
-                                    {{litigation.otherFee}}
-                                    
+                                    <!-- {{litigation.otherFee}} -->
+                                    <Input v-model="litigation.otherFee" placeholder="请输入其他费用" style="width: 300px" />
                                 </FormItem>
                                 <FormItem label="是否支持夫妻共同债:">
                                     <RadioGroup v-model="litigation.isPublic">
-                                        <Radio disabled label="yes">
+                                        <Radio label="yes">
                                             <span>是</span>
                                         </Radio>
-                                        <Radio disabled label="no">
+                                        <Radio label="no">
                                             <span>否</span>
                                         </Radio>
                                     </RadioGroup>
                                 </FormItem>
                                 <FormItem label="结婚登记时间:">
-                                    {{litigation.marryTime}}
-                                    
+                                    <!-- {{litigation.marryTime}} -->
+                                    <DatePicker type="date" v-model="litigation.marryTime" placeholder="请选择结婚时间" style="width: 300px"></DatePicker>
                                 </FormItem>
                                 <FormItem label="离婚登记时间:">
-                                    {{litigation.divorceTime}}
-                                    
+                                    <!-- {{litigation.divorceTime}} -->
+                                    <DatePicker type="date" v-model="litigation.divorceTime" placeholder="请选择离婚时间" style="width: 300px"></DatePicker>
                                 </FormItem>
                                 <FormItem label="适用的法律条文:">
-                                    {{litigation.legalProvisions}}
-                                    
+                                    <!-- {{litigation.legalProvisions}} -->
+                                    <Input type="textarea" v-model="litigation.legalProvisions" :row="5" placeholder="请输入法律条文" style="width: 300px" />
                                 </FormItem>
                                 <FormItem label="法律法规:">
-                                    {{litigation.regulations}}
-                                    
+                                    <!-- {{litigation.regulations}} -->
+                                    <Input type="textarea" v-model="litigation.regulations" :row="5" placeholder="请输入法律法规" style="width: 300px" />
                                 </FormItem>
                                 <FormItem label="诉前保全裁定案号:">
-                                    {{litigation.caseNumber}}
-                                  
+                                    <!-- {{litigation.caseNumber}} -->
+                                    <Input v-model="litigation.caseNumber" placeholder="请输入案号" style="width: 300px" />
                                 </FormItem>
                                 <FormItem label="保全被申请人:">
-                                    {{litigation.preservationMan}}
-                                    
+                                    <!-- {{litigation.preservationMan}} -->
+                                    <Input v-model="litigation.preservationMan" placeholder="请输入保全被申请人" style="width: 300px" />
                                 </FormItem>
                                 <FormItem label="申请保全时间:">
-                                        {{litigation.preservationTime}}
-                                    
+                                    <!-- {{litigation.preservationTime}} -->
+                                    <DatePicker type="date" v-model="litigation.preservationTime" placeholder="请选择保全日期" style="width: 300px"></DatePicker>
                                 </FormItem>
                                 <FormItem label="财产保全金额:">
-                                    {{litigation.preservationMoney}}
-                                    
+                                    <!-- {{litigation.preservationMoney}} -->
+                                    <Input v-model="litigation.preservationMoney" placeholder="请输入财产保全金额" style="width: 300px" />
                                 </FormItem>
                                 <FormItem label="财产保全费:">
-                                       {{ litigation.preservationFee}}
-                                    
+                                    <!-- {{ litigation.preservationFee}} -->
+                                    <Input v-model="litigation.preservationFee" placeholder="请输入财产保全费" style="width: 300px" />
                                 </FormItem>
                                 <FormItem label="作出保全裁定时间:">
-                                    {{litigation.rulingTime}}
-                                   
+                                    <!-- {{litigation.rulingTime}} -->
+                                    <DatePicker type="date" v-model="litigation.rulingTime" placeholder="请选择裁定时间" style="width: 300px"></DatePicker>
                                 </FormItem>
                                 <FormItem label="解除保全申请时间:">
-                                    {{litigation.releasePreservation}}
-                                    
+                                    <!-- {{litigation.releasePreservation}} -->
+                                    <DatePicker type="date" v-model="litigation.releasePreservation" placeholder="请选择申请日期" style="width: 300px"></DatePicker>
                                 </FormItem>
                                 <FormItem label="保全财产情况:">
-                                    {{litigation.preservationStatus}}
-                                   
+                                    <!-- {{litigation.preservationStatus}} -->
+                                    <Input type="textarea" v-model="litigation.preservationStatus" :row="5" placeholder="请输入保全财产情况" style="width: 300px" />
                                 </FormItem>
                             </Form>
                         </div>
                         <div v-if="element == 2 && elementSw" class="loan-Box">
                             <Form label-position="left" :label-width="170">
                                 <FormItem label="合同名称：" prop="name">
-                                        {{contract.name}}
+                                    <!-- {{contract.name}} -->
+                                    <Input v-model="contract.name" placeholder="请输入合同名称" style="width: 300px" />
                                 </FormItem>
                                 <FormItem label="合同签订时间：">
-                                    {{contract.time}}
+                                    <!-- {{contract.time}} -->
+                                    <DatePicker type="date" v-model="contract.time" placeholder="请选择截至日期" style="width: 300px"></DatePicker>
                                 </FormItem>
                                 <FormItem label="信用卡信息：">
                                     <Menu @on-select="creditChoice" style="width: 300px;">
@@ -602,57 +608,57 @@
                                 </FormItem>
                                 <FormItem label="是否支持夫妻共同债：">
                                     <RadioGroup v-model="couple.isPublic">
-                                        <Radio disabled label="yes">
+                                        <Radio label="yes">
                                             <span>是</span>
                                         </Radio>
-                                        <Radio disabled label="no">
+                                        <Radio label="no">
                                             <span>否</span>
                                         </Radio>
                                     </RadioGroup>
                                 </FormItem>
                                 <FormItem label="结婚登记时间：">
-                                        {{couple.marry}}
-                                    
+                                    <!-- {{couple.marry}} -->
+                                    <DatePicker type="date" v-model="couple.marry" placeholder="请选择时间" style="width: 300px"></DatePicker>
                                 </FormItem>
                                 <FormItem label="离婚登记时间：">
-                                    {{couple.divorce}}
-                                   
+                                    <!-- {{couple.divorce}} -->
+                                    <DatePicker type="date" v-model="couple.divorce" placeholder="请选择时间" style="width: 300px"></DatePicker>
                                 </FormItem>
                                 <FormItem label="请求支付的事实与理由：">
-                                    {{pay.reason}}
-                                   
+                                    <!-- {{pay.reason}} -->
+                                    <Input v-model="pay.reason" :row="5" placeholder="请输入理由" style="width: 300px" />
                                 </FormItem>
                                 <FormItem label="申请支付金额（元）：">
-                                    {{pay.money}}
-                                   
+                                    <!-- {{pay.money}} -->
+                                    <Input v-model="pay.money" :row="5" placeholder="请输入金额" style="width: 300px" />
                                 </FormItem>
                                 <FormItem label="有价证券：">
-                                    {{pay.securities}}
-                                   
+                                    <!-- {{pay.securities}} -->
+                                    <Input v-model="pay.securities" :row="5" placeholder="请输入金额" style="width: 300px" />
                                 </FormItem>
                                 <FormItem label="支付令申请费（元）：">
-                                    {{pay.applicationFee}}
-                                   
+                                    <!-- {{pay.applicationFee}} -->
+                                    <Input v-model="pay.applicationFee" :row="5" placeholder="请输入金额" style="width: 300px" />
                                 </FormItem>
                                 <FormItem label="申请支付令时：">
-                                    {{pay.applyTime}}
-                                   
+                                    <!-- {{pay.applyTime}} -->
+                                    <DatePicker type="date" v-model="pay.applyTime" placeholder="请选择时间" style="width: 300px"></DatePicker>
                                 </FormItem>
                                 <FormItem label="作出支付令时间：">
-                                    {{pay.completeTime}}
-                                   
+                                    <!-- {{pay.completeTime}} -->
+                                    <DatePicker type="date" v-model="pay.completeTime" placeholder="请选择时间" style="width: 300px"></DatePicker>
                                 </FormItem>
                                 <FormItem label="终结督促程序申请费（元）：">
-                                    {{endProcess.fee}}
-                                   
+                                    <!-- {{endProcess.fee}} -->
+                                    <Input v-model="endProcess.fee" :row="5" placeholder="请输入金额" style="width: 300px" />
                                 </FormItem>
                                 <FormItem label="终结督促程序裁定作出时间：">
-                                    {{endProcess.time}}
-                                   
+                                    <!-- {{endProcess.time}} -->
+                                    <DatePicker type="date" v-model="endProcess.time" placeholder="请选择时间" style="width: 300px"></DatePicker>
                                 </FormItem>
                                 <FormItem label="终结督促程序的原因：">
-                                    {{endProcess.reason}}
-                                    
+                                    <!-- {{endProcess.reason}} -->
+                                    <Input v-model="endProcess.reason" :row="5" placeholder="请输入原因" style="width: 300px" />
                                 </FormItem>
                             </Form>
                         </div>
@@ -750,79 +756,80 @@
             >
             <Form label-position="right" :label-width="315">
                 <FormItem label="信用卡卡号" prop="num">
-                    {{creditCard.num}}
-                    
+                    <!-- {{creditCard.num}} -->
+                    <Input v-model="creditCard.num" :row="5" placeholder="请输入信用卡卡号" style="width: 300px" />
                 </FormItem>
                 <FormItem label="信用卡合约名称" prop="name">
-                    {{creditCard.name}}
-                    
+                    <!-- {{creditCard.name}} -->
+                    <Input v-model="creditCard.name" :row="5" placeholder="请输入合约名称" style="width: 300px" />
                 </FormItem>
                 <FormItem label="利息约定" prop="interestAgreement">
-                    {{creditCard.interestAgreement}}
-                    
+                    <!-- {{creditCard.interestAgreement}} -->
+                    <Input v-model="creditCard.interestAgreement" :row="5" placeholder="请输入利息约定" style="width: 300px" />
                 </FormItem>
                 <FormItem label="信用卡欠款最新截至时间" prop="deadline">
-                    {{creditCard.deadline}}
+                    <!-- {{creditCard.deadline}} -->
+                    <DatePicker type="date" v-model="creditCard.deadline" placeholder="请选择时间" style="width: 300px"></DatePicker>
                 </FormItem>
                 <FormItem label="信用卡最新欠款本金（元）" prop="principal">
-                    {{creditCard.principal}}
-                    
+                    <!-- {{creditCard.principal}} -->
+                    <Input v-model="creditCard.principal" :row="5" placeholder="请输入本金" style="width: 300px" />
                 </FormItem>
                 <FormItem label="信用卡最新欠款利息（元）" prop="interest">
-                    {{creditCard.interest}}
-                    
+                    <!-- {{creditCard.interest}} -->
+                    <Input v-model="creditCard.interest" :row="5" placeholder="请输入利息" style="width: 300px" />
                 </FormItem>
                 <FormItem label="信用卡最新欠款滞纳金（违约金）（元）" prop="latePayment">
-                    {{creditCard.latePayment}}
-                    
+                    <!-- {{creditCard.latePayment}} -->
+                    <Input v-model="creditCard.latePayment" :row="5" placeholder="请输入滞纳金" style="width: 300px" />
                 </FormItem>
                 <FormItem label="信用卡年费（元）" prop="annualFee">
-                    {{creditCard.annualFee}}
-                    
+                    <!-- {{creditCard.annualFee}} -->
+                    <Input v-model="creditCard.annualFee" :row="5" placeholder="请输入年费" style="width: 300px" />
                 </FormItem>
                 <FormItem label="信用卡分期手续费（元）" prop="handlingFee">
-                    {{creditCard.handlingFee}}
-                    
+                    <!-- {{creditCard.handlingFee}} -->
+                    <Input v-model="creditCard.handlingFee" :row="5" placeholder="请输入手续费" style="width: 300px" />
                 </FormItem>
                 <FormItem label="其他费用项目及金额（元）" prop="otherFee">
-                    {{creditCard.otherFee}}
-                    
+                    <!-- {{creditCard.otherFee}} -->
+                    <Input v-model="creditCard.otherFee" :row="5" placeholder="请输入其他费用" style="width: 300px" />
                 </FormItem>
                 <FormItem label="违约金约定" prop="defaultAgreement">
-                    {{creditCard.defaultAgreement}}
-                    
+                    <!-- {{creditCard.defaultAgreement}} -->
+                    <Input v-model="creditCard.defaultAgreement" :row="5" placeholder="请输入约定" style="width: 300px" />
                 </FormItem>
                 <FormItem label="实现债权费用的约定" prop="feeAgreement">
-                    {{creditCard.feeAgreement}}
-                    
+                    <!-- {{creditCard.feeAgreement}} -->
+                    <Input v-model="creditCard.feeAgreement" :row="5" placeholder="请输入约定" style="width: 300px" />
                 </FormItem>
                 <FormItem label="律师费（元）" prop="lawyerFee">
-                    {{creditCard.lawyerFee}}
-                    
+                    <!-- {{creditCard.lawyerFee}} -->
+                    <Input v-model="creditCard.lawyerFee" :row="5" placeholder="请输入律师费" style="width: 300px" />
                 </FormItem>
                 <FormItem label="保全费（元）" prop="securityFee">
-                    {{creditCard.securityFee}}
-                    
+                    <!-- {{creditCard.securityFee}} -->
+                    <Input v-model="creditCard.securityFee" :row="5" placeholder="请输入保全费" style="width: 300px" />
                 </FormItem>
                 <FormItem label="公告费（元）" prop="announcementFee">
-                    {{creditCard.announcementFee}}
-                    
+                    <!-- {{creditCard.announcementFee}} -->
+                    <Input v-model="creditCard.announcementFee" :row="5" placeholder="请输入公告费" style="width: 300px" />
                 </FormItem>
                 <FormItem label="信用卡取现手续费（元）" prop="cashFee">
-                    {{creditCard.cashFee}}
-                    
+                    <!-- {{creditCard.cashFee}} -->
+                    <Input v-model="creditCard.cashFee" :row="5" placeholder="请输入手续费" style="width: 300px" />
                 </FormItem>
                 <FormItem label="其他项目费用（年费、取现手续费、分期手续费）的约定" prop="otherProjectFee">
-                    {{creditCard.otherProjectFee}}
-                    
+                    <!-- {{creditCard.otherProjectFee}} -->
+                    <Input v-model="creditCard.otherProjectFee" :row="5" placeholder="请输入其他项目约定" style="width: 300px" />
                 </FormItem>
                 <FormItem label="最新截止时间后利息计算标准" prop="endStandard">
-                    {{creditCard.endStandard}}
-                    
+                    <!-- {{creditCard.endStandard}} -->
+                    <Input v-model="creditCard.endStandard" :row="5" placeholder="请输入计算标准" style="width: 300px" />
                 </FormItem>
                 <FormItem label="最新截止时间后违约金（滞纳金）计算标准" prop="endFeeStandard">
-                    {{creditCard.endFeeStandard}}
-                    
+                    <!-- {{creditCard.endFeeStandard}} -->
+                    <Input v-model="creditCard.endFeeStandard" :row="5" placeholder="请输入计算标准" style="width: 300px" />
                 </FormItem>
                 <FormItem>
                     <Menu @on-select="guaranteeChioce" style="width: 300px;">
@@ -844,22 +851,28 @@
         >
             <Form label-position="right" :label-width="155">
                 <FormItem label="保证合同名称:" prop="name">
-                    {{guaranteeContract2.name}}
+                    <!-- {{guaranteeContract2.name}} -->
+                    <Input v-model="guaranteeContract.name" :row="5" placeholder="请输入合同名称" style="width: 300px" /> 
                 </FormItem>
                 <FormItem label="合同签订时间:" prop="time">
-                    {{guaranteeContract2.time}}
+                    <!-- {{guaranteeContract2.time}} -->
+                    <DatePicker type="date" v-model="guaranteeContract.time" placeholder="请选择时间" style="width: 300px"></DatePicker>
                 </FormItem>
                 <FormItem label="保证人:" prop="people">
-                    {{guaranteeContract2.people}}
+                    <!-- {{guaranteeContract2.people}} -->
+                    <Input v-model="guaranteeContract.people" :row="5" placeholder="请输入保证人" style="width: 300px" />
                 </FormItem>
                 <FormItem label="保证期间:" prop="timeRange">
-                    {{guaranteeContract2.timeRange}}
+                    <!-- {{guaranteeContract2.timeRange}} -->
+                    <DatePicker type="daterange" v-model="guaranteeContract.timeRange" placeholder="请选择时间" style="width: 300px"></DatePicker>
                 </FormItem>
                 <FormItem label="保证方式:" prop="methods">
-                    {{guaranteeContract2.methods}}
+                    <!-- {{guaranteeContract2.methods}} -->
+                    <Input v-model="guaranteeContract.methods" :row="5" placeholder="请输入方式" style="width: 300px" />
                 </FormItem>
                 <FormItem label="保证范围:" prop="range">
-                    {{guaranteeContract2.range}}
+                    <!-- {{guaranteeContract2.range}} -->
+                    <Input v-model="guaranteeContract.range" :row="5" placeholder="请输入范围" style="width: 300px" />
                 </FormItem>
             </Form>
         </Modal>
@@ -871,174 +884,180 @@
             >
             <Form label-position="left" :label-width="180" v-show="titleIndex == 0">
                 <FormItem label="授信合同名称：" prop="name">
-                    {{credit.name}}
+                    <!-- {{credit.name}} -->
+                    <Input v-model="credit.name" :row="5" placeholder="请输入授信合同名称" style="width: 300px" />
                 </FormItem>
                 <FormItem label="是否诉请解除该授信合同：" prop="isRelease">
                     <RadioGroup v-model="credit.isRelease">
-                        <Radio disabled label="yes">
+                        <Radio label="yes">
                             <span>是</span>
                         </Radio>
-                        <Radio disabled label="no">
+                        <Radio label="no">
                             <span>否</span>
                         </Radio>
                     </RadioGroup>
                 </FormItem>
                 <FormItem label="授信人：" prop="creditPeople">
-                        {{credit.creditPeople}}
+                    <!-- {{credit.creditPeople}} -->
+                    <Input v-model="credit.creditPeople" :row="5" placeholder="请输入授信合同名称" style="width: 300px" />
                 </FormItem>
                 <FormItem label="授信合同签订时间：" prop="creditTime">
-                        {{credit.creditTime}}
-                    
+                    <!-- {{credit.creditTime}} -->
+                    <DatePicker type="date" v-model="credit.creditTime" placeholder="请选择授信合同时间" style="width: 300px"></DatePicker>
                 </FormItem>
                 <FormItem label="授信合同期间：" prop="creditRange">
-                    {{credit.creditRange}}
-                    
+                    <!-- {{credit.creditRange}} -->
+                    <DatePicker type="daterange" v-model="credit.creditRange" placeholder="请选择授信合同时间" style="width: 300px"></DatePicker>
                 </FormItem>
                 <FormItem label="授信金额：" prop="creditMoney">
-                    {{credit.creditMoney}}
+                    <!-- {{credit.creditMoney}} -->
+                    <Input v-model="credit.creditMoney" :row="5" placeholder="请输入授信合同名称" style="width: 300px" />
                 </FormItem>
             </Form>
             <Form label-position="left" :label-width="180" v-show="titleIndex == 1">
                 <FormItem label="借款合同名称：" prop="name">
-                    {{loan.name}}
+                    <!-- {{loan.name}} -->
+                    <Input v-model="loan.name" :row="5" placeholder="请输入借款合同名称" style="width: 300px" />
                 </FormItem>
                 <FormItem label="借款人：" prop="creditPeople">
-                    {{loan.creditPeople}}
+                    <!-- {{loan.creditPeople}} -->
+                    <Input v-model="loan.creditPeople" :row="5" placeholder="请输入借款人" style="width: 300px" />
                 </FormItem>
                 <FormItem label="是否诉请解除该借款合同：" prop="isRelease">
                     <RadioGroup v-model="loan.isRelease">
-                        <Radio disabled label="yes">
+                        <Radio label="yes">
                             <span>是</span>
                         </Radio>
-                        <Radio disabled label="no">
+                        <Radio label="no">
                             <span>否</span>
                         </Radio>
                     </RadioGroup>
                 </FormItem>
                 <FormItem label="签订借款合同时间：" prop="time">
-                    {{loan.time}}
+                    <!-- {{loan.time}} -->
+                    <DatePicker type="date" v-model="loan.time" placeholder="请选择借款合同时间" style="width: 300px"></DatePicker>
                 </FormItem>
                 <FormItem label="借款本金：" prop="money">
-                    {{loan.money}}
-                   
+                    <!-- {{loan.money}} -->
+                    <Input v-model="loan.money" :row="5" placeholder="请输入借款本金" style="width: 300px" />
                 </FormItem>
                 <FormItem label="借款期限：" prop="range">
-                    {{loan.range}}
-                    
+                    <!-- {{loan.range}} -->
+                    <DatePicker v-model="loan.range" type="daterange" placement="bottom-end" placeholder="请选择借款期限" style="width: 200px"></DatePicker>
                 </FormItem>
                 <FormItem label="还款方式：" prop="methods">
-                    {{loan.methods}}
-                    
+                    <!-- {{loan.methods}} -->
+                    <Input v-model="loan.methods" :row="5" placeholder="请输入还款方式" style="width: 300px" />
                 </FormItem>
                 <FormItem label="借款利率：" prop="loanRate">
-                    {{loan.loanRate}}
-                    
+                    <!-- {{loan.loanRate}} -->
+                    <Input v-model="loan.loanRate" :row="5" placeholder="请输入借款利率" style="width: 300px" />
                 </FormItem>
                 <FormItem label="罚息利率：" prop="penaltyInterest">
-                    {{loan.penaltyRate}}
-                    
+                    <!-- {{loan.penaltyRate}} -->
+                    <Input v-model="loan.penaltyRate" :row="5" placeholder="请输入罚息利率" style="width: 300px" />
                 </FormItem>
                 <FormItem label="复利利率：" prop="compoundRate">
-                    {{loan.compoundRate}}
-                    
+                    <!-- {{loan.compoundRate}} -->
+                    <Input v-model="loan.compoundRate" :row="5" placeholder="请输入复利利率" style="width: 300px" />
                 </FormItem>
                 <FormItem label="罚息/复利约定：" prop="rateAgreement">
-                    {{loan.rateAgreement}}
-                    
+                    <!-- {{loan.rateAgreement}} -->
+                    <Input v-model="loan.rateAgreement" :row="5" placeholder="请输入约定" style="width: 300px" />
                 </FormItem>
                 <FormItem label="解除合同或提前收贷约定：" prop="releaseAgreement">
-                    {{loan.releaseAgreement}}
-                    
+                    <!-- {{loan.releaseAgreement}} -->
+                    <Input v-model="loan.releaseAgreement" :row="5" placeholder="请输入约定" style="width: 300px" />
                 </FormItem>
                 <FormItem label="违约金约定：" prop="defaultAgreement">
-                    {{loan.defaultAgreement}}
-                    
+                    <!-- {{loan.defaultAgreement}} -->
+                    <Input v-model="loan.defaultAgreement" :row="5" placeholder="请输入约定" style="width: 300px" />
                 </FormItem>
                 <FormItem label="实现债券费用的约定：" prop="feeAgreement">
-                    {{loan.feeAgreement}}
-                    
+                    <!-- {{loan.feeAgreement}} -->
+                    <Input v-model="loan.feeAgreement" :row="5" placeholder="请输入约定" style="width: 300px" />
                 </FormItem>
                 <FormItem label="送达约定：" prop="sendAgreement">
-                    {{loan.sendAgreement}}
-                    
+                    <!-- {{loan.sendAgreement}} -->
+                    <Input v-model="loan.sendAgreement" :row="5" placeholder="请输入约定" style="width: 300px" />
                 </FormItem>
             </Form>
             <Form label-position="left" :label-width="180" v-show="titleIndex == 2">
                 <FormItem label="保证合同名称：" prop="name">
-                        {{guarantee.name}}
-                    
+                        <!-- {{guarantee.name}} -->
+                    <Input v-model="guarantee.name" :row="5" placeholder="请输入保证合同名称" style="width: 300px" />
                 </FormItem>
                 <FormItem label="保证人：" prop="guaranteePeople">
-                    {{guarantee.guaranteePeople}}
-                    
+                    <!-- {{guarantee.guaranteePeople}} -->
+                    <Input v-model="guarantee.guaranteePeople" :row="5" placeholder="请输入保证人" style="width: 300px" />
                 </FormItem>
                 <FormItem label="保证方式：" prop="methods">
-                    {{guarantee.methods}}
-                    
+                    <!-- {{guarantee.methods}} -->
+                    <Input v-model="guarantee.methods" :row="5" placeholder="请输入保证方式" style="width: 300px" />
                 </FormItem>
                 <FormItem label="保证期间：" prop="timeRange">
-                    {{guarantee.timeRange}}
-                    
+                    <!-- {{guarantee.timeRange}} -->
+                    <DatePicker v-model="guarantee.timeRange" type="daterange" placement="bottom-end" placeholder="请选择保证期间" style="width: 200px"></DatePicker>
                 </FormItem>
                 <FormItem label="保证合同签订时间：" prop="time">
-                    {{guarantee.time}}
-                    
+                    <!-- {{guarantee.time}} -->
+                    <DatePicker v-model="guarantee.time" type="date" placement="bottom-end" placeholder="请选择签订时间" style="width: 200px"></DatePicker>
                 </FormItem>
                 <FormItem label="保证范围：" prop="guaranteeRange">
-                    {{guarantee.guaranteeRange}}
-                    
+                    <!-- {{guarantee.guaranteeRange}} -->
+                    <Input v-model="guarantee.guaranteeRange" :row="5" placeholder="请输入保证范围" style="width: 300px" />
                 </FormItem>
             </Form>
             <Form label-position="left" :label-width="180" v-show="titleIndex == 3">
                 <FormItem label="抵押合同名称：" prop="name">
-                    {{mortgage.name}}
-                   
+                    <!-- {{mortgage.name}} -->
+                    <Input v-model="mortgage.name" :row="5" placeholder="请输入抵押合同名称" style="width: 300px" />
                 </FormItem>
                 <FormItem label="抵押合同签订时间：" prop="time">
-                    {{mortgage.time}}
-                    
+                    <!-- {{mortgage.time}} -->
+                    <DatePicker v-model="mortgage.time" type="date" placement="bottom-end" placeholder="请选择签订时间" style="width: 200px"></DatePicker>
                 </FormItem>
                 <FormItem label="抵押物权属：" prop="ownership">
-                    {{mortgage.ownership}}
-                    
+                    <!-- {{mortgage.ownership}} -->
+                    <Input v-model="mortgage.ownership" :row="5" placeholder="请输入抵押物权属" style="width: 300px" />
                 </FormItem>
                 <FormItem label="抵押物名称：" prop="articleName">
-                    {{mortgage.articleName}}
-                    
+                    <!-- {{mortgage.articleName}} -->
+                    <Input v-model="mortgage.articleName" :row="5" placeholder="请输入抵押物名称" style="width: 300px" />
                 </FormItem>
                 <FormItem label="抵押担保范围：" prop="range">
-                    {{mortgage.range}}
-                    
+                    <!-- {{mortgage.range}} -->
+                    <Input v-model="mortgage.range" :row="5" placeholder="请输入担保范围" style="width: 300px" />
                 </FormItem>
                 <FormItem label="办理抵押登记时间：" prop="handletime">
-                    {{mortgage.handletime}}
-                    
+                    <!-- {{mortgage.handletime}} -->
+                    <DatePicker v-model="mortgage.handletime" type="date" placement="bottom-end" placeholder="请选择登记时间" style="width: 200px"></DatePicker>
                 </FormItem>
             </Form>
             <Form label-position="left" :label-width="180" v-show="titleIndex == 4">
                 <FormItem label="质押合同名称：" prop="name">
-                    {{pledge.name}}
-                   
+                    <!-- {{pledge.name}} -->
+                    <Input v-model="pledge.name" :row="5" placeholder="请输入质押合同名称" style="width: 300px" />
                 </FormItem>
                 <FormItem label="质押合同签订时间：" prop="time">
-                    {{pledge.time}}
-                    
+                    <!-- {{pledge.time}} -->
+                    <DatePicker v-model="pledge.time" type="date" placement="bottom-end" placeholder="请选择签订时间" style="width: 200px"></DatePicker>
                 </FormItem>
                 <FormItem label="质押物权属：" prop="ownership">
-                    {{pledge.ownership}}
-                    
+                    <!-- {{pledge.ownership}} -->
+                    <Input v-model="pledge.ownership" :row="5" placeholder="请输入质押物权属" style="width: 300px" />
                 </FormItem>
                 <FormItem label="质押物名称：" prop="articleName">
-                    {{pledge.articleName}}
-                   
+                    <!-- {{pledge.articleName}} -->
+                    <Input v-model="pledge.articleName" :row="5" placeholder="请输入质押物名称" style="width: 300px" />
                 </FormItem>
                 <FormItem label="质押担保范围：" prop="range">
-                    {{pledge.range}}
-                    
+                    <!-- {{pledge.range}} -->
+                    <Input v-model="pledge.range" :row="5" placeholder="请输入质押担保范围" style="width: 300px" />
                 </FormItem>
                 <FormItem label="办理质押登记时间：" prop="handletime">
-                    {{pledge.handletime}}
-                    
+                    <!-- {{pledge.handletime}} -->
+                    <DatePicker v-model="pledge.handletime" type="date" placement="bottom-end" placeholder="请选择质押登记时间" style="width: 200px"></DatePicker>
                 </FormItem>
             </Form>
         </Modal>
