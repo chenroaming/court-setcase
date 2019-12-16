@@ -200,7 +200,7 @@
                     </RadioGroup>
                 </FormItem>
                 <FormItem label="授信人" prop="creditPeople">
-                    <Input v-model="credit.creditPeople" :row="5" placeholder="请输入授信合同名称" style="width: 300px" />
+                    <Input v-model="credit.creditPeople" :row="5" placeholder="请输入授信人" style="width: 300px" />
                 </FormItem>
                 <FormItem label="授信合同签订时间" prop="creditTime">
                     <DatePicker type="date" v-model="credit.creditTime" placeholder="请选择授信合同时间" style="width: 300px"></DatePicker>
@@ -209,7 +209,7 @@
                     <DatePicker type="daterange" v-model="credit.creditRange" placeholder="请选择授信合同时间" style="width: 300px"></DatePicker>
                 </FormItem>
                 <FormItem label="授信金额" prop="creditMoney">
-                    <Input v-model="credit.creditMoney" :row="5" placeholder="请输入授信合同名称" style="width: 300px" />
+                    <Input v-model="credit.creditMoney" :row="5" placeholder="请输入授信金额" style="width: 300px" />
                 </FormItem>
             </Form>
             <Form ref="loan" :model="loan" label-position="right" :label-width="155" v-show="titleIndex == 1">
