@@ -103,13 +103,13 @@
                 <Input v-model="litigation.compoundInterest" placeholder="请输入复利" style="width: 300px" />
             </FormItem>
             <FormItem label="最新欠款利息">
-                <Input v-model="litigation.nInterest" placeholder="请输入最新的利息" style="width: 300px" />
+                <Input v-model="litigation.nInterest" placeholder="请输入最新欠款利息" style="width: 300px" />
             </FormItem>
             <FormItem label="最新欠款罚息">
-                <Input v-model="litigation.npInterest" placeholder="请输入最新的利息" style="width: 300px" />
+                <Input v-model="litigation.npInterest" placeholder="请输入最新欠款罚息" style="width: 300px" />
             </FormItem>
             <FormItem label="最新欠款复利">
-                <Input v-model="litigation.ncdInterest" placeholder="请输入最新的利息" style="width: 300px" />
+                <Input v-model="litigation.ncdInterest" placeholder="请输入最新欠款复利" style="width: 300px" />
             </FormItem>
             <FormItem label="最新欠款利息等">
                 <Input v-model="litigation.newArrears" placeholder="请输入最新欠款利息" style="width: 300px" />
@@ -259,7 +259,7 @@
                 <FormItem label="违约金约定" prop="defaultAgreement">
                     <Input v-model="loan.defaultAgreement" :row="5" placeholder="请输入约定" style="width: 300px" />
                 </FormItem>
-                <FormItem label="实现债券费用的约定" prop="feeAgreement">
+                <FormItem label="实现债权费用的约定" prop="feeAgreement">
                     <Input v-model="loan.feeAgreement" :row="5" placeholder="请输入约定" style="width: 300px" />
                 </FormItem>
                 <FormItem label="送达约定" prop="sendAgreement">

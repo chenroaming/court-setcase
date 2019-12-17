@@ -830,7 +830,7 @@
                     <div>
                         <Form  :model="addFormItem" :label-width="145" inline :rules="ruleValidate">
                             <FormItem style="width: 505px;">
-                                <p>请完整填写所知详尽信息，以便法院传唤、文书送达</p>
+                                <p style="font-size:18px;">请完整填写所知详尽信息，以便法院文书送达</p>
                             </FormItem>
                             <FormItem :label="addFormItem.litigantType == '自然人'? '姓名*' : '名称*'" style="width: 505px;">
                                 <Input v-model="addFormItem.litigantName" :placeholder="addFormItem.litigantType == '自然人'? '请输入当事人' : '请输入名称'"></Input>
@@ -916,21 +916,21 @@
                                     <Option v-for="item in this.data" :value="item.id" :key="item.litigantName">{{ item.litigantName }}</Option>
                                 </Select>
                             </FormItem>
-                            <FormItem label="固定电话" style="width: 245px;" v-show="addFormItem.litigantType != '法人' && addFormItem.litigantType != '非法人组织'" >
+                            <!-- <FormItem label="固定电话" style="width: 245px;" v-show="addFormItem.litigantType != '法人' && addFormItem.litigantType != '非法人组织'" >
                                 <Input v-model="addFormItem.fixedPhone" placeholder="请输入固话号码"></Input>
-                            </FormItem>
+                            </FormItem> -->
         
-                            <FormItem label="手机号码*" style="width: 245px;" v-show="addFormItem.litigantType != '法人' && addFormItem.litigantType != '非法人组织'" >
+                            <FormItem label="联系号码*" style="width: 245px;" v-show="addFormItem.litigantType != '法人' && addFormItem.litigantType != '非法人组织'" >
                                 <!-- <Input v-model="addFormItem.litigantPhone" placeholder="请输入手机号码"></Input>
                                 <div style="color: #ed3f14;position:absolute;top:28px;left:5px;">多个手机号码请用逗号分隔</div> -->
                                 <Dropdown @on-click="changePhone" v-if="this.litigantId != ''">
-                                    <Input v-model="litigantPhoneSelect" :disabled="isDisabled" placeholder="请选择手机号" @on-change></Input>
+                                    <Input v-model="litigantPhoneSelect" :disabled="isDisabled" placeholder="请选择号码" @on-change></Input>
                                     <DropdownMenu slot="list">
                                         <DropdownItem v-for="(item,index) in addFormItem.litigantPhone" :name="index">{{item}}</DropdownItem>
                                     </DropdownMenu>
                                 </Dropdown>
-                                <Input v-model="addNewPhone" placeholder="请输入手机号" v-if="this.litigantId == ''"></Input>
-                                <div style="color: #ed3f14;position:absolute;top:28px;" v-if="this.litigantId == ''">多个手机号码请用逗号分隔</div>
+                                <Input v-model="addNewPhone" placeholder="请输入号码" v-if="this.litigantId == ''"></Input>
+                                <div style="color: #ed3f14;position:absolute;top:28px;width: 155px;" v-if="this.litigantId == ''">多个号码请用逗号分隔</div>
                             </FormItem>
                             
                             <!-- <FormItem :label="addFormItem.litigantType == '自然人' ?'固定电话' : '固定电话*'" style="width: 245px;">
@@ -965,8 +965,8 @@
                             <FormItem label="电子邮箱*" style="width: 505px" v-show="addFormItem.litigantType == '自然人'">
                                 <Input v-model="addFormItem.email" placeholder="请输入电子邮箱"></Input>
                             </FormItem>
-                            <FormItem :label="addFormItem.litigantType == '自然人' ? '户籍地址*' : '注册地址*'" style="width: 505px">
-                                <Input v-model="addFormItem.nativePlace" :placeholder="addFormItem.litigantType == '自然人' ? '请输入户籍地址' : '请输入登记地址'"></Input>
+                            <FormItem :label="addFormItem.litigantType == '自然人' ? '户籍地址*' : '注册登记地址*'" style="width: 505px">
+                                <Input v-model="addFormItem.nativePlace" :placeholder="addFormItem.litigantType == '自然人' ? '请输入户籍地址' : '请输入注册登记地址'"></Input>
                             </FormItem>
                             <FormItem :label="addFormItem.litigantType == '自然人' ? '现居地址*' : '办公地址*'" style="width: 505px">
                                 <Input v-model="addFormItem.address" :placeholder="addFormItem.litigantType == '自然人' ? '请输入除户籍地址外满一年的现居地址' : '请输入办公地址'"></Input>

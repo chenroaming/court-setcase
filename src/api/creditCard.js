@@ -5,9 +5,9 @@ const service = Util.ajax;
 /** 
  * 添加/修改信用卡信息
  */
-export function addUpdateCardInfo (cardId,partCardId,cardNo,contractName,interestAgreement,ldlTime,nowAmount,nowInterest,nowLFee,annualFeeStr,byStagesFeeStr,proAndFee,lateFeeAppointment,bondFeeAppointment,lawyerFeeStr,pFee,annouFee,enFee,anotherApponintment,nowInterestStandard,nowLateFeeStandard,gcInfoIds) {
+export function addUpdateCardInfo (cardId,partCardId,cardNo,contractName,interestAgreement,ldlTime,nowAmount,nowInterest,nowLFee,annualFeeStr,byStagesFeeStr,proAndFee,lateFeeAppointment,bondFeeAppointment,lawyerFeeStr,pFee,annouFee,enFee,anotherApponintment,nowInterestStandard,nowLateFeeStandard,gcInfoIds,cardType,applyCardTime,auditTime,overdrawRateStr,bondFeeStr,lineOfCreditStr) {
     const params = {
-        cardId,partCardId,cardNo,contractName,interestAgreement,ldlTime,nowAmount,nowInterest,nowLFee,annualFeeStr,byStagesFeeStr,proAndFee,lateFeeAppointment,bondFeeAppointment,lawyerFeeStr,pFee,annouFee,enFee,anotherApponintment,nowInterestStandard,nowLateFeeStandard,gcInfoIds
+        cardId,partCardId,cardNo,contractName,interestAgreement,ldlTime,nowAmount,nowInterest,nowLFee,annualFeeStr,byStagesFeeStr,proAndFee,lateFeeAppointment,bondFeeAppointment,lawyerFeeStr,pFee,annouFee,enFee,anotherApponintment,nowInterestStandard,nowLateFeeStandard,gcInfoIds,cardType,applyCardTime,auditTime,overdrawRateStr,bondFeeStr,lineOfCreditStr
     };
     return service({
         url: '/online/part/addUpdateCardInfo.jhtml',

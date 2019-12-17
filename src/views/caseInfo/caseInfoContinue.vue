@@ -773,7 +773,7 @@ right: -20px;">元</span>
     <div>
         <Form :model="addFormItem" :label-width="145" inline>
             <FormItem style="width: 505px;">
-                <p>请完整填写所知详尽信息，以便法院传唤、文书送达</p>
+                <p style="font-size:18px;">请完整填写所知详尽信息，以便法院文书送达</p>
             </FormItem>
             <FormItem :label="addFormItem.litigantType == '自然人'? '姓名*' : '名称*'" style="width: 505px;">
                 <Input v-model="addFormItem.litigantName" :placeholder="addFormItem.litigantType == '自然人'? '请输入当事人' : '请输入名称'"></Input>
@@ -859,9 +859,9 @@ right: -20px;">元</span>
                     <Option v-for="item in this.data" :value="item.id" :key="item.litigantName">{{ item.litigantName }}</Option>
                 </Select>
             </FormItem>
-            <FormItem label="固定电话" style="width: 245px;" v-show="addFormItem.litigantType != '法人' && addFormItem.litigantType != '非法人组织'" >
+            <!-- <FormItem label="固定电话" style="width: 245px;" v-show="addFormItem.litigantType != '法人' && addFormItem.litigantType != '非法人组织'" >
                 <Input v-model="addFormItem.fixedPhone" placeholder="请输入固话号码"></Input>
-            </FormItem>
+            </FormItem> -->
             <!-- <FormItem :label="addFormItem.litigantType == '自然人' ?'固定电话' : '固定电话*'" style="width: 245px;">
                 <Input v-model="addFormItem.litigantTelPhone" placeholder="请输入固定电话"></Input>
             </FormItem>
@@ -869,15 +869,15 @@ right: -20px;">元</span>
                 <DatePicker type="date" transfer :value="addFormItem.birthday2" @on-change="changeDate2"></DatePicker>
             </FormItem> -->
 
-            <FormItem label="手机号码*" style="width: 245px;" v-show="addFormItem.litigantType != '法人' && addFormItem.litigantType != '非法人组织'">
+            <FormItem label="联系号码*" style="width: 245px;" v-show="addFormItem.litigantType != '法人' && addFormItem.litigantType != '非法人组织'">
                 <Dropdown @on-click="changePhone" v-if="this.litigantId != ''">
-                    <Input v-model="litigantPhoneSelect" :disabled="isDisabled" placeholder="请选择手机号" @on-change></Input>
+                    <Input v-model="litigantPhoneSelect" :disabled="isDisabled" placeholder="请选择号码" @on-change></Input>
                     <DropdownMenu slot="list">
                         <DropdownItem v-for="(item,index) in addFormItem.litigantPhone" :name="index">{{item}}</DropdownItem>
                     </DropdownMenu>
                 </Dropdown>
-                <Input v-model="addNewPhone" placeholder="请输入手机号" v-if="this.litigantId == ''"></Input>
-                <div style="color: #ed3f14;position:absolute;top:28px;" v-if="this.litigantId == ''">多个手机号码请用逗号分隔</div>
+                <Input v-model="addNewPhone" placeholder="请输入号码" v-if="this.litigantId == ''"></Input>
+                <div style="color: #ed3f14;position:absolute;top:28px;" v-if="this.litigantId == ''">多个号码请用逗号分隔</div>
             </FormItem>
             <FormItem v-bind:label="addFormItem.litigantType == '法人' ? '法定代表人*' : '负责人*'" style="width: 505px;" v-show="addFormItem.litigantType != '自然人'">
                 <Input v-model="addFormItem.legalManName" v-bind:placeholder="addFormItem.litigantType == '法人' ? '请输入法定代表人姓名' : '请输入负责人姓名'" width="100px;"></Input>
@@ -904,7 +904,7 @@ right: -20px;">元</span>
             <FormItem label="电子邮箱*" style="width: 505px" v-show="addFormItem.litigantType == '自然人'">
                 <Input v-model="addFormItem.email" placeholder="请输入电子邮箱"></Input>
             </FormItem>
-            <FormItem :label="addFormItem.litigantType == '自然人' ? '户籍地址*' : '注册地址*'" style="width: 505px">
+            <FormItem :label="addFormItem.litigantType == '自然人' ? '户籍地址*' : '注册登记地址*'" style="width: 505px">
                 <Input v-model="addFormItem.nativePlace" :placeholder="addFormItem.litigantType == '自然人' ? '请输入户籍地址' : '请输入注册地址'"></Input>
             </FormItem>
             <FormItem :label="addFormItem.litigantType == '自然人' ? '现居地址*' : '经营地址*'" style="width: 505px">
@@ -1401,13 +1401,13 @@ v-clipboard:error="onError" style="font-size: 18px;margin-left: 10px;cursor: poi
                 <input type="file"  name="" @change="getFile($event)" id="upfil">点击这里上传文件
             </a>
             <span style='
-padding: 4px 10px;
-line-height: 20px;
-position: relative;
-color: #888;
-background: #fafafa;
-overflow: hidden;
-display: inline-block;'>文件最大支持30M</span>
+                padding: 4px 10px;
+                line-height: 20px;
+                position: relative;
+                color: #888;
+                background: #fafafa;
+                overflow: hidden;
+                display: inline-block;'>文件最大支持30M</span>
             <div class="demo-spin-container" v-show='fileNlistEvi'>
                 <Spin fix>上传中..</Spin>
             </div>
@@ -1581,7 +1581,6 @@ return {
     mediatePeople:'',
     meidatePhone:'',
     mediatePeopleArr:[],
-    data3: ['Steve Jobs', 'Stephen Gary Wozniak', 'Jonathan Paul Ive'],
     caseType:"",
     sureMol:false,
     sureMoInfo:{},

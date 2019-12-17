@@ -111,9 +111,8 @@
                     <FormItem label="申请时间：">
                         <DatePicker v-model="applyDate" format="yyyy/MM/dd" type="daterange" placement="bottom-start" placeholder="请选择日期" style="width: 175px"></DatePicker>
                     </FormItem>
-                    <Button @click="searchList"  type="primary" style="width:220px;margin-left:20px">查询</Button>
+                    <Button @click="searchList" :loading="loading" type="primary" style="width:220px;margin-left:20px">查询</Button>
                 </Form>
-            
             </div>
         </div>
         <div class="content_main">
@@ -537,7 +536,7 @@
                                     
                                 </FormItem>
                                 <FormItem label="实际到期日期:">
-                                        {{litigation.maturity}}
+                                    {{litigation.maturity}}
 
                                 </FormItem>
                                 <FormItem label="逾期还款日期:">
@@ -562,7 +561,7 @@
                                     {{litigation.compoundInterest}}
                                 </FormItem>
                                 <FormItem label="最新欠款利息:">
-                                        {{litigation.nInterest}}
+                                    {{litigation.nInterest}}
                                     
                                 </FormItem>
                                 <FormItem label="最新欠款罚息:">
@@ -656,14 +655,16 @@
                                 </FormItem>
                                 <FormItem label="保全财产情况:">
                                     {{litigation.preservationStatus}}
-                                    
+                                </FormItem>
+                                <FormItem label="核对状态:">
+                                    <Button type="primary" :loading="confirmLoading" @click="checkLawCase">{{lawCaseChecked ? '未核对' : '已核对'}}</Button>
                                 </FormItem>
                             </Form>
                         </div>
                         <div v-if="element == 2 && elementSw" class="loan-Box">
                             <Form label-position="left" :label-width="170">
                                 <FormItem label="合同名称：" prop="name">
-                                        {{contract.name}}
+                                    {{contract.name}}
                                 </FormItem>
                                 <FormItem label="合同签订时间：">
                                     {{contract.time}}
@@ -723,6 +724,9 @@
                                 </FormItem>
                                 <FormItem label="终结督促程序的原因：">
                                     {{endProcess.reason}}  
+                                </FormItem>
+                                <FormItem label="核对状态：">
+                                    <Button type="primary" :loading="confirmLoading" @click="checkLawCase">{{lawCaseChecked ? '未核对' : '已核对'}}</Button>
                                 </FormItem>
                             </Form>
                         </div>
@@ -1059,7 +1063,7 @@
                     {{loan.defaultAgreement}}
                     
                 </FormItem>
-                <FormItem label="实现债券费用的约定：" prop="feeAgreement">
+                <FormItem label="实现债权费用的约定：" prop="feeAgreement">
                     {{loan.feeAgreement}}
                     
                 </FormItem>
@@ -1354,7 +1358,10 @@ transferOnlineLawCase,//案件移送接口
 } from '@/api/caseInfo.js';
 import {addOrUpdateCtInfo,addOrUpdateLoanCtInfo,addOrUpdateMcInfo,addOrUpdatePcInfo,
         getDelCtInfo,
-        updatePLoan
+        updatePLoan,
+        getEdit,
+        editInfo,
+        confirmOnLawCase
     } from '@/api/contract.js';
     import {
         addUpdateCardInfo,
@@ -1389,6 +1396,8 @@ export default {
             originalSh:'',
             fileStatus:true,
             filaeLoading:false,//原件审核相关data
+            lawCaseChecked:false,//要素信息是否已核对
+            confirmLoading:false,//核对按钮加载状态
             firstWord:'',
             element:0,
             elementSw:false,//要素信息显示开关，避免要素信息过长影响布局
@@ -2125,6 +2134,18 @@ export default {
         },
 
 
+        checkLawCase(){
+            this.confirmLoading = true;
+            confirmOnLawCase(this.lawcaseId,!this.lawCaseChecked).then(res => {
+                this.confirmLoading = false;
+                if(res.data.state == 100){
+                    this.$Message.success(res.data.message);
+                    this.lawCaseChecked = !this.lawCaseChecked;
+                }else if(res.data.state == 101){
+                    this.$Message.error(res.data.message);
+                }
+            })
+        },
 
         checkEvidenceMethod(){
             this.$Modal.confirm({
@@ -2979,6 +3000,11 @@ export default {
                 })
             }else if (e == 5){  //查看要素
                 this.elementSw = true;
+                getEdit(this.lawcaseId).then(res => {
+                    if(res.data.state == 100){
+                        this.lawCaseChecked = res.data.flag;
+                    }
+                })
                 if(this.element == 1){
                     getPart(this.lawcaseId).then(res => {
                         this.creditContract = [];

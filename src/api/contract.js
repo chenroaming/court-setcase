@@ -184,3 +184,44 @@ export function getPart (lawId) {
         params
     });
 }
+
+
+/** 
+ * 查询该案件是否允许修改
+ */
+export function getEdit (onlineLawCaseId) {
+    const params = {
+        onlineLawCaseId
+    };
+    return service({
+        url: '/online/part/getEdit.jhtml',
+        method: 'GET',
+        params
+    });
+}
+
+/** 
+ * 修改金融/信用卡信息
+ */
+export function editInfo (params) {
+    return service({
+        url: '/online/part/editInfo.jhtml',
+        method: 'get',
+        params
+    });
+}
+
+/** 
+ * 更改案件是否可在已申请界面编辑（法院端）
+ */
+export function confirmOnLawCase (onlineLawCaseId,flag) {
+    const params = {
+        onlineLawCaseId,
+        flag
+    };
+    return service({
+        url: '/online/part/confirmOnLawCase.jhtml',
+        method: 'GET',
+        params
+    });
+}

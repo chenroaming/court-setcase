@@ -66,13 +66,13 @@
                         <FormItem label="请求支付的事实与理由">
                             <Input v-model="pay.reason" :row="5" placeholder="请输入理由" style="width: 300px" />
                         </FormItem>
-                        <FormItem label="申请支付金额（元）">
+                        <FormItem label="申请支付金额（元）" prop="quota">
                             <Input v-model="pay.money" :row="5" placeholder="请输入金额" style="width: 300px" />
                         </FormItem>
-                        <FormItem label="有价证券">
+                        <FormItem label="有价证券" prop="quota">
                             <Input v-model="pay.securities" :row="5" placeholder="请输入金额" style="width: 300px" />
                         </FormItem>
-                        <FormItem label="支付令申请费（元）">
+                        <FormItem label="支付令申请费（元）" prop="quota">
                             <Input v-model="pay.applicationFee" :row="5" placeholder="请输入金额" style="width: 300px" />
                         </FormItem>
                         <FormItem label="申请支付令时">
@@ -106,9 +106,24 @@
             :loading="isAdd"
             @on-ok="ok"
             @on-cancel="cancel">
-            <Form label-position="right" ref="creditCard" :model="creditCard" :label-width="155" v-show="titleIndex == 0">
+            <Form label-position="right" ref="creditCard" :model="creditCard" :label-width="155" v-show="titleIndex == 0" :rules="ruleValid">
                 <FormItem label="信用卡卡号" prop="num">
                     <Input v-model="creditCard.num" :row="5" placeholder="请输入信用卡卡号" style="width: 300px" />
+                </FormItem>
+                <FormItem label="信用卡种类" prop="type">
+                    <Input v-model="creditCard.type" :row="5" placeholder="请输入信用卡种类" style="width: 300px" />
+                </FormItem>
+                <FormItem label="信用卡申请时间" prop="applyTime">
+                    <DatePicker type="date" v-model="creditCard.applyTime" placeholder="请选择时间" style="width: 300px"></DatePicker>
+                </FormItem>
+                <FormItem label="信用卡核准发卡时间" prop="issueTime">
+                    <DatePicker type="date" v-model="creditCard.issueTime" placeholder="请选择时间" style="width: 300px"></DatePicker>
+                </FormItem>
+                <FormItem label="信用额度" prop="quota">
+                    <Input v-model="creditCard.quota" :row="5" placeholder="请输入信用额度" style="width: 300px" />
+                </FormItem>
+                <FormItem label="透支利率" prop="overRate">
+                    <Input v-model="creditCard.overRate" :row="5" placeholder="请输入透支利率" style="width: 300px" />
                 </FormItem>
                 <FormItem label="信用卡合约名称" prop="name">
                     <Input v-model="creditCard.name" :row="5" placeholder="请输入合约名称" style="width: 300px" />
@@ -140,6 +155,9 @@
                 <FormItem label="违约金约定" prop="defaultAgreement">
                     <Input v-model="creditCard.defaultAgreement" :row="5" placeholder="请输入约定" style="width: 300px" />
                 </FormItem>
+                <FormItem label="实现债权的费用" prop="agreementFee">
+                    <Input v-model="creditCard.agreementFee" :row="5" placeholder="请输入费用" style="width: 300px" />
+                </FormItem>
                 <FormItem label="实现债权费用的约定" prop="feeAgreement">
                     <Input v-model="creditCard.feeAgreement" :row="5" placeholder="请输入约定" style="width: 300px" />
                 </FormItem>
@@ -158,6 +176,9 @@
                 <FormItem label="其他项目费用（年费、取现手续费、分期手续费）的约定" prop="otherProjectFee">
                     <Input v-model="creditCard.otherProjectFee" :row="5" placeholder="请输入其他项目约定" style="width: 300px" />
                 </FormItem>
+                <!-- <FormItem label="案件受理费（元）" prop="acceptanceFee">
+                    <Input v-model="creditCard.acceptanceFee" :row="5" placeholder="请输入受理费" style="width: 300px" />
+                </FormItem> -->
                 <FormItem label="最新截止时间后利息计算标准" prop="endStandard">
                     <Input v-model="creditCard.endStandard" :row="5" placeholder="请输入计算标准" style="width: 300px" />
                 </FormItem>
@@ -226,6 +247,12 @@ export default {
     name: 'elementInfo2',
     props:['lawCaseId','partId'],
     data () {
+        const validNumber = (rule, value, callback) => {//表单验证
+            if (isNaN(value)) {
+                return callback(new Error('请输入数字'));
+            }
+            callback();
+        };
         return {
             collapseBox:'1',
             gcId:'',
@@ -249,6 +276,13 @@ export default {
             creditCard:{
                 num:'',
                 name:'',
+                type:'',
+                applyTime:'',
+                issueTime:'',
+                quota:'',
+                overRate:'',
+                agreementFee:'',
+                acceptanceFee:'',
                 interestAgreement:'',
                 deadline:'',
                 principal:'',
@@ -265,7 +299,7 @@ export default {
                 cashFee:'',
                 otherProjectFee:'',
                 endStandard:'',
-                endFeeStandard:''  
+                endFeeStandard:'' 
             },
             guaranteeContract:{
                 name:'',
@@ -291,6 +325,44 @@ export default {
                 marry:'',
                 divorce:''
             },
+            ruleValid:{
+                quota:[
+                    {validator:validNumber,trigger:'change'}
+                ],
+                principal:[
+                    {validator:validNumber,trigger:'change'}
+                ],
+                interest:[
+                    {validator:validNumber,trigger:'change'}
+                ],
+                latePayment:[
+                    {validator:validNumber,trigger:'change'}
+                ],
+                annualFee:[
+                    {validator:validNumber,trigger:'change'}
+                ],
+                handlingFee:[
+                    {validator:validNumber,trigger:'change'}
+                ],
+                otherFee:[
+                    {validator:validNumber,trigger:'change'}
+                ],
+                lawyerFee:[
+                    {validator:validNumber,trigger:'change'}
+                ],
+                securityFee:[
+                    {validator:validNumber,trigger:'change'}
+                ],
+                announcementFee:[
+                    {validator:validNumber,trigger:'change'} 
+                ],
+                cashFee:[
+                    {validator:validNumber,trigger:'change'} 
+                ],
+                otherProjectFee:[
+                    {validator:validNumber,trigger:'change'} 
+                ],
+            }
         };
     },
     methods: {
@@ -335,6 +407,12 @@ export default {
                     this.creditCard.otherProjectFee = res.data.data.anotherApponintment;
                     this.creditCard.endStandard = res.data.data.nowInterestStandard;
                     this.creditCard.endFeeStandard = res.data.data.nowLateFeeStandard;
+                    this.creditCard.type = res.data.data.cardType;
+                    this.creditCard.applyTime = res.data.data.applyCardDate == null ? '' : this.time(res.data.data.applyCardDate);
+                    this.creditCard.issueTime = res.data.data.auditDate == null ? '' : this.time(res.data.data.auditDate);
+                    this.creditCard.overRate = res.data.data.BigDecimal;
+                    this.creditCard.agreementFee = res.data.data.bondFeeStr;
+                    this.creditCard.quota = res.data.data.lineOfCredit;
                 });
                 getContractInfo(this.lawCaseId,this.partCardId,'gc',this.cardId).then(res => {
                     this.guarantee = res.data.nameList;
@@ -359,47 +437,58 @@ export default {
             }
         },
         ok (){
-            this.isAdd = false;
-            addUpdateCardInfo(this.cardId,
-                this.partCardId,
-                this.creditCard.num,
-                this.creditCard.name,
-                this.creditCard.interestAgreement,
-                this.creditCard.deadline == '' ? this.creditCard.deadline : typeof(this.creditCard.deadline) == 'number' ? this.time(this.creditCard.deadline) : this.creditCard.deadline.getFullYear()+'-'+(this.creditCard.deadline.getMonth()+1)+'-'+this.creditCard.deadline.getDate(),
-                this.creditCard.principal,
-                this.creditCard.interest,
-                this.creditCard.latePayment,
-                this.creditCard.annualFee,
-                this.creditCard.handlingFee,
-                this.creditCard.otherFee,
-                this.creditCard.defaultAgreement,
-                this.creditCard.feeAgreement,
-                this.creditCard.lawyerFee,
-                this.creditCard.securityFee,
-                this.creditCard.announcementFee,
-                this.creditCard.cashFee,
-                this.creditCard.otherProjectFee,
-                this.creditCard.endStandard,
-                this.creditCard.endFeeStandard,
-                this.gcIdList
-            ).then(res => {
-                this.isAdd = true;
-                if(res.data.state = 100){
-                    this.handleReset2('creditCard');
-                    this.modal1 = false;
-                    this.$Message.success(res.data.message);
-                    this.gcIdList = '';
-                    getPart(this.lawCaseId).then(res => {
-                        this.creditInfo = [];
-                        res.data.creditCard.creditCardInformations.map(item => {
-                            return item.enable == true ? this.creditInfo.push(item) : false;
-                        });
-                    })
-                    return;
-                }else{
-                    this.$Message.warning(res.data.message);
+            this.$refs['creditCard'].validate((valid) => {
+                if(!valid){
+                    this.isAdd = false;
+                    return this.$Message.error('格式错误！请检查！');
                 }
-                this.$Message.warning(res.data.message);
+                addUpdateCardInfo(this.cardId,
+                    this.partCardId,
+                    this.creditCard.num,
+                    this.creditCard.name,
+                    this.creditCard.interestAgreement,
+                    this.creditCard.deadline == '' ? this.creditCard.deadline : typeof(this.creditCard.deadline) == 'number' ? this.time(this.creditCard.deadline) : this.creditCard.deadline.getFullYear()+'-'+(this.creditCard.deadline.getMonth()+1)+'-'+this.creditCard.deadline.getDate(),
+                    this.creditCard.principal,
+                    this.creditCard.interest,
+                    this.creditCard.latePayment,
+                    this.creditCard.annualFee,
+                    this.creditCard.handlingFee,
+                    this.creditCard.otherFee,
+                    this.creditCard.defaultAgreement,
+                    this.creditCard.feeAgreement,
+                    this.creditCard.lawyerFee,
+                    this.creditCard.securityFee,
+                    this.creditCard.announcementFee,
+                    this.creditCard.cashFee,
+                    this.creditCard.otherProjectFee,
+                    this.creditCard.endStandard,
+                    this.creditCard.endFeeStandard,
+                    this.gcIdList,
+                    this.creditCard.type,
+                    this.creditCard.applyTime == '' ? this.creditCard.applyTime : typeof(this.creditCard.applyTime) == 'number' ? this.time(this.creditCard.applyTime) : this.creditCard.applyTime.getFullYear()+'-'+(this.creditCard.applyTime.getMonth()+1)+'-'+this.creditCard.applyTime.getDate(),
+                    this.creditCard.issueTime == '' ? this.creditCard.issueTime : typeof(this.creditCard.issueTime) == 'number' ? this.time(this.creditCard.issueTime) : this.creditCard.issueTime.getFullYear()+'-'+(this.creditCard.issueTime.getMonth()+1)+'-'+this.creditCard.issueTime.getDate(),
+                    this.creditCard.overRate,
+                    this.creditCard.agreementFee,
+                    this.creditCard.quota
+                ).then(res => {
+                    this.isAdd = true;
+                    if(res.data.state = 100){
+                        this.handleReset2('creditCard');
+                        this.modal1 = false;
+                        this.$Message.success(res.data.message);
+                        this.gcIdList = '';
+                        getPart(this.lawCaseId).then(res => {
+                            this.creditInfo = [];
+                            res.data.creditCard.creditCardInformations.map(item => {
+                                return item.enable == true ? this.creditInfo.push(item) : false;
+                            });
+                        })
+                        return;
+                    }else{
+                        this.$Message.warning(res.data.message);
+                    }
+                    this.$Message.warning(res.data.message);
+                })
             })
         },
         cancel (){
