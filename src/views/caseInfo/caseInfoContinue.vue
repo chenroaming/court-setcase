@@ -877,7 +877,7 @@ right: -20px;">元</span>
                     </DropdownMenu>
                 </Dropdown>
                 <Input v-model="addNewPhone" placeholder="请输入号码" v-if="this.litigantId == ''"></Input>
-                <div style="color: #ed3f14;position:absolute;top:28px;" v-if="this.litigantId == ''">多个号码请用逗号分隔</div>
+                <div style="color: #ed3f14;position:absolute;top:28px;width: 155px;" v-if="this.litigantId == ''">多个号码请用逗号分隔</div>
             </FormItem>
             <FormItem v-bind:label="addFormItem.litigantType == '法人' ? '法定代表人*' : '负责人*'" style="width: 505px;" v-show="addFormItem.litigantType != '自然人'">
                 <Input v-model="addFormItem.legalManName" v-bind:placeholder="addFormItem.litigantType == '法人' ? '请输入法定代表人姓名' : '请输入负责人姓名'" width="100px;"></Input>

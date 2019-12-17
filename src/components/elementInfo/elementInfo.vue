@@ -90,47 +90,47 @@
             <FormItem label="欠款最新截至时间">
                 <DatePicker type="date" v-model="litigation.cutoff" placeholder="请选择截至日期" style="width: 300px"></DatePicker>
             </FormItem>
-            <FormItem label="欠款本金">
-                <Input v-model="litigation.arrears" placeholder="请输入欠款本金" style="width: 300px" />
+            <FormItem label="欠款本金（元）">
+                <Input v-model="litigation.arrears" placeholder="请输入欠款本金，例如：1000.00" style="width: 300px" />
             </FormItem>
-            <FormItem label="利息">
-                <Input v-model="litigation.interest" placeholder="请输入利息" style="width: 300px" />
+            <FormItem label="利息（元）">
+                <Input v-model="litigation.interest" placeholder="请输入利息，例如：1000.00" style="width: 300px" />
             </FormItem>
-            <FormItem label="罚息">
-                <Input v-model="litigation.penaltyInterest" placeholder="请输入罚息" style="width: 300px" />
+            <FormItem label="罚息（元）">
+                <Input v-model="litigation.penaltyInterest" placeholder="请输入罚息，例如：1000.00" style="width: 300px" />
             </FormItem>
-            <FormItem label="复利">
-                <Input v-model="litigation.compoundInterest" placeholder="请输入复利" style="width: 300px" />
+            <FormItem label="复利（元）">
+                <Input v-model="litigation.compoundInterest" placeholder="请输入复利，例如：1000.00" style="width: 300px" />
             </FormItem>
-            <FormItem label="最新欠款利息">
-                <Input v-model="litigation.nInterest" placeholder="请输入最新欠款利息" style="width: 300px" />
+            <FormItem label="最新欠款利息（元）">
+                <Input v-model="litigation.nInterest" placeholder="请输入最新欠款利息，例如：1000.00" style="width: 300px" />
             </FormItem>
-            <FormItem label="最新欠款罚息">
-                <Input v-model="litigation.npInterest" placeholder="请输入最新欠款罚息" style="width: 300px" />
+            <FormItem label="最新欠款罚息（元）">
+                <Input v-model="litigation.npInterest" placeholder="请输入最新欠款罚息，例如：1000.00" style="width: 300px" />
             </FormItem>
-            <FormItem label="最新欠款复利">
-                <Input v-model="litigation.ncdInterest" placeholder="请输入最新欠款复利" style="width: 300px" />
+            <FormItem label="最新欠款复利（元）">
+                <Input v-model="litigation.ncdInterest" placeholder="请输入最新欠款复利，例如：1000.00" style="width: 300px" />
             </FormItem>
-            <FormItem label="最新欠款利息等">
-                <Input v-model="litigation.newArrears" placeholder="请输入最新欠款利息" style="width: 300px" />
+            <FormItem label="最新欠款利息等（元）">
+                <Input v-model="litigation.newArrears" placeholder="请输入最新欠款利息，例如：1000.00" style="width: 300px" />
             </FormItem>
-            <FormItem label="违约金金额">
-                <Input v-model="litigation.liquidatedDamages" placeholder="请输入违约金额" style="width: 300px" />
+            <FormItem label="违约金金额（元）">
+                <Input v-model="litigation.liquidatedDamages" placeholder="请输入违约金额，例如：1000.00" style="width: 300px" />
             </FormItem>
-            <FormItem label="实现债权的费用">
-                <Input v-model="litigation.claim" placeholder="请输入债权费用" style="width: 300px" />
+            <FormItem label="实现债权的费用（元）">
+                <Input v-model="litigation.claim" placeholder="请输入债权费用，例如：1000.00" style="width: 300px" />
             </FormItem>
-            <FormItem label="律师费">
-                <Input v-model="litigation.lawyerFee" placeholder="请输入律师费" style="width: 300px" />
+            <FormItem label="律师费（元）">
+                <Input v-model="litigation.lawyerFee" placeholder="请输入律师费，例如：1000.00" style="width: 300px" />
             </FormItem>
-            <FormItem label="保全费">
-                <Input v-model="litigation.securityFee" placeholder="请输入保全费" style="width: 300px" />
+            <FormItem label="保全费（元）">
+                <Input v-model="litigation.securityFee" placeholder="请输入保全费，例如：1000.00" style="width: 300px" />
             </FormItem>
-            <FormItem label="公告费">
-                <Input v-model="litigation.announcementFee" placeholder="请输入公告费" style="width: 300px" />
+            <FormItem label="公告费（元）">
+                <Input v-model="litigation.announcementFee" placeholder="请输入公告费，例如：1000.00" style="width: 300px" />
             </FormItem>
-            <FormItem label="债权其他费用">
-                <Input v-model="litigation.otherFee" placeholder="请输入其他费用" style="width: 300px" />
+            <FormItem label="债权其他费用（元）">
+                <Input v-model="litigation.otherFee" placeholder="请输入其他费用，例如：1000.00" style="width: 300px" />
             </FormItem>
             <FormItem label="是否支持夫妻共同债">
                 <RadioGroup v-model="isPublic">
@@ -163,11 +163,11 @@
             <FormItem label="申请保全时间">
                 <DatePicker type="date" v-model="litigation.preservationTime" placeholder="请选择保全日期" style="width: 300px"></DatePicker>
             </FormItem>
-            <FormItem label="财产保全金额">
-                <Input v-model="litigation.preservationMoney" placeholder="请输入财产保全金额" style="width: 300px" />
+            <FormItem label="财产保全金额（元）">
+                <Input v-model="litigation.preservationMoney" placeholder="请输入财产保全金额，例如：1000.00" style="width: 300px" />
             </FormItem>
-            <FormItem label="财产保全费">
-                <Input v-model="litigation.preservationFee" placeholder="请输入财产保全费" style="width: 300px" />
+            <FormItem label="财产保全费（元）">
+                <Input v-model="litigation.preservationFee" placeholder="请输入财产保全费，例如：1000.00" style="width: 300px" />
             </FormItem>
             <FormItem label="作出保全裁定时间">
                 <DatePicker type="date" v-model="litigation.rulingTime" placeholder="请选择裁定时间" style="width: 300px"></DatePicker>
@@ -208,8 +208,8 @@
                 <FormItem label="授信合同期间" prop="creditRange">
                     <DatePicker type="daterange" v-model="credit.creditRange" placeholder="请选择授信合同时间" style="width: 300px"></DatePicker>
                 </FormItem>
-                <FormItem label="授信金额" prop="creditMoney">
-                    <Input v-model="credit.creditMoney" :row="5" placeholder="请输入授信金额" style="width: 300px" />
+                <FormItem label="授信金额（元）" prop="creditMoney">
+                    <Input v-model="credit.creditMoney" :row="5" placeholder="请输入授信金额，例如：1000.00" style="width: 300px" />
                 </FormItem>
             </Form>
             <Form ref="loan" :model="loan" label-position="right" :label-width="155" v-show="titleIndex == 1">
@@ -232,8 +232,8 @@
                 <FormItem label="签订借款合同时间" prop="time">
                     <DatePicker type="date" v-model="loan.time" placeholder="请选择借款合同时间" style="width: 300px"></DatePicker>
                 </FormItem>
-                <FormItem label="借款本金" prop="money">
-                    <Input v-model="loan.money" :row="5" placeholder="请输入借款本金" style="width: 300px" />
+                <FormItem label="借款本金（元）" prop="money">
+                    <Input v-model="loan.money" :row="5" placeholder="请输入借款本金，例如：1000.00" style="width: 300px" />
                 </FormItem>
                 <FormItem label="借款期限" prop="range">
                     <DatePicker v-model="loan.range" type="daterange" placement="bottom-end" placeholder="请选择借款期限" style="width: 200px"></DatePicker>
@@ -242,28 +242,28 @@
                     <Input v-model="loan.methods" :row="5" placeholder="请输入还款方式" style="width: 300px" />
                 </FormItem>
                 <FormItem label="借款利率" prop="loanRate">
-                    <Input v-model="loan.loanRate" :row="5" placeholder="请输入借款利率" style="width: 300px" />
+                    <Input v-model="loan.loanRate" :row="5" placeholder="请输入借款利率，例如：0.0005" style="width: 300px" />
                 </FormItem>
                 <FormItem label="罚息利率" prop="penaltyRate">
-                    <Input v-model="loan.penaltyRate" :row="5" placeholder="请输入罚息利率" style="width: 300px" />
+                    <Input v-model="loan.penaltyRate" :row="5" placeholder="请输入罚息利率，例如：0.0005" style="width: 300px" />
                 </FormItem>
                 <FormItem label="复利利率" prop="compoundRate">
-                    <Input v-model="loan.compoundRate" :row="5" placeholder="请输入复利利率" style="width: 300px" />
+                    <Input v-model="loan.compoundRate" :row="5" placeholder="请输入复利利率，例如：0.0005" style="width: 300px" />
                 </FormItem>
                 <FormItem label="罚息/复利约定" prop="rateAgreement">
-                    <Input v-model="loan.rateAgreement" :row="5" placeholder="请输入约定" style="width: 300px" />
+                    <Input type="textarea" v-model="loan.rateAgreement" :row="5" placeholder="请输入约定" style="width: 300px" />
                 </FormItem>
                 <FormItem label="解除合同或提前收贷约定" prop="releaseAgreement">
-                    <Input v-model="loan.releaseAgreement" :row="5" placeholder="请输入约定" style="width: 300px" />
+                    <Input type="textarea" v-model="loan.releaseAgreement" :row="5" placeholder="请输入约定" style="width: 300px" />
                 </FormItem>
                 <FormItem label="违约金约定" prop="defaultAgreement">
-                    <Input v-model="loan.defaultAgreement" :row="5" placeholder="请输入约定" style="width: 300px" />
+                    <Input type="textarea" v-model="loan.defaultAgreement" :row="5" placeholder="请输入约定" style="width: 300px" />
                 </FormItem>
                 <FormItem label="实现债权费用的约定" prop="feeAgreement">
-                    <Input v-model="loan.feeAgreement" :row="5" placeholder="请输入约定" style="width: 300px" />
+                    <Input type="textarea" v-model="loan.feeAgreement" :row="5" placeholder="请输入约定" style="width: 300px" />
                 </FormItem>
                 <FormItem label="送达约定" prop="sendAgreement">
-                    <Input v-model="loan.sendAgreement" :row="5" placeholder="请输入约定" style="width: 300px" />
+                    <Input type="textarea" v-model="loan.sendAgreement" :row="5" placeholder="请输入约定" style="width: 300px" />
                 </FormItem>
             </Form>
             <Form ref="guarantee" :model="guarantee" label-position="right" :label-width="155" v-show="titleIndex == 2">

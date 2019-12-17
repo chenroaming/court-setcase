@@ -67,13 +67,13 @@
                             <Input v-model="pay.reason" :row="5" placeholder="请输入理由" style="width: 300px" />
                         </FormItem>
                         <FormItem label="申请支付金额（元）" prop="quota">
-                            <Input v-model="pay.money" :row="5" placeholder="请输入金额" style="width: 300px" />
+                            <Input v-model="pay.money" :row="5" placeholder="请输入金额，例如：1000.00" style="width: 300px" />
                         </FormItem>
-                        <FormItem label="有价证券" prop="quota">
-                            <Input v-model="pay.securities" :row="5" placeholder="请输入金额" style="width: 300px" />
+                        <FormItem label="有价证券（元）" prop="quota">
+                            <Input v-model="pay.securities" :row="5" placeholder="请输入金额，例如：1000.00" style="width: 300px" />
                         </FormItem>
                         <FormItem label="支付令申请费（元）" prop="quota">
-                            <Input v-model="pay.applicationFee" :row="5" placeholder="请输入金额" style="width: 300px" />
+                            <Input v-model="pay.applicationFee" :row="5" placeholder="请输入金额，例如：1000.00" style="width: 300px" />
                         </FormItem>
                         <FormItem label="申请支付令时">
                             <DatePicker type="date" v-model="pay.applyTime" placeholder="请选择时间" style="width: 300px"></DatePicker>
@@ -87,7 +87,7 @@
                     终结督促程序
                     <div slot="content" class="collaps-content">
                         <FormItem label="终结督促程序申请费（元）">
-                            <Input v-model="endProcess.fee" :row="5" placeholder="请输入金额" style="width: 300px" />
+                            <Input v-model="endProcess.fee" :row="5" placeholder="请输入金额，例如：1000.00" style="width: 300px" />
                         </FormItem>
                         <FormItem label="终结督促程序裁定作出时间">
                             <DatePicker type="date" v-model="endProcess.time" placeholder="请选择时间" style="width: 300px"></DatePicker>
@@ -119,71 +119,71 @@
                 <FormItem label="信用卡核准发卡时间" prop="issueTime">
                     <DatePicker type="date" v-model="creditCard.issueTime" placeholder="请选择时间" style="width: 300px"></DatePicker>
                 </FormItem>
-                <FormItem label="信用额度" prop="quota">
-                    <Input v-model="creditCard.quota" :row="5" placeholder="请输入信用额度" style="width: 300px" />
+                <FormItem label="信用额度（元）" prop="quota">
+                    <Input v-model="creditCard.quota" :row="5" placeholder="请输入信用额度，例如：1000.00" style="width: 300px" />
                 </FormItem>
                 <FormItem label="透支利率" prop="overRate">
-                    <Input v-model="creditCard.overRate" :row="5" placeholder="请输入透支利率" style="width: 300px" />
+                    <Input v-model="creditCard.overRate" :row="5" placeholder="请输入透支利率，例如：0.005" style="width: 300px" />
                 </FormItem>
                 <FormItem label="信用卡合约名称" prop="name">
                     <Input v-model="creditCard.name" :row="5" placeholder="请输入合约名称" style="width: 300px" />
                 </FormItem>
                 <FormItem label="利息约定" prop="interestAgreement">
-                    <Input v-model="creditCard.interestAgreement" :row="5" placeholder="请输入利息约定" style="width: 300px" />
+                    <Input type="textarea" v-model="creditCard.interestAgreement" :row="5" placeholder="请输入利息约定" style="width: 300px" />
                 </FormItem>
                 <FormItem label="信用卡欠款最新截至时间" prop="deadline">
                     <DatePicker type="date" v-model="creditCard.deadline" placeholder="请选择时间" style="width: 300px"></DatePicker>
                 </FormItem>
                 <FormItem label="信用卡最新欠款本金（元）" prop="principal">
-                    <Input v-model="creditCard.principal" :row="5" placeholder="请输入本金" style="width: 300px" />
+                    <Input v-model="creditCard.principal" :row="5" placeholder="请输入本金，例如：1000.00" style="width: 300px" />
                 </FormItem>
                 <FormItem label="信用卡最新欠款利息（元）" prop="interest">
-                    <Input v-model="creditCard.interest" :row="5" placeholder="请输入利息" style="width: 300px" />
+                    <Input v-model="creditCard.interest" :row="5" placeholder="请输入利息，例如：1000.00" style="width: 300px" />
                 </FormItem>
                 <FormItem label="信用卡最新欠款滞纳金（违约金）（元）" prop="latePayment">
-                    <Input v-model="creditCard.latePayment" :row="5" placeholder="请输入滞纳金" style="width: 300px" />
+                    <Input v-model="creditCard.latePayment" :row="5" placeholder="请输入滞纳金，例如：1000.00" style="width: 300px" />
                 </FormItem>
                 <FormItem label="信用卡年费（元）" prop="annualFee">
-                    <Input v-model="creditCard.annualFee" :row="5" placeholder="请输入年费" style="width: 300px" />
+                    <Input v-model="creditCard.annualFee" :row="5" placeholder="请输入年费，例如：1000.00" style="width: 300px" />
                 </FormItem>
                 <FormItem label="信用卡分期手续费（元）" prop="handlingFee">
-                    <Input v-model="creditCard.handlingFee" :row="5" placeholder="请输入手续费" style="width: 300px" />
+                    <Input v-model="creditCard.handlingFee" :row="5" placeholder="请输入手续费，例如：1000.00" style="width: 300px" />
                 </FormItem>
                 <FormItem label="其他费用项目及金额（元）" prop="otherFee">
-                    <Input v-model="creditCard.otherFee" :row="5" placeholder="请输入其他费用" style="width: 300px" />
+                    <Input v-model="creditCard.otherFee" :row="5" placeholder="请输入其他费用，例如：1000.00" style="width: 300px" />
                 </FormItem>
                 <FormItem label="违约金约定" prop="defaultAgreement">
-                    <Input v-model="creditCard.defaultAgreement" :row="5" placeholder="请输入约定" style="width: 300px" />
+                    <Input type="textarea" v-model="creditCard.defaultAgreement" :row="5" placeholder="请输入约定" style="width: 300px" />
                 </FormItem>
                 <FormItem label="实现债权的费用" prop="agreementFee">
                     <Input v-model="creditCard.agreementFee" :row="5" placeholder="请输入费用" style="width: 300px" />
                 </FormItem>
                 <FormItem label="实现债权费用的约定" prop="feeAgreement">
-                    <Input v-model="creditCard.feeAgreement" :row="5" placeholder="请输入约定" style="width: 300px" />
+                    <Input type="textarea" v-model="creditCard.feeAgreement" :row="5" placeholder="请输入约定" style="width: 300px" />
                 </FormItem>
                 <FormItem label="律师费（元）" prop="lawyerFee">
-                    <Input v-model="creditCard.lawyerFee" :row="5" placeholder="请输入律师费" style="width: 300px" />
+                    <Input v-model="creditCard.lawyerFee" :row="5" placeholder="请输入律师费，例如：1000.00" style="width: 300px" />
                 </FormItem>
                 <FormItem label="保全费（元）" prop="securityFee">
-                    <Input v-model="creditCard.securityFee" :row="5" placeholder="请输入保全费" style="width: 300px" />
+                    <Input v-model="creditCard.securityFee" :row="5" placeholder="请输入保全费，例如：1000.00" style="width: 300px" />
                 </FormItem>
                 <FormItem label="公告费（元）" prop="announcementFee">
-                    <Input v-model="creditCard.announcementFee" :row="5" placeholder="请输入公告费" style="width: 300px" />
+                    <Input v-model="creditCard.announcementFee" :row="5" placeholder="请输入公告费，例如：1000.00" style="width: 300px" />
                 </FormItem>
                 <FormItem label="信用卡取现手续费（元）" prop="cashFee">
-                    <Input v-model="creditCard.cashFee" :row="5" placeholder="请输入手续费" style="width: 300px" />
+                    <Input v-model="creditCard.cashFee" :row="5" placeholder="请输入手续费，例如：1000.00" style="width: 300px" />
                 </FormItem>
                 <FormItem label="其他项目费用（年费、取现手续费、分期手续费）的约定" prop="otherProjectFee">
-                    <Input v-model="creditCard.otherProjectFee" :row="5" placeholder="请输入其他项目约定" style="width: 300px" />
+                    <Input type="textarea" v-model="creditCard.otherProjectFee" :row="5" placeholder="请输入其他项目约定" style="width: 300px" />
                 </FormItem>
                 <!-- <FormItem label="案件受理费（元）" prop="acceptanceFee">
                     <Input v-model="creditCard.acceptanceFee" :row="5" placeholder="请输入受理费" style="width: 300px" />
                 </FormItem> -->
                 <FormItem label="最新截止时间后利息计算标准" prop="endStandard">
-                    <Input v-model="creditCard.endStandard" :row="5" placeholder="请输入计算标准" style="width: 300px" />
+                    <Input type="textarea" v-model="creditCard.endStandard" :row="5" placeholder="请输入计算标准" style="width: 300px" />
                 </FormItem>
                 <FormItem label="最新截止时间后违约金（滞纳金）计算标准" prop="endFeeStandard">
-                    <Input v-model="creditCard.endFeeStandard" :row="5" placeholder="请输入计算标准" style="width: 300px" />
+                    <Input type="textarea" v-model="creditCard.endFeeStandard" :row="5" placeholder="请输入计算标准" style="width: 300px" />
                 </FormItem>
                 <FormItem>
                     <Menu @on-select="guaranteeChioce" style="width: 300px;">

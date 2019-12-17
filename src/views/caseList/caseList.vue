@@ -470,61 +470,61 @@
                                     <!-- {{litigation.cutoff}} -->
                                     <DatePicker type="date" :disabled="isChecked" v-model="litigation.cutoff" placeholder="请选择截至日期" style="width: 300px"></DatePicker>
                                 </FormItem>
-                                <FormItem label="欠款本金:">
+                                <FormItem label="欠款本金（元）:">
                                        <!-- {{litigation.arrears}} -->
-                                    <Input v-model="litigation.arrears" :disabled="isChecked" placeholder="请输入欠款本金" style="width: 300px" />
+                                    <Input v-model="litigation.arrears" :disabled="isChecked" placeholder="请输入欠款本金，例如：1000.00" style="width: 300px" />
                                 </FormItem>
-                                <FormItem label="利息:">
+                                <FormItem label="利息（元）:">
                                     <!-- {{litigation.interest}} -->
-                                    <Input v-model="litigation.interest" :disabled="isChecked" placeholder="请输入利息" style="width: 300px" />
+                                    <Input v-model="litigation.interest" :disabled="isChecked" placeholder="请输入利息，例如：1000.00" style="width: 300px" />
                                 </FormItem>
-                                <FormItem label="罚息:">
+                                <FormItem label="罚息（元）:">
                                     <!-- {{litigation.penaltyInterest}} -->
-                                    <Input v-model="litigation.penaltyInterest" :disabled="isChecked" placeholder="请输入罚息" style="width: 300px" />
+                                    <Input v-model="litigation.penaltyInterest" :disabled="isChecked" placeholder="请输入罚息，例如：1000.00" style="width: 300px" />
                                 </FormItem>
-                                <FormItem label="复利:">
+                                <FormItem label="复利（元）:">
                                     <!-- {{litigation.compoundInterest}} -->
-                                    <Input v-model="litigation.compoundInterest" :disabled="isChecked" placeholder="请输入复利" style="width: 300px" />
+                                    <Input v-model="litigation.compoundInterest" :disabled="isChecked" placeholder="请输入复利，例如：1000.00" style="width: 300px" />
                                 </FormItem>
-                                <FormItem label="最新欠款利息:">
+                                <FormItem label="最新欠款利息（元）:">
                                     <!-- {{litigation.nInterest}} -->
-                                    <Input v-model="litigation.nInterest" :disabled="isChecked" placeholder="请输入最新的利息" style="width: 300px" />
+                                    <Input v-model="litigation.nInterest" :disabled="isChecked" placeholder="请输入最新的利息，例如：1000.00" style="width: 300px" />
                                 </FormItem>
-                                <FormItem label="最新欠款罚息:">
+                                <FormItem label="最新欠款罚息（元）:">
                                     <!-- {{litigation.npInterest}} -->
-                                    <Input v-model="litigation.npInterest" :disabled="isChecked" placeholder="请输入最新的利息" style="width: 300px" />
+                                    <Input v-model="litigation.npInterest" :disabled="isChecked" placeholder="请输入最新的利息，例如：1000.00" style="width: 300px" />
                                 </FormItem>
-                                <FormItem label="最新欠款复利:">
+                                <FormItem label="最新欠款复利（元）:">
                                     <!-- {{litigation.ncdInterest}} -->
-                                    <Input v-model="litigation.ncdInterest" :disabled="isChecked" placeholder="请输入最新的利息" style="width: 300px" />
+                                    <Input v-model="litigation.ncdInterest" :disabled="isChecked" placeholder="请输入最新的利息，例如：1000.00" style="width: 300px" />
                                 </FormItem>
-                                <FormItem label="最新欠款利息等:">
+                                <FormItem label="最新欠款利息等（元）:">
                                     <!-- {{litigation.newArrears}} -->
-                                    <Input v-model="litigation.newArrears" :disabled="isChecked" placeholder="请输入最新欠款利息" style="width: 300px" />
+                                    <Input v-model="litigation.newArrears" :disabled="isChecked" placeholder="请输入最新欠款利息，例如：1000.00" style="width: 300px" />
                                 </FormItem>
-                                <FormItem label="违约金金额:">
+                                <FormItem label="违约金金额（元）:">
                                     <!-- {{litigation.liquidatedDamages}} -->
-                                    <Input v-model="litigation.liquidatedDamages" :disabled="isChecked" placeholder="请输入违约金额" style="width: 300px" />
+                                    <Input v-model="litigation.liquidatedDamages" :disabled="isChecked" placeholder="请输入违约金额，例如：1000.00" style="width: 300px" />
                                 </FormItem>
-                                <FormItem label="实现债权的费用:">
+                                <FormItem label="实现债权的费用（元）:">
                                     <!-- {{litigation.claim}} -->
-                                    <Input v-model="litigation.claim" :disabled="isChecked" placeholder="请输入债权费用" style="width: 300px" />
+                                    <Input v-model="litigation.claim" :disabled="isChecked" placeholder="请输入债权费用，例如：1000.00" style="width: 300px" />
                                 </FormItem>
-                                <FormItem label="律师费:">
+                                <FormItem label="律师费（元）:">
                                     <!-- {{litigation.lawyerFee}} -->
-                                    <Input v-model="litigation.lawyerFee" :disabled="isChecked" placeholder="请输入律师费" style="width: 300px" />
+                                    <Input v-model="litigation.lawyerFee" :disabled="isChecked" placeholder="请输入律师费，例如：1000.00" style="width: 300px" />
                                 </FormItem>
-                                <FormItem label="保全费:">
+                                <FormItem label="保全费（元）:">
                                     <!-- {{litigation.securityFee}} -->
-                                    <Input v-model="litigation.securityFee" :disabled="isChecked" placeholder="请输入保全费" style="width: 300px" />
+                                    <Input v-model="litigation.securityFee" :disabled="isChecked" placeholder="请输入保全费，例如：1000.00" style="width: 300px" />
                                 </FormItem>
-                                <FormItem label="公告费:">
+                                <FormItem label="公告费（元）:">
                                     <!-- {{litigation.announcementFee}} -->
-                                    <Input v-model="litigation.announcementFee" :disabled="isChecked" placeholder="请输入公告费" style="width: 300px" />
+                                    <Input v-model="litigation.announcementFee" :disabled="isChecked" placeholder="请输入公告费，例如：1000.00" style="width: 300px" />
                                 </FormItem>
-                                <FormItem label="债权其他费用:">
+                                <FormItem label="债权其他费用（元）:">
                                     <!-- {{litigation.otherFee}} -->
-                                    <Input v-model="litigation.otherFee" :disabled="isChecked" placeholder="请输入其他费用" style="width: 300px" />
+                                    <Input v-model="litigation.otherFee" :disabled="isChecked" placeholder="请输入其他费用，例如：1000.00" style="width: 300px" />
                                 </FormItem>
                                 <FormItem label="是否支持夫妻共同债:">
                                     <RadioGroup v-model="litigation.isPublic">
@@ -564,13 +564,13 @@
                                     <!-- {{litigation.preservationTime}} -->
                                     <DatePicker type="date" :disabled="isChecked" v-model="litigation.preservationTime" placeholder="请选择保全日期" style="width: 300px"></DatePicker>
                                 </FormItem>
-                                <FormItem label="财产保全金额:">
+                                <FormItem label="财产保全金额（元）:">
                                     <!-- {{litigation.preservationMoney}} -->
-                                    <Input v-model="litigation.preservationMoney" :disabled="isChecked" placeholder="请输入财产保全金额" style="width: 300px" />
+                                    <Input v-model="litigation.preservationMoney" :disabled="isChecked" placeholder="请输入财产保全金额，例如：1000.00" style="width: 300px" />
                                 </FormItem>
-                                <FormItem label="财产保全费:">
+                                <FormItem label="财产保全费（元）:">
                                     <!-- {{ litigation.preservationFee}} -->
-                                    <Input v-model="litigation.preservationFee" :disabled="isChecked" placeholder="请输入财产保全费" style="width: 300px" />
+                                    <Input v-model="litigation.preservationFee" :disabled="isChecked" placeholder="请输入财产保全费，例如：1000.00" style="width: 300px" />
                                 </FormItem>
                                 <FormItem label="作出保全裁定时间:">
                                     <!-- {{litigation.rulingTime}} -->
@@ -633,15 +633,15 @@
                                 </FormItem>
                                 <FormItem label="申请支付金额（元）：">
                                     <!-- {{pay.money}} -->
-                                    <Input v-model="pay.money" :disabled="isChecked" :row="5" placeholder="请输入金额" style="width: 300px" />
+                                    <Input v-model="pay.money" :disabled="isChecked" :row="5" placeholder="请输入金额，例如：1000.00" style="width: 300px" />
                                 </FormItem>
-                                <FormItem label="有价证券：">
+                                <FormItem label="有价证券（元）：">
                                     <!-- {{pay.securities}} -->
-                                    <Input v-model="pay.securities" :disabled="isChecked" :row="5" placeholder="请输入金额" style="width: 300px" />
+                                    <Input v-model="pay.securities" :disabled="isChecked" :row="5" placeholder="请输入金额，例如：1000.00" style="width: 300px" />
                                 </FormItem>
                                 <FormItem label="支付令申请费（元）：">
                                     <!-- {{pay.applicationFee}} -->
-                                    <Input v-model="pay.applicationFee" :disabled="isChecked" :row="5" placeholder="请输入金额" style="width: 300px" />
+                                    <Input v-model="pay.applicationFee" :disabled="isChecked" :row="5" placeholder="请输入金额，例如：1000.00" style="width: 300px" />
                                 </FormItem>
                                 <FormItem label="申请支付令时：">
                                     <!-- {{pay.applyTime}} -->
@@ -653,7 +653,7 @@
                                 </FormItem>
                                 <FormItem label="终结督促程序申请费（元）：">
                                     <!-- {{endProcess.fee}} -->
-                                    <Input v-model="endProcess.fee" :row="5" :disabled="isChecked" placeholder="请输入金额" style="width: 300px" />
+                                    <Input v-model="endProcess.fee" :row="5" :disabled="isChecked" placeholder="请输入金额，例如：1000.00" style="width: 300px" />
                                 </FormItem>
                                 <FormItem label="终结督促程序裁定作出时间：">
                                     <!-- {{endProcess.time}} -->
@@ -780,7 +780,7 @@
                     <Input v-model="creditCard.quota" :disabled="isChecked" :row="5" placeholder="请输入信用额度" style="width: 300px" />
                 </FormItem>
                 <FormItem label="透支利率" prop="overRate">
-                    <Input v-model="creditCard.overRate" :disabled="isChecked" :row="5" placeholder="请输入透支利率" style="width: 300px" />
+                    <Input v-model="creditCard.overRate" :disabled="isChecked" :row="5" placeholder="请输入透支利率，例如：0.0005" style="width: 300px" />
                 </FormItem>
                 <FormItem label="信用卡合约名称" prop="name">
                     <!-- {{creditCard.name}} -->
@@ -788,7 +788,7 @@
                 </FormItem>
                 <FormItem label="利息约定" prop="interestAgreement">
                     <!-- {{creditCard.interestAgreement}} -->
-                    <Input v-model="creditCard.interestAgreement" :disabled="isChecked" :row="5" placeholder="请输入利息约定" style="width: 300px" />
+                    <Input type="textarea" v-model="creditCard.interestAgreement" :disabled="isChecked" :row="5" placeholder="请输入利息约定" style="width: 300px" />
                 </FormItem>
                 <FormItem label="信用卡欠款最新截至时间" prop="deadline">
                     <!-- {{creditCard.deadline}} -->
@@ -796,63 +796,63 @@
                 </FormItem>
                 <FormItem label="信用卡最新欠款本金（元）" prop="principal">
                     <!-- {{creditCard.principal}} -->
-                    <Input v-model="creditCard.principal" :disabled="isChecked" :row="5" placeholder="请输入本金" style="width: 300px" />
+                    <Input v-model="creditCard.principal" :disabled="isChecked" :row="5" placeholder="请输入本金，例如：1000.00" style="width: 300px" />
                 </FormItem>
                 <FormItem label="信用卡最新欠款利息（元）" prop="interest">
                     <!-- {{creditCard.interest}} -->
-                    <Input v-model="creditCard.interest" :disabled="isChecked" :row="5" placeholder="请输入利息" style="width: 300px" />
+                    <Input v-model="creditCard.interest" :disabled="isChecked" :row="5" placeholder="请输入利息，例如：1000.00" style="width: 300px" />
                 </FormItem>
                 <FormItem label="信用卡最新欠款滞纳金（违约金）（元）" prop="latePayment">
                     <!-- {{creditCard.latePayment}} -->
-                    <Input v-model="creditCard.latePayment" :disabled="isChecked" :row="5" placeholder="请输入滞纳金" style="width: 300px" />
+                    <Input v-model="creditCard.latePayment" :disabled="isChecked" :row="5" placeholder="请输入滞纳金，例如：1000.00" style="width: 300px" />
                 </FormItem>
                 <FormItem label="信用卡年费（元）" prop="annualFee">
                     <!-- {{creditCard.annualFee}} -->
-                    <Input v-model="creditCard.annualFee" :disabled="isChecked" :row="5" placeholder="请输入年费" style="width: 300px" />
+                    <Input v-model="creditCard.annualFee" :disabled="isChecked" :row="5" placeholder="请输入年费，例如：1000.00" style="width: 300px" />
                 </FormItem>
                 <FormItem label="信用卡分期手续费（元）" prop="handlingFee">
                     <!-- {{creditCard.handlingFee}} -->
-                    <Input v-model="creditCard.handlingFee" :disabled="isChecked" :row="5" placeholder="请输入手续费" style="width: 300px" />
+                    <Input v-model="creditCard.handlingFee" :disabled="isChecked" :row="5" placeholder="请输入手续费，例如：1000.00" style="width: 300px" />
                 </FormItem>
                 <FormItem label="其他费用项目及金额（元）" prop="otherFee">
                     <!-- {{creditCard.otherFee}} -->
-                    <Input v-model="creditCard.otherFee" :disabled="isChecked" :row="5" placeholder="请输入其他费用" style="width: 300px" />
+                    <Input v-model="creditCard.otherFee" :disabled="isChecked" :row="5" placeholder="请输入其他费用，例如：1000.00" style="width: 300px" />
                 </FormItem>
                 <FormItem label="违约金约定" prop="defaultAgreement">
                     <!-- {{creditCard.defaultAgreement}} -->
-                    <Input v-model="creditCard.defaultAgreement" :disabled="isChecked" :row="5" placeholder="请输入约定" style="width: 300px" />
+                    <Input type="textarea"  v-model="creditCard.defaultAgreement" :disabled="isChecked" :row="5" placeholder="请输入约定" style="width: 300px" />
                 </FormItem>
                 <FormItem label="实现债权费用的约定" prop="feeAgreement">
                     <!-- {{creditCard.feeAgreement}} -->
-                    <Input v-model="creditCard.feeAgreement" :disabled="isChecked" :row="5" placeholder="请输入约定" style="width: 300px" />
+                    <Input type="textarea" v-model="creditCard.feeAgreement" :disabled="isChecked" :row="5" placeholder="请输入约定" style="width: 300px" />
                 </FormItem>
                 <FormItem label="律师费（元）" prop="lawyerFee">
                     <!-- {{creditCard.lawyerFee}} -->
-                    <Input v-model="creditCard.lawyerFee" :disabled="isChecked" :row="5" placeholder="请输入律师费" style="width: 300px" />
+                    <Input v-model="creditCard.lawyerFee" :disabled="isChecked" :row="5" placeholder="请输入律师费，例如：1000.00" style="width: 300px" />
                 </FormItem>
                 <FormItem label="保全费（元）" prop="securityFee">
                     <!-- {{creditCard.securityFee}} -->
-                    <Input v-model="creditCard.securityFee" :disabled="isChecked" :row="5" placeholder="请输入保全费" style="width: 300px" />
+                    <Input v-model="creditCard.securityFee" :disabled="isChecked" :row="5" placeholder="请输入保全费，例如：1000.00" style="width: 300px" />
                 </FormItem>
                 <FormItem label="公告费（元）" prop="announcementFee">
                     <!-- {{creditCard.announcementFee}} -->
-                    <Input v-model="creditCard.announcementFee" :disabled="isChecked" :row="5" placeholder="请输入公告费" style="width: 300px" />
+                    <Input v-model="creditCard.announcementFee" :disabled="isChecked" :row="5" placeholder="请输入公告费，例如：1000.00" style="width: 300px" />
                 </FormItem>
                 <FormItem label="信用卡取现手续费（元）" prop="cashFee">
                     <!-- {{creditCard.cashFee}} -->
-                    <Input v-model="creditCard.cashFee" :disabled="isChecked" :row="5" placeholder="请输入手续费" style="width: 300px" />
+                    <Input v-model="creditCard.cashFee" :disabled="isChecked" :row="5" placeholder="请输入手续费，例如：1000.00" style="width: 300px" />
                 </FormItem>
                 <FormItem label="其他项目费用（年费、取现手续费、分期手续费）的约定" prop="otherProjectFee">
                     <!-- {{creditCard.otherProjectFee}} -->
-                    <Input v-model="creditCard.otherProjectFee" :disabled="isChecked" :row="5" placeholder="请输入其他项目约定" style="width: 300px" />
+                    <Input type="textarea" v-model="creditCard.otherProjectFee" :disabled="isChecked" :row="5" placeholder="请输入其他项目约定" style="width: 300px" />
                 </FormItem>
                 <FormItem label="最新截止时间后利息计算标准" prop="endStandard">
                     <!-- {{creditCard.endStandard}} -->
-                    <Input v-model="creditCard.endStandard" :disabled="isChecked" :row="5" placeholder="请输入计算标准" style="width: 300px" />
+                    <Input type="textarea" v-model="creditCard.endStandard" :disabled="isChecked" :row="5" placeholder="请输入计算标准" style="width: 300px" />
                 </FormItem>
                 <FormItem label="最新截止时间后违约金（滞纳金）计算标准" prop="endFeeStandard">
                     <!-- {{creditCard.endFeeStandard}} -->
-                    <Input v-model="creditCard.endFeeStandard" :disabled="isChecked" :row="5" placeholder="请输入计算标准" style="width: 300px" />
+                    <Input type="textarea" v-model="creditCard.endFeeStandard" :disabled="isChecked" :row="5" placeholder="请输入计算标准" style="width: 300px" />
                 </FormItem>
                 <FormItem>
                     <Menu @on-select="guaranteeChioce" style="width: 300px;">
@@ -926,7 +926,7 @@
                 </FormItem>
                 <FormItem label="授信人：" prop="creditPeople">
                     <!-- {{credit.creditPeople}} -->
-                    <Input v-model="credit.creditPeople" :disabled="isChecked" :row="5" placeholder="请输入授信合同名称" style="width: 300px" />
+                    <Input v-model="credit.creditPeople" :disabled="isChecked" :row="5" placeholder="请输入授信人" style="width: 300px" />
                 </FormItem>
                 <FormItem label="授信合同签订时间：" prop="creditTime">
                     <!-- {{credit.creditTime}} -->
@@ -936,9 +936,9 @@
                     <!-- {{credit.creditRange}} -->
                     <DatePicker type="daterange" :disabled="isChecked" v-model="credit.creditRange" placeholder="请选择授信合同时间" style="width: 300px"></DatePicker>
                 </FormItem>
-                <FormItem label="授信金额：" prop="creditMoney">
+                <FormItem label="授信金额（元）：" prop="creditMoney">
                     <!-- {{credit.creditMoney}} -->
-                    <Input v-model="credit.creditMoney" :disabled="isChecked" :row="5" placeholder="请输入授信合同名称" style="width: 300px" />
+                    <Input v-model="credit.creditMoney" :disabled="isChecked" :row="5" placeholder="请输入授信金额，例如：1000.00" style="width: 300px" />
                 </FormItem>
             </Form>
             <Form label-position="left" :label-width="180" v-show="titleIndex == 1">
@@ -964,9 +964,9 @@
                     <!-- {{loan.time}} -->
                     <DatePicker type="date" :disabled="isChecked" v-model="loan.time" placeholder="请选择借款合同时间" style="width: 300px"></DatePicker>
                 </FormItem>
-                <FormItem label="借款本金：" prop="money">
+                <FormItem label="借款本金（元）：" prop="money">
                     <!-- {{loan.money}} -->
-                    <Input v-model="loan.money" :disabled="isChecked" :row="5" placeholder="请输入借款本金" style="width: 300px" />
+                    <Input v-model="loan.money" :disabled="isChecked" :row="5" placeholder="请输入借款本金，例如：1000.00" style="width: 300px" />
                 </FormItem>
                 <FormItem label="借款期限：" prop="range">
                     <!-- {{loan.range}} -->
@@ -978,35 +978,35 @@
                 </FormItem>
                 <FormItem label="借款利率：" prop="loanRate">
                     <!-- {{loan.loanRate}} -->
-                    <Input v-model="loan.loanRate" :disabled="isChecked" :row="5" placeholder="请输入借款利率" style="width: 300px" />
+                    <Input v-model="loan.loanRate" :disabled="isChecked" :row="5" placeholder="请输入借款利率，例如：0.0005" style="width: 300px" />
                 </FormItem>
                 <FormItem label="罚息利率：" prop="penaltyInterest">
                     <!-- {{loan.penaltyRate}} -->
-                    <Input v-model="loan.penaltyRate" :disabled="isChecked" :row="5" placeholder="请输入罚息利率" style="width: 300px" />
+                    <Input v-model="loan.penaltyRate" :disabled="isChecked" :row="5" placeholder="请输入罚息利率，例如：0.0005" style="width: 300px" />
                 </FormItem>
                 <FormItem label="复利利率：" prop="compoundRate">
                     <!-- {{loan.compoundRate}} -->
-                    <Input v-model="loan.compoundRate" :disabled="isChecked" :row="5" placeholder="请输入复利利率" style="width: 300px" />
+                    <Input v-model="loan.compoundRate" :disabled="isChecked" :row="5" placeholder="请输入复利利率，例如：0.0005" style="width: 300px" />
                 </FormItem>
                 <FormItem label="罚息/复利约定：" prop="rateAgreement">
                     <!-- {{loan.rateAgreement}} -->
-                    <Input v-model="loan.rateAgreement" :disabled="isChecked" :row="5" placeholder="请输入约定" style="width: 300px" />
+                    <Input type="textarea" v-model="loan.rateAgreement" :disabled="isChecked" :row="5" placeholder="请输入约定" style="width: 300px" />
                 </FormItem>
                 <FormItem label="解除合同或提前收贷约定：" prop="releaseAgreement">
                     <!-- {{loan.releaseAgreement}} -->
-                    <Input v-model="loan.releaseAgreement" :disabled="isChecked" :row="5" placeholder="请输入约定" style="width: 300px" />
+                    <Input type="textarea" v-model="loan.releaseAgreement" :disabled="isChecked" :row="5" placeholder="请输入约定" style="width: 300px" />
                 </FormItem>
                 <FormItem label="违约金约定：" prop="defaultAgreement">
                     <!-- {{loan.defaultAgreement}} -->
-                    <Input v-model="loan.defaultAgreement" :disabled="isChecked" :row="5" placeholder="请输入约定" style="width: 300px" />
+                    <Input type="textarea" v-model="loan.defaultAgreement" :disabled="isChecked" :row="5" placeholder="请输入约定" style="width: 300px" />
                 </FormItem>
                 <FormItem label="实现债权费用的约定：" prop="feeAgreement">
                     <!-- {{loan.feeAgreement}} -->
-                    <Input v-model="loan.feeAgreement" :disabled="isChecked" :row="5" placeholder="请输入约定" style="width: 300px" />
+                    <Input type="textarea" v-model="loan.feeAgreement" :disabled="isChecked" :row="5" placeholder="请输入约定" style="width: 300px" />
                 </FormItem>
                 <FormItem label="送达约定：" prop="sendAgreement">
                     <!-- {{loan.sendAgreement}} -->
-                    <Input v-model="loan.sendAgreement" :disabled="isChecked" :row="5" placeholder="请输入约定" style="width: 300px" />
+                    <Input type="textarea" v-model="loan.sendAgreement" :disabled="isChecked" :row="5" placeholder="请输入约定" style="width: 300px" />
                 </FormItem>
             </Form>
             <Form label-position="left" :label-width="180" v-show="titleIndex == 2">
@@ -2876,6 +2876,7 @@ export default {
                         this.isChecked = !res.data.flag;
                     }
                 })
+                console.log(this.isChecked);
                 if(this.element == 1){
                     getPart(this.lawCaseId).then(res => {
                         this.creditContract = [];
