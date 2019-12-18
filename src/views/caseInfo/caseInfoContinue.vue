@@ -883,7 +883,7 @@ right: -20px;">元</span>
                 <Input v-model="addFormItem.legalManName" v-bind:placeholder="addFormItem.litigantType == '法人' ? '请输入法定代表人姓名' : '请输入负责人姓名'" width="100px;"></Input>
             </FormItem>
             <FormItem v-show="addFormItem.litigantType != '自然人'" :label="addFormItem.litigantType == '法人' ? '法定代表人身份证号码':'负责人身份证号码'" style="width: 505px">
-                <Input v-model="addFormItem.corpManId" :placeholder="addFormItem.litigantType == '法人' ? '请输入法定代表人身份证号码':'请输入负责人身份证号码'" width="100px;"></Input>
+                <Input v-model="addFormItem.legalManId" :placeholder="addFormItem.litigantType == '法人' ? '请输入法定代表人身份证号码':'请输入负责人身份证号码'" width="100px;"></Input>
             </FormItem>
             <FormItem v-bind:label="addFormItem.litigantType == '法人' ? '联系方式*' : '联系方式*'" style="width: 505px;" v-show="addFormItem.litigantType != '自然人'">
                 <Input v-model="addFormItem.legalManPhone"  placeholder="请输入联系方式" width="100px;"></Input>
@@ -908,7 +908,7 @@ right: -20px;">元</span>
                 <Input v-model="addFormItem.nativePlace" :placeholder="addFormItem.litigantType == '自然人' ? '请输入户籍地址' : '请输入注册地址'"></Input>
             </FormItem>
             <FormItem :label="addFormItem.litigantType == '自然人' ? '现居地址*' : '经营地址*'" style="width: 505px">
-                <Input v-model="addFormItem.address" :placeholder="addFormItem.litigantType == '自然人' ? '请输入除户籍地址外满一年的现居地址' : '请输入经营地址'"></Input>
+                <Input v-model="addFormItem.address" :placeholder="addFormItem.litigantType == '自然人' ? '请输入当前常住地址' : '请输入经营地址'"></Input>
             </FormItem>
             <FormItem :label="addFormItem.litigantType == '自然人' ? '确认送达地址*' : '确认送达地址*'" style="width: 505px">
                 <Input v-model="addFormItem.sendAddress" placeholder="请输入当事人送达地址"></Input>
@@ -2882,7 +2882,7 @@ submit(){   //添加当事人
             identityCard:this.addFormItem.identityCard,
             legalManName:this.addFormItem.legalManName,
             legalManPhone:this.addFormItem.legalManPhone,
-            // legalManId:this.addFormItem.legalManId,
+            legalManId:this.addFormItem.legalManId,
             nativePlace:this.addFormItem.nativePlace,
             address:this.addFormItem.address,
             sendAddress:this.addFormItem.sendAddress,

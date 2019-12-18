@@ -597,7 +597,7 @@
                                 </FormItem>
                                 <FormItem label="合同签订时间：">
                                     <!-- {{contract.time}} -->
-                                    <DatePicker type="date" :disabled="isChecked" v-model="contract.time" placeholder="请选择截至日期" style="width: 300px"></DatePicker>
+                                    <DatePicker type="date" :disabled="isChecked" v-model="contract.time" placeholder="请选择日期" style="width: 300px"></DatePicker>
                                 </FormItem>
                                 <FormItem label="信用卡信息：">
                                     <Menu @on-select="creditChoice" style="width: 300px;">
@@ -821,6 +821,9 @@
                 <FormItem label="违约金约定" prop="defaultAgreement">
                     <!-- {{creditCard.defaultAgreement}} -->
                     <Input type="textarea"  v-model="creditCard.defaultAgreement" :disabled="isChecked" :row="5" placeholder="请输入约定" style="width: 300px" />
+                </FormItem>
+                <FormItem label="实现债权的费用" prop="agreementFee">
+                    <Input v-model="creditCard.agreementFee" :disabled="isChecked" :row="5" placeholder="请输入费用" style="width: 300px" />
                 </FormItem>
                 <FormItem label="实现债权费用的约定" prop="feeAgreement">
                     <!-- {{creditCard.feeAgreement}} -->
@@ -2130,7 +2133,7 @@ export default {
                 this.creditCard.type = res.data.data.cardType;
                 this.creditCard.applyTime = res.data.data.applyCardDate == null ? '' : this.time(res.data.data.applyCardDate);
                 this.creditCard.issueTime = res.data.data.auditDate == null ? '' : this.time(res.data.data.auditDate);
-                this.creditCard.overRate = res.data.data.BigDecimal;
+                this.creditCard.overRate = res.data.data.overdrawRate;
                 this.creditCard.agreementFee = res.data.data.bondFeeStr;
                 this.creditCard.quota = res.data.data.lineOfCredit;
             });

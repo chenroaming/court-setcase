@@ -21,7 +21,7 @@
                 <Input v-model="contract.name" placeholder="请输入合同名称" style="width: 300px" />
             </FormItem>
             <FormItem label="合同签订时间">
-                <DatePicker type="date" v-model="contract.time" placeholder="请选择截至日期" style="width: 300px"></DatePicker>
+                <DatePicker type="date" v-model="contract.time" placeholder="请选择日期" style="width: 300px"></DatePicker>
             </FormItem>
             <FormItem>
                 <Menu @on-select="choice" style="width: 300px;">
@@ -358,10 +358,7 @@ export default {
                 ],
                 cashFee:[
                     {validator:validNumber,trigger:'change'} 
-                ],
-                otherProjectFee:[
-                    {validator:validNumber,trigger:'change'} 
-                ],
+                ]
             }
         };
     },

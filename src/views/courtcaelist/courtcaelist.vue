@@ -860,6 +860,26 @@
                         {{creditCard.num}}
                         
                     </FormItem>
+                    <FormItem label="信用卡种类" prop="type">
+                        {{creditCard.type}}
+                        <!-- <Input v-model="creditCard.type" :row="5" placeholder="请输入信用卡种类" style="width: 300px" /> -->
+                    </FormItem>
+                    <FormItem label="信用卡申请时间" prop="applyTime">
+                        {{creditCard.applyTime}}
+                        <!-- <DatePicker type="date" v-model="creditCard.applyTime" placeholder="请选择时间" style="width: 300px"></DatePicker> -->
+                    </FormItem>
+                    <FormItem label="信用卡核准发卡时间" prop="issueTime">
+                        {{creditCard.issueTime}}
+                        <!-- <DatePicker type="date" v-model="creditCard.issueTime" placeholder="请选择时间" style="width: 300px"></DatePicker> -->
+                    </FormItem>
+                    <FormItem label="信用额度（元）" prop="quota">
+                        {{creditCard.quota}}
+                        <!-- <Input v-model="creditCard.quota" :row="5" placeholder="请输入信用额度，例如：1000.00" style="width: 300px" /> -->
+                    </FormItem>
+                    <FormItem label="透支利率" prop="overRate">
+                        {{creditCard.overRate}}
+                        <!-- <Input v-model="creditCard.overRate" :row="5" placeholder="请输入透支利率，例如：0.005" style="width: 300px" /> -->
+                    </FormItem>
                     <FormItem label="信用卡合约名称" prop="name">
                         {{creditCard.name}}
                         
@@ -898,6 +918,10 @@
                     <FormItem label="违约金约定" prop="defaultAgreement">
                         {{creditCard.defaultAgreement}}
                         
+                    </FormItem>
+                    <FormItem label="实现债权的费用" prop="agreementFee">
+                        {{creditCard.agreementFee}}
+
                     </FormItem>
                     <FormItem label="实现债权费用的约定" prop="feeAgreement">
                         {{creditCard.feeAgreement}}
@@ -2105,7 +2129,6 @@ export default {
             this.modal5 = true;
             this.cardId = name;
             getCtInfo('cdInfo',name).then(res =>{
-                console.log(res.data.data);
                 this.creditCard.num = res.data.data.cardNo;
                 this.creditCard.name = res.data.data.contractName;
                 this.creditCard.interestAgreement = res.data.data.interestAgreement;
@@ -2125,6 +2148,12 @@ export default {
                 this.creditCard.otherProjectFee = res.data.data.anotherApponintment;
                 this.creditCard.endStandard = res.data.data.nowInterestStandard;
                 this.creditCard.endFeeStandard = res.data.data.nowLateFeeStandard;
+                this.creditCard.type = res.data.data.cardType;
+                this.creditCard.applyTime = res.data.data.applyCardDate == null ? '' : this.time(res.data.data.applyCardDate);
+                this.creditCard.issueTime = res.data.data.auditDate == null ? '' : this.time(res.data.data.auditDate);
+                this.creditCard.overRate = res.data.data.overdrawRate;
+                this.creditCard.agreementFee = res.data.data.bondFeeStr;
+                this.creditCard.quota = res.data.data.lineOfCredit;
             });
             getContractInfo(this.lawcaseId,this.partCardId,'gc',this.cardId).then(res => {
                 if(res.data.state == 100){
@@ -2136,7 +2165,7 @@ export default {
 
         checkLawCase(){
             this.confirmLoading = true;
-            confirmOnLawCase(this.lawcaseId,!this.lawCaseChecked).then(res => {
+            confirmOnLawCase(this.lawcaseId,this.lawCaseChecked).then(res => {
                 this.confirmLoading = false;
                 if(res.data.state == 100){
                     this.$Message.success(res.data.message);
