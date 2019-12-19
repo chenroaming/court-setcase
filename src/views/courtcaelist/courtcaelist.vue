@@ -595,7 +595,7 @@
                                     {{litigation.announcementFee}}
                                     
                                 </FormItem>
-                                <FormItem label="债权其他费用:">
+                                <FormItem label="实现债权其他费用:">
                                     {{litigation.otherFee}}
                                     
                                 </FormItem>
@@ -675,7 +675,7 @@
                                             <template slot="title">
                                                 点击展开信用卡信息
                                             </template>
-                                            <MenuItem :name="item.id" v-for="(item,index) in creditInfo">{{item.contractName}}</MenuItem>
+                                            <MenuItem :name="item.id" v-for="(item,index) in creditInfo">{{'信用卡（' + item.cardNo + '）'}}</MenuItem>
                                         </Submenu>
                                     </Menu>
                                 </FormItem>
@@ -855,103 +855,103 @@
             width="700px"
             >
             <div class="loan-box">
-                <Form label-position="right" :label-width="315">
-                    <FormItem label="信用卡卡号" prop="num">
+                <Form label-position="right" :label-width="150">
+                    <FormItem label="信用卡卡号：" prop="num">
                         {{creditCard.num}}
                         
                     </FormItem>
-                    <FormItem label="信用卡种类" prop="type">
+                    <FormItem label="信用卡种类：" prop="type">
                         {{creditCard.type}}
                         <!-- <Input v-model="creditCard.type" :row="5" placeholder="请输入信用卡种类" style="width: 300px" /> -->
                     </FormItem>
-                    <FormItem label="信用卡申请时间" prop="applyTime">
+                    <FormItem label="信用卡申请时间：" prop="applyTime">
                         {{creditCard.applyTime}}
                         <!-- <DatePicker type="date" v-model="creditCard.applyTime" placeholder="请选择时间" style="width: 300px"></DatePicker> -->
                     </FormItem>
-                    <FormItem label="信用卡核准发卡时间" prop="issueTime">
+                    <FormItem label="信用卡核准发卡时间：" prop="issueTime">
                         {{creditCard.issueTime}}
                         <!-- <DatePicker type="date" v-model="creditCard.issueTime" placeholder="请选择时间" style="width: 300px"></DatePicker> -->
                     </FormItem>
-                    <FormItem label="信用额度（元）" prop="quota">
+                    <FormItem label="信用额度（元）：" prop="quota">
                         {{creditCard.quota}}
                         <!-- <Input v-model="creditCard.quota" :row="5" placeholder="请输入信用额度，例如：1000.00" style="width: 300px" /> -->
                     </FormItem>
-                    <FormItem label="透支利率" prop="overRate">
+                    <FormItem label="透支利率：" prop="overRate">
                         {{creditCard.overRate}}
                         <!-- <Input v-model="creditCard.overRate" :row="5" placeholder="请输入透支利率，例如：0.005" style="width: 300px" /> -->
                     </FormItem>
-                    <FormItem label="信用卡合约名称" prop="name">
+                    <FormItem label="信用卡合约名称：" prop="name">
                         {{creditCard.name}}
                         
                     </FormItem>
-                    <FormItem label="利息约定" prop="interestAgreement">
+                    <FormItem label="利息约定：" prop="interestAgreement">
                         {{creditCard.interestAgreement}}
                         
                     </FormItem>
-                    <FormItem label="信用卡欠款最新截至时间" prop="deadline">
+                    <FormItem label="信用卡欠款最新截至时间：" prop="deadline">
                         {{creditCard.deadline}}
                     </FormItem>
-                    <FormItem label="信用卡最新欠款本金（元）" prop="principal">
+                    <FormItem label="信用卡最新欠款本金（元）：" prop="principal">
                         {{creditCard.principal}}
                         
                     </FormItem>
-                    <FormItem label="信用卡最新欠款利息（元）" prop="interest">
+                    <FormItem label="信用卡最新欠款利息（元）：" prop="interest">
                         {{creditCard.interest}}
                         
                     </FormItem>
-                    <FormItem label="信用卡最新欠款滞纳金（违约金）（元）" prop="latePayment">
+                    <FormItem label="信用卡最新欠款滞纳金（违约金）（元）：" prop="latePayment">
                         {{creditCard.latePayment}}
                         
                     </FormItem>
-                    <FormItem label="信用卡年费（元）" prop="annualFee">
+                    <FormItem label="信用卡年费（元）：" prop="annualFee">
                         {{creditCard.annualFee}}
                         
                     </FormItem>
-                    <FormItem label="信用卡分期手续费（元）" prop="handlingFee">
+                    <FormItem label="信用卡分期手续费（元）：" prop="handlingFee">
                         {{creditCard.handlingFee}}
                         
                     </FormItem>
-                    <FormItem label="其他费用项目及金额（元）" prop="otherFee">
+                    <FormItem label="其他费用项目及金额（元）：" prop="otherFee">
                         {{creditCard.otherFee}}
                         
                     </FormItem>
-                    <FormItem label="违约金约定" prop="defaultAgreement">
+                    <FormItem label="违约金约定：" prop="defaultAgreement">
                         {{creditCard.defaultAgreement}}
                         
                     </FormItem>
-                    <FormItem label="实现债权的费用" prop="agreementFee">
+                    <FormItem label="实现债权的费用：" prop="agreementFee">
                         {{creditCard.agreementFee}}
 
                     </FormItem>
-                    <FormItem label="实现债权费用的约定" prop="feeAgreement">
+                    <FormItem label="实现债权费用的约定：" prop="feeAgreement">
                         {{creditCard.feeAgreement}}
                         
                     </FormItem>
-                    <FormItem label="律师费（元）" prop="lawyerFee">
+                    <FormItem label="律师费（元）：" prop="lawyerFee">
                         {{creditCard.lawyerFee}}
                         
                     </FormItem>
-                    <FormItem label="保全费（元）" prop="securityFee">
+                    <FormItem label="保全费（元）：" prop="securityFee">
                         {{creditCard.securityFee}}
                         
                     </FormItem>
-                    <FormItem label="公告费（元）" prop="announcementFee">
+                    <FormItem label="公告费（元）：" prop="announcementFee">
                         {{creditCard.announcementFee}}
                         
                     </FormItem>
-                    <FormItem label="信用卡取现手续费（元）" prop="cashFee">
+                    <FormItem label="信用卡取现手续费（元）：" prop="cashFee">
                         {{creditCard.cashFee}}
                         
                     </FormItem>
-                    <FormItem label="其他项目费用（年费、取现手续费、分期手续费）的约定" prop="otherProjectFee">
+                    <FormItem label="其他项目费用（年费、取现手续费、分期手续费）的约定：" prop="otherProjectFee">
                         {{creditCard.otherProjectFee}}
                         
                     </FormItem>
-                    <FormItem label="最新截止时间后利息计算标准" prop="endStandard">
+                    <FormItem label="最新截止时间后利息计算标准：" prop="endStandard">
                         {{creditCard.endStandard}}
                         
                     </FormItem>
-                    <FormItem label="最新截止时间后违约金（滞纳金）计算标准" prop="endFeeStandard">
+                    <FormItem label="最新截止时间后违约金（滞纳金）计算标准：" prop="endFeeStandard">
                         {{creditCard.endFeeStandard}}
                         
                     </FormItem>
@@ -2152,7 +2152,7 @@ export default {
                 this.creditCard.applyTime = res.data.data.applyCardDate == null ? '' : this.time(res.data.data.applyCardDate);
                 this.creditCard.issueTime = res.data.data.auditDate == null ? '' : this.time(res.data.data.auditDate);
                 this.creditCard.overRate = res.data.data.overdrawRate;
-                this.creditCard.agreementFee = res.data.data.bondFeeStr;
+                this.creditCard.agreementFee = res.data.data.bondFee;
                 this.creditCard.quota = res.data.data.lineOfCredit;
             });
             getContractInfo(this.lawcaseId,this.partCardId,'gc',this.cardId).then(res => {

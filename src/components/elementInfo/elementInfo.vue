@@ -8,7 +8,7 @@
 
 <template>
     <div class="elementInfo-box">
-        <Form label-position="right" :label-width="130"> 
+        <Form label-position="right" :label-width="130" ref="litigation" :model="litigation" :rules="ruleValid"> 
             <FormItem>
                 <Menu @on-select="choice" style="width: 300px;">
                     <Submenu name="1">
@@ -90,46 +90,46 @@
             <FormItem label="欠款最新截至时间">
                 <DatePicker type="date" v-model="litigation.cutoff" placeholder="请选择截至日期" style="width: 300px"></DatePicker>
             </FormItem>
-            <FormItem label="欠款本金（元）">
+            <FormItem label="欠款本金（元）" prop="arrears">
                 <Input v-model="litigation.arrears" placeholder="请输入欠款本金，例如：1000.00" style="width: 300px" />
             </FormItem>
-            <FormItem label="利息（元）">
+            <FormItem label="利息（元）" prop="interest">
                 <Input v-model="litigation.interest" placeholder="请输入利息，例如：1000.00" style="width: 300px" />
             </FormItem>
-            <FormItem label="罚息（元）">
+            <FormItem label="罚息（元）" prop="penaltyInterest">
                 <Input v-model="litigation.penaltyInterest" placeholder="请输入罚息，例如：1000.00" style="width: 300px" />
             </FormItem>
-            <FormItem label="复利（元）">
+            <FormItem label="复利（元）" prop="compoundInterest">
                 <Input v-model="litigation.compoundInterest" placeholder="请输入复利，例如：1000.00" style="width: 300px" />
             </FormItem>
-            <FormItem label="最新欠款利息（元）">
+            <FormItem label="最新欠款利息（元）" prop="nInterest">
                 <Input v-model="litigation.nInterest" placeholder="请输入最新欠款利息，例如：1000.00" style="width: 300px" />
             </FormItem>
-            <FormItem label="最新欠款罚息（元）">
+            <FormItem label="最新欠款罚息（元）" prop="npInterest">
                 <Input v-model="litigation.npInterest" placeholder="请输入最新欠款罚息，例如：1000.00" style="width: 300px" />
             </FormItem>
-            <FormItem label="最新欠款复利（元）">
+            <FormItem label="最新欠款复利（元）" prop="ncdInterest">
                 <Input v-model="litigation.ncdInterest" placeholder="请输入最新欠款复利，例如：1000.00" style="width: 300px" />
             </FormItem>
-            <FormItem label="最新欠款利息等（元）">
+            <FormItem label="最新欠款利息等（元）" prop="newArrears">
                 <Input v-model="litigation.newArrears" placeholder="请输入最新欠款利息，例如：1000.00" style="width: 300px" />
             </FormItem>
-            <FormItem label="违约金金额（元）">
+            <FormItem label="违约金金额（元）" prop="liquidatedDamages">
                 <Input v-model="litigation.liquidatedDamages" placeholder="请输入违约金额，例如：1000.00" style="width: 300px" />
             </FormItem>
-            <FormItem label="实现债权的费用（元）">
+            <FormItem label="实现债权的费用（元）" prop="claim">
                 <Input v-model="litigation.claim" placeholder="请输入债权费用，例如：1000.00" style="width: 300px" />
             </FormItem>
-            <FormItem label="律师费（元）">
+            <FormItem label="律师费（元）" prop="lawyerFee">
                 <Input v-model="litigation.lawyerFee" placeholder="请输入律师费，例如：1000.00" style="width: 300px" />
             </FormItem>
-            <FormItem label="保全费（元）">
+            <FormItem label="保全费（元）" prop="securityFee">
                 <Input v-model="litigation.securityFee" placeholder="请输入保全费，例如：1000.00" style="width: 300px" />
             </FormItem>
-            <FormItem label="公告费（元）">
+            <FormItem label="公告费（元）" prop="announcementFee">
                 <Input v-model="litigation.announcementFee" placeholder="请输入公告费，例如：1000.00" style="width: 300px" />
             </FormItem>
-            <FormItem label="债权其他费用（元）">
+            <FormItem label="实现债权的其他费用（元）" prop="otherFee">
                 <Input v-model="litigation.otherFee" placeholder="请输入其他费用，例如：1000.00" style="width: 300px" />
             </FormItem>
             <FormItem label="是否支持夫妻共同债">
@@ -163,10 +163,10 @@
             <FormItem label="申请保全时间">
                 <DatePicker type="date" v-model="litigation.preservationTime" placeholder="请选择保全日期" style="width: 300px"></DatePicker>
             </FormItem>
-            <FormItem label="财产保全金额（元）">
+            <FormItem label="财产保全金额（元）" prop="preservationMoney">
                 <Input v-model="litigation.preservationMoney" placeholder="请输入财产保全金额，例如：1000.00" style="width: 300px" />
             </FormItem>
-            <FormItem label="财产保全费（元）">
+            <FormItem label="财产保全费（元）" prop="preservationFee">
                 <Input v-model="litigation.preservationFee" placeholder="请输入财产保全费，例如：1000.00" style="width: 300px" />
             </FormItem>
             <FormItem label="作出保全裁定时间">
@@ -182,10 +182,8 @@
         <Modal
             v-model="modal1"
             :title=titleArr[titleIndex]
-            @on-ok="ok"
-            :mask-closable="false"
-            :loading="isAdd">
-            <Form ref="credit" :model="credit" label-position="right" :label-width="155" v-show="titleIndex == 0">
+            :mask-closable="false">
+            <Form ref="credit" :model="credit" label-position="right" :label-width="155" v-show="titleIndex == 0" :rules="creditCheck">
                 <FormItem label="授信合同名称" prop="name">
                     <Input v-model="credit.name" :row="5" placeholder="请输入授信合同名称" style="width: 300px" />
                 </FormItem>
@@ -212,7 +210,7 @@
                     <Input v-model="credit.creditMoney" :row="5" placeholder="请输入授信金额，例如：1000.00" style="width: 300px" />
                 </FormItem>
             </Form>
-            <Form ref="loan" :model="loan" label-position="right" :label-width="155" v-show="titleIndex == 1">
+            <Form ref="loan" :rules="loanCheck" :model="loan" label-position="right" :label-width="155" v-show="titleIndex == 1">
                 <FormItem label="借款合同名称" prop="name">
                     <Input v-model="loan.name" :row="5" placeholder="请输入借款合同名称" style="width: 300px" />
                 </FormItem>
@@ -266,7 +264,7 @@
                     <Input type="textarea" v-model="loan.sendAgreement" :row="5" placeholder="请输入约定" style="width: 300px" />
                 </FormItem>
             </Form>
-            <Form ref="guarantee" :model="guarantee" label-position="right" :label-width="155" v-show="titleIndex == 2">
+            <Form ref="guarantee" :rules="guaranteeCheck" :model="guarantee" label-position="right" :label-width="155" v-show="titleIndex == 2">
                 <FormItem label="保证合同名称" prop="name">
                     <Input v-model="guarantee.name" :row="5" placeholder="请输入保证合同名称" style="width: 300px" />
                 </FormItem>
@@ -286,7 +284,7 @@
                     <Input v-model="guarantee.guaranteeRange" :row="5" placeholder="请输入保证范围" style="width: 300px" />
                 </FormItem>
             </Form>
-            <Form ref="mortgage" :model="mortgage" label-position="right" :label-width="155" v-show="titleIndex == 3">
+            <Form ref="mortgage" :rules="mortgageCheck" :model="mortgage" label-position="right" :label-width="155" v-show="titleIndex == 3">
                 <FormItem label="抵押合同名称" prop="name">
                     <Input v-model="mortgage.name" :row="5" placeholder="请输入抵押合同名称" style="width: 300px" />
                 </FormItem>
@@ -306,7 +304,7 @@
                     <DatePicker v-model="mortgage.handletime" type="date" placement="bottom-end" placeholder="请选择登记时间" style="width: 200px"></DatePicker>
                 </FormItem>
             </Form>
-            <Form ref="pledge" :model="pledge" label-position="right" :label-width="155" v-show="titleIndex == 4">
+            <Form ref="pledge" :rules="pledgeCheck" :model="pledge" label-position="right" :label-width="155" v-show="titleIndex == 4">
                 <FormItem label="质押合同名称" prop="name">
                     <Input v-model="pledge.name" :row="5" placeholder="请输入质押合同名称" style="width: 300px" />
                 </FormItem>
@@ -326,6 +324,9 @@
                     <DatePicker v-model="pledge.handletime" type="date" placement="bottom-end" placeholder="请选择质押登记时间" style="width: 200px"></DatePicker>
                 </FormItem>
             </Form>
+            <div slot="footer">
+                <Button type="primary" @click="ok" :loading="isAdd">确定</Button>
+            </div>
         </Modal>
     </div>
 </template>
@@ -343,8 +344,14 @@ export default {
     name: 'elementInfo',
     props:['lawCaseId','partId'],
     data () {
+        const validNumber = (rule, value, callback) => {//表单验证
+            if (isNaN(value)) {
+                return callback(new Error('请输入数字'));
+            }
+            callback();
+        };
         return {
-            isAdd:true,
+            isAdd:false,
             modal1:false,
             titleIndex:0,
             litigation:{
@@ -440,6 +447,81 @@ export default {
             isRelease:'',
             myPartId:this.partId,
             infoId:'',
+            ruleValid:{
+                arrears:[
+                    {validator:validNumber,trigger:'change'}
+                ],
+                interest:[
+                    {validator:validNumber,trigger:'change'}
+                ],
+                penaltyInterest:[
+                    {validator:validNumber,trigger:'change'}
+                ],
+                compoundInterest:[
+                    {validator:validNumber,trigger:'change'}
+                ],
+                nInterest:[
+                    {validator:validNumber,trigger:'change'}
+                ],
+                npInterest:[
+                    {validator:validNumber,trigger:'change'}
+                ],
+                ncdInterest:[
+                    {validator:validNumber,trigger:'change'}
+                ],
+                newArrears:[
+                    {validator:validNumber,trigger:'change'}
+                ],
+                liquidatedDamages:[
+                    {validator:validNumber,trigger:'change'}
+                ],
+                claim:[
+                    {validator:validNumber,trigger:'change'}
+                ],
+                lawyerFee:[
+                    {validator:validNumber,trigger:'change'}
+                ],
+                securityFee:[
+                    {validator:validNumber,trigger:'change'}
+                ],
+                announcementFee:[
+                    {validator:validNumber,trigger:'change'}
+                ],
+                otherFee:[
+                    {validator:validNumber,trigger:'change'}
+                ],
+                preservationMoney:[
+                    {validator:validNumber,trigger:'change'}
+                ],
+                preservationFee:[
+                    {validator:validNumber,trigger:'change'}
+                ],
+            },
+            creditCheck:{
+                name:[
+                    {required: true, message: '请输入合同名称', trigger: 'change'}
+                ]    
+            },
+            loanCheck:{
+                name:[
+                    {required: true, message: '请输入合同名称', trigger: 'change'}
+                ]    
+            },
+            guaranteeCheck:{
+                name:[
+                    {required: true, message: '请输入合同名称', trigger: 'change'}
+                ]    
+            },
+            mortgageCheck:{
+                name:[
+                    {required: true, message: '请输入合同名称', trigger: 'change'}
+                ]    
+            },
+            pledgeCheck:{
+                name:[
+                    {required: true, message: '请输入合同名称', trigger: 'change'}
+                ]    
+            },
         };
     },
     methods: {
@@ -531,9 +613,14 @@ export default {
             }
         },
         ok (){
-            this.isAdd = false;
+            this.isAdd = true;
             switch(this.titleIndex){
                 case '0':
+                this.$refs['credit'].validate((valid) => {
+                    if(!valid){
+                        this.isAdd = false;
+                        return this.$Message.error('合同名不能为空！');
+                    }
                     addOrUpdateCtInfo(this.credit.name,
                     this.credit.isRelease == 'yes' ? true : false,
                     this.credit.creditPeople,
@@ -543,7 +630,7 @@ export default {
                     this.infoId,
                     this.lawCaseId,
                     this.myPartId).then(res => {
-                        this.isAdd = true;
+                        this.isAdd = false;
                         if(res.data.state == 100){
                             this.handleReset('credit');
                             this.$Message.success(res.data.message);
@@ -555,8 +642,14 @@ export default {
                             this.$Message.warning(res.data.message);
                         }
                     });
+                })
                 break;
                 case '1':
+                this.$refs['loan'].validate((valid) => {
+                    if(!valid){
+                        this.isAdd = false;
+                        return this.$Message.error('合同名不能为空！');
+                    }
                     addOrUpdateLoanCtInfo(this.infoId,
                     this.loan.name,
                     this.loan.creditPeople,
@@ -576,7 +669,7 @@ export default {
                     this.lawCaseId,
                     this.myPartId,
                     ).then(res => {
-                        this.isAdd = true;
+                        this.isAdd = false;
                         if(res.data.state == 100){
                             this.handleReset('loan');
                             this.$Message.success(res.data.message);
@@ -588,9 +681,14 @@ export default {
                             this.$Message.warning(res.data.message);
                         }
                     })
+                })
                 break;
                 case '2':
-                    console.log(this.guarantee.timeRange);
+                this.$refs['guarantee'].validate((valid) => {
+                    if(!valid){
+                        this.isAdd = false;
+                        return this.$Message.error('合同名不能为空！');
+                    }
                     addOrUpdateGcInfo(this.infoId,
                     this.guarantee.name,
                     this.guarantee.guaranteePeople,
@@ -600,7 +698,7 @@ export default {
                     this.guarantee.guaranteeRange,
                     this.lawCaseId,
                     this.myPartId).then(res => {
-                        this.isAdd = true;
+                        this.isAdd = false;
                         if(res.data.state == 100){
                             this.handleReset('guarantee');
                             this.$Message.success(res.data.message);
@@ -612,8 +710,14 @@ export default {
                             this.$Message.warning(res.data.message);
                         }
                     })
+                })
                 break;
                 case '3':
+                this.$refs['mortgage'].validate((valid) => {
+                    if(!valid){
+                        this.isAdd = false;
+                        return this.$Message.error('合同名不能为空！');
+                    }
                     addOrUpdateMcInfo(this.infoId,
                     this.mortgage.name,
                     this.mortgage.time == '' ? this.mortgage.time : typeof(this.mortgage.time) == 'number' ? this.time(this.mortgage.time) : this.mortgage.time.getFullYear()+'-'+(this.mortgage.time.getMonth()+1)+'-'+this.mortgage.time.getDate(),
@@ -623,7 +727,7 @@ export default {
                     this.mortgage.handletime == '' ? this.mortgage.handletime : typeof(this.mortgage.handletime) == 'number' ? this.time(this.mortgage.handletime) : this.mortgage.handletime.getFullYear()+'-'+(this.mortgage.handletime.getMonth()+1)+'-'+this.mortgage.handletime.getDate(),
                     this.lawCaseId,
                     this.myPartId).then(res => {
-                        this.isAdd = true;
+                        this.isAdd = false;
                         if(res.data.state == 100){
                             this.handleReset('mortgage');
                             this.$Message.success(res.data.message);
@@ -635,8 +739,14 @@ export default {
                             this.$Message.warning(res.data.message);
                         }
                     })
+                })  
                 break;
                 case '4':
+                this.$refs['pledge'].validate((valid) => {
+                    if(!valid){
+                        this.isAdd = false;
+                        return this.$Message.error('合同名不能为空！');
+                    }
                     addOrUpdatePcInfo(this.infoId,
                     this.pledge.name,
                     this.pledge.time == '' ? this.pledge.time : typeof(this.pledge.time) == 'number' ? this.time(this.pledge.time) : this.pledge.time.getFullYear()+'-'+(this.pledge.time.getMonth()+1)+'-'+this.pledge.time.getDate(),
@@ -647,7 +757,7 @@ export default {
                     this.lawCaseId,
                     this.myPartId
                     ).then(res => {
-                        this.isAdd = true;
+                        this.isAdd = false;
                         if(res.data.state == 100){
                             this.handleReset('pledge');
                             this.$Message.success(res.data.message);
@@ -659,6 +769,7 @@ export default {
                             this.$Message.warning(res.data.message);
                         }  
                     })
+                })
                 break;
             }
         },
@@ -692,46 +803,52 @@ export default {
             })
         },
         submit(){
-            const request = updatePLoan(this.myPartId,
-            this.litigation.loan == '' ? this.litigation.loan : typeof(this.litigation.loan) == 'number' ? this.time(this.litigation.loan) : this.litigation.loan.getFullYear()+'-'+(this.litigation.loan.getMonth()+1)+'-'+this.litigation.loan.getDate(),
-            this.litigation.maturity == '' ? this.litigation.maturity : typeof(this.litigation.maturity) == 'number' ? this.time(this.litigation.maturity) : this.litigation.maturity.getFullYear()+'-'+(this.litigation.maturity.getMonth()+1)+'-'+this.litigation.maturity.getDate(),
-            this.litigation.overdue == '' ? this.litigation.overdue : typeof(this.litigation.overdue) == 'number' ? this.time(this.litigation.overdue) : this.litigation.overdue.getFullYear()+'-'+(this.litigation.overdue.getMonth()+1)+'-'+this.litigation.overdue.getDate(),
-            this.litigation.cutoff == '' ? this.litigation.cutoff : typeof(this.litigation.cutoff) == 'number' ? this.time(this.litigation.cutoff) : this.litigation.cutoff.getFullYear()+'-'+(this.litigation.cutoff.getMonth()+1)+'-'+this.litigation.cutoff.getDate(),
-            this.litigation.arrears,
-            this.litigation.interest,
-            this.litigation.penaltyInterest,
-            this.litigation.compoundInterest,
-            this.litigation.nInterest,
-            this.litigation.npInterest,
-            this.litigation.ncdInterest,
-            this.litigation.newArrears,
-            this.litigation.liquidatedDamages,
-            this.litigation.claim,
-            this.litigation.lawyerFee,
-            this.litigation.securityFee,
-            this.litigation.announcementFee,
-            this.litigation.otherFee,
-            this.isPublic == 'yes' ? true : false,
-            this.litigation.marryTime == '' ? this.litigation.marryTime : typeof(this.litigation.marryTime) == 'number' ? this.time(this.litigation.marryTime) : this.litigation.marryTime.getFullYear()+'-'+(this.litigation.marryTime.getMonth()+1)+'-'+this.litigation.marryTime.getDate(),
-            this.litigation.divorceTime == '' ? this.litigation.divorceTime : typeof(this.litigation.divorceTime) == 'number' ? this.time(this.litigation.divorceTime) : this.litigation.divorceTime.getFullYear()+'-'+(this.litigation.divorceTime.getMonth()+1)+'-'+this.litigation.divorceTime.getDate(),
-            this.litigation.legalProvisions,
-            this.litigation.regulations,
-            this.litigation.caseNumber,
-            this.litigation.preservationMan,
-            this.litigation.preservationTime == '' ? this.litigation.preservationTime : typeof(this.litigation.preservationTime) == 'number' ? this.time(this.litigation.preservationTime) : this.litigation.preservationTime.getFullYear()+'-'+(this.litigation.preservationTime.getMonth()+1)+'-'+this.litigation.preservationTime.getDate(),
-            this.litigation.preservationMoney,
-            this.litigation.preservationFee,
-            this.litigation.rulingTime == '' ? this.litigation.rulingTime : typeof(this.litigation.rulingTime) == 'number' ? this.time(this.litigation.rulingTime) : this.litigation.rulingTime.getFullYear()+'-'+(this.litigation.rulingTime.getMonth()+1)+'-'+this.litigation.rulingTime.getDate(),
-            this.litigation.releasePreservation == '' ? this.litigation.releasePreservation : typeof(this.litigation.releasePreservation) == 'number' ? this.time(this.litigation.releasePreservation) : this.litigation.releasePreservation.getFullYear()+'-'+(this.litigation.releasePreservation.getMonth()+1)+'-'+this.litigation.releasePreservation.getDate(),
-            this.litigation.preservationStatus
-            ).then(res2 => {
-                if(res2.data.state == 100){
-                    this.$Message.success(res2.data.message);
-                    this.$emit('listenToChildEvent','1');
-                }else{
-                    this.$Message.warning(res2.data.message);
+            this.$refs['litigation'].validate((valid) => {
+                if(!valid){
                     this.$emit('listenToChildEvent','0');
+                    return this.$Message.error('格式错误！请检查！');
                 }
+                const request = updatePLoan(this.myPartId,
+                this.litigation.loan == '' ? this.litigation.loan : typeof(this.litigation.loan) == 'number' ? this.time(this.litigation.loan) : this.litigation.loan.getFullYear()+'-'+(this.litigation.loan.getMonth()+1)+'-'+this.litigation.loan.getDate(),
+                this.litigation.maturity == '' ? this.litigation.maturity : typeof(this.litigation.maturity) == 'number' ? this.time(this.litigation.maturity) : this.litigation.maturity.getFullYear()+'-'+(this.litigation.maturity.getMonth()+1)+'-'+this.litigation.maturity.getDate(),
+                this.litigation.overdue == '' ? this.litigation.overdue : typeof(this.litigation.overdue) == 'number' ? this.time(this.litigation.overdue) : this.litigation.overdue.getFullYear()+'-'+(this.litigation.overdue.getMonth()+1)+'-'+this.litigation.overdue.getDate(),
+                this.litigation.cutoff == '' ? this.litigation.cutoff : typeof(this.litigation.cutoff) == 'number' ? this.time(this.litigation.cutoff) : this.litigation.cutoff.getFullYear()+'-'+(this.litigation.cutoff.getMonth()+1)+'-'+this.litigation.cutoff.getDate(),
+                this.litigation.arrears,
+                this.litigation.interest,
+                this.litigation.penaltyInterest,
+                this.litigation.compoundInterest,
+                this.litigation.nInterest,
+                this.litigation.npInterest,
+                this.litigation.ncdInterest,
+                this.litigation.newArrears,
+                this.litigation.liquidatedDamages,
+                this.litigation.claim,
+                this.litigation.lawyerFee,
+                this.litigation.securityFee,
+                this.litigation.announcementFee,
+                this.litigation.otherFee,
+                this.isPublic == 'yes' ? true : false,
+                this.litigation.marryTime == '' ? this.litigation.marryTime : typeof(this.litigation.marryTime) == 'number' ? this.time(this.litigation.marryTime) : this.litigation.marryTime.getFullYear()+'-'+(this.litigation.marryTime.getMonth()+1)+'-'+this.litigation.marryTime.getDate(),
+                this.litigation.divorceTime == '' ? this.litigation.divorceTime : typeof(this.litigation.divorceTime) == 'number' ? this.time(this.litigation.divorceTime) : this.litigation.divorceTime.getFullYear()+'-'+(this.litigation.divorceTime.getMonth()+1)+'-'+this.litigation.divorceTime.getDate(),
+                this.litigation.legalProvisions,
+                this.litigation.regulations,
+                this.litigation.caseNumber,
+                this.litigation.preservationMan,
+                this.litigation.preservationTime == '' ? this.litigation.preservationTime : typeof(this.litigation.preservationTime) == 'number' ? this.time(this.litigation.preservationTime) : this.litigation.preservationTime.getFullYear()+'-'+(this.litigation.preservationTime.getMonth()+1)+'-'+this.litigation.preservationTime.getDate(),
+                this.litigation.preservationMoney,
+                this.litigation.preservationFee,
+                this.litigation.rulingTime == '' ? this.litigation.rulingTime : typeof(this.litigation.rulingTime) == 'number' ? this.time(this.litigation.rulingTime) : this.litigation.rulingTime.getFullYear()+'-'+(this.litigation.rulingTime.getMonth()+1)+'-'+this.litigation.rulingTime.getDate(),
+                this.litigation.releasePreservation == '' ? this.litigation.releasePreservation : typeof(this.litigation.releasePreservation) == 'number' ? this.time(this.litigation.releasePreservation) : this.litigation.releasePreservation.getFullYear()+'-'+(this.litigation.releasePreservation.getMonth()+1)+'-'+this.litigation.releasePreservation.getDate(),
+                this.litigation.preservationStatus
+                ).then(res2 => {
+                    if(res2.data.state == 100){
+                        this.$Message.success(res2.data.message);
+                        this.$emit('listenToChildEvent','1');
+                    }else{
+                        this.$Message.warning(res2.data.message);
+                        this.$emit('listenToChildEvent','0');
+                    }
+                })
             })
         }
     },

@@ -1983,6 +1983,7 @@ mounted() {
     this.onlineBriefId = this.$route.params.briefId || window.localStorage.getItem('continueIsRight');
     this.noewTYpe = window.localStorage.getItem('continuePlace');
     this.isElement = this.onlineBriefId == 'fa86bd7e1af811e9b39a00163e0af9c6' ? 1 : (this.onlineBriefId == 'fa86bdfb1af811e9b39a00163e0af9c6' ? 2 : 0);
+    
     switch(Number(this.stepNum)){
         case 0:
             this.getCaseInfo();
@@ -2022,22 +2023,18 @@ mounted() {
     })
 
     this.getbrief();
-
-    getOnlineBrief(this.noewTYpe).then(res => {
-        // const data = res.data.briefList.map(item => {
-        //     return {title:item.name,loading:false,children:[],id:item.id,type:item.type};
-        // })
-        this.onlineBriefList = [];
-        for(const item of res.data.briefList){
-            if(item.type == 0){
-                this.onlineBriefList.push({title:item.name,id:item.id,type:item.type});
-            }else{
-                this.onlineBriefList.push({title:item.name,loading:false,children:[],id:item.id,type:item.type});
+    if(this.noewTYpe){
+        getOnlineBrief(this.noewTYpe).then(res => {
+            this.onlineBriefList = [];
+            for(const item of res.data.briefList){
+                if(item.type == 0){
+                    this.onlineBriefList.push({title:item.name,id:item.id,type:item.type});
+                }else{
+                    this.onlineBriefList.push({title:item.name,loading:false,children:[],id:item.id,type:item.type});
+                }
             }
-        }
-        // this.onlineBriefList = data;
-    })
-
+        })
+    }
 },
 watch: {
 mediatePeople(curVal,oldVal){
@@ -2430,6 +2427,19 @@ getCaseInfo(){
             this.reasonContent = res.data.result.reasonContent;
             this.onlineBriefId = res.data.result.onlineBrief.id;
             this.selectTitle = res.data.result.onlineBrief.name;
+            if(!this.noewTYpe){
+                this.noewTYpe = res.data.result.place;
+                getOnlineBrief(this.noewTYpe).then(res => {
+                    this.onlineBriefList = [];
+                    for(const item of res.data.briefList){
+                        if(item.type == 0){
+                            this.onlineBriefList.push({title:item.name,id:item.id,type:item.type});
+                        }else{
+                            this.onlineBriefList.push({title:item.name,loading:false,children:[],id:item.id,type:item.type});
+                        }
+                    }
+                })
+            }
         }
     })
 },

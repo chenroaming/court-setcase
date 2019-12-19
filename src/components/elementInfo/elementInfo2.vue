@@ -30,7 +30,7 @@
                             信用卡信息
                         </template>
                         <MenuItem name="合0">添加新的信用卡信息</MenuItem>
-                        <MenuItem :name="item.id" v-for="(item,index) in creditInfo">{{item.contractName}}
+                        <MenuItem :name="item.id" v-for="(item,index) in creditInfo">{{'信用卡（' + item.cardNo + '）'}}
                             <span @click.stop="delCreditCard(choice,'cdInfo',item.id)">
                                 <Icon title="删除该信用卡信息" type="ios-close" />
                             </span>
@@ -63,38 +63,42 @@
                 <Panel name="2">
                     支付令
                     <div slot="content" class="collaps-content">
-                        <FormItem label="请求支付的事实与理由">
-                            <Input v-model="pay.reason" :row="5" placeholder="请输入理由" style="width: 300px" />
-                        </FormItem>
-                        <FormItem label="申请支付金额（元）" prop="quota">
-                            <Input v-model="pay.money" :row="5" placeholder="请输入金额，例如：1000.00" style="width: 300px" />
-                        </FormItem>
-                        <FormItem label="有价证券（元）" prop="quota">
-                            <Input v-model="pay.securities" :row="5" placeholder="请输入金额，例如：1000.00" style="width: 300px" />
-                        </FormItem>
-                        <FormItem label="支付令申请费（元）" prop="quota">
-                            <Input v-model="pay.applicationFee" :row="5" placeholder="请输入金额，例如：1000.00" style="width: 300px" />
-                        </FormItem>
-                        <FormItem label="申请支付令时">
-                            <DatePicker type="date" v-model="pay.applyTime" placeholder="请选择时间" style="width: 300px"></DatePicker>
-                        </FormItem>
-                        <FormItem label="作出支付令时间">
-                            <DatePicker type="date" v-model="pay.completeTime" placeholder="请选择时间" style="width: 300px"></DatePicker>
-                        </FormItem>
+                        <Form label-position="right" ref="pay" :model="pay" :label-width="155" :rules="ruleValid2">
+                            <FormItem label="请求支付的事实与理由">
+                                <Input v-model="pay.reason" :row="5" placeholder="请输入理由" style="width: 300px" />
+                            </FormItem>
+                            <FormItem label="申请支付金额（元）" prop="money">
+                                <Input v-model="pay.money" :row="5" placeholder="请输入金额，例如：1000.00" style="width: 300px" />
+                            </FormItem>
+                            <FormItem label="有价证券（元）" prop="securities">
+                                <Input v-model="pay.securities" :row="5" placeholder="请输入金额，例如：1000.00" style="width: 300px" />
+                            </FormItem>
+                            <FormItem label="支付令申请费（元）" prop="applicationFee">
+                                <Input v-model="pay.applicationFee" :row="5" placeholder="请输入金额，例如：1000.00" style="width: 300px" />
+                            </FormItem>
+                            <FormItem label="申请支付令时">
+                                <DatePicker type="date" v-model="pay.applyTime" placeholder="请选择时间" style="width: 300px"></DatePicker>
+                            </FormItem>
+                            <FormItem label="作出支付令时间">
+                                <DatePicker type="date" v-model="pay.completeTime" placeholder="请选择时间" style="width: 300px"></DatePicker>
+                            </FormItem>
+                        </Form>
                     </div>
                 </Panel>
                 <Panel name="3">
                     终结督促程序
                     <div slot="content" class="collaps-content">
-                        <FormItem label="终结督促程序申请费（元）">
-                            <Input v-model="endProcess.fee" :row="5" placeholder="请输入金额，例如：1000.00" style="width: 300px" />
-                        </FormItem>
-                        <FormItem label="终结督促程序裁定作出时间">
-                            <DatePicker type="date" v-model="endProcess.time" placeholder="请选择时间" style="width: 300px"></DatePicker>
-                        </FormItem>
-                        <FormItem label="终结督促程序的原因">
-                            <Input v-model="endProcess.reason" :row="5" placeholder="请输入原因" style="width: 300px" />
-                        </FormItem>
+                        <Form label-position="right" ref="endProcess" :model="endProcess" :label-width="155" :rules="ruleValid3">
+                            <FormItem label="终结督促程序申请费（元）" prop="fee">
+                                <Input v-model="endProcess.fee" :row="5" placeholder="请输入金额，例如：1000.00" style="width: 300px" />
+                            </FormItem>
+                            <FormItem label="终结督促程序裁定作出时间">
+                                <DatePicker type="date" v-model="endProcess.time" placeholder="请选择时间" style="width: 300px"></DatePicker>
+                            </FormItem>
+                            <FormItem label="终结督促程序的原因">
+                                <Input v-model="endProcess.reason" :row="5" placeholder="请输入原因" style="width: 300px" />
+                            </FormItem>
+                        </Form>
                     </div>
                 </Panel>
             </Collapse>
@@ -102,10 +106,7 @@
         <Modal
             v-model="modal1"
             :title=titleArr[titleIndex]
-            :mask-closable="false"
-            :loading="isAdd"
-            @on-ok="ok"
-            @on-cancel="cancel">
+            :mask-closable="false">
             <Form label-position="right" ref="creditCard" :model="creditCard" :label-width="155" v-show="titleIndex == 0" :rules="ruleValid">
                 <FormItem label="信用卡卡号" prop="num">
                     <Input v-model="creditCard.num" :row="5" placeholder="请输入信用卡卡号" style="width: 300px" />
@@ -201,14 +202,14 @@
                     </Menu>
                 </FormItem>
             </Form>
+            <div slot="footer">
+                <Button @click="ok" :loading="isAdd" type="primary">确定</Button>
+            </div>
         </Modal>
         <Modal v-model="modal2"
             title="保证合同信息"
-            @on-ok="submitContract"
-            :mask-closable="false"
-            :loading="isAdd2"
-            @on-cancel="cancel">
-            <Form ref="guaranteeContract" :model="guaranteeContract" label-position="right" :label-width="155">
+            :mask-closable="false">
+            <Form ref="guaranteeContract" :model="guaranteeContract" label-position="right" :label-width="155" :rules="empty">
                 <FormItem label="保证合同名称" prop="name">
                     <Input v-model="guaranteeContract.name" :row="5" placeholder="请输入合同名称" style="width: 300px" /> 
                 </FormItem>
@@ -228,6 +229,9 @@
                     <Input v-model="guaranteeContract.range" :row="5" placeholder="请输入范围" style="width: 300px" /> 
                 </FormItem>
             </Form>
+            <div slot="footer">
+                <Button type="primary" @click="submitContract" :loading="isAdd2">确定</Button>
+            </div>
         </Modal>
     </div>
 </template>
@@ -257,8 +261,8 @@ export default {
             collapseBox:'1',
             gcId:'',
             cardId:'',
-            isAdd:true,
-            isAdd2:true,
+            isAdd:false,
+            isAdd2:false,
             partCardId:this.partId,
             modal1:false,
             modal2:false,
@@ -359,6 +363,27 @@ export default {
                 cashFee:[
                     {validator:validNumber,trigger:'change'} 
                 ]
+            },
+            ruleValid2:{
+                money:[
+                    {validator:validNumber,trigger:'change'}
+                ],
+                securities:[
+                    {validator:validNumber,trigger:'change'}
+                ],
+                applicationFee:[
+                    {validator:validNumber,trigger:'change'}
+                ],
+            },
+            ruleValid3:{
+                fee:[
+                    {validator:validNumber,trigger:'change'}
+                ]
+            },
+            empty:{
+                name:[
+                    { required: true, message: '合同名称不能为空', trigger: 'change' }
+                ]
             }
         };
     },
@@ -407,8 +432,8 @@ export default {
                     this.creditCard.type = res.data.data.cardType;
                     this.creditCard.applyTime = res.data.data.applyCardDate == null ? '' : this.time(res.data.data.applyCardDate);
                     this.creditCard.issueTime = res.data.data.auditDate == null ? '' : this.time(res.data.data.auditDate);
-                    this.creditCard.overRate = res.data.data.BigDecimal;
-                    this.creditCard.agreementFee = res.data.data.bondFeeStr;
+                    this.creditCard.overRate = res.data.data.overdrawRate;
+                    this.creditCard.agreementFee = res.data.data.bondFee;
                     this.creditCard.quota = res.data.data.lineOfCredit;
                 });
                 getContractInfo(this.lawCaseId,this.partCardId,'gc',this.cardId).then(res => {
@@ -434,6 +459,7 @@ export default {
             }
         },
         ok (){
+            this.isAdd = true;
             this.$refs['creditCard'].validate((valid) => {
                 if(!valid){
                     this.isAdd = false;
@@ -468,8 +494,8 @@ export default {
                     this.creditCard.agreementFee,
                     this.creditCard.quota
                 ).then(res => {
-                    this.isAdd = true;
-                    if(res.data.state = 100){
+                    this.isAdd = false;
+                    if(res.data.state == 100){
                         this.handleReset2('creditCard');
                         this.modal1 = false;
                         this.$Message.success(res.data.message);
@@ -488,61 +514,76 @@ export default {
                 })
             })
         },
-        cancel (){
-
-        },
         submitContract(){
-            this.isAdd2 = false;
-            addOrUpdateGcInfo(this.gcId,
-            this.guaranteeContract.name,
-            this.guaranteeContract.people,
-            this.guaranteeContract.methods,
-            this.guaranteeContract.timeRange[0] == null || this.guaranteeContract.timeRange.length == 0 ? '' : this.guaranteeContract.timeRange[0].getFullYear()+'-'+(this.guaranteeContract.timeRange[0].getMonth()+1)+'-'+this.guaranteeContract.timeRange[0].getDate()+'至'+this.guaranteeContract.timeRange[1].getFullYear()+'-'+(this.guaranteeContract.timeRange[1].getMonth()+1)+'-'+this.guaranteeContract.timeRange[1].getDate(),
-            this.guaranteeContract.time == '' ? this.guaranteeContract.time : typeof(this.guaranteeContract.time) == 'number' ? this.time(this.guaranteeContract.time) : this.guaranteeContract.time.getFullYear()+'-'+(this.guaranteeContract.time.getMonth()+1)+'-'+this.guaranteeContract.time.getDate(),
-            this.guaranteeContract.range,
-            this.lawCaseId,
-            this.partCardId,
-            this.cardId
-            ).then(res => {
-                this.isAdd2 = true;
-                if(res.data.state == 100){
-                    this.gcIdList = this.gcIdList == '' ? this.gcIdList + res.data.gcId : this.gcIdList + ',' + res.data.gcId;
-                    this.gcIdList = this.cardId != '' ? this.gcIdList = '' : this.gcIdList;
-                    getContractInfo(this.lawCaseId,this.partCardId,'gc',this.cardId,this.gcIdList).then(res => {
-                        this.guarantee = res.data.nameList;
-                    })
-                    this.modal2 = false;
-                    this.$Message.success(res.data.message);
-                    return; 
+            this.$refs['guaranteeContract'].validate((valid) => {
+                if(!valid){
+                    return this.$Message.error('格式错误！请检查！');
                 }
-                this.$Message.warning(res.data.message);
+                this.isAdd2 = true;
+                addOrUpdateGcInfo(this.gcId,
+                this.guaranteeContract.name,
+                this.guaranteeContract.people,
+                this.guaranteeContract.methods,
+                this.guaranteeContract.timeRange[0] == null || this.guaranteeContract.timeRange.length == 0 ? '' : this.guaranteeContract.timeRange[0].getFullYear()+'-'+(this.guaranteeContract.timeRange[0].getMonth()+1)+'-'+this.guaranteeContract.timeRange[0].getDate()+'至'+this.guaranteeContract.timeRange[1].getFullYear()+'-'+(this.guaranteeContract.timeRange[1].getMonth()+1)+'-'+this.guaranteeContract.timeRange[1].getDate(),
+                this.guaranteeContract.time == '' ? this.guaranteeContract.time : typeof(this.guaranteeContract.time) == 'number' ? this.time(this.guaranteeContract.time) : this.guaranteeContract.time.getFullYear()+'-'+(this.guaranteeContract.time.getMonth()+1)+'-'+this.guaranteeContract.time.getDate(),
+                this.guaranteeContract.range,
+                this.lawCaseId,
+                this.partCardId,
+                this.cardId
+                ).then(res => {
+                    if(res.data.state == 100){
+                        this.gcIdList = this.gcIdList == '' ? this.gcIdList + res.data.gcId : this.gcIdList + ',' + res.data.gcId;
+                        this.gcIdList = this.cardId != '' ? this.gcIdList = '' : this.gcIdList;
+                        getContractInfo(this.lawCaseId,this.partCardId,'gc',this.cardId,this.gcIdList).then(res => {
+                            this.guarantee = res.data.nameList;
+                        })
+                        this.modal2 = false;
+                        this.isAdd2 = false;
+                        this.$Message.success(res.data.message);
+                        return; 
+                    }
+                    this.isAdd2 = false;
+                    this.$Message.warning(res.data.message);
+                })
             })
         }, 
         submitLoan(){
-            let res = null;
-            const request = upPartOfCard(this.partCardId,
-            this.contract.name,
-            this.contract.time == '' ? this.contract.time : typeof(this.contract.time) == 'number' ? this.time(this.contract.time) : this.contract.time.getFullYear()+'-'+(this.contract.time.getMonth()+1)+'-'+this.contract.time.getDate(),
-            this.couple.isPublic == 'yes' ? true : false,
-            this.couple.marry == '' ? this.couple.marry : typeof(this.couple.marry) == 'number' ? this.time(this.couple.marry) : this.couple.marry.getFullYear()+'-'+(this.couple.marry.getMonth()+1)+'-'+this.couple.marry.getDate(),
-            this.couple.divorce == '' ? this.couple.divorce : typeof(this.couple.divorce) == 'number' ? this.time(this.couple.divorce) : this.couple.divorce.getFullYear()+'-'+(this.couple.divorce.getMonth()+1)+'-'+this.couple.divorce.getDate(),
-            this.pay.reason,
-            this.pay.money,
-            this.pay.securities,
-            this.pay.applicationFee,
-            this.pay.applyTime == '' ? this.pay.applyTime : typeof(this.pay.applyTime) == 'number' ? this.time(this.pay.applyTime) : this.pay.applyTime.getFullYear()+'-'+(this.pay.applyTime.getMonth()+1)+'-'+this.pay.applyTime.getDate(),
-            this.pay.completeTime == '' ? this.pay.completeTime : typeof(this.pay.completeTime) == 'number' ? this.time(this.pay.completeTime) : this.pay.completeTime.getFullYear()+'-'+(this.pay.completeTime.getMonth()+1)+'-'+this.pay.completeTime.getDate(),
-            this.endProcess.fee,
-            this.endProcess.time == '' ? this.endProcess.time : typeof(this.endProcess.time) == 'number' ? this.time(this.endProcess.time) : this.endProcess.time.getFullYear()+'-'+(this.endProcess.time.getMonth()+1)+'-'+this.endProcess.time.getDate(),
-            this.endProcess.reason
-            ).then(res2 => {
-                if(res2.data.state == 100){
-                    this.$Message.success(res2.data.message);
-                    this.$emit('listenToChildEvent','1');
-                }else{
-                    this.$Message.warning(res2.data.message);
+            this.$refs['pay'].validate((valid) => {
+                if(!valid){
                     this.$emit('listenToChildEvent','0');
+                    return this.$Message.error('格式错误！请检查！');
                 }
+                this.$refs['endProcess'].validate((valid) => {
+                    if(!valid){
+                        this.$emit('listenToChildEvent','0');
+                        return this.$Message.error('格式错误！请检查！');
+                    }
+                    let res = null;
+                    const request = upPartOfCard(this.partCardId,
+                    this.contract.name,
+                    this.contract.time == '' ? this.contract.time : typeof(this.contract.time) == 'number' ? this.time(this.contract.time) : this.contract.time.getFullYear()+'-'+(this.contract.time.getMonth()+1)+'-'+this.contract.time.getDate(),
+                    this.couple.isPublic == 'yes' ? true : false,
+                    this.couple.marry == '' ? this.couple.marry : typeof(this.couple.marry) == 'number' ? this.time(this.couple.marry) : this.couple.marry.getFullYear()+'-'+(this.couple.marry.getMonth()+1)+'-'+this.couple.marry.getDate(),
+                    this.couple.divorce == '' ? this.couple.divorce : typeof(this.couple.divorce) == 'number' ? this.time(this.couple.divorce) : this.couple.divorce.getFullYear()+'-'+(this.couple.divorce.getMonth()+1)+'-'+this.couple.divorce.getDate(),
+                    this.pay.reason,
+                    this.pay.money,
+                    this.pay.securities,
+                    this.pay.applicationFee,
+                    this.pay.applyTime == '' ? this.pay.applyTime : typeof(this.pay.applyTime) == 'number' ? this.time(this.pay.applyTime) : this.pay.applyTime.getFullYear()+'-'+(this.pay.applyTime.getMonth()+1)+'-'+this.pay.applyTime.getDate(),
+                    this.pay.completeTime == '' ? this.pay.completeTime : typeof(this.pay.completeTime) == 'number' ? this.time(this.pay.completeTime) : this.pay.completeTime.getFullYear()+'-'+(this.pay.completeTime.getMonth()+1)+'-'+this.pay.completeTime.getDate(),
+                    this.endProcess.fee,
+                    this.endProcess.time == '' ? this.endProcess.time : typeof(this.endProcess.time) == 'number' ? this.time(this.endProcess.time) : this.endProcess.time.getFullYear()+'-'+(this.endProcess.time.getMonth()+1)+'-'+this.endProcess.time.getDate(),
+                    this.endProcess.reason
+                    ).then(res2 => {
+                        if(res2.data.state == 100){
+                            this.$Message.success(res2.data.message);
+                            this.$emit('listenToChildEvent','1');
+                        }else{
+                            this.$Message.warning(res2.data.message);
+                            this.$emit('listenToChildEvent','0');
+                        }
+                    })
+                })
             })
         },
         delCreditCard($event,infoType,infoId){
