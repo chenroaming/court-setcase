@@ -30,7 +30,7 @@
                             信用卡信息
                         </template>
                         <MenuItem name="合0">添加新的信用卡信息</MenuItem>
-                        <MenuItem :name="item.id" v-for="(item,index) in creditInfo">{{'信用卡（' + item.cardNo + '）'}}
+                        <MenuItem :key="item.id" :name="item.id" v-for="(item,index) in creditInfo">{{'信用卡（' + item.cardNo + '）'}}
                             <span @click.stop="delCreditCard(choice,'cdInfo',item.id)">
                                 <Icon title="删除该信用卡信息" type="ios-close" />
                             </span>
@@ -510,7 +510,6 @@ export default {
                     }else{
                         this.$Message.warning(res.data.message);
                     }
-                    this.$Message.warning(res.data.message);
                 })
             })
         },

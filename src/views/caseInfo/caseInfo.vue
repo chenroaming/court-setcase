@@ -828,7 +828,7 @@
                     :mask-closable="false"
                     :title="this.litigantId == '' ? '添加当事人' : '查看/修改当事人'">
                     <div>
-                        <Form  :model="addFormItem" :label-width="145" inline :rules="ruleValidate">
+                        <Form :model="addFormItem" :label-width="145" inline :rules="ruleValidate">
                             <FormItem style="width: 505px;">
                                 <p style="font-size:18px;">请完整填写所知详尽信息，以便法院文书送达</p>
                             </FormItem>
@@ -849,7 +849,7 @@
                                     <Option value="第三人">第三人</Option>
                                 </Select>
                             </FormItem>
-                            <FormItem :label="addFormItem.litigantType == '自然人' ? '身份证号码*' : '统一信用代码*'" style="width: 505px;" >
+                            <FormItem prop="identityCard" :label="addFormItem.litigantType == '自然人' ? '身份证号码*' : '统一信用代码*'" style="width: 505px;" >
                                 <Input v-model="addFormItem.identityCard" @on-blur="idCardtoBirth" placeholder="请输入"></Input>
                             </FormItem>
                             <!-- <FormItem v-show="addFormItem.litigantStatus == '被告'" label="角色" style="width: 505px;">
@@ -1564,6 +1564,13 @@
                 elementInfo2
             },
             data () {
+                // const haveEmpty = (rule, value, callback) => {//表单验证
+                //     if (isNaN(value)) {
+                //         console.log(value);
+                //         return callback(new Error('格式有误！'));
+                //     }
+                //     callback();
+                // };
                 return {
                     wordLength:60,
                     nowPage:1,
@@ -1645,9 +1652,6 @@
                         litigantStatus:[
                             { required: true}
                         ],
-                        identityCard:[
-                            { required: true}
-                        ],
                         birthday:[
                             { required: true}
                         ],
@@ -1672,6 +1676,7 @@
                         nation:[
                             { required: true}
                         ],
+
                     },
                    onlineBriefId:"",
                    bridfList:[],
@@ -2872,6 +2877,11 @@
                             this.changeLoading();
                             return false;
                         }
+                        if(this.addFormItem.litigantType == '法人' && this.addFormItem.identityCard.indexOf(' ') != -1){
+                            this.$Message.info("统一信用代码格式错误！");
+                            this.changeLoading();
+                            return false;
+                        }
                         let otherAddressStr=''
                         if (this.addFormItem.otherAddressArr.length>0) {
                             for (let i = 0; i < this.addFormItem.otherAddressArr.length; i++) {
@@ -2936,6 +2946,12 @@
                             this.addFormItem.litigantPhone[this.phoneIndex] = this.litigantPhoneSelect;
                             const newlitigantPhone = this.addFormItem.litigantPhone.join(',');
                             params.litigantPhone = newlitigantPhone;
+                            console.log(this.addFormItem.identicard);
+                            if(this.addFormItem.litigantType == '法人' && this.addFormItem.identityCard.indexOf(' ') != -1){
+                                this.$Message.info("统一信用代码格式错误！");
+                                this.changeLoading();
+                                return false;
+                            }
                             updateLitigantInfo(params).then(res => {
                                 if(res.data.state == 100){
                                     this.$Message.success('修改成功');
@@ -2968,6 +2984,11 @@
                         if(!checkPhone && this.addFormItem.litigantType == '自然人'){
                             this.changeLoading();
                             return this.$Message.warning('手机号码格式不正确！');
+                        }
+                        if(this.addFormItem.litigantType == '法人' && this.addFormItem.identityCard.indexOf(' ') != -1){
+                            this.$Message.info("统一信用代码格式错误！");
+                            this.changeLoading();
+                            return false;
                         }
                         params.litigantPhone = this.addNewPhone;
                         saveLitigantInfo(params).then(res => {

@@ -777,7 +777,7 @@
                     <DatePicker type="date" :disabled="isChecked" v-model="creditCard.issueTime" placeholder="请选择时间" style="width: 300px"></DatePicker>
                 </FormItem>
                 <FormItem label="信用额度" prop="quota">
-                    <Input v-model="creditCard.quota" :disabled="isChecked" :row="5" placeholder="请输入信用额度" style="width: 300px" />
+                    <Input v-model="creditCard.quota" :disabled="isChecked" :row="5" placeholder="请输入信用额度，例如：1000.00" style="width: 300px" />
                 </FormItem>
                 <FormItem label="透支利率" prop="overRate">
                     <Input v-model="creditCard.overRate" :disabled="isChecked" :row="5" placeholder="请输入透支利率，例如：0.0005" style="width: 300px" />
@@ -823,7 +823,7 @@
                     <Input type="textarea"  v-model="creditCard.defaultAgreement" :disabled="isChecked" :row="5" placeholder="请输入约定" style="width: 300px" />
                 </FormItem>
                 <FormItem label="实现债权的费用" prop="agreementFee">
-                    <Input v-model="creditCard.agreementFee" :disabled="isChecked" :row="5" placeholder="请输入费用" style="width: 300px" />
+                    <Input v-model="creditCard.agreementFee" :disabled="isChecked" :row="5" placeholder="请输入债权费用，例如：1000.00" style="width: 300px" />
                 </FormItem>
                 <FormItem label="实现债权费用的约定" prop="feeAgreement">
                     <!-- {{creditCard.feeAgreement}} -->
@@ -870,7 +870,8 @@
                 </FormItem>
             </Form>
             <div slot="footer">
-                <Button type="primary" @click="submitCard" :loading="isAdd2">{{isChecked ? '关闭' : '确定'}}</Button>
+                <Button type="dashed" @click="modal5 = false">关闭</Button>
+                <Button type="primary" @click="submitCard" :loading="isAdd2" v-if="!isChecked">确定</Button>
             </div>
         </Modal>
         <Modal v-model="modal2"
@@ -905,7 +906,8 @@
                 </FormItem>
             </Form>
             <div slot="footer">
-                <Button type="primary" @click="submitCardContract" :loading="isAdd">{{isChecked ? '关闭' : '确定'}}</Button>
+                <Button type="dashed" @click="modal2 = false">关闭</Button>
+                <Button type="primary" @click="submitCardContract" :loading="isAdd" v-if="!isChecked">确定</Button>
             </div>
         </Modal>
         <Modal
@@ -985,7 +987,7 @@
                     <!-- {{loan.loanRate}} -->
                     <Input v-model="loan.loanRate" :disabled="isChecked" :row="5" placeholder="请输入借款利率，例如：0.0005" style="width: 300px" />
                 </FormItem>
-                <FormItem label="罚息利率：" prop="penaltyInterest">
+                <FormItem label="罚息利率：" prop="penaltyRate">
                     <!-- {{loan.penaltyRate}} -->
                     <Input v-model="loan.penaltyRate" :disabled="isChecked" :row="5" placeholder="请输入罚息利率，例如：0.0005" style="width: 300px" />
                 </FormItem>
@@ -1093,7 +1095,8 @@
                 </FormItem>
             </Form>
             <div slot="footer">
-                <Button type="primary" @click="submitContract" :loading="isAdd">{{isChecked ? '关闭' : '确定'}}</Button>
+                <Button type="dashed" @click="modal1 = false">关闭</Button>
+                <Button type="primary" @click="submitContract" :loading="isAdd" v-if="!isChecked">确定</Button>
             </div>
         </Modal>
                 <!-- 当事人信息 -->
@@ -1104,7 +1107,7 @@
             :mask-closable="closeM"
             title="当事人信息">
             <div>
-                <Form :model="addFormItem" :label-width="100" inline>
+                <Form :model="addFormItem" :label-width="145" inline>
                     <FormItem :label="addFormItem.litigantType == '自然人'? '姓名:' : '公司名称:'" style="width: 505px;">
                         <span>{{addFormItem.litigantName}}</span>
                     </FormItem>
@@ -1166,7 +1169,9 @@
                     <FormItem label="联系方式：" style="width: 505px;" v-show="addFormItem.litigantType != '自然人'">
                         <span>{{addFormItem.legalManPhone}}</span>
                     </FormItem>
-
+                    <FormItem v-show="addFormItem.litigantType != '自然人'" :label="addFormItem.litigantType == '法人' ? '法定代表人身份证号码：':'负责人身份证号码：'" style="width: 505px">
+                        <span>{{addFormItem.legalManId}}</span>
+                    </FormItem>
                     <FormItem label="工作单位：" style="width: 505px;" v-show="addFormItem.litigantType == '自然人'">
                         <span>{{addFormItem.employer}}</span>
                     </FormItem>
@@ -1461,6 +1466,9 @@ export default {
                 annualFee:[
                     {validator:validNumber,trigger:'change'}
                 ],
+                agreementFee:[
+                    {validator:validNumber,trigger:'change'}
+                ],
                 handlingFee:[
                     {validator:validNumber,trigger:'change'}
                 ],
@@ -1503,12 +1511,27 @@ export default {
             creditCheck:{
                 name:[
                     {required: true, message: '请输入合同名称', trigger: 'change'}
-                ]    
+                ],
+                creditMoney:[
+                    {validator:validNumber,trigger:'change'}
+                ]   
             },
             loanCheck:{
                 name:[
                     {required: true, message: '请输入合同名称', trigger: 'change'}
-                ]    
+                ],
+                money:[
+                    {validator:validNumber,trigger:'change'}
+                ],
+                loanRate:[
+                    {validator:validNumber,trigger:'change'}
+                ],
+                penaltyRate:[
+                    {validator:validNumber,trigger:'change'}
+                ],
+                compoundRate:[
+                    {validator:validNumber,trigger:'change'}
+                ]
             },
             guaranteeCheck:{
                 name:[
@@ -2449,52 +2472,64 @@ export default {
             this.isAdd = true;
             switch(this.contractType){
                 case 'c0':
-                    this.$refs['credit'].validate((valid) => {
-                        if(!valid){
+                    this.$refs['credit'].validateField('creditMoney',valid => {
+                        if(valid){
                             this.isAdd = false;
-                            return this.$Message.error('合同名不能为空！');
+                            return this.$Message.error('授信金额格式错误！');
                         }
-                        obj = {
-                            onlineLawCaseId:this.lawCaseId,
-                            creditContractId:this.infoId,
-                            partId:this.partId,
-                            name:this.credit.name,
-                            isRelieve:this.credit.isRelease == 'yes' ? true : false,
-                            creditGrantor:this.credit.creditPeople,
-                            signTime:this.credit.creditTime == '' ? this.credit.creditTime : typeof(this.credit.creditTime) == 'number' ? this.time(this.credit.creditTime) : this.credit.creditTime.getFullYear()+'-'+(this.credit.creditTime.getMonth()+1)+'-'+this.credit.creditTime.getDate(),
-                            periodRange:this.credit.creditRange[0] == null || this.credit.creditRange.length == 0 ? '' : this.credit.creditRange[0].getFullYear()+'-'+(this.credit.creditRange[0].getMonth()+1)+'-'+this.credit.creditRange[0].getDate()+'至'+this.credit.creditRange[1].getFullYear()+'-'+(this.credit.creditRange[1].getMonth()+1)+'-'+this.credit.creditRange[1].getDate(),
-                            amount:this.credit.creditMoney
-                        }
-                        this.editInformation(obj);
+                        this.$refs['credit'].validate((valid) => {
+                            if(!valid){
+                                this.isAdd = false;
+                                return this.$Message.error('合同名不能为空！');
+                            }
+                            obj = {
+                                onlineLawCaseId:this.lawCaseId,
+                                creditContractId:this.infoId,
+                                partId:this.partId,
+                                name:this.credit.name,
+                                isRelieve:this.credit.isRelease == 'yes' ? true : false,
+                                creditGrantor:this.credit.creditPeople,
+                                signTime:this.credit.creditTime == '' ? this.credit.creditTime : typeof(this.credit.creditTime) == 'number' ? this.time(this.credit.creditTime) : this.credit.creditTime.getFullYear()+'-'+(this.credit.creditTime.getMonth()+1)+'-'+this.credit.creditTime.getDate(),
+                                periodRange:this.credit.creditRange[0] == null || this.credit.creditRange.length == 0 ? '' : this.credit.creditRange[0].getFullYear()+'-'+(this.credit.creditRange[0].getMonth()+1)+'-'+this.credit.creditRange[0].getDate()+'至'+this.credit.creditRange[1].getFullYear()+'-'+(this.credit.creditRange[1].getMonth()+1)+'-'+this.credit.creditRange[1].getDate(),
+                                amount:this.credit.creditMoney
+                            }
+                            this.editInformation(obj);
+                        })
                     })
                 break;
                 case 'l1':
-                    this.$refs['loan'].validate((valid) => {
-                        if(!valid){
+                    this.$refs['loan'].validateField('name',valid => {
+                        if(valid){
                             this.isAdd = false;
-                            return this.$Message.error('合同名不能为空！');
+                            return this.$Message.error(valid);
                         }
-                        obj = {
-                            onlineLawCaseId:this.lawCaseId,
-                            loanCtId:this.infoId,
-                            partId:this.partId,
-                            name:this.loan.name,
-                            borrower:this.loan.creditPeople,
-                            isRelieve:this.loan.isRelease == 'yes' ? true : false,
-                            signTime:this.loan.time == '' ? this.loan.time : typeof(this.loan.time) == 'number' ? this.time(this.loan.time) : this.loan.time.getFullYear()+'-'+(this.loan.time.getMonth()+1)+'-'+this.loan.time.getDate(),
-                            amount:this.loan.money,
-                            askTime:this.loan.range[0] == null || this.loan.range.length == 0 ? '' : this.loan.range[0].getFullYear()+'-'+(this.loan.range[0].getMonth()+1)+'-'+this.loan.range[0].getDate()+'至'+this.loan.range[1].getFullYear()+'-'+(this.loan.range[1].getMonth()+1)+'-'+this.loan.range[1].getDate(),
-                            repaymentMethod:this.loan.methods,
-                            borrowingRate:this.loan.loanRate,
-                            penaltyRate:this.loan.penaltyRate,
-                            compoundRate:this.loan.compoundRate,
-                            pcAppointment:this.loan.rateAgreement,
-                            rpAppointment:this.loan.releaseAgreement,
-                            vfAppointment:this.loan.defaultAgreement,
-                            bfAppointment:this.loan.feeAgreement,
-                            sendAppointment:this.loan.sendAgreement
-                        }
-                        this.editInformation(obj);
+                        this.$refs['loan'].validate((valid) => {
+                            if(!valid){
+                                this.isAdd = false;
+                                return this.$Message.error('格式错误！请检查');
+                            }
+                            obj = {
+                                onlineLawCaseId:this.lawCaseId,
+                                loanCtId:this.infoId,
+                                partId:this.partId,
+                                name:this.loan.name,
+                                borrower:this.loan.creditPeople,
+                                isRelieve:this.loan.isRelease == 'yes' ? true : false,
+                                signTime:this.loan.time == '' ? this.loan.time : typeof(this.loan.time) == 'number' ? this.time(this.loan.time) : this.loan.time.getFullYear()+'-'+(this.loan.time.getMonth()+1)+'-'+this.loan.time.getDate(),
+                                amount:this.loan.money,
+                                askTime:this.loan.range[0] == null || this.loan.range.length == 0 ? '' : this.loan.range[0].getFullYear()+'-'+(this.loan.range[0].getMonth()+1)+'-'+this.loan.range[0].getDate()+'至'+this.loan.range[1].getFullYear()+'-'+(this.loan.range[1].getMonth()+1)+'-'+this.loan.range[1].getDate(),
+                                repaymentMethod:this.loan.methods,
+                                borrowingRate:this.loan.loanRate,
+                                penaltyRate:this.loan.penaltyRate,
+                                compoundRate:this.loan.compoundRate,
+                                pcAppointment:this.loan.rateAgreement,
+                                rpAppointment:this.loan.releaseAgreement,
+                                vfAppointment:this.loan.defaultAgreement,
+                                bfAppointment:this.loan.feeAgreement,
+                                sendAppointment:this.loan.sendAgreement
+                            }
+                            this.editInformation(obj);
+                        })
                     })
                 break;
                 case 'g2':
@@ -2606,6 +2641,7 @@ export default {
             const obj = {
                 onlineLawCaseId:this.lawCaseId,
                 gcInfoId:this.infoId,
+                partId:this.partCardId,
                 name:this.guaranteeContract2.name,
                 guarantor:this.guaranteeContract2.people,
                 method:this.guaranteeContract2.methods,
@@ -2705,7 +2741,7 @@ export default {
         cloaselawyer(){
             this.lawyerMol = false;
         },
-                getOneLini(id){
+        getOneLini(id){
             this.clearAddfortem();
             // this.litigantId = id;
             getOneLitigant(id).then(res => {
@@ -2733,6 +2769,7 @@ export default {
                     this.addFormItem.legalManId= res.data.onlineLitigant.legalManId;
                     this.addFormItem.sendAddress= res.data.onlineLitigant.sendAddress;
                     this.completeMol = true;
+                    this.addFormItem.legalManId = res.data.onlineLitigant.legalManId;
                 }else{
                     this.$Message.info(res.data.message);
                 }

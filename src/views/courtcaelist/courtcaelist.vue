@@ -763,7 +763,7 @@
             title="当事人信息"
             >
             <div>
-                <Form :model="addFormItem" :label-width="100" inline>
+                <Form :model="addFormItem" :label-width="145" inline>
                     <FormItem :label="addFormItem.litigantType == '自然人'? '姓名:' : '公司名称:'" style="width: 505px;">
                         <span>{{addFormItem.litigantName}}</span>
                     </FormItem>
@@ -825,7 +825,9 @@
                     <FormItem label="联系方式：" style="width: 505px;" v-show="addFormItem.litigantType != '自然人'">
                         <span>{{addFormItem.legalManPhone}}</span>
                     </FormItem>
-
+                    <FormItem v-show="addFormItem.litigantType != '自然人'" :label="addFormItem.litigantType == '法人' ? '法定代表人身份证号码：':'负责人身份证号码：'" style="width: 505px">
+                        <span>{{addFormItem.legalManId}}</span>
+                    </FormItem>
                     <FormItem label="工作单位：" style="width: 505px;" v-show="addFormItem.litigantType == '自然人'">
                         <span>{{addFormItem.employer}}</span>
                     </FormItem>
@@ -1425,6 +1427,7 @@ export default {
             firstWord:'',
             element:0,
             elementSw:false,//要素信息显示开关，避免要素信息过长影响布局
+            partCardId:'',
             titleArr:['查看授信合同信息','查看借款合同信息','查看保证合同信息','查看抵押合同信息','查看质押合同信息'],
             cardId:'',
             titleIndex:0,
@@ -3091,6 +3094,7 @@ export default {
                 }else{
                     getPart(this.lawcaseId).then(res => {
                         this.creditInfo = [];
+                        this.partCardId = res.data.creditCard.id;
                         res.data.creditCard.creditCardInformations.map(item => {
                             return item.enable == true ? this.creditInfo.push(item) : false;
                         });

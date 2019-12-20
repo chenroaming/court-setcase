@@ -2930,6 +2930,11 @@ submit(){   //添加当事人
             this.addFormItem.litigantPhone[this.phoneIndex] = this.litigantPhoneSelect;
             const newlitigantPhone = this.addFormItem.litigantPhone.join(',');
             params.litigantPhone = newlitigantPhone;
+            if(this.addFormItem.litigantType == '法人' && this.addFormItem.identityCard.indexOf(' ') != -1){
+                this.$Message.info("统一信用代码格式错误！");
+                this.changeLoading();
+                return false;
+            }
             updateLitigantInfo(params).then(res => {
                 if(res.data.state == 100){
                     this.$Message.success('修改成功');

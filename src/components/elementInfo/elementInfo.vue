@@ -500,12 +500,27 @@ export default {
             creditCheck:{
                 name:[
                     {required: true, message: '请输入合同名称', trigger: 'change'}
-                ]    
+                ],
+                creditMoney:[
+                    {validator:validNumber,trigger:'change'}
+                ]  
             },
             loanCheck:{
                 name:[
                     {required: true, message: '请输入合同名称', trigger: 'change'}
-                ]    
+                ],
+                money:[
+                    {validator:validNumber,trigger:'change'}
+                ],
+                loanRate:[
+                    {validator:validNumber,trigger:'change'}
+                ],
+                penaltyRate:[
+                    {validator:validNumber,trigger:'change'}
+                ],
+                compoundRate:[
+                    {validator:validNumber,trigger:'change'}
+                ]   
             },
             guaranteeCheck:{
                 name:[
@@ -616,72 +631,85 @@ export default {
             this.isAdd = true;
             switch(this.titleIndex){
                 case '0':
-                this.$refs['credit'].validate((valid) => {
-                    if(!valid){
+                this.$refs['credit'].validateField('creditMoney',valid => {
+                    if(valid){
                         this.isAdd = false;
-                        return this.$Message.error('合同名不能为空！');
+                        return this.$Message.error('授信金额格式错误！');
                     }
-                    addOrUpdateCtInfo(this.credit.name,
-                    this.credit.isRelease == 'yes' ? true : false,
-                    this.credit.creditPeople,
-                    this.credit.creditTime == '' ? this.credit.creditTime : typeof(this.credit.creditTime) == 'number' ? this.time(this.credit.creditTime) : this.credit.creditTime.getFullYear()+'-'+(this.credit.creditTime.getMonth()+1)+'-'+this.credit.creditTime.getDate(),
-                    this.credit.creditRange[0] == null || this.credit.creditRange.length == 0 ? '' : this.credit.creditRange[0].getFullYear()+'-'+(this.credit.creditRange[0].getMonth()+1)+'-'+this.credit.creditRange[0].getDate()+'至'+this.credit.creditRange[1].getFullYear()+'-'+(this.credit.creditRange[1].getMonth()+1)+'-'+this.credit.creditRange[1].getDate(),
-                    this.credit.creditMoney,
-                    this.infoId,
-                    this.lawCaseId,
-                    this.myPartId).then(res => {
-                        this.isAdd = false;
-                        if(res.data.state == 100){
-                            this.handleReset('credit');
-                            this.$Message.success(res.data.message);
-                            this.modal1 = false;
-                            getContractInfo(this.lawCaseId,this.myPartId,'cc').then(res => {
-                                this.creditContract = res.data.nameList;
-                            })
-                        }else{
-                            this.$Message.warning(res.data.message);
+                    this.$refs['credit'].validate((valid) => {
+                        if(!valid){
+                            this.isAdd = false;
+                            return this.$Message.error('合同名不能为空！');
                         }
-                    });
+                        addOrUpdateCtInfo(this.credit.name,
+                        this.credit.isRelease == 'yes' ? true : false,
+                        this.credit.creditPeople,
+                        this.credit.creditTime == '' ? this.credit.creditTime : typeof(this.credit.creditTime) == 'number' ? this.time(this.credit.creditTime) : this.credit.creditTime.getFullYear()+'-'+(this.credit.creditTime.getMonth()+1)+'-'+this.credit.creditTime.getDate(),
+                        this.credit.creditRange[0] == null || this.credit.creditRange.length == 0 ? '' : this.credit.creditRange[0].getFullYear()+'-'+(this.credit.creditRange[0].getMonth()+1)+'-'+this.credit.creditRange[0].getDate()+'至'+this.credit.creditRange[1].getFullYear()+'-'+(this.credit.creditRange[1].getMonth()+1)+'-'+this.credit.creditRange[1].getDate(),
+                        this.credit.creditMoney,
+                        this.infoId,
+                        this.lawCaseId,
+                        this.myPartId).then(res => {
+                            this.isAdd = false;
+                            if(res.data.state == 100){
+                                this.handleReset('credit');
+                                this.$Message.success(res.data.message);
+                                this.modal1 = false;
+                                getContractInfo(this.lawCaseId,this.myPartId,'cc').then(res => {
+                                    this.creditContract = res.data.nameList;
+                                })
+                            }else{
+                                this.$Message.warning(res.data.message);
+                            }
+                        });
+                    })
                 })
                 break;
                 case '1':
-                this.$refs['loan'].validate((valid) => {
-                    if(!valid){
+                this.$refs['loan'].validateField('name',valid => {
+                    if(valid){
                         this.isAdd = false;
-                        return this.$Message.error('合同名不能为空！');
+                        return this.$Message.error(valid);
                     }
-                    addOrUpdateLoanCtInfo(this.infoId,
-                    this.loan.name,
-                    this.loan.creditPeople,
-                    this.loan.isRelease == 'yes' ? true : false,
-                    this.loan.time == '' ? this.loan.time : typeof(this.loan.time) == 'number' ? this.time(this.loan.time) : this.loan.time.getFullYear()+'-'+(this.loan.time.getMonth()+1)+'-'+this.loan.time.getDate(),
-                    this.loan.money,
-                    this.loan.range[0] == null || this.loan.range.length == 0 ? '' : this.loan.range[0].getFullYear()+'-'+(this.loan.range[0].getMonth()+1)+'-'+this.loan.range[0].getDate()+'至'+this.loan.range[1].getFullYear()+'-'+(this.loan.range[1].getMonth()+1)+'-'+this.loan.range[1].getDate(),
-                    this.loan.methods,
-                    this.loan.loanRate,
-                    this.loan.penaltyRate,
-                    this.loan.compoundRate,
-                    this.loan.rateAgreement,
-                    this.loan.releaseAgreement,
-                    this.loan.defaultAgreement,
-                    this.loan.feeAgreement,
-                    this.loan.sendAgreement,
-                    this.lawCaseId,
-                    this.myPartId,
-                    ).then(res => {
-                        this.isAdd = false;
-                        if(res.data.state == 100){
-                            this.handleReset('loan');
-                            this.$Message.success(res.data.message);
-                            this.modal1 = false;
-                            getContractInfo(this.lawCaseId,this.myPartId,'lc').then(res => {
-                                this.loanContract = res.data.nameList;
-                            })
-                        }else{
-                            this.$Message.warning(res.data.message);
+                    this.$refs['loan'].validate((valid) => {
+                        if(!valid){
+                            this.isAdd = false;
+                            return this.$Message.error('格式错误！请检查');
                         }
+                        addOrUpdateLoanCtInfo(this.infoId,
+                        this.loan.name,
+                        this.loan.creditPeople,
+                        this.loan.isRelease == 'yes' ? true : false,
+                        this.loan.time == '' ? this.loan.time : typeof(this.loan.time) == 'number' ? this.time(this.loan.time) : this.loan.time.getFullYear()+'-'+(this.loan.time.getMonth()+1)+'-'+this.loan.time.getDate(),
+                        this.loan.money,
+                        this.loan.range[0] == null || this.loan.range.length == 0 ? '' : this.loan.range[0].getFullYear()+'-'+(this.loan.range[0].getMonth()+1)+'-'+this.loan.range[0].getDate()+'至'+this.loan.range[1].getFullYear()+'-'+(this.loan.range[1].getMonth()+1)+'-'+this.loan.range[1].getDate(),
+                        this.loan.methods,
+                        this.loan.loanRate,
+                        this.loan.penaltyRate,
+                        this.loan.compoundRate,
+                        this.loan.rateAgreement,
+                        this.loan.releaseAgreement,
+                        this.loan.defaultAgreement,
+                        this.loan.feeAgreement,
+                        this.loan.sendAgreement,
+                        this.lawCaseId,
+                        this.myPartId,
+                        ).then(res => {
+                            this.isAdd = false;
+                            if(res.data.state == 100){
+                                this.handleReset('loan');
+                                this.$Message.success(res.data.message);
+                                this.modal1 = false;
+                                getContractInfo(this.lawCaseId,this.myPartId,'lc').then(res => {
+                                    this.loanContract = res.data.nameList;
+                                })
+                            }else{
+                                this.$Message.warning(res.data.message);
+                            }
+                        })
                     })
                 })
+                
                 break;
                 case '2':
                 this.$refs['guarantee'].validate((valid) => {
