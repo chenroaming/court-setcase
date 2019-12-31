@@ -1185,13 +1185,22 @@ right: -20px;">元</span>
                 </RadioGroup>
                 <div style="margin-top:10px" v-if="mediate=='是'">
                     *原告方联系人：
-                    <AutoComplete
+                    <!-- <AutoComplete
                         v-model="mediatePeople"
                         placeholder="请输入原告方联系人"
-                        style="width:230px" @on-change="mediatePeopleChange(mediatePeople)">
+                        placement="top-end"
+                        transfer
+                        style="width:230px" @on-change="mediatePeopleChange(mediatePeople)"> -->
                         <!-- 修改key不为唯一值的报错 -->
-                        <Option v-for="(item,index) in mediatePeopleArr" :value="item.name" :key="index"></Option>
-                    </AutoComplete>
+                        <!-- <Option v-for="(item,index) in mediatePeopleArr" :value="item.name" :key="index"></Option>
+                    </AutoComplete> -->
+                    <Select v-model="mediatePeople"
+                    placement="top"
+                    transfer
+                    style="width:230px"
+                    @on-change="mediatePeopleChange(mediatePeople)">
+                        <Option v-for="(item,index) in mediatePeopleArr" :value="item.name" :key="index">{{ item.name }}</Option>
+                    </Select>
                     <!-- <Input v-model="mediatePeople" placeholder="请输入起诉方联系人" style="width: 230px;margin-right:20px" /> -->
                     *电话：<Input v-model="meidatePhone" placeholder="请输入电话" style="width: 230px" />
                 </div>

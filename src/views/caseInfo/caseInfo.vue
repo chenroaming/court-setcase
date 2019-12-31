@@ -1243,13 +1243,19 @@
                                 </RadioGroup>
                                 <div style="margin-top:10px" v-if="mediate=='是'">
                                     *原告方联系人：
-                                    <AutoComplete
+                                    <!-- <AutoComplete
                                         v-model="mediatePeople"
                                         placeholder="请输入原告方联系人"
                                         style="width:230px">
                                         
                                         <Option v-for="item in mediatePeopleArr" :value="item.name" :key="item.name"></Option>
-                                    </AutoComplete>
+                                    </AutoComplete> -->
+                                    <Select v-model="mediatePeople"
+                                      placement="top"
+                                        transfer
+                                      style="width:230px">
+                                        <Option v-for="(item,index) in mediatePeopleArr" :value="item.name" :key="index">{{ item.name }}</Option>
+                                    </Select>
                                     <!-- <Input v-model="mediatePeople" placeholder="请输入起诉方联系人" style="width: 230px;margin-right:20px" /> -->
                                     *电话：<Input v-model="meidatePhone" placeholder="请输入电话" style="width: 230px" />
                                 </div>
