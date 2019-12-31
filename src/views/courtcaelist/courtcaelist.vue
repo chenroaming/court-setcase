@@ -67,10 +67,10 @@
 .ivu-auto-complete.ivu-select-dropdown {
     max-height: 160px;
 }
-.loan-Box{
+/* .loan-Box{
     width: 90%;
     margin: 0 auto;
-}
+} */
 </style>
 
 <template>
@@ -492,244 +492,7 @@
 
 
                     <TabPane label="要素信息" v-if="element != 0">
-                        <div v-if="element == 1 && elementSw" class="loan-Box">
-                            <Menu @on-select="choice" style="width: 300px;">
-                                <Submenu name="1">
-                                    <template slot="title">
-                                        授信合同信息
-                                    </template>
-                                    <MenuItem :name="'c0'+item.id" v-for="(item,index) in creditContract">{{item.name}}
-                                    </MenuItem>
-                                </Submenu>
-                                <Submenu name="2">
-                                    <template slot="title">
-                                        借款合同信息
-                                    </template>
-                                    <MenuItem :name="'l1'+item.id" v-for="(item,index) in loanContract">{{item.name}}
-                                    </MenuItem>
-                                </Submenu>
-                                <Submenu name="3">
-                                    <template slot="title">
-                                        保证合同信息
-                                    </template>
-                                    <MenuItem :name="'g2'+item.id" v-for="(item,index) in guaranteeContract">{{item.name}}
-                                    </MenuItem>
-                                </Submenu>
-                                <Submenu name="4">
-                                    <template slot="title">
-                                        抵押合同信息
-                                    </template>
-                                    <MenuItem :name="'m3'+item.id" v-for="(item,index) in mortgageContract">{{item.name}}
-                                    </MenuItem>
-                                </Submenu>
-                                <Submenu name="5">
-                                    <template slot="title">
-                                        质押合同信息
-                                    </template>
-                                    <MenuItem :name="'p4'+item.id" v-for="(item,index) in pledgeContract">{{item.name}}
-                                    </MenuItem>
-                                </Submenu>
-                            </Menu>
-                            <Form>
-                                <FormItem label="放款日期:">
-                                    {{litigation.loan}}
-                                    
-                                </FormItem>
-                                <FormItem label="实际到期日期:">
-                                    {{litigation.maturity}}
-
-                                </FormItem>
-                                <FormItem label="逾期还款日期:">
-                                    {{litigation.overdue}}
-                                    
-                                </FormItem>
-                                <FormItem label="欠款最新截至时间:">
-                                        {{litigation.cutoff}}
-                                    
-                                </FormItem>
-                                <FormItem label="欠款本金:">
-                                        {{litigation.arrears}}
-                                </FormItem>
-                                <FormItem label="利息:">
-                                    {{litigation.interest}}
-                                </FormItem>
-                                <FormItem label="罚息:">
-                                    {{litigation.penaltyInterest}}
-                                    
-                                </FormItem>
-                                <FormItem label="复利:">
-                                    {{litigation.compoundInterest}}
-                                </FormItem>
-                                <FormItem label="最新欠款利息:">
-                                    {{litigation.nInterest}}
-                                    
-                                </FormItem>
-                                <FormItem label="最新欠款罚息:">
-                                    {{litigation.npInterest}}
-                                    
-                                </FormItem>
-                                <FormItem label="最新欠款复利:">
-                                    {{litigation.ncdInterest}}
-                                    
-                                </FormItem>
-                                <FormItem label="最新欠款利息等:">
-                                    {{litigation.newArrears}}
-                                </FormItem>
-                                <FormItem label="违约金金额:">
-                                    {{litigation.liquidatedDamages}}
-                                    
-                                </FormItem>
-                                <FormItem label="实现债权的费用:">
-                                    {{litigation.claim}}
-                    
-                                </FormItem>
-                                <FormItem label="律师费:">
-                                    {{litigation.lawyerFee}}
-                
-                                </FormItem>
-                                <FormItem label="保全费:">
-                                    {{litigation.securityFee}}
-                                    
-                                </FormItem>
-                                <FormItem label="公告费:">
-                                    {{litigation.announcementFee}}
-                                    
-                                </FormItem>
-                                <FormItem label="实现债权其他费用:">
-                                    {{litigation.otherFee}}
-                                    
-                                </FormItem>
-                                <FormItem label="是否支持夫妻共同债:">
-                                    <RadioGroup v-model="litigation.isPublic">
-                                        <Radio disabled label="yes">
-                                            <span>是</span>
-                                        </Radio>
-                                        <Radio disabled label="no">
-                                            <span>否</span>
-                                        </Radio>
-                                    </RadioGroup>
-                                </FormItem>
-                                <FormItem label="结婚登记时间:">
-                                    {{litigation.marryTime}}
-                                    
-                                </FormItem>
-                                <FormItem label="离婚登记时间:">
-                                    {{litigation.divorceTime}}
-                                    
-                                </FormItem>
-                                <FormItem label="适用的法律条文:">
-                                    {{litigation.legalProvisions}}
-                                    
-                                </FormItem>
-                                <FormItem label="法律法规:">
-                                    {{litigation.regulations}}
-                                    
-                                </FormItem>
-                                <FormItem label="诉前保全裁定案号:">
-                                    {{litigation.caseNumber}}
-                                    
-                                </FormItem>
-                                <FormItem label="保全被申请人:">
-                                    {{litigation.preservationMan}}
-                                    
-                                </FormItem>
-                                <FormItem label="申请保全时间:">
-                                        {{litigation.preservationTime}}
-                                    
-                                </FormItem>
-                                <FormItem label="财产保全金额:">
-                                    {{litigation.preservationMoney}}
-                                    
-                                </FormItem>
-                                <FormItem label="财产保全费:">
-                                        {{ litigation.preservationFee}}
-                                    
-                                </FormItem>
-                                <FormItem label="作出保全裁定时间:">
-                                    {{litigation.rulingTime}}
-                                    
-                                </FormItem>
-                                <FormItem label="解除保全申请时间:">
-                                    {{litigation.releasePreservation}}
-                                    
-                                </FormItem>
-                                <FormItem label="保全财产情况:">
-                                    {{litigation.preservationStatus}}
-                                </FormItem>
-                                <FormItem label="核对状态:">
-                                    <Button type="primary" :loading="confirmLoading" @click="checkLawCase">{{lawCaseChecked ? '未核对' : '已核对'}}</Button>
-                                </FormItem>
-                            </Form>
-                        </div>
-                        <div v-if="element == 2 && elementSw" class="loan-Box">
-                            <Form label-position="left" :label-width="170">
-                                <FormItem label="合同名称：" prop="name">
-                                    {{contract.name}}
-                                </FormItem>
-                                <FormItem label="合同签订时间：">
-                                    {{contract.time}}
-                                </FormItem>
-                                <FormItem label="信用卡信息：">
-                                    <Menu @on-select="creditChoice" style="width: 300px;">
-                                        <Submenu name="1">
-                                            <template slot="title">
-                                                点击展开信用卡信息
-                                            </template>
-                                            <MenuItem :name="item.id" v-for="(item,index) in creditInfo">{{'信用卡（' + item.cardNo + '）'}}</MenuItem>
-                                        </Submenu>
-                                    </Menu>
-                                </FormItem>
-                                <FormItem label="是否支持夫妻共同债：">
-                                    <RadioGroup v-model="couple.isPublic">
-                                        <Radio disabled label="yes">
-                                            <span>是</span>
-                                        </Radio>
-                                        <Radio disabled label="no">
-                                            <span>否</span>
-                                        </Radio>
-                                    </RadioGroup>
-                                </FormItem>
-                                <FormItem label="结婚登记时间：">
-                                        {{couple.marry}}
-                                    
-                                </FormItem>
-                                <FormItem label="离婚登记时间：">
-                                    {{couple.divorce}}
-                                    
-                                </FormItem>
-                                <FormItem label="请求支付的事实与理由：">
-                                    {{pay.reason}}
-                                    
-                                </FormItem>
-                                <FormItem label="申请支付金额（元）：">
-                                    {{pay.money}}
-                                </FormItem>
-                                <FormItem label="有价证券：">
-                                    {{pay.securities}}
-                                </FormItem>
-                                <FormItem label="支付令申请费（元）：">
-                                    {{pay.applicationFee}}
-                                </FormItem>
-                                <FormItem label="申请支付令时：">
-                                    {{pay.applyTime}}
-                                </FormItem>
-                                <FormItem label="作出支付令时间：">
-                                    {{pay.completeTime}}
-                                </FormItem>
-                                <FormItem label="终结督促程序申请费（元）：">
-                                    {{endProcess.fee}}
-                                </FormItem>
-                                <FormItem label="终结督促程序裁定作出时间：">
-                                    {{endProcess.time}}
-                                </FormItem>
-                                <FormItem label="终结督促程序的原因：">
-                                    {{endProcess.reason}}  
-                                </FormItem>
-                                <FormItem label="核对状态：">
-                                    <Button type="primary" :loading="confirmLoading" @click="checkLawCase">{{lawCaseChecked ? '未核对' : '已核对'}}</Button>
-                                </FormItem>
-                            </Form>
-                        </div>
+                        <showElement ref="elementInfo" v-if="elementSw" :lawcaseId="lawcaseId" :element="element"></showElement>
                     </TabPane>
 
 
@@ -849,335 +612,6 @@
                 <Button @click="closeLiti"  type="dashed" size="large">关闭</Button>
             </div>
         </Modal>
-
-        <Modal
-            v-model="modal5"
-            title="查看信用卡信息"
-            footer-hide
-            width="700px"
-            >
-            <div class="loan-box">
-                <Form label-position="right" :label-width="150">
-                    <FormItem label="信用卡卡号：" prop="num">
-                        {{creditCard.num}}
-                        
-                    </FormItem>
-                    <FormItem label="信用卡种类：" prop="type">
-                        {{creditCard.type}}
-                        <!-- <Input v-model="creditCard.type" :row="5" placeholder="请输入信用卡种类" style="width: 300px" /> -->
-                    </FormItem>
-                    <FormItem label="信用卡申请时间：" prop="applyTime">
-                        {{creditCard.applyTime}}
-                        <!-- <DatePicker type="date" v-model="creditCard.applyTime" placeholder="请选择时间" style="width: 300px"></DatePicker> -->
-                    </FormItem>
-                    <FormItem label="信用卡核准发卡时间：" prop="issueTime">
-                        {{creditCard.issueTime}}
-                        <!-- <DatePicker type="date" v-model="creditCard.issueTime" placeholder="请选择时间" style="width: 300px"></DatePicker> -->
-                    </FormItem>
-                    <FormItem label="信用额度（元）：" prop="quota">
-                        {{creditCard.quota}}
-                        <!-- <Input v-model="creditCard.quota" :row="5" placeholder="请输入信用额度，例如：1000.00" style="width: 300px" /> -->
-                    </FormItem>
-                    <FormItem label="透支利率：" prop="overRate">
-                        {{creditCard.overRate}}
-                        <!-- <Input v-model="creditCard.overRate" :row="5" placeholder="请输入透支利率，例如：0.005" style="width: 300px" /> -->
-                    </FormItem>
-                    <FormItem label="信用卡合约名称：" prop="name">
-                        {{creditCard.name}}
-                        
-                    </FormItem>
-                    <FormItem label="利息约定：" prop="interestAgreement">
-                        {{creditCard.interestAgreement}}
-                        
-                    </FormItem>
-                    <FormItem label="信用卡欠款最新截至时间：" prop="deadline">
-                        {{creditCard.deadline}}
-                    </FormItem>
-                    <FormItem label="信用卡最新欠款本金（元）：" prop="principal">
-                        {{creditCard.principal}}
-                        
-                    </FormItem>
-                    <FormItem label="信用卡最新欠款利息（元）：" prop="interest">
-                        {{creditCard.interest}}
-                        
-                    </FormItem>
-                    <FormItem label="信用卡最新欠款滞纳金（违约金）（元）：" prop="latePayment">
-                        {{creditCard.latePayment}}
-                        
-                    </FormItem>
-                    <FormItem label="信用卡年费（元）：" prop="annualFee">
-                        {{creditCard.annualFee}}
-                        
-                    </FormItem>
-                    <FormItem label="信用卡分期手续费（元）：" prop="handlingFee">
-                        {{creditCard.handlingFee}}
-                        
-                    </FormItem>
-                    <FormItem label="其他费用项目及金额（元）：" prop="otherFee">
-                        {{creditCard.otherFee}}
-                        
-                    </FormItem>
-                    <FormItem label="违约金约定：" prop="defaultAgreement">
-                        {{creditCard.defaultAgreement}}
-                        
-                    </FormItem>
-                    <FormItem label="实现债权的费用：" prop="agreementFee">
-                        {{creditCard.agreementFee}}
-
-                    </FormItem>
-                    <FormItem label="实现债权费用的约定：" prop="feeAgreement">
-                        {{creditCard.feeAgreement}}
-                        
-                    </FormItem>
-                    <FormItem label="律师费（元）：" prop="lawyerFee">
-                        {{creditCard.lawyerFee}}
-                        
-                    </FormItem>
-                    <FormItem label="保全费（元）：" prop="securityFee">
-                        {{creditCard.securityFee}}
-                        
-                    </FormItem>
-                    <FormItem label="公告费（元）：" prop="announcementFee">
-                        {{creditCard.announcementFee}}
-                        
-                    </FormItem>
-                    <FormItem label="信用卡取现手续费（元）：" prop="cashFee">
-                        {{creditCard.cashFee}}
-                        
-                    </FormItem>
-                    <FormItem label="其他项目费用（年费、取现手续费、分期手续费）的约定：" prop="otherProjectFee">
-                        {{creditCard.otherProjectFee}}
-                        
-                    </FormItem>
-                    <FormItem label="最新截止时间后利息计算标准：" prop="endStandard">
-                        {{creditCard.endStandard}}
-                        
-                    </FormItem>
-                    <FormItem label="最新截止时间后违约金（滞纳金）计算标准：" prop="endFeeStandard">
-                        {{creditCard.endFeeStandard}}
-                        
-                    </FormItem>
-                    <FormItem>
-                        <Menu @on-select="guaranteeChioce" style="width: 300px;">
-                            <Submenu name="1">
-                                <template slot="title">
-                                    保证合同信息
-                                </template>
-                                <MenuItem :name="item.id" v-for="(item,index) in guarantee2">{{item.name}}
-                                </MenuItem>
-                            </Submenu>
-                        </Menu>
-                    </FormItem>
-                </Form>
-            </div>
-            
-        </Modal>
-        <Modal v-model="modal7"
-            title="保证合同信息"
-            footer-hide
-            width="700px"
-        >
-            <Form label-position="right" :label-width="155">
-                <FormItem label="保证合同名称:" prop="name">
-                    {{guaranteeContract2.name}}
-                </FormItem>
-                <FormItem label="合同签订时间:" prop="time">
-                    {{guaranteeContract2.time}}
-                </FormItem>
-                <FormItem label="保证人:" prop="people">
-                    {{guaranteeContract2.people}}
-                </FormItem>
-                <FormItem label="保证期间:" prop="timeRange">
-                    {{guaranteeContract2.timeRange}}
-                </FormItem>
-                <FormItem label="保证方式:" prop="methods">
-                    {{guaranteeContract2.methods}}
-                </FormItem>
-                <FormItem label="保证范围:" prop="range">
-                    {{guaranteeContract2.range}}
-                </FormItem>
-            </Form>
-        </Modal>
-        <Modal
-            v-model="modal6"
-            :title=titleArr[titleIndex]
-            footer-hide
-            width="700px"
-            >
-            <Form label-position="left" :label-width="180" v-show="titleIndex == 0">
-                <FormItem label="授信合同名称：" prop="name">
-                    {{credit.name}}
-                </FormItem>
-                <FormItem label="是否诉请解除该授信合同：" prop="isRelease">
-                    <RadioGroup v-model="credit.isRelease">
-                        <Radio disabled label="yes">
-                            <span>是</span>
-                        </Radio>
-                        <Radio disabled label="no">
-                            <span>否</span>
-                        </Radio>
-                    </RadioGroup>
-                </FormItem>
-                <FormItem label="授信人：" prop="creditPeople">
-                        {{credit.creditPeople}}
-                </FormItem>
-                <FormItem label="授信合同签订时间：" prop="creditTime">
-                        {{credit.creditTime}}
-                    
-                </FormItem>
-                <FormItem label="授信合同期间：" prop="creditRange">
-                    {{credit.creditRange}}
-                    
-                </FormItem>
-                <FormItem label="授信金额：" prop="creditMoney">
-                    {{credit.creditMoney}}
-                </FormItem>
-            </Form>
-            <Form label-position="left" :label-width="180" v-show="titleIndex == 1">
-                <FormItem label="借款合同名称：" prop="name">
-                    {{loan.name}}
-                </FormItem>
-                <FormItem label="借款人：" prop="creditPeople">
-                    {{loan.creditPeople}}
-                </FormItem>
-                <FormItem label="是否诉请解除该借款合同：" prop="isRelease">
-                    <RadioGroup v-model="loan.isRelease">
-                        <Radio disabled label="yes">
-                            <span>是</span>
-                        </Radio>
-                        <Radio disabled label="no">
-                            <span>否</span>
-                        </Radio>
-                    </RadioGroup>
-                </FormItem>
-                <FormItem label="签订借款合同时间：" prop="time">
-                    {{loan.time}}
-                </FormItem>
-                <FormItem label="借款本金：" prop="money">
-                    {{loan.money}}
-                   
-                </FormItem>
-                <FormItem label="借款期限：" prop="range">
-                    {{loan.range}}
-                    
-                </FormItem>
-                <FormItem label="还款方式：" prop="methods">
-                    {{loan.methods}}
-                    
-                </FormItem>
-                <FormItem label="借款利率：" prop="loanRate">
-                    {{loan.loanRate}}
-                    
-                </FormItem>
-                <FormItem label="罚息利率：" prop="penaltyInterest">
-                    {{loan.penaltyRate}}
-                    
-                </FormItem>
-                <FormItem label="复利利率：" prop="compoundRate">
-                    {{loan.compoundRate}}
-                    
-                </FormItem>
-                <FormItem label="罚息/复利约定：" prop="rateAgreement">
-                    {{loan.rateAgreement}}
-                    
-                </FormItem>
-                <FormItem label="解除合同或提前收贷约定：" prop="releaseAgreement">
-                    {{loan.releaseAgreement}}
-                    
-                </FormItem>
-                <FormItem label="违约金约定：" prop="defaultAgreement">
-                    {{loan.defaultAgreement}}
-                    
-                </FormItem>
-                <FormItem label="实现债权费用的约定：" prop="feeAgreement">
-                    {{loan.feeAgreement}}
-                    
-                </FormItem>
-                <FormItem label="送达约定：" prop="sendAgreement">
-                    {{loan.sendAgreement}}
-                    
-                </FormItem>
-            </Form>
-            <Form label-position="left" :label-width="180" v-show="titleIndex == 2">
-                <FormItem label="保证合同名称：" prop="name">
-                        {{guarantee.name}}
-                    
-                </FormItem>
-                <FormItem label="保证人：" prop="guaranteePeople">
-                    {{guarantee.guaranteePeople}}
-                    
-                </FormItem>
-                <FormItem label="保证方式：" prop="methods">
-                    {{guarantee.methods}}
-                    
-                </FormItem>
-                <FormItem label="保证期间：" prop="timeRange">
-                    {{guarantee.timeRange}}
-                    
-                </FormItem>
-                <FormItem label="保证合同签订时间：" prop="time">
-                    {{guarantee.time}}
-                    
-                </FormItem>
-                <FormItem label="保证范围：" prop="guaranteeRange">
-                    {{guarantee.guaranteeRange}}
-                    
-                </FormItem>
-            </Form>
-            <Form label-position="left" :label-width="180" v-show="titleIndex == 3">
-                <FormItem label="抵押合同名称：" prop="name">
-                    {{mortgage.name}}
-                   
-                </FormItem>
-                <FormItem label="抵押合同签订时间：" prop="time">
-                    {{mortgage.time}}
-                    
-                </FormItem>
-                <FormItem label="抵押物权属：" prop="ownership">
-                    {{mortgage.ownership}}
-                    
-                </FormItem>
-                <FormItem label="抵押物名称：" prop="articleName">
-                    {{mortgage.articleName}}
-                    
-                </FormItem>
-                <FormItem label="抵押担保范围：" prop="range">
-                    {{mortgage.range}}
-                    
-                </FormItem>
-                <FormItem label="办理抵押登记时间：" prop="handletime">
-                    {{mortgage.handletime}}
-                    
-                </FormItem>
-            </Form>
-            <Form label-position="left" :label-width="180" v-show="titleIndex == 4">
-                <FormItem label="质押合同名称：" prop="name">
-                    {{pledge.name}}
-                   
-                </FormItem>
-                <FormItem label="质押合同签订时间：" prop="time">
-                    {{pledge.time}}
-                    
-                </FormItem>
-                <FormItem label="质押物权属：" prop="ownership">
-                    {{pledge.ownership}}
-                    
-                </FormItem>
-                <FormItem label="质押物名称：" prop="articleName">
-                    {{pledge.articleName}}
-                   
-                </FormItem>
-                <FormItem label="质押担保范围：" prop="range">
-                    {{pledge.range}}
-                    
-                </FormItem>
-                <FormItem label="办理质押登记时间：" prop="handletime">
-                    {{pledge.handletime}}
-                    
-                </FormItem>
-            </Form>
-        </Modal>
-
 
         <!-- 代理人信息 -->
          <Modal
@@ -1405,13 +839,15 @@ import mySteps from "@/components/steps";
 import dipmosShow from "@/components/courtHandle/dipmosShow.vue";
 import caseAccept from "@/components/diplomas/caseAccept.vue";
 import ZhViewer from "@/components/moreFileViewer/moreFileViewer.vue";
+import showElement from '@/components/elementInfo/showElement.vue'
 export default {
     components: {
         mySteps: mySteps,
         myStep: myStep,
         dipmosShow,
         caseAccept,
-        ZhViewer
+        ZhViewer,
+        showElement
     },
     data () {
         var width = window.innerWidth - 430;
@@ -1427,157 +863,7 @@ export default {
             firstWord:'',
             element:0,
             elementSw:false,//要素信息显示开关，避免要素信息过长影响布局
-            partCardId:'',
-            titleArr:['查看授信合同信息','查看借款合同信息','查看保证合同信息','查看抵押合同信息','查看质押合同信息'],
-            cardId:'',
-            titleIndex:0,
-            litigation:{
-                amount:'',
-                request:'',
-                loan:'',
-                maturity:'',
-                overdue:'',
-                cutoff:'',
-                arrears:'',
-                interest:'',
-                penaltyInterest:'',
-                compoundInterest:'',
-                nInterest:'',
-                npInterest:'',
-                ncdInterest:'',
-                newArrears:'',
-                liquidatedDamages:'',
-                isPublic:'',
-                claim:'',
-                lawyerFee:'',
-                securityFee:'',
-                announcementFee:'',
-                otherFee:'',
-                marryTime:'',
-                divorceTime:'',
-                legalProvisions:'',
-                regulations:'',
-                caseNumber:'',
-                preservationMan:'',
-                preservationTime:'',
-                preservationMoney:'',
-                preservationFee:'',
-                rulingTime:'',
-                releasePreservation:'',
-                preservationStatus:'',
-            },
-            credit:{
-                name:'',
-                isRelease:'',
-                creditPeople:'',
-                creditTime:'',
-                creditRange:'',
-                creditMoney:''
-            },
-            loan:{
-                name:'',
-                creditPeople:'',
-                isRelease:'',
-                time:'',
-                money:'',
-                range:'',
-                methods:'',
-                loanRate:'',
-                penaltyRate:'',
-                compoundRate:'',
-                rateAgreement:'',
-                releaseAgreement:'',
-                defaultAgreement:'',
-                feeAgreement:'',
-                sendAgreement:''
-            },
-            guarantee:{
-                name:'',
-                guaranteePeople:'',
-                methods:'',
-                timeRange:'',
-                time:'',
-                guaranteeRange:''
-            },
-            mortgage:{
-                name:'',
-                time:'',
-                ownership:'',
-                articleName:'',
-                range:'',
-                handletime:''
-            },
-            pledge:{
-                name:'',
-                time:'',
-                ownership:'',
-                articleName:'',
-                range:'',
-                handletime:''
-            },
 
-            modal3:false,
-            modal5:false,//信用卡弹窗
-            modal6:false,
-            modal7:false,
-            creditInfo:[],
-            contract:{
-                name:'',
-                time:''
-            },
-            endProcess:{
-                fee:'',
-                time:'',
-                reason:''
-            },
-            creditCard:{
-                num:'',
-                name:'',
-                interestAgreement:'',
-                deadline:'',
-                principal:'',
-                interest:'',
-                latePayment:'',
-                annualFee:'',
-                handlingFee:'',
-                otherFee:'',
-                defaultAgreement:'',
-                feeAgreement:'',
-                lawyerFee:'',
-                securityFee:'',
-                announcementFee:'',
-                cashFee:'',
-                otherProjectFee:'',
-                endStandard:'',
-                endFeeStandard:''  
-            },
-            guaranteeContract2:{
-                name:'',
-                time:'',
-                people:'',
-                timeRange:'',
-                methods:'',
-                range:''
-            },
-            pay:{
-                reason:'',
-                money:'',
-                securities:'',
-                applicationFee:'',
-                applyTime:'',
-                completeTime:'' 
-            },
-            guarantee2:[],
-            couple:{
-                isPublic:'',
-                marry:'',
-                divorce:''
-            },
-            creditContract:[],
-            loanContract:[],
-            guaranteeContract:[],
-            mortgageContract:[],
-            pledgeContract:[],
             procedure:[
                 {name:'简易程序',id:'简易程序'},
                 {name:'普通程序',id:'普通程序'}
@@ -2039,129 +1325,6 @@ export default {
                 }
             }).catch(error => {
                 this.$Message.warning('网络错误，请刷新重试！');
-            })
-        },
-        time(time = +new Date()) {//时间戳转换函数
-            var date = new Date(time + 8 * 3600 * 1000); // 增加8小时
-            return date.toJSON().substr(0, 19).replace('T', ' ').substring(0,10);
-        },
-        guaranteeChioce(name){
-            this.modal7 = true;
-            getCtInfo('gc',name).then(res => {
-                this.guaranteeContract2.name = res.data.data.name;
-                this.guaranteeContract2.time = res.data.data.signTime == null ? '' : this.time(res.data.data.signTime);
-                this.guaranteeContract2.people = res.data.data.guarantor;
-                this.guaranteeContract2.timeRange = res.data.data.guarantorDate == null ? '' : res.data.data.guarantorDate.replace('至',' - ');
-                this.guaranteeContract2.methods = res.data.data.guarantorMethod;
-                this.guaranteeContract2.range = res.data.data.guaranteeScope;
-            })
-        },
-        choice(name){
-            this.titleIndex = name[1];
-            this.modal6 = true;
-            switch(name.substring(0,2)){
-                case 'c0':
-                    this.infoId = name.substring(2);
-                    getCtInfo('cc',this.infoId).then(res => {
-                        this.credit.name = res.data.data.name;
-                        this.credit.isRelease = res.data.data.relieve == true ? 'yes' : 'no';
-                        this.credit.creditPeople = res.data.data.creditGrantor;
-                        this.credit.creditTime = res.data.data.sign == null ? '' : this.time(res.data.data.sign);
-                        this.credit.creditRange = res.data.data.periodRange == null ? '' :res.data.data.periodRange.replace('至',' - ');
-                        this.credit.creditMoney = res.data.data.amount;
-                    })
-                break;
-                case 'l1':
-                    this.infoId = name.substring(2);
-                    getCtInfo('lc',this.infoId).then(res => {
-                        console.log(res.data.data);
-                        this.loan.name = res.data.data.name;
-                        this.loan.creditPeople = res.data.data.borrower;
-                        this.loan.isRelease = res.data.data.relieve == true ? 'yes' : 'no';
-                        this.loan.time = res.data.data.signTime == null ? '' : this.time(res.data.data.signTime);
-                        this.loan.money = res.data.data.amount;
-                        this.loan.range = res.data.data.askTime == null ? '' : res.data.data.askTime.replace('至',' - ');
-                        this.loan.methods = res.data.data.repaymentMethod;
-                        this.loan.loanRate = res.data.data.borrowingRate;
-                        this.loan.penaltyRate = res.data.data.penaltyRate;
-                        this.loan.compoundRate = res.data.data.compoundRate;
-                        this.loan.rateAgreement = res.data.data.penaltyAndCompoundAppointment;
-                        this.loan.releaseAgreement = res.data.data.relieveAndPayLoanAppointment;
-                        this.loan.defaultAgreement = res.data.data.violationFundAppointment;
-                        this.loan.feeAgreement = res.data.data.bondFeeAppointment;
-                        this.loan.sendAgreement = res.data.data.sendAppointment;
-                    })
-                break;
-                case 'g2':
-                    this.infoId = name.substring(2);
-                    getCtInfo('gc',this.infoId).then(res => {
-                        this.guarantee.name = res.data.data.name;
-                        this.guarantee.guaranteePeople = res.data.data.guarantor;
-                        this.guarantee.methods = res.data.data.guarantorMethod;
-                        this.guarantee.timeRange = res.data.data.guarantorDate == null ? '' : res.data.data.guarantorDate.replace('至',' - ');
-                        this.guarantee.time = res.data.data.signTime == null ? '' : this.time(res.data.data.signTime);
-                        this.guarantee.guaranteeRange = res.data.data.guaranteeScope;
-                    })
-                break;
-                case 'm3':
-                    this.infoId = name.substring(2);
-                    getCtInfo('mc',this.infoId).then(res => {
-                            this.mortgage.name = res.data.data.name;
-                            this.mortgage.time = res.data.data.signTime == null ? '' : this.time(res.data.data.signTime);
-                            this.mortgage.ownership = res.data.data.ownership;
-                            this.mortgage.articleName = res.data.data.collateral;
-                            this.mortgage.range = res.data.data.mortgageRange;
-                            this.mortgage.handletime = res.data.data.mortgageTime == null ? '' : this.time(res.data.data.mortgageTime);
-                        })
-                break;
-                case 'p4':
-                    this.infoId = name.substring(2);
-                    getCtInfo('pc',this.infoId).then(res => {
-                        console.log(res.data.data);
-                        this.pledge.name = res.data.data.name;
-                        this.pledge.time = res.data.data.signTime == null ? '' : this.time(res.data.data.signTime);
-                        this.pledge.ownership = res.data.data.ownership;
-                        this.pledge.articleName = res.data.data.pledge;
-                        this.pledge.range = res.data.data.pledgeRange;
-                        this.pledge.handletime = res.data.data.pledgeTime == null ? '' : this.time(res.data.data.pledgeTime);
-                    })
-                break;
-            }
-        },
-        creditChoice(name){
-            this.modal5 = true;
-            this.cardId = name;
-            getCtInfo('cdInfo',name).then(res =>{
-                this.creditCard.num = res.data.data.cardNo;
-                this.creditCard.name = res.data.data.contractName;
-                this.creditCard.interestAgreement = res.data.data.interestAgreement;
-                this.creditCard.deadline = res.data.data.latestDeadLineForArrears == null ? '' : this.time(res.data.data.latestDeadLineForArrears);
-                this.creditCard.principal = res.data.data.nowArrearsAmount;
-                this.creditCard.interest = res.data.data.nowArrearsInterest;
-                this.creditCard.latePayment = res.data.data.nowLateFee;
-                this.creditCard.annualFee = res.data.data.annualFee;
-                this.creditCard.handlingFee = res.data.data.byStagesFee;
-                this.creditCard.otherFee = res.data.data.proAndFee;
-                this.creditCard.defaultAgreement = res.data.data.lateFeeAppointment;
-                this.creditCard.feeAgreement = res.data.data.bondFeeAppointment;
-                this.creditCard.lawyerFee = res.data.data.lawyerFee;
-                this.creditCard.securityFee = res.data.data.preservationFee;
-                this.creditCard.announcementFee = res.data.data.announcementFee;
-                this.creditCard.cashFee = res.data.data.enchashmentFee;
-                this.creditCard.otherProjectFee = res.data.data.anotherApponintment;
-                this.creditCard.endStandard = res.data.data.nowInterestStandard;
-                this.creditCard.endFeeStandard = res.data.data.nowLateFeeStandard;
-                this.creditCard.type = res.data.data.cardType;
-                this.creditCard.applyTime = res.data.data.applyCardDate == null ? '' : this.time(res.data.data.applyCardDate);
-                this.creditCard.issueTime = res.data.data.auditDate == null ? '' : this.time(res.data.data.auditDate);
-                this.creditCard.overRate = res.data.data.overdrawRate;
-                this.creditCard.agreementFee = res.data.data.bondFee;
-                this.creditCard.quota = res.data.data.lineOfCredit;
-            });
-            getContractInfo(this.lawcaseId,this.partCardId,'gc',this.cardId).then(res => {
-                if(res.data.state == 100){
-                    this.guarantee2 = res.data.nameList;
-                }
             })
         },
 
@@ -3032,88 +2195,88 @@ export default {
                 })
             }else if (e == 5){  //查看要素
                 this.elementSw = true;
-                getEdit(this.lawcaseId).then(res => {
-                    if(res.data.state == 100){
-                        this.lawCaseChecked = res.data.flag;
-                    }
-                })
-                if(this.element == 1){
-                    getPart(this.lawcaseId).then(res => {
-                        this.creditContract = [];
-                        this.loanContract = [];
-                        this.guaranteeContract = [];
-                        this.mortgageContract = [];
-                        this.pledgeContract = [];
-                        res.data.loan.creditContractInformationSet == '' ? [] : res.data.loan.creditContractInformationSet.map(item => {
-                            return item.enable == true ? this.creditContract.push(item) : false;
-                        });
-                        res.data.loan.loanContractInformations == '' ? [] : res.data.loan.loanContractInformations.map(item => {
-                            return item.enable == true ? this.loanContract.push(item) : false;
-                        });
-                        res.data.loan.guaranteeContractInformations == '' ? [] : res.data.loan.guaranteeContractInformations.map(item => {
-                            return item.enable == true ? this.guaranteeContract.push(item) : false;
-                        });
-                        res.data.loan.mortgageContractInformations == '' ? [] : res.data.loan.mortgageContractInformations.map(item => {
-                            return item.enable == true ? this.mortgageContract.push(item) : false;
-                        });
-                        res.data.loan.pledgeContractInformations == '' ? [] : res.data.loan.pledgeContractInformations.map(item => {
-                            return item.enable == true ? this.pledgeContract.push(item) : false;
-                        });
-                        this.litigation.loan = res.data.loan.loan == null ? '' : this.time(res.data.loan.loan);
-                        this.litigation.maturity = res.data.loan.payment == null ? '' : this.time(res.data.loan.payment);
-                        this.litigation.overdue = res.data.loan.overdueRepayment == null ? '' : this.time(res.data.loan.overdueRepayment);
-                        this.litigation.cutoff = res.data.loan.latestDeadLineForArrears == null ? '' : this.time(res.data.loan.latestDeadLineForArrears);
-                        this.litigation.arrears = res.data.loan.principalArrears;
-                        this.litigation.interest = res.data.loan.interest;
-                        this.litigation.penaltyInterest = res.data.loan.penaltyInterest;
-                        this.litigation.compoundInterest = res.data.loan.compoundInterest;
-                        this.litigation.nInterest = res.data.loan.nowInterest;
-                        this.litigation.npInterest = res.data.loan.nowPenaltyInterest;
-                        this.litigation.ncdInterest = res.data.loan.nowCompoundInterest;
-                        this.litigation.newArrears = res.data.loan.nowInterestOnArrears;
-                        this.litigation.liquidatedDamages = res.data.loan.liquidatedDamages;
-                        this.litigation.claim = res.data.loan.debtExpense;
-                        this.litigation.lawyerFee = res.data.loan.lawyerFees;
-                        this.litigation.securityFee = res.data.loan.preservationFee;
-                        this.litigation.announcementFee = res.data.loan.announcementFee;
-                        this.litigation.otherFee = res.data.loan.anotherDebtExpense;
-                        this.litigation.isPublic = res.data.loan.jointDebts == true ? 'yes' : 'no';
-                        this.litigation.marryTime = res.data.loan.marriage == null ? '' : this.time(res.data.loan.marriage);
-                        this.litigation.divorceTime = res.data.loan.divorce == null ? '' : this.time(res.data.loan.divorce);
-                        this.litigation.legalProvisions = res.data.loan.legalProvisions;
-                        this.litigation.regulations = res.data.loan.lawAndRegulations;
-                        this.litigation.caseNumber = res.data.loan.preservationCaseNo;
-                        this.litigation.preservationMan = res.data.loan.preservationRespondent;
-                        this.litigation.preservationTime = res.data.loan.applyForPreservation == null ? '' : this.time(res.data.loan.applyForPreservation);
-                        this.litigation.preservationMoney = res.data.loan.preservationAmount;
-                        this.litigation.preservationFee = res.data.loan.preservationAmountFee;
-                        this.litigation.rulingTime = res.data.loan.preservationTime == null ? '' : this.time(res.data.loan.preservationTime);
-                        this.litigation.releasePreservation = res.data.loan.firePreservationTime == null ? '' : this.time(res.data.loan.firePreservationTime);
-                        this.litigation.preservationStatus = res.data.loan.preservationSituation;
-                    })
-                }else{
-                    getPart(this.lawcaseId).then(res => {
-                        this.creditInfo = [];
-                        this.partCardId = res.data.creditCard.id;
-                        res.data.creditCard.creditCardInformations.map(item => {
-                            return item.enable == true ? this.creditInfo.push(item) : false;
-                        });
-                        this.contract.name = res.data.creditCard.contractName;
-                        this.contract.time = res.data.creditCard.signContractTime == null ? '' : this.time(res.data.creditCard.signContractTime);
-                        this.couple.isPublic = res.data.creditCard.jointdebts == null ? '' : (res.data.creditCard.jointdebts == true ? 'yes' : 'no');
-                        this.couple.marry = res.data.creditCard.marriageTime == null ? '' : this.time(res.data.creditCard.marriageTime);
-                        this.couple.divorce = res.data.creditCard.divorceTime == null ? '' : this.time(res.data.creditCard.divorceTime);
-                        this.pay.reason = res.data.creditCard.reasonContent;
-                        this.pay.money = res.data.creditCard.applyAmount;
-                        this.pay.securities = res.data.creditCard.securities;
-                        this.pay.applicationFee = res.data.creditCard.applyFee;
-                        this.pay.applyTime = res.data.creditCard.applyTime == null ? '' : this.time(res.data.creditCard.applyTime);
-                        this.pay.completeTime = res.data.creditCard.makeApplyTime == null ? '' : this.time(res.data.creditCard.makeApplyTime);
-                        this.endProcess.fee = res.data.creditCard.endApplyFee;
-                        this.endProcess.time = res.data.creditCard.endMakeTime == null ? '' : this.time(res.data.creditCard.endMakeTime);
-                        this.endProcess.reason = res.data.creditCard.endReason;
-                    })
-                }
+                // getEdit(this.lawcaseId).then(res => {
+                //     if(res.data.state == 100){
+                //         this.lawCaseChecked = res.data.flag;
+                //     }
+                // })
+                // if(this.element == 1){
+                //     getPart(this.lawcaseId).then(res => {
+                //         this.creditContract = [];
+                //         this.loanContract = [];
+                //         this.guaranteeContract = [];
+                //         this.mortgageContract = [];
+                //         this.pledgeContract = [];
+                //         res.data.loan.creditContractInformationSet == '' ? [] : res.data.loan.creditContractInformationSet.map(item => {
+                //             return item.enable == true ? this.creditContract.push(item) : false;
+                //         });
+                //         res.data.loan.loanContractInformations == '' ? [] : res.data.loan.loanContractInformations.map(item => {
+                //             return item.enable == true ? this.loanContract.push(item) : false;
+                //         });
+                //         res.data.loan.guaranteeContractInformations == '' ? [] : res.data.loan.guaranteeContractInformations.map(item => {
+                //             return item.enable == true ? this.guaranteeContract.push(item) : false;
+                //         });
+                //         res.data.loan.mortgageContractInformations == '' ? [] : res.data.loan.mortgageContractInformations.map(item => {
+                //             return item.enable == true ? this.mortgageContract.push(item) : false;
+                //         });
+                //         res.data.loan.pledgeContractInformations == '' ? [] : res.data.loan.pledgeContractInformations.map(item => {
+                //             return item.enable == true ? this.pledgeContract.push(item) : false;
+                //         });
+                //         this.litigation.loan = res.data.loan.loan == null ? '' : this.time(res.data.loan.loan);
+                //         this.litigation.maturity = res.data.loan.payment == null ? '' : this.time(res.data.loan.payment);
+                //         this.litigation.overdue = res.data.loan.overdueRepayment == null ? '' : this.time(res.data.loan.overdueRepayment);
+                //         this.litigation.cutoff = res.data.loan.latestDeadLineForArrears == null ? '' : this.time(res.data.loan.latestDeadLineForArrears);
+                //         this.litigation.arrears = res.data.loan.principalArrears;
+                //         this.litigation.interest = res.data.loan.interest;
+                //         this.litigation.penaltyInterest = res.data.loan.penaltyInterest;
+                //         this.litigation.compoundInterest = res.data.loan.compoundInterest;
+                //         this.litigation.nInterest = res.data.loan.nowInterest;
+                //         this.litigation.npInterest = res.data.loan.nowPenaltyInterest;
+                //         this.litigation.ncdInterest = res.data.loan.nowCompoundInterest;
+                //         this.litigation.newArrears = res.data.loan.nowInterestOnArrears;
+                //         this.litigation.liquidatedDamages = res.data.loan.liquidatedDamages;
+                //         this.litigation.claim = res.data.loan.debtExpense;
+                //         this.litigation.lawyerFee = res.data.loan.lawyerFees;
+                //         this.litigation.securityFee = res.data.loan.preservationFee;
+                //         this.litigation.announcementFee = res.data.loan.announcementFee;
+                //         this.litigation.otherFee = res.data.loan.anotherDebtExpense;
+                //         this.litigation.isPublic = res.data.loan.jointDebts == true ? 'yes' : 'no';
+                //         this.litigation.marryTime = res.data.loan.marriage == null ? '' : this.time(res.data.loan.marriage);
+                //         this.litigation.divorceTime = res.data.loan.divorce == null ? '' : this.time(res.data.loan.divorce);
+                //         this.litigation.legalProvisions = res.data.loan.legalProvisions;
+                //         this.litigation.regulations = res.data.loan.lawAndRegulations;
+                //         this.litigation.caseNumber = res.data.loan.preservationCaseNo;
+                //         this.litigation.preservationMan = res.data.loan.preservationRespondent;
+                //         this.litigation.preservationTime = res.data.loan.applyForPreservation == null ? '' : this.time(res.data.loan.applyForPreservation);
+                //         this.litigation.preservationMoney = res.data.loan.preservationAmount;
+                //         this.litigation.preservationFee = res.data.loan.preservationAmountFee;
+                //         this.litigation.rulingTime = res.data.loan.preservationTime == null ? '' : this.time(res.data.loan.preservationTime);
+                //         this.litigation.releasePreservation = res.data.loan.firePreservationTime == null ? '' : this.time(res.data.loan.firePreservationTime);
+                //         this.litigation.preservationStatus = res.data.loan.preservationSituation;
+                //     })
+                // }else{
+                //     getPart(this.lawcaseId).then(res => {
+                //         this.creditInfo = [];
+                //         this.partCardId = res.data.creditCard.id;
+                //         res.data.creditCard.creditCardInformations.map(item => {
+                //             return item.enable == true ? this.creditInfo.push(item) : false;
+                //         });
+                //         this.contract.name = res.data.creditCard.contractName;
+                //         this.contract.time = res.data.creditCard.signContractTime == null ? '' : this.time(res.data.creditCard.signContractTime);
+                //         this.couple.isPublic = res.data.creditCard.jointdebts == null ? '' : (res.data.creditCard.jointdebts == true ? 'yes' : 'no');
+                //         this.couple.marry = res.data.creditCard.marriageTime == null ? '' : this.time(res.data.creditCard.marriageTime);
+                //         this.couple.divorce = res.data.creditCard.divorceTime == null ? '' : this.time(res.data.creditCard.divorceTime);
+                //         this.pay.reason = res.data.creditCard.reasonContent;
+                //         this.pay.money = res.data.creditCard.applyAmount;
+                //         this.pay.securities = res.data.creditCard.securities;
+                //         this.pay.applicationFee = res.data.creditCard.applyFee;
+                //         this.pay.applyTime = res.data.creditCard.applyTime == null ? '' : this.time(res.data.creditCard.applyTime);
+                //         this.pay.completeTime = res.data.creditCard.makeApplyTime == null ? '' : this.time(res.data.creditCard.makeApplyTime);
+                //         this.endProcess.fee = res.data.creditCard.endApplyFee;
+                //         this.endProcess.time = res.data.creditCard.endMakeTime == null ? '' : this.time(res.data.creditCard.endMakeTime);
+                //         this.endProcess.reason = res.data.creditCard.endReason;
+                //     })
+                // }
             }
         },
         getMaxCaseNum(){ //获取引调号的方法

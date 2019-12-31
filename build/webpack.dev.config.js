@@ -39,7 +39,17 @@ module.exports = merge(webpackBaseConfig, {
                 //路径重写
                 pathRewrite: {'^/api' : ''},
                 changeOrigin: true
-            }
+            },
+            '/api2': {
+                // 目标服务器地址
+                target: 'http://192.168.86.62:7300/mock/5e00b4aaf234a30034cdbc85/test',
+                // target: 'http://120.78.223.114:8688',
+                // target: 'http://114.115.133.183:8780',
+                // target: 'http://47.105.189.44:8780',
+                //路径重写
+                pathRewrite: {'^/api2' : ''},
+                changeOrigin: true
+            },
         }
     },
     plugins: [
