@@ -488,14 +488,9 @@
                             </Row>
                        </div>
                     </TabPane>
-
-
-
                     <TabPane label="要素信息" v-if="element != 0">
                         <showElement ref="elementInfo" v-if="elementSw" :lawcaseId="lawcaseId" :element="element"></showElement>
                     </TabPane>
-
-
                 </Tabs>
             </div>
             <div slot="footer">
@@ -2195,88 +2190,6 @@ export default {
                 })
             }else if (e == 5){  //查看要素
                 this.elementSw = true;
-                // getEdit(this.lawcaseId).then(res => {
-                //     if(res.data.state == 100){
-                //         this.lawCaseChecked = res.data.flag;
-                //     }
-                // })
-                // if(this.element == 1){
-                //     getPart(this.lawcaseId).then(res => {
-                //         this.creditContract = [];
-                //         this.loanContract = [];
-                //         this.guaranteeContract = [];
-                //         this.mortgageContract = [];
-                //         this.pledgeContract = [];
-                //         res.data.loan.creditContractInformationSet == '' ? [] : res.data.loan.creditContractInformationSet.map(item => {
-                //             return item.enable == true ? this.creditContract.push(item) : false;
-                //         });
-                //         res.data.loan.loanContractInformations == '' ? [] : res.data.loan.loanContractInformations.map(item => {
-                //             return item.enable == true ? this.loanContract.push(item) : false;
-                //         });
-                //         res.data.loan.guaranteeContractInformations == '' ? [] : res.data.loan.guaranteeContractInformations.map(item => {
-                //             return item.enable == true ? this.guaranteeContract.push(item) : false;
-                //         });
-                //         res.data.loan.mortgageContractInformations == '' ? [] : res.data.loan.mortgageContractInformations.map(item => {
-                //             return item.enable == true ? this.mortgageContract.push(item) : false;
-                //         });
-                //         res.data.loan.pledgeContractInformations == '' ? [] : res.data.loan.pledgeContractInformations.map(item => {
-                //             return item.enable == true ? this.pledgeContract.push(item) : false;
-                //         });
-                //         this.litigation.loan = res.data.loan.loan == null ? '' : this.time(res.data.loan.loan);
-                //         this.litigation.maturity = res.data.loan.payment == null ? '' : this.time(res.data.loan.payment);
-                //         this.litigation.overdue = res.data.loan.overdueRepayment == null ? '' : this.time(res.data.loan.overdueRepayment);
-                //         this.litigation.cutoff = res.data.loan.latestDeadLineForArrears == null ? '' : this.time(res.data.loan.latestDeadLineForArrears);
-                //         this.litigation.arrears = res.data.loan.principalArrears;
-                //         this.litigation.interest = res.data.loan.interest;
-                //         this.litigation.penaltyInterest = res.data.loan.penaltyInterest;
-                //         this.litigation.compoundInterest = res.data.loan.compoundInterest;
-                //         this.litigation.nInterest = res.data.loan.nowInterest;
-                //         this.litigation.npInterest = res.data.loan.nowPenaltyInterest;
-                //         this.litigation.ncdInterest = res.data.loan.nowCompoundInterest;
-                //         this.litigation.newArrears = res.data.loan.nowInterestOnArrears;
-                //         this.litigation.liquidatedDamages = res.data.loan.liquidatedDamages;
-                //         this.litigation.claim = res.data.loan.debtExpense;
-                //         this.litigation.lawyerFee = res.data.loan.lawyerFees;
-                //         this.litigation.securityFee = res.data.loan.preservationFee;
-                //         this.litigation.announcementFee = res.data.loan.announcementFee;
-                //         this.litigation.otherFee = res.data.loan.anotherDebtExpense;
-                //         this.litigation.isPublic = res.data.loan.jointDebts == true ? 'yes' : 'no';
-                //         this.litigation.marryTime = res.data.loan.marriage == null ? '' : this.time(res.data.loan.marriage);
-                //         this.litigation.divorceTime = res.data.loan.divorce == null ? '' : this.time(res.data.loan.divorce);
-                //         this.litigation.legalProvisions = res.data.loan.legalProvisions;
-                //         this.litigation.regulations = res.data.loan.lawAndRegulations;
-                //         this.litigation.caseNumber = res.data.loan.preservationCaseNo;
-                //         this.litigation.preservationMan = res.data.loan.preservationRespondent;
-                //         this.litigation.preservationTime = res.data.loan.applyForPreservation == null ? '' : this.time(res.data.loan.applyForPreservation);
-                //         this.litigation.preservationMoney = res.data.loan.preservationAmount;
-                //         this.litigation.preservationFee = res.data.loan.preservationAmountFee;
-                //         this.litigation.rulingTime = res.data.loan.preservationTime == null ? '' : this.time(res.data.loan.preservationTime);
-                //         this.litigation.releasePreservation = res.data.loan.firePreservationTime == null ? '' : this.time(res.data.loan.firePreservationTime);
-                //         this.litigation.preservationStatus = res.data.loan.preservationSituation;
-                //     })
-                // }else{
-                //     getPart(this.lawcaseId).then(res => {
-                //         this.creditInfo = [];
-                //         this.partCardId = res.data.creditCard.id;
-                //         res.data.creditCard.creditCardInformations.map(item => {
-                //             return item.enable == true ? this.creditInfo.push(item) : false;
-                //         });
-                //         this.contract.name = res.data.creditCard.contractName;
-                //         this.contract.time = res.data.creditCard.signContractTime == null ? '' : this.time(res.data.creditCard.signContractTime);
-                //         this.couple.isPublic = res.data.creditCard.jointdebts == null ? '' : (res.data.creditCard.jointdebts == true ? 'yes' : 'no');
-                //         this.couple.marry = res.data.creditCard.marriageTime == null ? '' : this.time(res.data.creditCard.marriageTime);
-                //         this.couple.divorce = res.data.creditCard.divorceTime == null ? '' : this.time(res.data.creditCard.divorceTime);
-                //         this.pay.reason = res.data.creditCard.reasonContent;
-                //         this.pay.money = res.data.creditCard.applyAmount;
-                //         this.pay.securities = res.data.creditCard.securities;
-                //         this.pay.applicationFee = res.data.creditCard.applyFee;
-                //         this.pay.applyTime = res.data.creditCard.applyTime == null ? '' : this.time(res.data.creditCard.applyTime);
-                //         this.pay.completeTime = res.data.creditCard.makeApplyTime == null ? '' : this.time(res.data.creditCard.makeApplyTime);
-                //         this.endProcess.fee = res.data.creditCard.endApplyFee;
-                //         this.endProcess.time = res.data.creditCard.endMakeTime == null ? '' : this.time(res.data.creditCard.endMakeTime);
-                //         this.endProcess.reason = res.data.creditCard.endReason;
-                //     })
-                // }
             }
         },
         getMaxCaseNum(){ //获取引调号的方法

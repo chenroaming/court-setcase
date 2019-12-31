@@ -38,12 +38,12 @@
         
         }
 
-        .bookbuilding-table .ivu-menu-vertical .ivu-menu-submenu-title{
-            padding: 0 !important;
-        } 
-        .bookbuilding-table .ivu-menu-vertical .ivu-menu-item{
-            padding: 6px 24px;
-        }
+    .bookbuilding-table .ivu-menu-vertical .ivu-menu-submenu-title{
+        padding: 0 !important;
+    } 
+    .bookbuilding-table .ivu-menu-vertical .ivu-menu-item{
+        padding: 6px 24px;
+    }
 </style>
 
 
