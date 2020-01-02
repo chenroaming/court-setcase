@@ -408,7 +408,7 @@
                 <div class="middleType">
                     <!-- <Button :type="noewTYpe == '0' ? 'primary' : 'dashed'" class="btxa"  shape="circle"   @click="selType(0)">涉网案件</Button><br/><br/> -->
                     <Button :type="noewTYpe == '1' ? 'primary' : 'dashed'" class="btxa" shape="circle" @click="selType(1)">
-                        殿前法庭审判事物服务中心
+                        殿前法庭审判事务服务中心
                         <br/>
                         <span class="Introduction">金融，互联网，互联网知识产权</span>
                     </Button><br/><br/>
@@ -1374,7 +1374,6 @@
                      <div style="margin-top: 10px; " slot="footer">
                         <p style="float:left"><Checkbox @click.native="selectSure" v-model="single">我已阅读并同意以上内容</Checkbox></p><br/>
                         <p style="text-align: center;"><Button type="info" :disabled="disabled"  @click="nextStepSure"  >{{buttonStr}}</Button></p>
-                        
                     </div>
                 </Modal>
                 <Modal
