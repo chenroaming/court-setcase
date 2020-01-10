@@ -53,8 +53,8 @@
                 <FormItem label="逾期还款日期:">
                     <DatePicker type="date" :disabled="isChecked" v-model="litigation.overdue" placeholder="请选择还款日期" style="width: 300px"></DatePicker>
                 </FormItem>
-                <FormItem label="欠款最新截至时间:">
-                    <DatePicker type="date" :disabled="isChecked" v-model="litigation.cutoff" placeholder="请选择截至日期" style="width: 300px"></DatePicker>
+                <FormItem label="欠款最新截止时间:">
+                    <DatePicker type="date" :disabled="isChecked" v-model="litigation.cutoff" placeholder="请选截止日期" style="width: 300px"></DatePicker>
                 </FormItem>
                 <FormItem label="欠款本金（元）:" prop="arrears">
                     <Input v-model="litigation.arrears" :disabled="isChecked" placeholder="请输入欠款本金，例如：1000.00" style="width: 300px" />
@@ -198,8 +198,9 @@
                 <FormItem label="申请支付令时：">
                     <DatePicker type="date" v-model="pay.applyTime" :disabled="isChecked" placeholder="请选择时间" style="width: 300px"></DatePicker>
                 </FormItem>
-                <FormItem label="作出支付令时间：">
-                    <DatePicker type="date" v-model="pay.completeTime" :disabled="isChecked" placeholder="请选择时间" style="width: 300px"></DatePicker>
+                <FormItem label="证据：">
+                    <Input v-model="pay.completeTime" :disabled="isChecked" :row="5" placeholder="请输入证据名称和页码序号" style="width: 300px" />
+                    <!-- <DatePicker type="date" v-model="pay.completeTime" :disabled="isChecked" placeholder="请选择时间" style="width: 300px"></DatePicker> -->
                 </FormItem>
                 <FormItem label="终结督促程序裁定作出时间：">
                     <DatePicker transfer type="date" :disabled="isChecked" v-model="endProcess.time" placeholder="请选择时间" style="width: 300px"></DatePicker>
@@ -248,7 +249,7 @@
                 <FormItem label="利息约定" prop="interestAgreement">
                     <Input type="textarea" v-model="creditCard.interestAgreement" :disabled="isChecked" :row="5" placeholder="请输入利息约定" style="width: 300px" />
                 </FormItem>
-                <FormItem label="信用卡欠款最新截至时间" prop="deadline">
+                <FormItem label="信用卡欠款最截止时间" prop="deadline">
                     <DatePicker type="date" :disabled="isChecked" v-model="creditCard.deadline" placeholder="请选择时间" style="width: 300px"></DatePicker>
                 </FormItem>
                 <FormItem label="信用卡最新欠款本金（元）" prop="principal">
@@ -1127,7 +1128,6 @@ export default {
                 })
             })
         },
-
 
         submitContract(){
             if(this.isChecked){

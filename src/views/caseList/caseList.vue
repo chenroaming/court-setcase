@@ -114,6 +114,12 @@
     width: 90%;
     margin: 0 auto;
 }
+.block{
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
 </style>
 
 <template>
@@ -124,7 +130,6 @@
               <div style="position:absolute;bottom: 200px;left:50%;margin-left:-60px;color:#3399ff;font-size:20px">获取支付信息中。。。</div>
             </div>
             <span class="clos" @click="cloaseImg"><Icon type="ios-close" /></span>
-            
         </div>
         <div class="midleImg" v-show="imgshow2">
             <p  style="text-align:center;line-height:50px;font-size: 18px;color:#fff;background: #09BB07">微信扫码支付</p>
@@ -177,7 +182,6 @@
                     
                     <Button @click="searchList" :loading="loading1"  type="primary" style="width:220px;margin-left:20px">查询</Button>
                 </Form>
-            
             </div>
         </div>
         <div class="content_main1" style="width:750px">
@@ -341,69 +345,91 @@
                                     起诉状：
                                 </Col>
                                 <Col span="18" style=" padding-right: 5px;margin-bottom:15px">
-                                    <span v-if="qFileName.name == ''">无</span>
-                                    <a v-else  @click="showEvdence(qFileName.path)" download="">{{ qFileName.name }}</a>
+                                    <span v-if="qFileName.length == 0">无</span>
+                                    <a class="block" :title="item.name" v-for="(item,index) in qFileName" @click="showEvdence(item.path)">{{item.name}}</a>
+                                    <!-- <span v-if="qFileName.name == ''">无</span>
+                                    <a v-else  @click="showEvdence(qFileName.path)" download="">{{ qFileName.name }}</a> -->
                                 </Col>
                                 <Col span="6" style=" padding-right: 5px;text-align: right;">
                                     身份证明材料：
                                 </Col>
                                 <Col span="6" style=" padding-right: 5px">
-                                    <span v-if="fileName1.name == ''">无</span>
-                                    <a v-else  @click="showEvdence(fileName1.path)" download="">{{ fileName1.name }}</a>
+                                    <span v-if="fileName1.length == 0">无</span>
+                                    <a class="block" :title="item.name" v-for="(item,index) in fileName1" @click="showEvdence(item.path)">{{item.name}}</a>
+                                    <!-- <span v-if="fileName1.name == ''">无</span>
+                                    <a v-else  @click="showEvdence(fileName1.path)" download="">{{ fileName1.name }}</a> -->
                                 </Col>
                                 <Col span="6" style=" padding-right: 5px;text-align: right;">
                                     授权委托材料：
                                 </Col>
                                 <Col span="6" style=" padding-right: 5px">
-                                    <span v-if="fileName2.name == ''">无</span>
-                                    <a v-else  @click="showEvdence(fileName2.path)" download="">{{ fileName2.name }}</a>
+                                    <span v-if="fileName2.length == 0">无</span>
+                                    <a class="block" :title="item.name" v-for="(item,index) in fileName2" @click="showEvdence(item.path)">{{item.name}}</a>
+                                    <!-- <span v-if="fileName2.name == ''">无</span>
+                                    <a v-else  @click="showEvdence(fileName2.path)" download="">{{ fileName2.name }}</a> -->
                                 </Col>
                             </Row>
-                            <Row  style="margin-bottom:5px;margin-bottom:10px">
-                                <p class="sdws">
-                                    申请书：
-                                </p>
+                            <p class="sdws">
+                                申请书：
+                            </p>
+                            <Row :gutter="16" style="margin-bottom:5px;margin-bottom:10px">
                                 <Col span="6" style=" padding-right: 5px;text-align: right;margin-bottom:10px">
                                     财产保全申请书：
                                 </Col>
                                 <Col span="6" style=" padding-right: 5px;margin-bottom:10px">
-                                    <span v-if="fileNameShen1 == ''">无</span>
-                                    <a v-else  @click="showEvdence(onlineEAIdShen1)" download="">{{ fileNameShen1 }}</a>
+                                    <span v-if="fileNameShen1.length == 0">无</span>
+                                    <a class="block" :title="item.name" v-for="(item,index) in fileNameShen1" @click="showEvdence(item.path)">{{item.name}}</a>
+                                    <!-- <span v-if="fileNameShen1 == ''">无</span>
+                                    <a v-else  @click="showEvdence(onlineEAIdShen1)" download="">{{ fileNameShen1 }}</a> -->
                                 </Col>
-                                <Col span="5" style=" padding-right: 5px;text-align: right;margin-bottom:10px">
+                                <Col span="6" style=" padding-right: 5px;text-align: right;margin-bottom:10px">
                                     调查取证申请书：
                                 </Col>
-                                <Col span="7" style=" padding-right: 5px;margin-bottom:10px">
-                                    <span v-if="fileNameShen2 == ''">无</span>
-                                    <a v-else  @click="showEvdence(onlineEAIdShen2)" download="">{{ fileNameShen2 }}</a>
+                                <Col span="6" style=" padding-right: 5px;margin-bottom:10px">
+                                    <span v-if="fileNameShen2.length == 0">无</span>
+                                    <a class="block" :title="item.name" v-for="(item,index) in fileNameShen2" @click="showEvdence(item.path)">{{item.name}}</a>
+                                    <!-- <span v-if="fileNameShen2 == ''">无</span>
+                                    <a v-else  @click="showEvdence(onlineEAIdShen2)" download="">{{ fileNameShen2 }}</a> -->
                                 </Col>
+                            </Row>
+                            <Row :gutter="16" style="margin-bottom:5px;margin-bottom:10px">
                                 <Col span="6" style=" padding-right: 5px;text-align: right;margin-bottom:10px">
                                     证据保全申请书：
                                 </Col>
                                 <Col span="6" style=" padding-right: 5px;margin-bottom:10px">
-                                    <span v-if="fileNameShen3 == ''">无</span>
-                                    <a v-else  @click="showEvdence(onlineEAIdShen3)" download="">{{ fileNameShen3 }}</a>
+                                    <span v-if="fileNameShen3.length == 0">无</span>
+                                    <a class="block" :title="item.name" v-for="(item,index) in fileNameShen3" @click="showEvdence(item.path)">{{item.name}}</a>
+                                    <!-- <span v-if="fileNameShen3 == ''">无</span>
+                                    <a v-else  @click="showEvdence(onlineEAIdShen3)" download="">{{ fileNameShen3 }}</a> -->
                                 </Col>
-                                <Col span="5" style=" padding-right: 5px;text-align: right;margin-bottom:10px">
+                                <Col span="6" style=" padding-right: 5px;text-align: right;margin-bottom:10px">
                                     证人出庭申请书：
                                 </Col>
-                                <Col span="7" style=" padding-right: 5px;margin-bottom:10px">
-                                    <span v-if="fileNameShen4 == ''">无</span>
-                                    <a v-else   @click="showEvdence(onlineEAIdShen4)" download="">{{ fileNameShen4 }}</a>
+                                <Col span="6" style=" padding-right: 5px;margin-bottom:10px">
+                                    <span v-if="fileNameShen4.length == 0">无</span>
+                                    <a class="block" :title="item.name" v-for="(item,index) in fileNameShen4" @click="showEvdence(item.path)">{{item.name}}</a>
+                                    <!-- <span v-if="fileNameShen4 == ''">无</span>
+                                    <a v-else   @click="showEvdence(onlineEAIdShen4)" download="">{{ fileNameShen4 }}</a> -->
                                 </Col>
+                            </Row>
+                            <Row :gutter="16" style="margin-bottom:5px;margin-bottom:10px">
                                 <Col span="6" style=" padding-right: 5px;text-align: right;margin-bottom:10px">
                                     现场勘验申请书：
                                 </Col>
                                 <Col span="6" style=" padding-right: 5px;margin-bottom:10px">
-                                    <span v-if="fileNameShen5 == ''">无</span>
-                                    <a v-else  @click="showEvdence(onlineEAIdShen5)" download="">{{ fileNameShen5 }}</a>
+                                    <span v-if="fileNameShen5.length == 0">无</span>
+                                    <a class="block" :title="item.name" v-for="(item,index) in fileNameShen5" @click="showEvdence(item.path)">{{item.name}}</a>
+                                    <!-- <span v-if="fileNameShen5 == ''">无</span>
+                                    <a v-else  @click="showEvdence(onlineEAIdShen5)" download="">{{ fileNameShen5 }}</a> -->
                                 </Col>
-                                <Col span="5" style=" padding-right: 5px;text-align: right;margin-bottom:10px">
+                                <Col span="6" style=" padding-right: 5px;text-align: right;margin-bottom:10px">
                                     鉴定评估申请书：
                                 </Col>
-                                <Col span="7" style=" padding-right: 5px;margin-bottom:10px">
-                                    <span v-if="fileNameShen6 == ''">无</span>
-                                    <a v-else  @click="showEvdence(onlineEAIdShen6)" download="">{{ fileNameShen6 }}</a>
+                                <Col span="6" style=" padding-right: 5px;margin-bottom:10px">
+                                    <span v-if="fileNameShen6.length == 0">无</span>
+                                    <a class="block" :title="item.name" v-for="(item,index) in fileNameShen6" @click="showEvdence(item.path)">{{item.name}}</a>
+                                    <!-- <span v-if="fileNameShen6 == ''">无</span>
+                                    <a v-else  @click="showEvdence(onlineEAIdShen6)" download="">{{ fileNameShen6 }}</a> -->
                                 </Col>
                             </Row>
                             <div>
@@ -738,24 +764,15 @@ export default {
             reasonContent:'',
             filePath:"",
             fileInfo:true,
-            qFileName:{
-                path:"",
-                name:"",
-            },
-            fileName1:{
-                path:"",
-                name:"",
-            },
-            fileName2:{
-                path:"",
-                name:"",
-            },
-            fileNameShen1:"",
-            fileNameShen2:'',
-            fileNameShen3:'',
-            fileNameShen4:"",
-            fileNameShen5:'',
-            fileNameShen6:'',
+            qFileName:[],
+            fileName1:[],
+            fileName2:[],
+            fileNameShen1:[],
+            fileNameShen2:[],
+            fileNameShen3:[],
+            fileNameShen4:[],
+            fileNameShen5:[],
+            fileNameShen6:[],
             onlineEAIdShen1:'',
             onlineEAIdShen2:'',
             onlineEAIdShen3:'',
@@ -1663,42 +1680,35 @@ export default {
                 otherGetFiles(this.lawCaseId).then(res => {
                 if(res.data.state == 100){
                     this.EviList = [];
-                    this.qFileName = {
-                        path:"",
-                        name:"",
-                    };
-                    this.fileName1 = {
-                        path:'',
-                        name:''
-                    };
-                    this.fileName2 = {
-                        path:'',
-                        name:''
-                    };
-                    this.fileNameShen1="";
+                    this.qFileName = [];
+                    this.fileName1 = [];
+                    this.fileName2 = [];
+                    this.fileNameShen1=[];
                     this.onlineEAIdShen1="";
-                    this.fileNameShen2="";
+                    this.fileNameShen2=[];
                     this.onlineEAIdShen2="";
-                    this.fileNameShen3="";
+                    this.fileNameShen3=[];
                     this.onlineEAIdShen3="";
-                    this.fileNameShen4="";
+                    this.fileNameShen4=[];
                     this.onlineEAIdShen4="";
-                    this.fileNameShen5="";
+                    this.fileNameShen5=[];
                     this.onlineEAIdShen5="";
-                    this.fileNameShen6="";
+                    this.fileNameShen6=[];
                     this.onlineEAIdShen6="";
                     res.data.file.map(item => {
                         if(item.type == 1){
-                            this.fileName1 = {
-                                path:item.path,
-                                name:item.name
-                            };
+                            this.fileName1.push(item);
+                            // this.fileName1 = {
+                            //     path:item.path,
+                            //     name:item.name
+                            // };
                             // this.qisuShow1 = false;
                         }else if(item.type == 2){
-                            this.fileName2 = {
-                                path:item.path,
-                                name:item.name
-                            };
+                            this.fileName2.push(item);
+                            // this.fileName2 = {
+                            //     path:item.path,
+                            //     name:item.name
+                            // };
                             // this.qisuShow2 = false;
                         }else if(item.type == 3){
                             const data = {
@@ -1711,35 +1721,42 @@ export default {
                             this.EviList.push(data);
                         }else if(item.type == 4){
                             if(item.applyType == 1){
-                                this.fileNameShen1 = item.name;
-                                this.qisuShowShen1 = false;
-                                this.onlineEAIdShen1 = item.path;
+                                this.fileNameShen1.push(item);
+                                // this.fileNameShen1 = item.name;
+                                // this.qisuShowShen1 = false;
+                                // this.onlineEAIdShen1 = item.path;
                             }else if(item.applyType == 2){
-                                this.fileNameShen2 = item.name;
-                                this.qisuShowShen2 = false;
-                                this.onlineEAIdShen2 = item.path;
+                                this.fileNameShen2.push(item);
+                                // this.fileNameShen2 = item.name;
+                                // this.qisuShowShen2 = false;
+                                // this.onlineEAIdShen2 = item.path;
                             }else if(item.applyType == 3){
-                                this.fileNameShen3 = item.name;
-                                this.qisuShowShen3 = false;
-                                this.onlineEAIdShen3 = item.path;
+                                this.fileNameShen3.push(item);
+                                // this.fileNameShen3 = item.name;
+                                // this.qisuShowShen3 = false;
+                                // this.onlineEAIdShen3 = item.path;
                             }else if(item.applyType == 4){
-                                this.fileNameShen4 = item.name;
-                                this.qisuShowShen4= false;
-                                this.onlineEAIdShen4 = item.path;
+                                this.fileNameShen4.push(item);
+                                // this.fileNameShen4 = item.name;
+                                // this.qisuShowShen4= false;
+                                // this.onlineEAIdShen4 = item.path;
                             }else if(item.applyType == 5){
-                                this.fileNameShen5 = item.name;
-                                this.qisuShowShen5 = false;
-                                this.onlineEAIdShen5 = item.path;
+                                this.fileNameShen5.push(item);
+                                // this.fileNameShen5 = item.name;
+                                // this.qisuShowShen5 = false;
+                                // this.onlineEAIdShen5 = item.path;
                             }else if(item.applyType == 6){
-                                this.fileNameShen6 = item.name;
-                                this.qisuShowShen6 = false;
-                                this.onlineEAIdShen6 = item.path;
+                                this.fileNameShen5.push(item);
+                                // this.fileNameShen6 = item.name;
+                                // this.qisuShowShen6 = false;
+                                // this.onlineEAIdShen6 = item.path;
                             }
                         }else if(item.type == 5){
-                            this.qFileName = {
-                                path:item.path,
-                                name:item.name
-                            };
+                            this.qFileName.push(item);
+                            // this.qFileName = {
+                            //     path:item.path,
+                            //     name:item.name
+                            // };
                             // this.qisuShow1 = false;
                         }
                     });

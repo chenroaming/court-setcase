@@ -54,11 +54,12 @@ overflow-x: none;
 padding-top: 0; */
 }
 .boxContent{
-float: left;
-height: 160px;
-width: 105px;
-overflow:hidden; 
-word-wrap:break-word;
+    float: left;
+    height: 205px;
+    width: 45%;
+    margin-right: 25px;
+    overflow:hidden; 
+    word-wrap:break-word;
 }
 .over_flo .matr{
 width: 185px;
@@ -160,6 +161,7 @@ cursor: pointer;
     height: 30px;
     text-align: left;
     padding-left: 15px;
+    margin-bottom: 5px;
 }
 .content-col{
     padding:10px;
@@ -336,6 +338,11 @@ border-right: 1px solid #e9eaec; */
 }
 .handelBtns button{
     margin-top: 7px;
+}
+.overflow {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 </style>
 
@@ -561,8 +568,71 @@ right: -20px;">元</span>
 
     <!-- 附件信息 -->
     <div class="over_flo" v-show="fileAdd" style="height:450px;">
-        <div style="height:170px;">
-        <div class="boxContent">
+        <div style="height:1060px;">
+            <div class="boxContent">
+                <p class="labelNmae">起诉书：
+                    <Button type="primary" @click="upFile(3)">添加</Button>
+                </p>
+                <Table height="168" :columns="columns1" :data="qfileName"></Table>
+                <input type="file" style="display:none"  name="" @change="changeFile3($event)" id="qisu">
+            </div>
+            <div class="boxContent" style="height: 210px;">
+                <p class="labelNmae">身份证明：
+                    <Button type="primary" @click="upFile(1)">添加</Button>
+                </p>
+                <Table height="168" :columns="columns1" :data="fileName1"></Table>
+                <input type="file" style="display:none"  name="" @change="changeFile1($event)" id="qisu1">
+            </div>
+            <div class="boxContent" style="height: 210px;">
+                <p class="labelNmae">授权委托材料：
+                    <Button type="primary" @click="upFile(2)">添加</Button>
+                </p>
+                <Table height="168" :columns="columns1" :data="fileName2"></Table>
+                <input type="file" style="display:none"  name="" @change="changeFile2($event)" id="qisu2">
+            </div>
+            <div class="boxContent" style="height: 210px;">
+                <p class="labelNmae">财产保全申请书：
+                    <Button type="primary" @click="upFileShen(1)">添加</Button>
+                </p>
+                <Table height="168" :columns="columns1" :data="fileNameShen1"></Table>
+                <input type="file" style="display:none"  name="" @change="changeFileShen1($event)" id="qisuShen1">
+            </div>
+            <div class="boxContent" style="height: 210px;">
+                <p class="labelNmae">调查取证申请书：
+                    <Button type="primary" @click="upFileShen(2)">添加</Button>
+                </p>
+                <Table height="168" :columns="columns1" :data="fileNameShen2"></Table>
+                <input type="file" style="display:none"  name="" @change="changeFileShen2($event)" id="qisuShen2">
+            </div>
+            <div class="boxContent" style="height: 210px;">
+                <p class="labelNmae">证据保全申请书：
+                    <Button type="primary" @click="upFileShen(3)">添加</Button>
+                </p>
+                <Table height="168" :columns="columns1" :data="fileNameShen3"></Table>
+                <input type="file" style="display:none"  name="" @change="changeFileShen3($event)" id="qisuShen3">
+            </div>
+            <div class="boxContent" style="height: 210px;">
+                <p class="labelNmae">证人出庭申请书：
+                    <Button type="primary" @click="upFileShen(4)">添加</Button>
+                </p>
+                <Table height="168" :columns="columns1" :data="fileNameShen4"></Table>
+                <input type="file" style="display:none"  name="" @change="changeFileShen4($event)" id="qisuShen4">
+            </div>
+            <div class="boxContent" style="height: 210px;">
+                <p class="labelNmae">现场勘验申请书：
+                    <Button type="primary" @click="upFileShen(5)">添加</Button>
+                </p>
+                <Table height="168" :columns="columns1" :data="fileNameShen5"></Table>
+                <input type="file" style="display:none"  name="" @change="changeFileShen5($event)" id="qisuShen5">
+            </div>
+            <div class="boxContent" style="height: 210px;">
+                <p class="labelNmae">鉴定评估申请书：
+                    <Button type="primary" @click="upFileShen(6)">添加</Button>
+                </p>
+                <Table height="168" :columns="columns1" :data="fileNameShen6"></Table>
+                <input type="file" style="display:none"  name="" @change="changeFileShen6($event)" id="qisuShen6">
+            </div>
+        <!-- <div class="boxContent">
             <p class="labelNmae">起诉书：</p>
             <div class="add matrFile" @click="upFile(3)" v-show="qisuSh">
                 <div class="demo-spin-container" v-show='uploadIngSpinchangeFile3'>
@@ -575,9 +645,9 @@ right: -20px;">元</span>
                 </div>
             </div>
             <p style="margin-top:10px;color:black">{{qfileName}}<span class="cansal" @click="cancelFile(3)">X</span></p>
-        </div>
-        <div class="boxContent" style="width: 195px;">
-            <p class="labelNmae"  style="padding-left: 0px;">身份证明及授权委托材料：</p>
+        </div> -->
+        <!-- <div class="boxContent" style="width: 195px;">
+            <p class="labelNmae"  style="padding-left: 0px;">身份证明及授权委托材料：</p> -->
             <!-- <div class="add matrFile" @click="upFile(2)" v-show="qisuShow2">
                 <Icon type="plus-round"></Icon>
                 <p>添加委托书</p>
@@ -585,7 +655,7 @@ right: -20px;">元</span>
             </div>
             <p style="margin-top:10px;color:black">{{fileName2}}<span class="cansal" @click="cancelFile(2)">X</span></p> -->
             
-            <div class="add matrShen">
+            <!-- <div class="add matrShen">
                 <div v-show="qisuShow1" class="add matrFileShen" style="width:160px;"  @click="upFile(1)">
                     <div class="demo-spin-container" v-show='uploadIngSpinchangeFile1'>
                         <Spin fix>上传中..</Spin>
@@ -594,16 +664,16 @@ right: -20px;">元</span>
                         <Icon type="plus-round"></Icon>
                         <p>身份证明材料</p>
                         <input type="file" style="display:none"  name="" @change="changeFile1($event)" id="qisu1">
-                    </div>
+                    </div> -->
                     <!-- <Icon type="plus-round"></Icon>
                     <p>身份证明材料</p>
                     <input type="file" style="display:none"  name="" @change="changeFile1($event)" id="qisu1"> -->
-                </div>
+                <!-- </div>
                 <p class="overHides" style="margin-top:10px;color:black;">{{fileName1}}</p>
                 <span v-show="fileName1 != ''" class="cansal" @click="cancelFile(1)">X</span>
-            </div>
+            </div> -->
 
-            <div class="add matrShen">
+            <!-- <div class="add matrShen">
                 <div  v-show="qisuShow2" class="add matrFileShen" style="width:160px;" @click="upFile(2)">
                     <div class="demo-spin-container" v-show='uploadIngSpinchangeFile2'>
                         <Spin fix>上传中..</Spin>
@@ -612,11 +682,11 @@ right: -20px;">元</span>
                         <Icon type="plus-round"></Icon>
                         <p>授权委托材料</p>
                         <input type="file" style="display:none"  name="" @change="changeFile2($event)" id="qisu2">
-                    </div>
+                    </div> -->
                     <!-- <Icon type="plus-round"></Icon>
                     <p>授权委托材料</p>
                     <input type="file" style="display:none"  name="" @change="changeFile2($event)" id="qisu2"> -->
-                </div>
+                <!-- </div>
                 <p class="overHides" style="margin-top:10px;color:black">{{fileName2}}</p>
                 <span v-show="fileName2 != ''" class="cansal" @click="cancelFile(2)">X</span>                        
             </div>
@@ -632,11 +702,11 @@ right: -20px;">元</span>
                         <Icon type="plus-round"></Icon>
                         <p>财产保全申请书</p>
                         <input type="file" style="display:none"  name="" @change="changeFileShen1($event)" id="qisuShen1">
-                    </div>
+                    </div> -->
                     <!-- <Icon type="plus-round"></Icon>
                     <p>财产保全申请书</p>
                     <input type="file" style="display:none"  name="" @change="changeFileShen1($event)" id="qisuShen1"> -->
-                </div>
+                <!-- </div>
                 <p class="overHides" style="margin-top:10px;color:black">{{fileNameShen1}}</p>
                 <span v-show="fileNameShen1 != ''" class="cansal" @click="cancelFileShen(1)">X</span>
             </div>
@@ -649,11 +719,11 @@ right: -20px;">元</span>
                         <Icon type="plus-round"></Icon>
                         <p>调查取证申请书</p>
                         <input type="file" style="display:none"  name="" @change="changeFileShen2($event)" id="qisuShen2">
-                    </div>
+                    </div> -->
                     <!-- <Icon type="plus-round"></Icon>
                     <p>调查取证申请书</p>
                     <input type="file" style="display:none"  name="" @change="changeFileShen2($event)" id="qisuShen2"> -->
-                </div>
+                <!-- </div>
                 <p class="overHides" style="margin-top:10px;color:black">{{fileNameShen2}}</p>  
                 <span v-show="fileNameShen2 != ''" class="cansal" @click="cancelFileShen(2)">X</span>                      
             </div>
@@ -666,11 +736,11 @@ right: -20px;">元</span>
                         <Icon type="plus-round"></Icon>
                         <p>证据保全申请书</p>
                         <input type="file" style="display:none"  name="" @change="changeFileShen3($event)" id="qisuShen3">
-                    </div>
+                    </div> -->
                     <!-- <Icon type="plus-round"></Icon>
                     <p>证据保全申请书</p>
                     <input type="file" style="display:none"  name="" @change="changeFileShen3($event)" id="qisuShen3"> -->
-                </div>
+                <!-- </div>
                 <p class="overHides"  style="margin-top:10px;color:black">{{fileNameShen3}}</p>
                 <span v-show="fileNameShen3 != ''" class="cansal" @click="cancelFileShen(3)">X</span>                        
             </div>
@@ -683,11 +753,11 @@ right: -20px;">元</span>
                         <Icon type="plus-round"></Icon>
                         <p>证人出庭申请书</p>
                         <input type="file" style="display:none"  name="" @change="changeFileShen4($event)" id="qisuShen4">
-                    </div>
+                    </div> -->
                     <!-- <Icon type="plus-round"></Icon>
                     <p>证人出庭申请书</p>
                     <input type="file" style="display:none"  name="" @change="changeFileShen4($event)" id="qisuShen4"> -->
-                </div>
+                <!-- </div>
                 <p class="overHides" style="margin-top:10px;color:black">{{fileNameShen4}}</p>
                 <span v-show="fileNameShen4 != ''" class="cansal" @click="cancelFileShen(4)">X</span>                        
             </div>
@@ -700,11 +770,11 @@ right: -20px;">元</span>
                         <Icon type="plus-round"></Icon>
                         <p>现场勘验申请书</p>
                         <input type="file" style="display:none"  name="" @change="changeFileShen5($event)" id="qisuShen5">
-                    </div>
+                    </div> -->
                     <!-- <Icon type="plus-round"></Icon>
                     <p>现场勘验申请书</p>
                     <input type="file" style="display:none"  name="" @change="changeFileShen5($event)" id="qisuShen5"> -->
-                </div>
+                <!-- </div>
                 <p class="overHides"  style="margin-top:10px;color:black">{{fileNameShen5}}</p>               
                 <span v-show="fileNameShen5 != ''" class="cansal" @click="cancelFileShen(5)">X</span>         
             </div>
@@ -717,15 +787,15 @@ right: -20px;">元</span>
                         <Icon type="plus-round"></Icon>
                         <p>鉴定评估申请书</p>
                         <input type="file" style="display:none"  name="" @change="changeFileShen6($event)" id="qisuShen6">
-                    </div>
+                    </div> -->
                     <!-- <Icon type="plus-round"></Icon>
                     <p>鉴定评估申请书</p>
                     <input type="file" style="display:none"  name="" @change="changeFileShen6($event)" id="qisuShen6"> -->
-                </div>
+                <!-- </div>
                 <p class="overHides" style="margin-top:10px;color:black">{{fileNameShen6}}</p>               
                 <span v-show="fileNameShen6 != ''" class="cansal" @click="cancelFileShen(6)">X</span>         
             </div>
-        </div>
+            </div> -->
         </div>
         <div style="width:100%">
             <p class="sdw">
@@ -910,7 +980,7 @@ right: -20px;">元</span>
             <FormItem :label="addFormItem.litigantType == '自然人' ? '现居地址*' : '经营地址*'" style="width: 505px">
                 <Input v-model="addFormItem.address" :placeholder="addFormItem.litigantType == '自然人' ? '请输入当前常住地址' : '请输入经营地址'"></Input>
             </FormItem>
-            <FormItem :label="addFormItem.litigantType == '自然人' ? '确认送达地址*' : '确认送达地址*'" style="width: 505px">
+            <FormItem :label="addFormItem.litigantType == '自然人' ? '约定送达地址*' : '约定送达地址*'" style="width: 505px">
                 <Input v-model="addFormItem.sendAddress" placeholder="请输入当事人送达地址"></Input>
             </FormItem>
             <!-- <FormItem v-show="addFormItem.litigantType == '自然人'" label="个人证明" style="width: 505px">
@@ -999,15 +1069,15 @@ right: -20px;">元</span>
                 <Input v-model="litigantPhoneSelect" placeholder="请输入手机号" v-if="this.lawyerId == ''"></Input>
                 <div style="color: #ed3f14;position:absolute;top:28px;" v-if="this.lawyerId == ''">多个手机号码请用逗号分隔</div> -->
             </FormItem>
-            <FormItem label="律所*" v-show="!lawyerT1" style="width: 505px;">
+            <FormItem label="执业机构*" v-show="!lawyerT1" style="width: 505px;">
                 <!-- <Input v-model="addFormItem.lawIdentiCard" placeholder="请输入代理人公民身份证号码"  ></Input> -->
-                <AutoComplete v-model="addFormItem.lawyerOfficeName"  placeholder="请输入律师所属事务所" transfer></AutoComplete>
+                <AutoComplete v-model="addFormItem.lawyerOfficeName"  placeholder="请输入执业机构" transfer></AutoComplete>
             </FormItem>
-            <FormItem label="公民身份证号码" v-show="lawyerT1" style="width: 505px;">
+            <FormItem label="公民身份证号码*" v-show="lawyerT1" style="width: 505px;">
                 <!-- <Input v-model="addFormItem.lawIdentiCard" placeholder="请输入代理人公民身份证号码"  ></Input> -->
                 <AutoComplete v-model="addFormItem.lawIdentiCard" :data="numData1" @on-search="queryAgent1" placeholder="请输入代理人公民身份证号码" transfer></AutoComplete>
             </FormItem>
-            <FormItem label="公民身份证号码" v-show="!lawyerT1" style="width: 505px;">
+            <FormItem label="公民身份证号码*" v-show="!lawyerT1" style="width: 505px;">
                 <!-- <Input v-model="addFormItem.lawIdentiCard" placeholder="请输入代理人公民身份证号码"  ></Input> -->
                 <Input v-model="addFormItem.lawIdentiCard2" placeholder="请输入代理人公民身份证号码"></Input>
             </FormItem>
@@ -1015,12 +1085,20 @@ right: -20px;">元</span>
                 <!-- <Input v-model="addFormItem.lawerNum" placeholder="请输入代理人工作证件号码"  ></Input> -->
                 <AutoComplete v-model="addFormItem.lawerNum" :data="lawNumData1" @on-search="queryAgent1" placeholder="请输入代理人工作证件号码" transfer></AutoComplete>
             </FormItem>
-            <FormItem label="电子邮箱" style="width: 505px">
+            <FormItem label="电子邮箱*" style="width: 505px">
                 <Input v-model="addFormItem.email" placeholder="请输入电子邮箱"></Input>
             </FormItem>
             <FormItem label="联系地址"  style="width: 505px;">
                 <!-- <Input v-model="addFormItem.lawerNum" placeholder="请输入代理人联系地址"  ></Input> -->
                 <AutoComplete v-model="addFormItem.address"  placeholder="请输入代理人确认送达地址" transfer></AutoComplete>
+            </FormItem>
+            <FormItem label="推荐单位*" v-show="citizen"  style="width: 505px;">
+                <!-- <Input v-model="addFormItem.lawerNum" placeholder="请输入代理人联系地址"  ></Input> -->
+                <AutoComplete v-model="addFormItem.recCompany"  placeholder="请输入推荐单位" transfer></AutoComplete>
+            </FormItem>
+            <FormItem label="与当事人关系*" v-show="relatives"  style="width: 505px;">
+                <!-- <Input v-model="addFormItem.lawerNum" placeholder="请输入代理人联系地址"  ></Input> -->
+                <AutoComplete v-model="addFormItem.relatives"  placeholder="请输入与当事人关系" transfer></AutoComplete>
             </FormItem>
         </Form>
     </div>
@@ -1114,61 +1192,83 @@ right: -20px;">元</span>
                     起诉状：
                 </Col>
                 <Col span="18" style=" padding-right: 5px;margin-bottom:15px">
-                    {{qfileName == '' ? "无" : qfileName}}
+                    <!-- {{qfileName == '' ? "无" : qfileName}} -->
+                    <span v-if="qfileName.length == 0">无</span>
+                    <p :title="item.name" class="overflow" v-for="(item,index) in qfileName">{{item.name}}</p>
                 </Col>
                 <Col span="6" style=" padding-right: 5px;text-align: left;">
                     身份证明材料：
                 </Col>
                 <Col span="6" style=" padding-right: 5px">
-                    {{fileName1 == '' ? "无" : fileName1}}
+                    <!-- {{fileName1 == '' ? "无" : fileName1}} -->
+                    <span v-if="fileName1.length == 0">无</span>
+                    <p :title="item.name" class="overflow" v-for="(item,index) in fileName1">{{item.name}}</p>
                 </Col>
                 <Col span="5" style=" padding-right: 5px;text-align: left;">
                     授权委托材料：
                 </Col>
                 <Col span="7" style=" padding-right: 5px">
-                    {{fileName2 == '' ? "无" : fileName2}}
+                    <!-- {{fileName2 == '' ? "无" : fileName2}} -->
+                    <span v-if="fileName2.length == 0">无</span>
+                    <p :title="item.name" class="overflow" v-for="(item,index) in fileName2">{{item.name}}</p>
                 </Col>
             </Row>
-        
-            <Row  style="margin-bottom:5px;margin-bottom:10px">
-                <p class="sdws">
-                    申请书：
-                </p>
+
+            <p class="sdws">
+                申请书：
+            </p>
+            <Row :gutter="16" style="margin-bottom:5px;margin-bottom:10px">
                 <Col span="6" style=" padding-right: 5px;text-align: left;margin-bottom:10px">
                     财产保全申请书：
                 </Col>
                 <Col span="6" style=" padding-right: 5px;margin-bottom:10px">
-                    {{fileNameShen1 == '' ? "无" : fileNameShen1}}
+                    <!-- {{fileNameShen1 == '' ? "无" : fileNameShen1}} -->
+                    <span v-if="fileNameShen1.length == 0">无</span>
+                    <p :title="item.name" class="overflow" v-for="(item,index) in fileNameShen1">{{item.name}}</p c>
                 </Col>
-                <Col span="5" style=" padding-right: 5px;text-align: left;margin-bottom:10px">
+                <Col span="6" style=" padding-right: 5px;text-align: left;margin-bottom:10px">
                     调查取证申请书：
                 </Col>
-                <Col span="7" style=" padding-right: 5px;margin-bottom:10px">
-                    {{fileNameShen2 == '' ? "无" : fileNameShen2}}
+                <Col span="6" style=" padding-right: 5px;margin-bottom:10px">
+                    <!-- {{fileNameShen2 == '' ? "无" : fileNameShen2}} -->
+                    <span v-if="fileNameShen2.length == 0">无</span>
+                    <p :title="item.name" class="overflow" v-for="(item,index) in fileNameShen2">{{item.name}}</p>
                 </Col>
+            </Row>
+            <Row :gutter="16" style="margin-bottom:5px;margin-bottom:10px">
                 <Col span="6" style=" padding-right: 5px;text-align: left;margin-bottom:10px">
                     证据保全申请书：
                 </Col>
                 <Col span="6" style=" padding-right: 5px;margin-bottom:10px">
-                    {{fileNameShen3 == '' ? "无" : fileNameShen3}}
+                    <!-- {{fileNameShen3 == '' ? "无" : fileNameShen3}} -->
+                    <span v-if="fileNameShen3.length == 0">无</span>
+                    <p :title="item.name" class="overflow" v-for="(item,index) in fileNameShen3">{{item.name}}</p>
                 </Col>
-                <Col span="5" style=" padding-right: 5px;text-align: left;margin-bottom:10px">
+                <Col span="6" style=" padding-right: 5px;text-align: left;margin-bottom:10px">
                     证人出庭申请书：
                 </Col>
-                <Col span="7" style=" padding-right: 5px;margin-bottom:10px">
-                    {{fileNameShen4 == '' ? "无" : fileNameShen4}}
+                <Col span="6" style=" padding-right: 5px;margin-bottom:10px">
+                    <!-- {{fileNameShen4 == '' ? "无" : fileNameShen4}} -->
+                    <span v-if="fileNameShen4.length == 0">无</span>
+                    <p :title="item.name" class="overflow" v-for="(item,index) in fileNameShen4">{{item.name}}</p>
                 </Col>
+            </Row>
+            <Row :gutter="16" style="margin-bottom:5px;margin-bottom:10px">
                 <Col span="6" style=" padding-right: 5px;text-align: left;margin-bottom:10px">
                     现场勘验申请书：
                 </Col>
                 <Col span="6" style=" padding-right: 5px;margin-bottom:10px">
-                    {{fileNameShen5 == '' ? "无" : fileNameShen5}}
+                    <!-- {{fileNameShen5 == '' ? "无" : fileNameShen5}} -->
+                    <span v-if="fileNameShen5.length == 0">无</span>
+                    <p :title="item.name" class="overflow" v-for="(item,index) in fileNameShen5">{{item.name}}</p>
                 </Col>
-                <Col span="5" style=" padding-right: 5px;text-align: left;margin-bottom:10px">
+                <Col span="6" style=" padding-right: 5px;text-align: left;margin-bottom:10px">
                     鉴定评估申请书：
                 </Col>
-                <Col span="7" style=" padding-right: 5px;margin-bottom:10px">
-                    {{fileNameShen6 == '' ? "无" : fileNameShen6}}
+                <Col span="6" style=" padding-right: 5px;margin-bottom:10px">
+                    <!-- {{fileNameShen6 == '' ? "无" : fileNameShen6}} -->
+                    <span v-if="fileNameShen6.length == 0">无</span>
+                    <p :title="item.name" class="overflow" v-for="(item,index) in fileNameShen6">{{item.name}}</p>
                 </Col>
             </Row>
             <div>
@@ -1519,6 +1619,77 @@ export default {
     },
 data () {
 return {
+    fileType:0,//文件类型
+    fileAppType:0,//申请书文件类型
+    citizen: false,//公民身份才显示的开关
+    relatives: false,//近亲属显示开关
+    columns1:[
+        {
+            title: '文件名',
+            key: 'name'
+        },
+        {
+            title: '操作',
+            key: 'id',
+            render: (h, params) => {
+                return h("div", [
+                    h(
+                        "Button",
+                        {
+                        props: {
+                            type: "text",
+                            size: "small"
+                        },
+                        on: {
+                            click: () => {
+                                this.fileType = params.row.type;
+                                this.fileAppType = params.row.applyType;
+                                delFiles(params.row.id, this.caseId).then(res => {
+                                    if(res.data.state == 100){
+                                        this.$Message.success("删除成功");
+                                        if(this.fileType == 1){
+                                            this.fileName1 = res.data.evidents;
+                                        }else if(this.fileType == 2){
+                                            this.fileName2 = res.data.evidents;
+                                        }else if(this.fileType == 3){
+                                            // const data = {
+                                            //     name:item.eviName,
+                                            //     proves:item.eviProve,
+                                            //     where:item.eviSource,
+                                            //     filePa:item.path ? item.path : "",
+                                            //     id:item.id
+                                            // }
+                                            // this.EviList.push(data);
+                                        }else if(this.fileType == 4){
+                                            if(this.fileAppType == 1){
+                                                this.fileNameShen1 = res.data.evidents;
+                                            }else if(this.fileAppType == 2){
+                                                this.fileNameShen2 = res.data.evidents;
+                                            }else if(this.fileAppType == 3){
+                                                this.fileNameShen3 = res.data.evidents;
+                                            }else if(this.fileAppType == 4){
+                                                this.fileNameShen4 = res.data.evidents;
+                                            }else if(this.fileAppType == 5){
+                                                this.fileNameShen5 = res.data.evidents;
+                                            }else if(this.fileAppType == 6){
+                                                this.fileNameShen6 = res.data.evidents;
+                                            }
+                                        }else if(this.fileType == 5){
+                                            this.qfileName = res.data.evidents;
+                                        }
+                                    }else{
+                                        this.$Message.info(res.data.message);
+                                    }
+                                }) 
+                            }
+                        }
+                        },
+                        "删除"
+                    ),
+                ]);
+            }
+        },
+    ],
     wordLength:60,
     nowPage:1,
     usualLoading:false,
@@ -1597,17 +1768,17 @@ return {
     single2:false,
     disabled:true,
     disabled1:true,
-    fileNameShen1:"",
+    fileNameShen1:[],
     onlineEAIdShen1:"",
-    fileNameShen2:"",
+    fileNameShen2:[],
     onlineEAIdShen2:"",
-    fileNameShen3:"",
+    fileNameShen3:[],
     onlineEAIdShen3:"",
-    fileNameShen4:"",
+    fileNameShen4:[],
     onlineEAIdShen4:"",
-    fileNameShen5:"",
+    fileNameShen5:[],
     onlineEAIdShen5:"",
-    fileNameShen6:"",
+    fileNameShen6:[],
     onlineEAIdShen6:"",
     qisuShowShen1:true,
     qisuShowShen2:true,
@@ -1877,13 +2048,13 @@ return {
     bridfList:[],
     phone:'',
     qisuSh:true,
-    qfileName:"",
-    fileName1:"",
-    fileName2:"",
-    fileName3:"",
-    fileName4:"",
-    fileName5:"",
-    fileName6:"",
+    qfileName:[],
+    fileName1:[],
+    fileName2:[],
+    fileName3:'',
+    fileName4:'',
+    fileName5:'',
+    fileName6:'',
     qisuShow1:true,
     qisuShow2:true,
     qisuShow3:true,
@@ -1946,6 +2117,8 @@ nationList:["汉族","蒙古族","回族","藏族","维吾尔族","苗族","彝�
         corpManId:'',
         role:[],
         fixedPhone:'',
+        recCompany:'',
+        relatives:'',
     },
     linigantList:[],
     pathList:[],
@@ -2280,11 +2453,11 @@ getFile(event){
     this.file = event.target.files[0];
     let applyType = "";
     this.fileNlistEvi=true
-    upFiles(this.file,3,this.caseId, applyType).then(res => {
+    upFiles(this.file,3,this.caseId, applyType,2).then(res => {
         if(res.data.state == 100){
             this.$Message.success('上传成功');
-            var datas = {
-                name:this.file.name,
+            const datas = {
+                name:res.data.evident.name,
                 id:res.data.evident.id
             }
             this.fileNlist.push(datas);
@@ -2493,18 +2666,29 @@ getlawyerLis(){
 },
 getFilesL(){
     this.EviList = [];
+    this.qfileName = [];
+    this.fileName1 = [];
+    this.fileName2 = [];
+    this.fileNameShen1 = [];
+    this.fileNameShen2 = [];
+    this.fileNameShen3 = [];
+    this.fileNameShen4 = [];
+    this.fileNameShen5 = [];
+    this.fileNameShen6 = [];
     getFiles(this.caseId).then(res => {
         if(res.data.state == 100){
             if(res.data.hasOwnProperty('file')){
                 res.data.file.map(item => {
                     if(item.type == 1){
-                        this.fileName1 = item.name;
-                        this.onlineEAId1 = item.id;
-                        this.qisuShow1 = false;
+                        this.fileName1.push(item);
+                        // this.fileName1 = item.name;
+                        // this.onlineEAId1 = item.id;
+                        // this.qisuShow1 = false;
                     }else if(item.type == 2){
-                        this.fileName2 = item.name;
-                        this.onlineEAId2 = item.id;
-                        this.qisuShow2 = false;
+                        this.fileName2.push(item);
+                        // this.fileName2 = item.name;
+                        // this.onlineEAId2 = item.id;
+                        // this.qisuShow2 = false;
                     }else if(item.type == 3){
                         const data = {
                             name:item.eviName,
@@ -2516,47 +2700,45 @@ getFilesL(){
                         this.EviList.push(data);
                     }else if(item.type == 4){
                         if(item.applyType == 1){
-                            this.fileNameShen1 = item.name;
-                            this.qisuShowShen1 = false;
-                            this.onlineEAIdShen1 = item.id;
+                            this.fileNameShen1.push(item);
+                            // this.fileNameShen1 = item.name;
+                            // this.qisuShowShen1 = false;
+                            // this.onlineEAIdShen1 = item.id;
                         }else if(item.applyType == 2){
-                            this.fileNameShen2 = item.name;
-                            this.qisuShowShen2 = false;
-                            this.onlineEAIdShen2 = item.id;
+                            this.fileNameShen2.push(item);
+                            // this.fileNameShen2 = item.name;
+                            // this.qisuShowShen2 = false;
+                            // this.onlineEAIdShen2 = item.id;
                         }else if(item.applyType == 3){
-                            this.fileNameShen3 = item.name;
-                            this.qisuShowShen3 = false;
-                            this.onlineEAIdShen3 = item.id;
+                            this.fileNameShen3.push(item);
+                            // this.fileNameShen3 = item.name;
+                            // this.qisuShowShen3 = false;
+                            // this.onlineEAIdShen3 = item.id;
                         }else if(item.applyType == 4){
-                            this.fileNameShen4 = item.name;
-                            this.qisuShowShen4= false;
-                            this.onlineEAIdShen4 = item.id;
+                            this.fileNameShen4.push(item);
+                            // this.fileNameShen4 = item.name;
+                            // this.qisuShowShen4= false;
+                            // this.onlineEAIdShen4 = item.id;
                         }else if(item.applyType == 5){
-                            this.fileNameShen5 = item.name;
-                            this.qisuShowShen5 = false;
-                            this.onlineEAIdShen5 = item.id;
+                            this.fileNameShen5.push(item);
+                            // this.fileNameShen5 = item.name;
+                            // this.qisuShowShen5 = false;
+                            // this.onlineEAIdShen5 = item.id;
                         }else if(item.applyType == 6){
-                            this.fileNameShen6 = item.name;
-                            this.qisuShowShen6 = false;
-                            this.onlineEAIdShen6 = item.id;
+                            this.fileNameShen6.push(item);
+                            // this.fileNameShen6 = item.name;
+                            // this.qisuShowShen6 = false;
+                            // this.onlineEAIdShen6 = item.id;
                         }
                     }else if(item.type == 5){
-                        this.qfileName = item.name;
-                        this.onlineEAId3 = item.id;
-                        this.qisuSh = false;
+                        this.qfileName.push(item);
+                        // this.qfileName = item.name;
+                        // this.onlineEAId3 = item.id;
+                        // this.qisuSh = false;
                     }
                 });
                 return;
             }
-            this.qfileName = '';
-            this.fileName1 = '';
-            this.fileName2 = '';
-            this.fileNameShen1 = '';
-            this.fileNameShen2 = '';
-            this.fileNameShen3 = '';
-            this.fileNameShen4 = '';
-            this.fileNameShen5 = '';
-            this.fileNameShen6 = '';
             this.qisuSh = true;
             this.qisuShow1 = true;
             this.qisuShow2 = true;
@@ -3203,6 +3385,16 @@ changeType (e) {
     } else {
         this.lawyerT1 = true;
     }
+    if (e == 5){
+        this.citizen = true;
+    }else{
+        this.citizen = false;
+    }
+    if (e == 4){
+        this.relatives = true;
+    }else{
+        this.relatives = false;
+    }
 },
 changeType1 (e) {
     if (e == 1 || e == 2) {
@@ -3789,75 +3981,79 @@ cancelFile(dex){
         })
     }
 },
-cancelFileShen(dex){
-    let sId = "";
-    if(dex == 1){
-        sId = this.onlineEAIdShen1
-    }else if(dex == 2){
-        sId = this.onlineEAIdShen2
-    }else if(dex == 3){
-        sId = this.onlineEAIdShen3
-    }else if(dex == 4){
-        sId = this.onlineEAIdShen4
-    }else if(dex == 5){
-        sId = this.onlineEAIdShen5
-    }else if(dex == 6){
-        sId = this.onlineEAIdShen6
-    }
-    delFiles(sId, this.caseId).then(res => {
-        if(res.data.state == 100){
-            this.$Message.success("删除成功");
-            if(dex == 1){
-                this.fileNameShen1 = "";
-                this.qisuShowShen1 = true;
-                document.getElementById("qisuShen1").value = "";
-            }else if(dex == 2){
-                this.fileNameShen2 = "";
-                this.qisuShowShen2 = true;
-                document.getElementById("qisuShen2").value = "";
-            }else if(dex == 3){
-                this.fileNameShen3 = "";
-                this.qisuShowShen3 = true;
-                document.getElementById("qisuShen3").value = "";
-            }else if(dex == 4){
-                this.fileNameShen4 = "";
-                this.qisuShowShen4 = true;
-                document.getElementById("qisuShen4").value = "";
-            }else if(dex == 5){
-                this.fileNameShen5 = "";
-                this.qisuShowShen5 = true;
-                document.getElementById("qisuShen5").value = "";
-            }else if(dex == 6){
-                this.fileNameShen6 = "";
-                this.qisuShowShen6 = true;
-                document.getElementById("qisuShen6").value = "";
-            }
-            for(let i=0;i<this.pathList.length;i++){
-                if(sId == this.pathList[i].id){
-                    this.pathList.splice(i, 1);
-                }
-            }
-        }else{
-            this.$Message.info(res.data.message);
-        }
-    })
-},
+// cancelFileShen(dex){
+//     let sId = "";
+//     if(dex == 1){
+//         sId = this.onlineEAIdShen1
+//     }else if(dex == 2){
+//         sId = this.onlineEAIdShen2
+//     }else if(dex == 3){
+//         sId = this.onlineEAIdShen3
+//     }else if(dex == 4){
+//         sId = this.onlineEAIdShen4
+//     }else if(dex == 5){
+//         sId = this.onlineEAIdShen5
+//     }else if(dex == 6){
+//         sId = this.onlineEAIdShen6
+//     }
+//     delFiles(sId, this.caseId).then(res => {
+//         if(res.data.state == 100){
+//             this.$Message.success("删除成功");
+//             if(dex == 1){
+//                 this.fileNameShen1 = "";
+//                 this.qisuShowShen1 = true;
+//                 document.getElementById("qisuShen1").value = "";
+//             }else if(dex == 2){
+//                 this.fileNameShen2 = "";
+//                 this.qisuShowShen2 = true;
+//                 document.getElementById("qisuShen2").value = "";
+//             }else if(dex == 3){
+//                 this.fileNameShen3 = "";
+//                 this.qisuShowShen3 = true;
+//                 document.getElementById("qisuShen3").value = "";
+//             }else if(dex == 4){
+//                 this.fileNameShen4 = "";
+//                 this.qisuShowShen4 = true;
+//                 document.getElementById("qisuShen4").value = "";
+//             }else if(dex == 5){
+//                 this.fileNameShen5 = "";
+//                 this.qisuShowShen5 = true;
+//                 document.getElementById("qisuShen5").value = "";
+//             }else if(dex == 6){
+//                 this.fileNameShen6 = "";
+//                 this.qisuShowShen6 = true;
+//                 document.getElementById("qisuShen6").value = "";
+//             }
+//             for(let i=0;i<this.pathList.length;i++){
+//                 if(sId == this.pathList[i].id){
+//                     this.pathList.splice(i, 1);
+//                 }
+//             }
+//         }else{
+//             this.$Message.info(res.data.message);
+//         }
+//     })
+// },
 changeFile1(event){
     this.file = event.target.files[0];
     let applyType = "";
     this.uploadIngSpinchangeFile1=true
-    upFiles(this.file,1,this.caseId,applyType).then(res => {
+    upFiles(this.file,1,this.caseId,applyType,1).then(res => {
         this.uploadIngSpinchangeFile1=false
         if(res.data.state == 100){
             this.$Message.success('上传成功');
-            this.fileName1 = this.file.name;
-            this.onlineEAId1 = res.data.evident.id;
-            this.qisuShow1 = false;
-            const data = {
-                path:res.data.evident.name,
-                id:res.data.evident.id
-            }
-            this.pathList.push(data);
+            this.fileName1 = [];
+            res.data.evidents.map(item => {
+                return item.type == 1 ? this.fileName1.push(item) : false;
+            })
+            // this.fileName1 = this.file.name;
+            // this.onlineEAId1 = res.data.evident.id;
+            // this.qisuShow1 = false;
+            // const data = {
+            //     path:res.data.evident.name,
+            //     id:res.data.evident.id
+            // }
+            // this.pathList.push(data);
         }else{
             this.$Modal.warning({
                 title: '提示',
@@ -3870,18 +4066,22 @@ changeFile2(event){
     this.file = event.target.files[0];
     let applyType = "";
     this.uploadIngSpinchangeFile2=true
-    upFiles(this.file,2,this.caseId,applyType).then(res => {
+    upFiles(this.file,2,this.caseId,applyType,1).then(res => {
         this.uploadIngSpinchangeFile2=false
         if(res.data.state == 100){
             this.$Message.success('上传成功');
-            this.fileName2 = this.file.name;
-            this.onlineEAId2 = res.data.evident.id;
-            this.qisuShow2 = false;
-            const data = {
-                path:res.data.evident.name,
-                id:res.data.evident.id
-            }
-            this.pathList.push(data);
+            this.fileName2 = [];
+            res.data.evidents.map(item => {
+                return item.type == 2 ? this.fileName2.push(item) : false;
+            })
+            // this.fileName2 = this.file.name;
+            // this.onlineEAId2 = res.data.evident.id;
+            // this.qisuShow2 = false;
+            // const data = {
+            //     path:res.data.evident.name,
+            //     id:res.data.evident.id
+            // }
+            // this.pathList.push(data);
         }else{
             this.$Modal.warning({
                 title: '提示',
@@ -3894,18 +4094,22 @@ changeFile3(event){
     this.file = event.target.files[0];
     let applyType = "";
     this.uploadIngSpinchangeFile3=true
-    upFiles(this.file,5,this.caseId, applyType).then(res => {
+    upFiles(this.file,5,this.caseId, applyType,1).then(res => {
         this.uploadIngSpinchangeFile3=false
         if(res.data.state == 100){
             this.$Message.success('上传成功');
-            this.qfileName = this.file.name;
-            this.onlineEAId3 = res.data.evident.id;
-            this.qisuSh = false;
-            const data = {
-                path:res.data.evident.name,
-                type:res.data.evident.id
-            }
-            this.pathList.push(data);
+            this.qfileName = [];
+            res.data.evidents.map(item => {
+                return item.type == 5 ? this.qfileName.push(item) : false;
+            })
+            // this.qfileName = this.file.name;
+            // this.onlineEAId3 = res.data.evident.id;
+            // this.qisuSh = false;
+            // const data = {
+            //     path:res.data.evident.name,
+            //     type:res.data.evident.id
+            // }
+            // this.pathList.push(data);
         }else{
             this.$Modal.warning({
                 title: '提示',
@@ -3918,18 +4122,22 @@ changeFileShen1(event){
     this.file = event.target.files[0];
     let applyType = 1;
     this.uploadIngSpinchangeFileShen1=true
-    upFiles(this.file,4,this.caseId,applyType).then(res => {
+    upFiles(this.file,4,this.caseId,applyType,1).then(res => {
         this.uploadIngSpinchangeFileShen1=false
         if(res.data.state == 100){
             this.$Message.success('上传成功');
-            this.fileNameShen1 = this.file.name;
-            this.onlineEAIdShen1 = res.data.evident.id;
-            const data = {
-                path:res.data.evident.name,
-                id:res.data.evident.id
-            }
-            this.pathList.push(data);
-            this.qisuShowShen1 = false;
+            this.fileNameShen1 = [];
+            res.data.evidents.map(item => {
+                return item.applyType == 1 ? this.fileNameShen1.push(item) : false;
+            })
+            // this.fileNameShen1 = this.file.name;
+            // this.onlineEAIdShen1 = res.data.evident.id;
+            // const data = {
+            //     path:res.data.evident.name,
+            //     id:res.data.evident.id
+            // }
+            // this.pathList.push(data);
+            // this.qisuShowShen1 = false;
         }else{
             this.$Modal.warning({
                 title: '提示',
@@ -3942,18 +4150,22 @@ changeFileShen2(event){
     this.file = event.target.files[0];
     let applyType = 2;
     this.uploadIngSpinchangeFileShen2=true
-    upFiles(this.file,4,this.caseId,applyType).then(res => {
+    upFiles(this.file,4,this.caseId,applyType,1).then(res => {
         this.uploadIngSpinchangeFileShen2=false
         if(res.data.state == 100){
             this.$Message.success('上传成功');
-            this.fileNameShen2 = this.file.name;
-            this.onlineEAIdShen2 = res.data.evident.id;
-            const data = {
-                path:res.data.evident.name,
-                id:res.data.evident.id
-            }
-            this.pathList.push(data);
-            this.qisuShowShen2 = false;
+            this.fileNameShen2 = [];
+            res.data.evidents.map(item => {
+                return item.applyType == 2 ? this.fileNameShen2.push(item) : false;
+            })
+            // this.fileNameShen2 = this.file.name;
+            // this.onlineEAIdShen2 = res.data.evident.id;
+            // const data = {
+            //     path:res.data.evident.name,
+            //     id:res.data.evident.id
+            // }
+            // this.pathList.push(data);
+            // this.qisuShowShen2 = false;
         }else{
             this.$Modal.warning({
                 title: '提示',
@@ -3966,18 +4178,22 @@ changeFileShen3(event){
     this.file = event.target.files[0];
     let applyType = 3;
     this.uploadIngSpinchangeFileShen3=true
-    upFiles(this.file,4,this.caseId,applyType).then(res => {
+    upFiles(this.file,4,this.caseId,applyType,1).then(res => {
         this.uploadIngSpinchangeFileShen3=false
         if(res.data.state == 100){
             this.$Message.success('上传成功');
-            this.fileNameShen3 = this.file.name;
-            this.onlineEAIdShen3 = res.data.evident.id;
-            const data = {
-                path:res.data.evident.name,
-                id:res.data.evident.id
-            }
-            this.pathList.push(data);
-            this.qisuShowShen3 = false;
+            this.fileNameShen3 = [];
+            res.data.evidents.map(item => {
+                return item.applyType == 3 ? this.fileNameShen3.push(item) : false;
+            })
+            // this.fileNameShen3 = this.file.name;
+            // this.onlineEAIdShen3 = res.data.evident.id;
+            // const data = {
+            //     path:res.data.evident.name,
+            //     id:res.data.evident.id
+            // }
+            // this.pathList.push(data);
+            // this.qisuShowShen3 = false;
         }else{
             this.$Modal.warning({
                 title: '提示',
@@ -3990,18 +4206,22 @@ changeFileShen4(event){
     this.file = event.target.files[0];
     let applyType = 4;
     this.uploadIngSpinchangeFileShen4=true
-    upFiles(this.file,4,this.caseId,applyType).then(res => {
+    upFiles(this.file,4,this.caseId,applyType,1).then(res => {
         this.uploadIngSpinchangeFileShen4=false
         if(res.data.state == 100){
             this.$Message.success('上传成功');
-            this.fileNameShen4 = this.file.name;
-            this.onlineEAIdShen4 = res.data.evident.id;
-            const data = {
-                path:res.data.evident.name,
-                id:res.data.evident.id
-            }
-            this.pathList.push(data);
-            this.qisuShowShen4 = false;
+            this.fileNameShen4 = [];
+            res.data.evidents.map(item => {
+                return item.applyType == 4 ? this.fileNameShen4.push(item) : false;
+            })
+            // this.fileNameShen4 = this.file.name;
+            // this.onlineEAIdShen4 = res.data.evident.id;
+            // const data = {
+            //     path:res.data.evident.name,
+            //     id:res.data.evident.id
+            // }
+            // this.pathList.push(data);
+            // this.qisuShowShen4 = false;
         }else{
             this.$Modal.warning({
                 title: '提示',
@@ -4014,18 +4234,22 @@ changeFileShen5(event){
     this.uploadIngSpinchangeFileShen5=true
     this.file = event.target.files[0];
     let applyType = 5;
-    upFiles(this.file,4,this.caseId,applyType).then(res => {
+    upFiles(this.file,4,this.caseId,applyType,1).then(res => {
         this.uploadIngSpinchangeFileShen5=false
         if(res.data.state == 100){
             this.$Message.success('上传成功');
-            this.fileNameShen5 = this.file.name;
-            this.onlineEAIdShen5 = res.data.evident.id;
-            const data = {
-                path:res.data.evident.name,
-                id:res.data.evident.id
-            }
-            this.pathList.push(data);
-            this.qisuShowShen5 = false;
+            this.fileNameShen5 = [];
+            res.data.evidents.map(item => {
+                return item.applyType == 5 ? this.fileNameShen5.push(item) : false;
+            })
+            // this.fileNameShen5 = this.file.name;
+            // this.onlineEAIdShen5 = res.data.evident.id;
+            // const data = {
+            //     path:res.data.evident.name,
+            //     id:res.data.evident.id
+            // }
+            // this.pathList.push(data);
+            // this.qisuShowShen5 = false;
         }else{
             this.$Modal.warning({
                 title: '提示',
@@ -4038,18 +4262,22 @@ changeFileShen6(event){
     this.uploadIngSpinchangeFileShen6=true
     this.file = event.target.files[0];
     let applyType = 6;
-    upFiles(this.file,4,this.caseId,applyType).then(res => {
+    upFiles(this.file,4,this.caseId,applyType,1).then(res => {
         this.uploadIngSpinchangeFileShen6=false
         if(res.data.state == 100){
             this.$Message.success('上传成功');
-            this.fileNameShen6 = this.file.name;
-            this.onlineEAIdShen6 = res.data.evident.id;
-            const data = {
-                path:res.data.evident.name,
-                id:res.data.evident.id
-            }
-            this.pathList.push(data);
-            this.qisuShowShen6 = false;
+            this.fileNameShen6 = [];
+            res.data.evidents.map(item => {
+                return item.applyType == 6 ? this.fileNameShen6.push(item) : false;
+            })
+            // this.fileNameShen6 = this.file.name;
+            // this.onlineEAIdShen6 = res.data.evident.id;
+            // const data = {
+            //     path:res.data.evident.name,
+            //     id:res.data.evident.id
+            // }
+            // this.pathList.push(data);
+            // this.qisuShowShen6 = false;
         }else{
             this.$Modal.warning({
                 title: '提示',

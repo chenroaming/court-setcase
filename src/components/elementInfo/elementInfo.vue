@@ -87,8 +87,8 @@
             <FormItem label="逾期还款日期">
                 <DatePicker type="date" v-model="litigation.overdue" placeholder="请选择还款日期" style="width: 300px"></DatePicker>
             </FormItem>
-            <FormItem label="欠款最新截至时间">
-                <DatePicker type="date" v-model="litigation.cutoff" placeholder="请选择截至日期" style="width: 300px"></DatePicker>
+            <FormItem label="欠款最新截止时间">
+                <DatePicker type="date" v-model="litigation.cutoff" placeholder="请选截止日期" style="width: 300px"></DatePicker>
             </FormItem>
             <FormItem label="欠款本金（元）" prop="arrears">
                 <Input v-model="litigation.arrears" placeholder="请输入欠款本金，例如：1000.00" style="width: 300px" />

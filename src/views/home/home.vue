@@ -86,9 +86,10 @@ top: 20%;
             cancel-text="立新案件"
             :closable="false"
             :mask-closable="false"
+            width="683"
             @on-ok="close"
             @on-cancel="newCase">
-            <Table border :loading="loading1" :columns="columns1" :data="data1"></Table>
+            <Table border :loading="loading1"  :columns="columns1" :data="data1"></Table>
             <div class="page-box">
                 <Page :total="total" :page-size='pageSize' @on-change="pageChange"/>
             </div> 
@@ -98,11 +99,12 @@ top: 20%;
 </template>
 <script>
 import Cookies from 'js-cookie';
-import { getCaesState} from '@/api/caseInfo.js';
+import { getCaesState,delLtigantCase} from '@/api/caseInfo.js';
 import { getUserInfo } from '@/api/user';
 export default {
 data () {
     return {
+        nowPage:1,
         isLoading:true,
         loading1:false,
         modal1:false,
@@ -116,11 +118,13 @@ data () {
             {
                 title: '案由',
                 key: 'onlineBriefName',
+                width:150,
                 align:'center'
             },
             {
                 title: '原告',
                 key: 'plaintiffName',
+                width:150,
                 align:'center',
             //     render:(h,params) => {
             //         return h('div', [
@@ -139,6 +143,7 @@ data () {
             {
                 title: '被告',
                 key: 'defendantName',
+                width:150,
                 align:'center',
             //     render:(h,params) => {
             //         return h('div', [
@@ -158,12 +163,16 @@ data () {
                 title: '操作',
                 key: 'action',
                 align:'center',
+                width:200,
                 render:(h,params) => {
                     return h('div', [
                         h('Button', {
                             props: {
                                 type: 'primary',
                                 size: 'small'
+                            },
+                            style:{
+                                'margin-right':'10px',
                             },
                             on: {
                                 click: () => {
@@ -178,6 +187,40 @@ data () {
                                 }
                             }
                         }, '继续填写'),
+                        h('Button', {
+                            props: {
+                                type: 'warning',
+                                size: 'small'
+                            },
+                            on: {
+                                click: () => {
+                                    this.$Modal.confirm({
+                                        title: '提示',
+                                        content: '<p>确认删除该案件吗？</p>',
+                                        okText: '确定',
+                                        closable:true,
+                                        cancelText: '取消',
+                                        onOk: () => {
+                                            this.loading1 = true;
+                                            delLtigantCase(params.row.lawCaseId).then(res => {
+                                                this.loading1 = false;
+                                                if(res.data.state == 100){
+                                                    this.$Message.success(res.data.message);
+                                                    this.pageChange(this.nowPage);
+                                                }
+                                            })
+                                            .catch(err => {
+                                                console.log(err);
+                                                this.$Message.error('网络错误！请刷新重试！');
+                                            })
+                                        },
+                                        onCancel: () => {
+                                            
+                                        }
+                                    });
+                                }
+                            }
+                        }, '删除'),
                     ]);
                 }
             }
@@ -218,6 +261,7 @@ mounted () {
 methods: {
     pageChange(current){
         this.loading1 = true;
+        this.nowPage = current;
         getCaesState(current).then(res => {
             this.total = res.data.total;
             this.data1 = [];

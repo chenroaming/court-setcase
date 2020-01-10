@@ -106,7 +106,7 @@
                     <td><span>{{litigation.overdue}}</span></td>
                 </tr>
                 <tr>
-                    <td>欠款最新截至时间</td>
+                    <td>欠款最新截止时间</td>
                     <td><span>{{litigation.cutoff}}</span></td>
                 </tr>
                 <tr>
@@ -301,7 +301,7 @@
                     <td><span>{{pay.applyTime}}</span></td>
                 </tr>
                 <tr>
-                    <td>作出支付令时间</td>
+                    <td>证据</td>
                     <td><span>{{pay.completeTime}}</span></td>
                 </tr>
                 <tr>
@@ -362,7 +362,7 @@
                         <td><span>{{creditCard.interestAgreement}}</span></td>
                     </tr>
                     <tr>
-                        <td>信用卡欠款最新截至时间</td>
+                        <td>信用卡欠款最新截止时间</td>
                         <td><span>{{creditCard.deadline}}</span></td>
                     </tr>
                     <tr>

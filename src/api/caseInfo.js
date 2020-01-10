@@ -239,13 +239,13 @@ export function updateLawyerInfo (params) {
 /**
  * 上传附件
  */
-export function upFiles (file, fileType, onlineLawCaseId, applyType) {
+export function upFiles (file, fileType, onlineLawCaseId, applyType,resultType) {
     let params = new FormData()
     params.append('file', file)
     let config = {
       headers: { 'Content-Type': 'multipart/form-data' }
     }
-    var str = '/online/evidenceAttachment/upFiles.jhtml?fileType='+fileType+"&onlineLawCaseId="+onlineLawCaseId+ "&applyType="+applyType;
+    var str = '/online/evidenceAttachment/upFiles.jhtml?fileType='+fileType+"&onlineLawCaseId="+onlineLawCaseId+ "&applyType="+applyType+"&resultType="+resultType;
     return service.post(str, params, config)
 }
 
@@ -392,6 +392,20 @@ export function getCaesState (pageNumber = '') {
     };
     return service({
         url: '/online/lawCase/getLitigantLatelyLawCaseInfo.jhtml',
+        method: 'GET',
+        params
+    });
+}
+
+/** 
+ * 是否有保存过的案件
+ */
+export function delLtigantCase (onlineCaseId) {
+    const params = {
+        onlineCaseId
+    };
+    return service({
+        url: '/online/lawCase/delLtigantCase.jhtml',
         method: 'GET',
         params
     });

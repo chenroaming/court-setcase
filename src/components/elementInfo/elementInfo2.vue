@@ -79,8 +79,9 @@
                             <FormItem label="申请支付令时">
                                 <DatePicker type="date" v-model="pay.applyTime" placeholder="请选择时间" style="width: 300px"></DatePicker>
                             </FormItem>
-                            <FormItem label="作出支付令时间">
-                                <DatePicker type="date" v-model="pay.completeTime" placeholder="请选择时间" style="width: 300px"></DatePicker>
+                            <FormItem label="证据">
+                                <Input v-model="pay.applicationFee" :row="5" placeholder="请输入证据名称和页码序号" style="width: 300px" />
+                                <!-- <DatePicker type="date" v-model="pay.completeTime" placeholder="请选择时间" style="width: 300px"></DatePicker> -->
                             </FormItem>
                         </Form>
                     </div>
@@ -132,7 +133,7 @@
                 <FormItem label="利息约定" prop="interestAgreement">
                     <Input type="textarea" v-model="creditCard.interestAgreement" :row="5" placeholder="请输入利息约定" style="width: 300px" />
                 </FormItem>
-                <FormItem label="信用卡欠款最新截至时间" prop="deadline">
+                <FormItem label="信用卡欠款最新截止时间" prop="deadline">
                     <DatePicker type="date" v-model="creditCard.deadline" placeholder="请选择时间" style="width: 300px"></DatePicker>
                 </FormItem>
                 <FormItem label="信用卡最新欠款本金（元）" prop="principal">
