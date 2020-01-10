@@ -1310,11 +1310,9 @@ right: -20px;">元</span>
             </div> -->
         </div>
     </div>
-    <div style="margin-top: 10px; " slot="footer">
-                
-                <p style="text-align: center;"><Button type="info" :disabled="mediate == '否'"  @click="submitCase" >确认提交</Button></p>
-                
-            </div>
+    <div style="margin-top: 10px; " slot="footer">   
+        <p style="text-align: center;"><Button type="info" :disabled="mediate == '否'"  @click="submitCase" >确认提交</Button></p>
+    </div>
 </Modal>
 <Modal
     v-model="completeMol"
@@ -1472,7 +1470,7 @@ v-clipboard:error="onError" style="font-size: 18px;margin-left: 10px;cursor: poi
         
     </div>
 </Modal>
-<Modal
+<!-- <Modal
     v-model="modalAdd"
     title="添加证据"
     :loading="loading"
@@ -1504,6 +1502,46 @@ v-clipboard:error="onError" style="font-size: 18px;margin-left: 10px;cursor: poi
                     <span>无</span>
                 </Radio>
             </RadioGroup>
+        </FormItem>
+        <FormItem label="*附件:"  style="width: 435px">
+            <a href="javascript:;" class="a-upload">
+                <input type="file"  name="" @change="getFile($event)" id="upfil">点击这里上传文件
+            </a>
+            <span style='
+                padding: 4px 10px;
+                line-height: 20px;
+                position: relative;
+                color: #888;
+                background: #fafafa;
+                overflow: hidden;
+                display: inline-block;'>文件最大支持30M</span>
+            <div class="demo-spin-container" v-show='fileNlistEvi'>
+                <Spin fix>上传中..</Spin>
+            </div>
+            <div style="padding: 4px 10px;display:block;position: relative;top:-10px">
+                <p v-for="item in fileNlist">{{item.name}}<span @click="delFile(item.name,item.id)"><Icon type="close-circled"  style="cursor:pointer;margin-left:10px;"></Icon></span></p>
+            </div>
+        </FormItem>
+    </Form>
+</Modal> -->
+<Modal
+    v-model="modalAdd"
+    title="添加证据"
+    :loading="loading"
+    cancel-text=""
+    ok-text="提交"
+    @on-ok="submitEvi"
+    class="dadd"
+    width="850"
+    :mask-closable="false"
+    style="z-index:9999999">
+    <Table border width="801" :columns="eviCol" :data="eviList2"></Table>
+    <div style="margin-top: 10px;">
+        <Button type="primary" @click="addEviList">点击添加证据行</Button>
+    </div>
+    <Form :model="addFormItemEvi" :label-width="85" inline>
+        <FormItem style="width: 435px">
+            
         </FormItem>
         <FormItem label="*附件:"  style="width: 435px">
             <a href="javascript:;" class="a-upload">
@@ -1619,6 +1657,122 @@ export default {
     },
 data () {
 return {
+    eviCol:[
+        {
+            title: '证据名称',
+            key: 'eviName',
+            width:200,
+            render: (h, params) => {
+                return h('div', [
+                    h('Input', {
+                        props: {
+                            type: 'text',
+                            value:params.row.eviName,
+                        },
+                        on:{
+                            'on-change':(event) => {
+                                params.row.eviName = event.target.value;
+                                this.eviList2[params.index] = params.row;
+                            }
+                        },
+                    })
+                ]);
+            }
+        },
+        {
+            title: '证明对象',
+            key: 'eviObj',
+            width:200,
+            render: (h, params) => {
+                return h('div', [
+                    h('Input', {
+                        props: {
+                            type: 'text',
+                            value:params.row.eviObj,
+                        },
+                        on:{
+                            'on-change':(event) => {
+                                params.row.eviObj = event.target.value;
+                                this.eviList2[params.index] = params.row;
+                            }
+                        },
+                    })
+                ]);
+            }
+        },
+        {
+            title: '证据来源',
+            key: 'eviSource',
+            width:200,
+            render: (h, params) => {
+                return h('div', [
+                    h('Input', {
+                        props: {
+                            type: 'text',
+                            value:params.row.eviSource,
+                        },
+                        on:{
+                            'on-change':(event) => {
+                                params.row.eviSource = event.target.value;
+                                this.eviList2[params.index] = params.row;
+                            }
+                        },
+                    })
+                ]);
+            }
+        },
+        {
+            title: '有无原件',
+            key: 'eviHave',
+            width:100,
+            render: (h, params) => {
+                return h('div', [
+                    h('Input', {
+                        props: {
+                            type: 'text',
+                            value:params.row.eviHave,
+                        },
+                        on:{
+                            'on-change':(event) => {
+                                params.row.eviHave = event.target.value;
+                                this.eviList2[params.index] = params.row;
+                            }
+                        },
+                    })
+                ]);
+            }
+        },
+        {
+            title: '页码',
+            key: 'eviCount',
+            width:100,
+            render: (h, params) => {
+                return h('div', [
+                    h('Input', {
+                        props: {
+                            type: 'text',
+                            value:params.row.eviCount,
+                        },
+                        on:{
+                            'on-change':(event) => {
+                                params.row.eviCount = event.target.value;
+                                this.eviList2[params.index] = params.row;
+                            }
+                        },
+                    })
+                ]);
+            }
+        }
+    ],
+    eviList2:[
+        {
+            eviName: '',
+            eviObj: '',
+            eviSource: '',
+            eviHave: '',
+            eviCount:''
+        },
+    ],
     fileType:0,//文件类型
     fileAppType:0,//申请书文件类型
     citizen: false,//公民身份才显示的开关
@@ -2420,6 +2574,13 @@ handleSuccess2(res, file){
     }
 },
 showAddModel(){
+    this.eviList2 = [{
+        eviName: '',
+        eviObj: '',
+        eviSource: '',
+        eviHave: '',
+        eviCount:''
+    }];
     this.addFormItemEvi = {
         evidenceName:'',
         pageNum:'',
@@ -2468,6 +2629,7 @@ getFile(event){
     })
 },
 submitEvi(){
+    console.log(this.eviList2);
     if(this.addFormItemEvi.evidenceName == ""){
         this.$Message.info('证据名称不能为空');
         this.changeLoading();
@@ -4285,6 +4447,17 @@ changeFileShen6(event){
             });
         }
     })
+},
+addEviList(){
+    const list = 
+    {
+        eviName: '',
+        eviObj: '',
+        eviSource: '',
+        eviHave: '',
+        eviCount:''
+    };
+    this.eviList2.push(list);
 },
 backHome(){
     this.$router.push({
