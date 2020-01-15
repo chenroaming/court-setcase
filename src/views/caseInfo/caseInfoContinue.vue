@@ -2650,20 +2650,25 @@ document.getElementById("upfil").value = "";
     this.modalAdd = true;
 },
 delFile(name,id){
-    delFiles(id, this.caseId).then(res => {
-        if(res.data.state == 100){
-            this.$Message.success("删除成功");
-            for(var i=0;i<this.fileNlist.length;i++){
-                if(id==this.fileNlist[i].id){
-                    this.fileNlist.splice(i,1)
-                }
-            }
-        }else{
-            this.$Message.info(res.data.message);
-        }
-    })  
+    this.$Message.success("删除成功");
+    this.fileNlist = [];
+    // delFiles(id, this.caseId).then(res => {
+    //     if(res.data.state == 100){
+    //         this.$Message.success("删除成功");
+    //         for(var i=0;i<this.fileNlist.length;i++){
+    //             if(id==this.fileNlist[i].id){
+    //                 this.fileNlist.splice(i,1)
+    //             }
+    //         }
+    //     }else{
+    //         this.$Message.info(res.data.message);
+    //     }
+    // })  
 },
 getFile(event){
+    if(event.target.files.length < 1){
+        return false;
+    }
     this.fileNlist = [];
     this.file = event.target.files[0];
     let applyType = "";
@@ -3857,18 +3862,18 @@ nextStep(dex){
                             
                             that.sureMoInfo.litigantPhone = ress.data.onlineLitigant.litigantPhone;
                             that.sureMoInfo.email = ress.data.onlineLitigant.email;
-                        }
-                        if(ress.data.onlineLitigant.onlineLawyers.length > 0){
-                            this.lawyerList = [];
-                            for(const item of ress.data.onlineLitigant.onlineLawyers){                          
-                                const data={
-                                    name:item.name,
-                                    card:item.identicard,
-                                    phone:item.phone,
-                                    adress:item.address,
-                                    id:item.id,
+                            if(ress.data.onlineLitigant.onlineLawyers.length > 0){
+                                this.lawyerList = [];
+                                for(const item of ress.data.onlineLitigant.onlineLawyers){                          
+                                    const data={
+                                        name:item.name,
+                                        card:item.identicard,
+                                        phone:item.phone,
+                                        adress:item.address,
+                                        id:item.id,
+                                    }
+                                    this.lawyerList.push(data);
                                 }
-                                this.lawyerList.push(data);
                             }
                         }
                         that.sureMoInfo.year = new Date().getFullYear();
@@ -4313,6 +4318,9 @@ cancelFile(dex){
 //     })
 // },
 changeFile1(event){
+    if(event.target.files.length < 1){
+        return false;
+    }
     this.file = event.target.files[0];
     let applyType = "";
     this.uploadIngSpinchangeFile1=true
@@ -4341,6 +4349,9 @@ changeFile1(event){
     })
 },
 changeFile2(event){
+    if(event.target.files.length < 1){
+        return false;
+    }
     this.file = event.target.files[0];
     let applyType = "";
     this.uploadIngSpinchangeFile2=true
@@ -4369,6 +4380,9 @@ changeFile2(event){
     })
 },
 changeFile3(event){
+    if(event.target.files.length < 1){
+        return false;
+    }
     this.file = event.target.files[0];
     let applyType = "";
     this.uploadIngSpinchangeFile3=true
@@ -4397,6 +4411,9 @@ changeFile3(event){
     })
 },
 changeFileShen1(event){
+    if(event.target.files.length < 1){
+        return false;
+    }
     this.file = event.target.files[0];
     let applyType = 1;
     this.uploadIngSpinchangeFileShen1=true
@@ -4425,6 +4442,9 @@ changeFileShen1(event){
     })
 },
 changeFileShen2(event){
+    if(event.target.files.length < 1){
+        return false;
+    }
     this.file = event.target.files[0];
     let applyType = 2;
     this.uploadIngSpinchangeFileShen2=true
@@ -4453,6 +4473,9 @@ changeFileShen2(event){
     })
 },
 changeFileShen3(event){
+    if(event.target.files.length < 1){
+        return false;
+    }
     this.file = event.target.files[0];
     let applyType = 3;
     this.uploadIngSpinchangeFileShen3=true
@@ -4481,6 +4504,9 @@ changeFileShen3(event){
     })
 },
 changeFileShen4(event){
+    if(event.target.files.length < 1){
+        return false;
+    }
     this.file = event.target.files[0];
     let applyType = 4;
     this.uploadIngSpinchangeFileShen4=true
@@ -4509,6 +4535,9 @@ changeFileShen4(event){
     })
 },
 changeFileShen5(event){
+    if(event.target.files.length < 1){
+        return false;
+    }
     this.uploadIngSpinchangeFileShen5=true
     this.file = event.target.files[0];
     let applyType = 5;
@@ -4537,6 +4566,9 @@ changeFileShen5(event){
     })
 },
 changeFileShen6(event){
+    if(event.target.files.length < 1){
+        return false;
+    }
     this.uploadIngSpinchangeFileShen6=true
     this.file = event.target.files[0];
     let applyType = 6;
