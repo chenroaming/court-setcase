@@ -1752,7 +1752,7 @@ export default {
                                 // this.qisuShowShen5 = false;
                                 // this.onlineEAIdShen5 = item.path;
                             }else if(item.applyType == 6){
-                                this.fileNameShen5.push(item);
+                                this.fileNameShen6.push(item);
                                 // this.fileNameShen6 = item.name;
                                 // this.qisuShowShen6 = false;
                                 // this.onlineEAIdShen6 = item.path;
