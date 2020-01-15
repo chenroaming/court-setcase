@@ -297,6 +297,34 @@ export function saveEvidence (eviName,eviPage,eviProve,eviSource,original,online
 }
 
 /** 
+ * 添加证据信息2
+ */
+export function saveEvidence2 (data) {
+    // const data = {
+    //     paramList,
+    //     onlineEAId
+    // };
+    return service({
+        url: '/online/evidenceAttachment/upSingle2EAs.jhtml',
+        method: 'post',
+        data
+    });
+}
+
+/**
+ * 上传证据
+ */
+export function upSingleEs (file, onlineLawCaseId) {
+    let params = new FormData()
+    params.append('file', file)
+    let config = {
+      headers: { 'Content-Type': 'multipart/form-data' }
+    }
+    var str = '/online/evidenceAttachment/upSingleEA.jhtml?onlineLawCaseId='+onlineLawCaseId;
+    return service.post(str, params, config)
+}
+
+/** 
  * 法官获取文件列表
  */
 export function otherGetFiles (onlineLawCaseId) {

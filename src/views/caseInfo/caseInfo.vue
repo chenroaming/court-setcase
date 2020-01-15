@@ -676,7 +676,7 @@
                             <input type="file" style="display:none"  name="" @change="changeFile3($event)" id="qisu">
                         </div>
                         <div class="boxContent" style="height: 210px;">
-                            <p class="labelNmae">身份证明：
+                            <p class="labelNmae">身份证明材料：
                                 <Button type="primary" @click="upFile(1)">添加</Button>
                             </p>
                             <Table height="168" :columns="columns1" :data="fileName1"></Table>
@@ -885,11 +885,11 @@
                         <div>
                             <p class="sdw">
                                 证据材料：
-                                 <span @click="dowmModel" style="float:right;margin-right:10px;cursor:pointer"><Icon type="md-arrow-down" />下载模板</span>
+                                 <!-- <span @click="dowmModel" style="float:right;margin-right:10px;cursor:pointer"><Icon type="md-arrow-down" />下载模板</span> -->
                                 <span @click="showAddModel" style="float:right;margin-right:10px;cursor:pointer">+添加</span>
                             </p>
                             <Table :columns="columnsEvi" :data="EviList"></Table>
-                            <div style="padding-top: 10px;">
+                            <!-- <div style="padding-top: 10px;">
                                 <Upload
                                     multiple
                                     type="drag"
@@ -903,7 +903,7 @@
                                         <p>点击或拖拽文件上传</p>
                                     </div>
                                 </Upload>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                     <div v-show="fileAdd" style="margin-top: 10px;">
@@ -1552,7 +1552,7 @@
                         
                     </div>
                 </Modal>
-                <Modal
+                <!-- <Modal
                     v-model="modalAdd"
                     title="添加证据"
                     :loading="loading"
@@ -1605,6 +1605,45 @@
                             </div>
                         </FormItem>
                     </Form>
+                </Modal> -->
+                <Modal
+                    v-model="modalAdd"
+                    title="添加证据"
+                    class="dadd"
+                    width="910"
+                    :mask-closable="false"
+                    style="z-index:9999999">
+                    <Table border width="872" :columns="eviCol" height="350" :data="eviList2"></Table>
+                    <div style="margin-top: 10px;">
+                        <Button type="primary" @click="addEviList">点击添加证据行</Button>
+                    </div>
+                    <Form :model="addFormItemEvi" :label-width="85" inline>
+                        <FormItem style="width: 435px">
+                            
+                        </FormItem>
+                        <FormItem label="*附件:"  style="width: 435px">
+                            <a href="javascript:;" class="a-upload">
+                                <input type="file"  name="" @change="getFile($event)" id="upfil">点击这里上传文件
+                            </a>
+                            <span style='
+                                padding: 4px 10px;
+                                line-height: 20px;
+                                position: relative;
+                                color: #888;
+                                background: #fafafa;
+                                overflow: hidden;
+                                display: inline-block;'>文件最大支持30M</span>
+                            <div class="demo-spin-container" v-show='fileNlistEvi'>
+                                <Spin fix>上传中..</Spin>
+                            </div>
+                            <div style="padding: 4px 10px;display:block;position: relative;top:-10px">
+                                <p v-for="item in fileNlist">{{item.name}}<span @click="delFile(item.name,item.id)"><Icon type="close-circled"  style="cursor:pointer;margin-left:10px;"></Icon></span></p>
+                            </div>
+                        </FormItem>
+                    </Form>
+                    <div slot="footer">
+                        <Button type="primary" @click="submitEvi" :loading="loading2">提交</Button>
+                    </div>
                 </Modal>
                 <Modal
                     v-model="selUsualPeo"
@@ -1673,6 +1712,7 @@
         briefMenu,
         getOnlineBrief,//新版法庭立案案由
         saveEvidence,
+        saveEvidence2,
         getContacts,
         getMateBrief,
         findLitigantEvidence,
@@ -1680,7 +1720,8 @@
         getLitigantLawyerList,
         getFiles,
         getOnlineLawCaseEdit,
-        saveOrUpdateProof} from '@/api/caseInfo.js';
+        saveOrUpdateProof,
+        upSingleEs} from '@/api/caseInfo.js';
         import { formatDate } from '@/libs/date';
         import {
             NetworkKyc,
@@ -1704,6 +1745,164 @@
                 //     callback();
                 // };
                 return {
+                    eviList2:[
+                        {
+                            eviName: '',
+                            eviProve: '',
+                            eviSource: '',
+                            eviPage: '',
+                            has_source:''
+                        },
+                    ],
+                    eviCol:[
+                        {
+                            title: '证据名称',
+                            key: 'eviName',
+                            width:200,
+                            align:'center',
+                            render: (h, params) => {
+                                return h('div', [
+                                    h('Input', {
+                                        props: {
+                                            type: 'textarea',
+                                            value:params.row.eviName,
+                                            'autosize':{minRows: 2,maxRows: 3}
+                                        },
+                                        on:{
+                                            'on-change':(event) => {
+                                                params.row.eviName = event.target.value;
+                                                this.eviList2[params.index] = params.row;
+                                            }
+                                        },
+                                    })
+                                ]);
+                            }
+                        },
+                        {
+                            title: '证明对象',
+                            key: 'eviProve',
+                            width:200,
+                            align:'center',
+                            render: (h, params) => {
+                                return h('div', [
+                                    h('Input', {
+                                        props: {
+                                            type: 'textarea',
+                                            value:params.row.eviProve,
+                                            'autosize':{minRows: 2,maxRows: 3}
+                                        },
+                                        on:{
+                                            'on-change':(event) => {
+                                                params.row.eviProve = event.target.value;
+                                                this.eviList2[params.index] = params.row;
+                                            }
+                                        },
+                                    })
+                                ]);
+                            }
+                        },
+                        {
+                            title: '证据来源',
+                            key: 'eviSource',
+                            width:200,
+                            align:'center',
+                            render: (h, params) => {
+                                return h('div', [
+                                    h('Input', {
+                                        props: {
+                                            type: 'textarea',
+                                            value:params.row.eviSource,
+                                            'autosize':{minRows: 2,maxRows: 3}
+                                        },
+                                        on:{
+                                            'on-change':(event) => {
+                                                params.row.eviSource = event.target.value;
+                                                this.eviList2[params.index] = params.row;
+                                            }
+                                        },
+                                    })
+                                ]);
+                            }
+                        },
+                        {
+                            title: '有无原件',
+                            key: 'has_source',
+                            width:120,
+                            render: (h, params) => {
+                                return h('RadioGroup',
+                                {
+                                    props: {
+                                        value: params.row.has_source,
+                                    },
+                                    on:{
+                                        'on-change':(val) => {
+                                            params.row.has_source = val;
+                                            this.eviList2[params.index] = params.row;
+                                        }
+                                    }
+                                }, [
+                                    h("Radio", {
+                                        props: {
+                                            label: "1",
+                                        }
+                                    },'有'),
+                                    h("Radio", {
+                                        props: {
+                                            label: "0",
+                                        }
+                                    },'无')
+                                ]);
+                            }
+                        },
+                        {
+                            title: '页码',
+                            key: 'eviPage',
+                            width:80,
+                            render: (h, params) => {
+                                return h('div', [
+                                    h('Input', {
+                                        props: {
+                                            type: 'text',
+                                            value:params.row.eviPage,
+                                        },
+                                        style:{
+                                            'display':'inline-block',
+                                            'width':'40px',
+                                            'margin-right':'5px'
+                                        },
+                                        on:{
+                                            'on-change':(event) => {
+                                                params.row.eviPage = event.target.value;
+                                                this.eviList2[params.index] = params.row;
+                                            }
+                                        },
+                                    })
+                                ]);
+                            }
+                        },
+                        {
+                            title: '操作',
+                            width:70,
+                            render: (h, params) => {
+                                return h('div', [
+                                    h('Button', {
+                                        props: {
+                                            'type': 'warning',
+                                            size:'small'
+                                        },
+                                        style:{
+                                            'display':params.row._index == 0 ? 'none' : 'block'
+                                        },
+                                        on:{
+                                            click:() => {
+                                                this.eviList2.splice(params.row._index,1);
+                                            }
+                                        },
+                                    },'删除'),
+                                ])
+                            }
+                        }
+                    ],
                     columns1:[
                         {
                             title: '文件名',
@@ -1786,6 +1985,7 @@
                     litigantPhoneSelect:'',
                     phoneIndex:0,
                     loading1:false,
+                    loading2:false,
                     onlineBriefList:[],
                     onlineBriefListShow:false,
                     selectTitle:'',
@@ -1935,6 +2135,11 @@
                       {
                         title: "证据来源",
                         key: "where",
+                        align: "center",
+                      },
+                      {
+                        title: "页码",
+                        key: "page",
                         align: "center",
                       },
                       {
@@ -2526,6 +2731,7 @@
                                             proves:item.eviProve,
                                             where:item.eviSource,
                                             filePa:item.path ? item.path : "",
+                                            page:item.eviPage,
                                             id:item.id
                                         }
                                         this.EviList.push(data);
@@ -2636,13 +2842,20 @@
                     }
                 },
                 showAddModel(){
-                    this.addFormItemEvi = {
-                        evidenceName:'',
-                        pageNum:'',
-                        evidenceObject:'',
-                        evidenceWhere:''
-                  };
-                document.getElementById("upfil").value = "";
+                    this.eviList2 = [{
+                        eviName: '',
+                        eviProve: '',
+                        eviSource: '',
+                        eviPage: '',
+                        has_source:''
+                    }];
+                //     this.addFormItemEvi = {
+                //         evidenceName:'',
+                //         pageNum:'',
+                //         evidenceObject:'',
+                //         evidenceWhere:''
+                //   };
+                  document.getElementById("upfil").value = "";
                   this.evidenceId = "";
                   this.fileN = "";
                   this.file = "";
@@ -2669,12 +2882,13 @@
                     this.fileNlist = [];
                     this.file = event.target.files[0];
                     let applyType = "";
-                    upFiles(this.file,3,this.caseId, applyType,2).then(res => {
+                    upSingleEs(this.file,this.caseId).then(res => {
                         if(res.data.state == 100){
                             this.$Message.success('上传成功');
+                            this.eviAddress = res.data.address;
                             const datas = {
-                                name:res.data.evident.name,
-                                id:res.data.evident.id
+                                name:res.data.fileName,
+                                id:res.data.litId
                             }
                             this.fileNlist.push(datas);
                         }else{
@@ -2684,55 +2898,105 @@
                     })
                 },
                 submitEvi(){
-                    if(this.addFormItemEvi.evidenceName == ""){
-                      this.$Message.info('证据名称不能为空');
-                      this.changeLoading();
-                      return false;
-                  }
-                  if(this.addFormItemEvi.evidenceObject == ""){
-                      this.$Message.info('证据对象不能为空');
-                      this.changeLoading();
-                      return false;
-                  }
-                  if(this.addFormItemEvi.evidenceWhere == ""){
-                      this.$Message.info('证据来源不能为空');
-                      this.changeLoading();
-                      return false;
-                  }
-                  if(this.fileNlist.length == 0){
-                      this.$Message.info('请上传证据文件');
-                      this.changeLoading();
-                      return false;
-                  }
-                  this.loading = true;
-                  saveEvidence(
-                      this.addFormItemEvi.evidenceName,
-                      this.addFormItemEvi.pageNum,
-                      this.addFormItemEvi.evidenceObject,
-                      this.addFormItemEvi.evidenceWhere,
-                      this.addFormItemEvi.original,
-                      this.fileNlist[0].id).then(res => {
-                          if(res.data.state == 100){
-                              const data = {
-                                  name:res.data.evidence.eviName,
-                                  proves:this.addFormItemEvi.evidenceObject,
-                                  where:this.addFormItemEvi.evidenceWhere,
-                                  filePa:res.data.evidence.path ? res.data.evidence.path : "",
-                                  id:res.data.evidence.id
+                    console.log(this.eviList2);
+                    if(this.fileNlist.length == 0){
+                        this.$Message.info('请上传证据文件');
+                        this.changeLoading();
+                        return false;
+                    }
+                    const newArr = {
+                        fileName:this.fileNlist[0].name,
+                        litId:this.fileNlist[0].id,
+                        path:this.eviAddress,
+                        onlineLawCaseId:this.caseId,
+                        paramList:[]
+                    };
+                    for(const item of this.eviList2){
+                        if(item.eviName == ""){
+                            this.$Message.info('证据名称不能为空');
+                            this.changeLoading();
+                            return false;
+                        }
+                        if(item.eviProve == ""){
+                            this.$Message.info('证明对象不能为空');
+                            this.changeLoading();
+                            return false;
+                        }
+                        if(item.eviSource == ""){
+                            this.$Message.info('证据来源不能为空');
+                            this.changeLoading();
+                            return false;
+                        }
+                        if(item.eviPage == ""){
+                            this.$Message.info('页码不能为空');
+                            this.changeLoading();
+                            return false;
+                        }
+                        if(item.has_source == ""){
+                            this.$Message.info('请选择是否有原件');
+                            this.changeLoading();
+                            return false;
+                        }
+                        const obj = {
+                            eviName:item.eviName,
+                            eviProve:item.eviProve,
+                            eviSource:item.eviSource,
+                            eviPage:item.eviPage,
+                            has_source:item.has_source == '0' ? false : true
+                        }
+                        newArr.paramList.push(obj);
+                    }
+                    this.loading2 = true;
+                    saveEvidence2(newArr).then(res => {
+                        console.log(res.data);
+                        this.loading2 = false;
+                        if(res.data.state == 100){
+                            this.$Message.success(res.data.message);
+                            this.modalAdd = false;
+                            for(const item of res.data.onlineEAs){
+                                const data = {
+                                  name:item.eviName,
+                                  proves:item.eviProve,
+                                  where:item.eviSource,
+                                  filePa:item.path,
+                                  page:item.eviPage,
+                                  id:item.id
                               }
                               this.EviList.push(data);
-                              const datas = {
-                                path:this.fileNlist[0].name,
-                                id:this.fileNlist[0].id
                             }
-                            this.pathList.push(datas);
-                              this.modalAdd = false;
-                              this.changeLoading();
-                          }else{
-                              this.$Message.info(res.data.message);
-                              this.changeLoading();
-                          }
-                  })
+                        }else if(res.data.state == 101){
+                            this.$Message.success(res.data.message);
+                        }
+                    })
+
+                //   saveEvidence(
+                //       this.addFormItemEvi.evidenceName,
+                //       this.addFormItemEvi.pageNum,
+                //       this.addFormItemEvi.evidenceObject,
+                //       this.addFormItemEvi.evidenceWhere,
+                //       this.addFormItemEvi.original,
+                //       this.fileNlist[0].id).then(res => {
+                //           if(res.data.state == 100){
+                //               const data = {
+                //                   name:res.data.evidence.eviName,
+                //                   proves:this.addFormItemEvi.evidenceObject,
+                //                   where:this.addFormItemEvi.evidenceWhere,
+                //                   filePa:res.data.evidence.path ? res.data.evidence.path : "",
+                //                   id:res.data.evidence.id
+                //               }
+                //               this.EviList.push(data);
+                //               const datas = {
+                //                 path:this.fileNlist[0].name,
+                //                 id:this.fileNlist[0].id
+                //             }
+                //             this.pathList.push(datas);
+                //               this.modalAdd = false;
+                //               this.changeLoading();
+                //           }else{
+                //               this.$Message.info(res.data.message);
+                //               this.changeLoading();
+                //           }
+                //   })
                 },
                 dowmModel(){
                     window.open('https://dq.hlcourt.gov.cn' + '/upload/evidenceAttachment/model/证据材料模板.xlsx')
@@ -2746,6 +3010,7 @@
                                 proves:item.eviProve,
                                 where:item.eviSource,
                                 filePa:'',
+                                page:item.eviPage,
                                 id:item.id
                             }
                             this.EviList.push(data)
@@ -4441,11 +4706,22 @@
                             // this.qisuShowShen6 = false;
                         }else{
                             this.$Modal.warning({
-                                title: '提示',
+                                title: '提��',
                                 content: res.data.message
                             });
                         }
                     })
+                },
+                addEviList(){
+                    const list = 
+                    {
+                        eviName: '',
+                        eviProve: '',
+                        eviSource: '',
+                        has_source: '',
+                        eviPage:''
+                    };
+                    this.eviList2.push(list);
                 },
                 backHome(){
                     this.$router.push({

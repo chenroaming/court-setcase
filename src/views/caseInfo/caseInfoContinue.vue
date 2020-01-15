@@ -577,7 +577,7 @@ right: -20px;">元</span>
                 <input type="file" style="display:none"  name="" @change="changeFile3($event)" id="qisu">
             </div>
             <div class="boxContent" style="height: 210px;">
-                <p class="labelNmae">身份证明：
+                <p class="labelNmae">身份证明材料：
                     <Button type="primary" @click="upFile(1)">添加</Button>
                 </p>
                 <Table height="168" :columns="columns1" :data="fileName1"></Table>
@@ -800,12 +800,12 @@ right: -20px;">元</span>
         <div style="width:100%">
             <p class="sdw">
                 证据材料：
-                <span @click="dowmModel" style="float:right;margin-right:10px;cursor:pointer"><Icon type="md-arrow-down" />下载模板</span>
+                <!-- <span @click="dowmModel" style="float:right;margin-right:10px;cursor:pointer"><Icon type="md-arrow-down" />下载模板</span> -->
                 <span @click="showAddModel" style="float:right;margin-right:10px;cursor:pointer;margin-right:20px">+添加</span>
                 
             </p>
             <Table :columns="columnsEvi" :data="EviList"></Table>
-            <div style="padding-top: 10px;">
+            <!-- <div style="padding-top: 10px;">
                 <Upload
                     multiple
                     type="drag"
@@ -819,7 +819,7 @@ right: -20px;">元</span>
                         <p>点击或拖拽文件上传</p>
                     </div>
                 </Upload>
-            </div>
+            </div> -->
         </div>
     </div>
     <div v-show="fileAdd" style="margin-top:10px">
@@ -1038,11 +1038,11 @@ right: -20px;">元</span>
     :loading="loading"
     ok-text="提交"
     @on-ok="submitLawyer"
-    width="560px"
+    width="570px"
     :mask-closable="false"
     :title="this.lawyerId == '' ? '添加代理人' : '查看/修改代理人'">
     <div>
-        <Form :model="addFormItem" :label-width="100" inline>
+        <Form :model="addFormItem" :label-width="105" inline>
             <FormItem label="代理人身份" style="width: 245px;">
                 <Select v-model="addFormItem.lawerType" transfer @on-change="changeType" placeholder="请选择">
                     <Option v-for="item in lawerType" :value="item.value">{{ item.label }}</Option>
@@ -1069,34 +1069,34 @@ right: -20px;">元</span>
                 <Input v-model="litigantPhoneSelect" placeholder="请输入手机号" v-if="this.lawyerId == ''"></Input>
                 <div style="color: #ed3f14;position:absolute;top:28px;" v-if="this.lawyerId == ''">多个手机号码请用逗号分隔</div> -->
             </FormItem>
-            <FormItem label="执业机构*" v-show="!lawyerT1" style="width: 505px;">
+            <FormItem label="执业机构*" v-show="!lawyerT1" style="width: 515px;">
                 <!-- <Input v-model="addFormItem.lawIdentiCard" placeholder="请输入代理人公民身份证号码"  ></Input> -->
                 <AutoComplete v-model="addFormItem.lawyerOfficeName"  placeholder="请输入执业机构" transfer></AutoComplete>
             </FormItem>
-            <FormItem label="公民身份证号码*" v-show="lawyerT1" style="width: 505px;">
+            <FormItem label="公民身份证号码*" v-show="lawyerT1" style="width: 515px;">
                 <!-- <Input v-model="addFormItem.lawIdentiCard" placeholder="请输入代理人公民身份证号码"  ></Input> -->
                 <AutoComplete v-model="addFormItem.lawIdentiCard" :data="numData1" @on-search="queryAgent1" placeholder="请输入代理人公民身份证号码" transfer></AutoComplete>
             </FormItem>
-            <FormItem label="公民身份证号码*" v-show="!lawyerT1" style="width: 505px;">
+            <FormItem label="公民身份证号码*" v-show="!lawyerT1" style="width: 515px;">
                 <!-- <Input v-model="addFormItem.lawIdentiCard" placeholder="请输入代理人公民身份证号码"  ></Input> -->
                 <Input v-model="addFormItem.lawIdentiCard2" placeholder="请输入代理人公民身份证号码"></Input>
             </FormItem>
-            <FormItem label="工作证件号码*" v-show="!lawyerT1" style="width: 505px;">
+            <FormItem label="工作证件号码*" v-show="!lawyerT1" style="width: 515px;">
                 <!-- <Input v-model="addFormItem.lawerNum" placeholder="请输入代理人工作证件号码"  ></Input> -->
                 <AutoComplete v-model="addFormItem.lawerNum" :data="lawNumData1" @on-search="queryAgent1" placeholder="请输入代理人工作证件号码" transfer></AutoComplete>
             </FormItem>
-            <FormItem label="电子邮箱*" style="width: 505px">
+            <FormItem label="电子邮箱*" style="width: 515px">
                 <Input v-model="addFormItem.email" placeholder="请输入电子邮箱"></Input>
             </FormItem>
-            <FormItem label="联系地址"  style="width: 505px;">
+            <FormItem label="联系地址"  style="width: 515px;">
                 <!-- <Input v-model="addFormItem.lawerNum" placeholder="请输入代理人联系地址"  ></Input> -->
                 <AutoComplete v-model="addFormItem.address"  placeholder="请输入代理人确认送达地址" transfer></AutoComplete>
             </FormItem>
-            <FormItem label="推荐单位*" v-show="citizen"  style="width: 505px;">
+            <FormItem label="推荐单位*" v-show="citizen"  style="width: 515px;">
                 <!-- <Input v-model="addFormItem.lawerNum" placeholder="请输入代理人联系地址"  ></Input> -->
                 <AutoComplete v-model="addFormItem.recCompany"  placeholder="请输入推荐单位" transfer></AutoComplete>
             </FormItem>
-            <FormItem label="与当事人关系*" v-show="relatives"  style="width: 505px;">
+            <FormItem label="与当事人关系*" v-show="relatives"  style="width: 515px;">
                 <!-- <Input v-model="addFormItem.lawerNum" placeholder="请输入代理人联系地址"  ></Input> -->
                 <AutoComplete v-model="addFormItem.relatives"  placeholder="请输入与当事人关系" transfer></AutoComplete>
             </FormItem>
@@ -1527,15 +1527,11 @@ v-clipboard:error="onError" style="font-size: 18px;margin-left: 10px;cursor: poi
 <Modal
     v-model="modalAdd"
     title="添加证据"
-    :loading="loading"
-    cancel-text=""
-    ok-text="提交"
-    @on-ok="submitEvi"
     class="dadd"
-    width="850"
+    width="910"
     :mask-closable="false"
     style="z-index:9999999">
-    <Table border width="801" :columns="eviCol" :data="eviList2"></Table>
+    <Table border width="872" :columns="eviCol" height="350" :data="eviList2"></Table>
     <div style="margin-top: 10px;">
         <Button type="primary" @click="addEviList">点击添加证据行</Button>
     </div>
@@ -1563,6 +1559,9 @@ v-clipboard:error="onError" style="font-size: 18px;margin-left: 10px;cursor: poi
             </div>
         </FormItem>
     </Form>
+    <div slot="footer">
+        <Button type="primary" @click="submitEvi" :loading="loading2">提交</Button>
+    </div>
 </Modal>
 <Modal
     v-model="selUsualPeo"
@@ -1633,6 +1632,7 @@ import {
     commitCae,
     getOnlineLitigantInfo,
     saveEvidence,
+    saveEvidence2,
     briefMenu,
     delEvidence,
     getContacts,
@@ -1640,7 +1640,8 @@ import {
     getMateBrief,
     getCaesState,
     findLitigantEvidence,
-    saveOrUpdateProof} from '@/api/caseInfo.js';
+    saveOrUpdateProof,
+    upSingleEs} from '@/api/caseInfo.js';
 import { formatDate } from '@/libs/date';
 import {
     NetworkKyc,
@@ -1657,17 +1658,21 @@ export default {
     },
 data () {
 return {
+    loading2:false,
+    eviAddress:'',
     eviCol:[
         {
             title: '证据名称',
             key: 'eviName',
             width:200,
+            align:'center',
             render: (h, params) => {
                 return h('div', [
                     h('Input', {
                         props: {
-                            type: 'text',
+                            type: 'textarea',
                             value:params.row.eviName,
+                            'autosize':{minRows: 2,maxRows: 3}
                         },
                         on:{
                             'on-change':(event) => {
@@ -1681,18 +1686,20 @@ return {
         },
         {
             title: '证明对象',
-            key: 'eviObj',
+            key: 'eviProve',
             width:200,
+            align:'center',
             render: (h, params) => {
                 return h('div', [
                     h('Input', {
                         props: {
-                            type: 'text',
-                            value:params.row.eviObj,
+                            type: 'textarea',
+                            value:params.row.eviProve,
+                            'autosize':{minRows: 2,maxRows: 3}
                         },
                         on:{
                             'on-change':(event) => {
-                                params.row.eviObj = event.target.value;
+                                params.row.eviProve = event.target.value;
                                 this.eviList2[params.index] = params.row;
                             }
                         },
@@ -1704,12 +1711,14 @@ return {
             title: '证据来源',
             key: 'eviSource',
             width:200,
+            align:'center',
             render: (h, params) => {
                 return h('div', [
                     h('Input', {
                         props: {
-                            type: 'text',
+                            type: 'textarea',
                             value:params.row.eviSource,
+                            'autosize':{minRows: 2,maxRows: 3}
                         },
                         on:{
                             'on-change':(event) => {
@@ -1723,18 +1732,55 @@ return {
         },
         {
             title: '有无原件',
-            key: 'eviHave',
-            width:100,
+            key: 'has_source',
+            width:120,
+            align:'center',
+            render: (h, params) => {
+                return h('RadioGroup',
+                {
+                    props: {
+                        value: params.row.has_source,
+                    },
+                    on:{
+                        'on-change':(val) => {
+                            params.row.has_source = val;
+                            this.eviList2[params.index] = params.row;
+                        }
+                    }
+                }, [
+                    h("Radio", {
+                        props: {
+                            label: "1",
+                        }
+                    },'有'),
+                    h("Radio", {
+                        props: {
+                            label: "0",
+                        }
+                    },'无')
+                ]);
+            }
+        },
+        {
+            title: '页码',
+            key: 'eviPage',
+            width:80,
+            align:'center',
             render: (h, params) => {
                 return h('div', [
                     h('Input', {
                         props: {
                             type: 'text',
-                            value:params.row.eviHave,
+                            value:params.row.eviPage,
+                        },
+                        style:{
+                            'display':'inline-block',
+                            'width':'40px',
+                            'margin-right':'5px'
                         },
                         on:{
                             'on-change':(event) => {
-                                params.row.eviHave = event.target.value;
+                                params.row.eviPage = event.target.value;
                                 this.eviList2[params.index] = params.row;
                             }
                         },
@@ -1743,34 +1789,36 @@ return {
             }
         },
         {
-            title: '页码',
-            key: 'eviCount',
-            width:100,
+            title: '操作',
+            width:70,
+            align:'center',
             render: (h, params) => {
                 return h('div', [
-                    h('Input', {
+                    h('Button', {
                         props: {
-                            type: 'text',
-                            value:params.row.eviCount,
+                            'type': 'warning',
+                            size:'small'
+                        },
+                        style:{
+                            'display':params.row._index == 0 ? 'none' : 'block'
                         },
                         on:{
-                            'on-change':(event) => {
-                                params.row.eviCount = event.target.value;
-                                this.eviList2[params.index] = params.row;
+                            click:() => {
+                                this.eviList2.splice(params.row._index,1);
                             }
                         },
-                    })
-                ]);
+                    },'删除'),
+                ])
             }
         }
     ],
     eviList2:[
         {
             eviName: '',
-            eviObj: '',
+            eviProve: '',
             eviSource: '',
-            eviHave: '',
-            eviCount:''
+            eviPage: '',
+            has_source:''
         },
     ],
     fileType:0,//文件类型
@@ -1970,6 +2018,11 @@ return {
         {
         title: "证据来源",
         key: "where",
+        align: "center",
+        },
+        {
+        title: "页码",
+        key: "page",
         align: "center",
         },
         {
@@ -2512,7 +2565,7 @@ onCopy(e){
     this.$Message.info('回执编号复制成功！');
 },
 onError(e){
-
+2
 },
 delOtherAddress(key){
     this.addFormItem.otherAddressArr.splice(key,1); 
@@ -2565,6 +2618,7 @@ handleSuccess2(res, file){
                 proves:item.eviProve,
                 where:item.eviSource,
                 filePa:'',
+                page:item.eviPage,
                 id:item.id
             }
             this.EviList.push(data)
@@ -2576,17 +2630,17 @@ handleSuccess2(res, file){
 showAddModel(){
     this.eviList2 = [{
         eviName: '',
-        eviObj: '',
+        eviProve: '',
         eviSource: '',
-        eviHave: '',
-        eviCount:''
+        eviPage: '',
+        has_source:''
     }];
-    this.addFormItemEvi = {
-        evidenceName:'',
-        pageNum:'',
-        evidenceObject:'',
-        evidenceWhere:''
-    };
+    // this.addFormItemEvi = {
+    //     evidenceName:'',
+    //     pageNum:'',
+    //     evidenceObject:'',
+    //     evidenceWhere:''
+    // };
 document.getElementById("upfil").value = "";
     this.evidenceId = "";
     this.fileN = "";
@@ -2614,12 +2668,13 @@ getFile(event){
     this.file = event.target.files[0];
     let applyType = "";
     this.fileNlistEvi=true
-    upFiles(this.file,3,this.caseId, applyType,2).then(res => {
+    upSingleEs(this.file,this.caseId).then(res => {
         if(res.data.state == 100){
             this.$Message.success('上传成功');
+            this.eviAddress = res.data.address;
             const datas = {
-                name:res.data.evident.name,
-                id:res.data.evident.id
+                name:res.data.fileName,
+                id:res.data.litId
             }
             this.fileNlist.push(datas);
         }else{
@@ -2630,55 +2685,103 @@ getFile(event){
 },
 submitEvi(){
     console.log(this.eviList2);
-    if(this.addFormItemEvi.evidenceName == ""){
-        this.$Message.info('证据名称不能为空');
-        this.changeLoading();
-        return false;
-    }
-    if(this.addFormItemEvi.evidenceObject == ""){
-        this.$Message.info('证据对象不能为空');
-        this.changeLoading();
-        return false;
-    }
-    if(this.addFormItemEvi.evidenceWhere == ""){
-        this.$Message.info('证据来源不能为空');
-        this.changeLoading();
-        return false;
-    }
     if(this.fileNlist.length == 0){
         this.$Message.info('请上传证据文件');
         this.changeLoading();
         return false;
     }
-    this.loading = true;
-    saveEvidence(
-        this.addFormItemEvi.evidenceName,
-        this.addFormItemEvi.pageNum,
-        this.addFormItemEvi.evidenceObject,
-        this.addFormItemEvi.evidenceWhere,
-        this.addFormItemEvi.original,
-        this.fileNlist[0].id).then(res => {
-            if(res.data.state == 100){
+    const newArr = {
+        fileName:this.fileNlist[0].name,
+        litId:this.fileNlist[0].id,
+        path:this.eviAddress,
+        onlineLawCaseId:this.caseId,
+        paramList:[]
+    };
+    for(const item of this.eviList2){
+        if(item.eviName == ""){
+            this.$Message.info('证据名称不能为空');
+            this.changeLoading();
+            return false;
+        }
+        if(item.eviProve == ""){
+            this.$Message.info('证明对象不能为空');
+            this.changeLoading();
+            return false;
+        }
+        if(item.eviSource == ""){
+            this.$Message.info('证据来源不能为空');
+            this.changeLoading();
+            return false;
+        }
+        if(item.eviPage == ""){
+            this.$Message.info('页码不能为空');
+            this.changeLoading();
+            return false;
+        }
+        if(item.has_source == ""){
+            this.$Message.info('请选择是否有原件');
+            this.changeLoading();
+            return false;
+        }
+        const obj = {
+            eviName:item.eviName,
+            eviProve:item.eviProve,
+            eviSource:item.eviSource,
+            eviPage:item.eviPage,
+            has_source:item.has_source == '0' ? false : true
+        }
+        newArr.paramList.push(obj);
+    }
+    this.loading2 = true;
+    saveEvidence2(newArr).then(res => {
+        console.log(res.data);
+        this.loading2 = false;
+        if(res.data.state == 100){
+            this.$Message.success(res.data.message);
+            this.modalAdd = false;
+            for(const item of res.data.onlineEAs){
                 const data = {
-                    name:res.data.evidence.eviName,
-                    proves:this.addFormItemEvi.evidenceObject,
-                    where:this.addFormItemEvi.evidenceWhere,
-                    filePa:res.data.evidence.path ? res.data.evidence.path : "",
-                    id:res.data.evidence.id
+                    name:item.eviName,
+                    proves:item.eviProve,
+                    where:item.eviSource,
+                    filePa:item.path,
+                    page:item.eviPage,
+                    id:item.id
                 }
                 this.EviList.push(data);
-                const datas = {
-                path:this.fileNlist[0].name,
-                id:this.fileNlist[0].id
             }
-            this.pathList.push(datas);
-                this.modalAdd = false;
-                this.changeLoading();
-            }else{
-                this.$Message.info(res.data.message);
-                this.changeLoading();
-            }
+        }else if(res.data.state == 101){
+            this.$Message.success(res.data.message);
+        }
     })
+    // saveEvidence(
+    //     this.addFormItemEvi.evidenceName,
+    //     this.addFormItemEvi.pageNum,
+    //     this.addFormItemEvi.evidenceObject,
+    //     this.addFormItemEvi.evidenceWhere,
+    //     this.addFormItemEvi.original,
+    //     this.fileNlist[0].id).then(res => {
+    //         if(res.data.state == 100){
+    //             const data = {
+    //                 name:res.data.evidence.eviName,
+    //                 proves:this.addFormItemEvi.evidenceObject,
+    //                 where:this.addFormItemEvi.evidenceWhere,
+    //                 filePa:res.data.evidence.path ? res.data.evidence.path : "",
+    //                 id:res.data.evidence.id
+    //             }
+    //             this.EviList.push(data);
+    //             const datas = {
+    //             path:this.fileNlist[0].name,
+    //             id:this.fileNlist[0].id
+    //         }
+    //         this.pathList.push(datas);
+    //             this.modalAdd = false;
+    //             this.changeLoading();
+    //         }else{
+    //             this.$Message.info(res.data.message);
+    //             this.changeLoading();
+    //         }
+    // })
 },
 deleLiti(id){   //删除当事人
     findLitigantEvidence(id).then(res => {
@@ -2857,6 +2960,7 @@ getFilesL(){
                             proves:item.eviProve,
                             where:item.eviSource,
                             filePa:item.path ? item.path : "",
+                            page:item.eviPage,
                             id:item.id
                         }
                         this.EviList.push(data);
@@ -3754,7 +3858,19 @@ nextStep(dex){
                             that.sureMoInfo.litigantPhone = ress.data.onlineLitigant.litigantPhone;
                             that.sureMoInfo.email = ress.data.onlineLitigant.email;
                         }
-                        
+                        if(ress.data.onlineLitigant.onlineLawyers.length > 0){
+                            this.lawyerList = [];
+                            for(const item of ress.data.onlineLitigant.onlineLawyers){                          
+                                const data={
+                                    name:item.name,
+                                    card:item.identicard,
+                                    phone:item.phone,
+                                    adress:item.address,
+                                    id:item.id,
+                                }
+                                this.lawyerList.push(data);
+                            }
+                        }
                         that.sureMoInfo.year = new Date().getFullYear();
                         that.sureMoInfo.month = new Date().getMonth() + 1;
                         that.sureMoInfo.date = new Date().getDate();
@@ -4452,10 +4568,10 @@ addEviList(){
     const list = 
     {
         eviName: '',
-        eviObj: '',
+        eviProve: '',
         eviSource: '',
-        eviHave: '',
-        eviCount:''
+        has_source: '',
+        eviPage:''
     };
     this.eviList2.push(list);
 },

@@ -804,6 +804,11 @@ export default {
                 align: "center",
               },
               {
+                title: "页码",
+                key: "page",
+                align: "center",
+              },
+              {
                 title: "附件",
                 key: "fileName",
                 width: 100,
@@ -1716,6 +1721,7 @@ export default {
                                 proves:item.eviProve,
                                 where:item.eviSource,
                                 filePa:item.path,
+                                page:item.eviPage,
                                 id:item.id
                             }
                             this.EviList.push(data);

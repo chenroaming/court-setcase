@@ -140,7 +140,7 @@
             :loading="loading"
             ok-text="确定"
             @on-ok="submint"
-            width="700px"
+            width="760px"
             :mask-closable="closeM"
             title="立案办理">
             <div v-if="infoMol">
@@ -1082,23 +1082,31 @@ export default {
                {
                 title: "证据名称",
                 key: "name",
-                width: 150,
+                width: 113,
                 align: "center",
               },
               {
                 title: "证明对象",
                 key: "proves",
-                width: 170,
+                width: 113,
                 align: "center",
               },
               {
                 title: "证据来源",
                 key: "where",
+                width: 100,
+                align: "center",
+              },
+              {
+                title: "页码",
+                key: "page",
+                width: 100,
                 align: "center",
               },
               {
                 title: "是否有原件",
                 key: "isOrigin",
+                width: 100,
                 align: "center",
                 render: (h, params) => {
                     return h("div", [
@@ -1130,6 +1138,7 @@ export default {
               {
                 title: "是否已核对",
                 key: "checkParam",
+                width: 100,
                 align: "center",
               },
               {
@@ -1370,6 +1379,7 @@ export default {
                                         where:item.eviSource,
                                         filePa:item.path,
                                         id:item.id,
+                                        page:item.eviPage,
                                         checkParam:item.checked == true ? '已核对' : '未核对',
                                         isOrigin:item.original == true ? '有' : '无'
                                     }
@@ -1427,6 +1437,7 @@ export default {
                                                 where:item.eviSource,
                                                 filePa:item.path,
                                                 id:item.id,
+                                                page:item.eviPage,
                                                 checkParam:item.checked == true ? '已核对' : '未核对',
                                                 isOrigin:item.original == true ? '有' : '无'
                                             }
@@ -2149,6 +2160,7 @@ export default {
                                 where:item.eviSource,
                                 filePa:item.path,
                                 id:item.id,
+                                page:item.eviPage,
                                 checkParam:item.checked == true ? '已核对' : '未核对',
                                 isOrigin:item.original == true ? '有' : '无'
                             }
@@ -2181,7 +2193,7 @@ export default {
                                 // this.qisuShowShen5 = false;
                                 // this.onlineEAIdShen5 = item.path;
                             }else if(item.applyType == 6){
-                                this.fileNameShen1.push(item);
+                                this.fileNameShen6.push(item);
                                 // this.fileNameShen6 = item.name;
                                 // this.qisuShowShen6 = false;
                                 // this.onlineEAIdShen6 = item.path;
