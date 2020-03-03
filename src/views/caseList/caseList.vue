@@ -683,6 +683,15 @@
                 <Button @click="viewEvidence = false"   type="dashed" size="large">关闭</Button>
             </div>
         </Modal>
+        <Modal
+            v-model="modal6"
+            title="选择文书">
+            <Table border ref="selection" @on-selection-change="selected" :columns="columns3" :data="data1"></Table>
+            <div slot="footer">
+                <Button @click="modal6 = false"   type="dashed" size="large">关闭</Button>
+                <Button @click="downloadFile" type="primary" size="large">下载</Button>
+            </div>
+        </Modal>
     </div>
 </template>
 <script>
@@ -739,6 +748,20 @@ export default {
             callback();
         };
         return {
+            modal6:false,//文书列表显示开关
+            columns3:[
+                {
+                    type: 'selection',
+                    width: 60,
+                    align: 'center'
+                },
+                {
+                    title: '文件名',
+                    key: 'name'
+                }
+            ],
+            data1:[],
+            isSelected:[],//已选择的文书
             listLoading:false,//表格加载状态
             element:0,
             elementSw:false,//要素信息显示开关，避免要素信息过长影响布局
@@ -940,6 +963,13 @@ export default {
                     fixed: ''
                 },
                 {
+                    title: '引调号',
+                    key: 'caseNo',
+                    align: 'center',
+                    width: 160,
+                    fixed: ''
+                },
+                {
                     title: '原告',
                     key: 'onlineLitigantsYuan',
                     align: 'center',
@@ -1038,11 +1068,9 @@ export default {
                     width: 120,
                     render: (h, params) => {
                         return h("div", [
-                            
                         h(
                             "Button",
-                            {
-                                
+                            { 
                             props: {
                                 type: "text",
                                 size: "small",
@@ -1192,24 +1220,35 @@ export default {
                             on: {
                                 click: () => {
                                     this.lawCaseId = params.row.id;
+                                    this.isSelected = [];
                                     downFiles(params.row.id).then(res => {
                                         console.log(res)
                                         if(res.data.state == 100){
                                             if (res.data.data) {
-                                                for (let i = 0; i < res.data.data.length; i++) {
-                                                    window.open(res.data.data[i].path);
-                                                    // this.contentUpload = res.data.data[i].path
-                                                    // this.filenameUpload = res.data.data[i].name
-                                                    // const blob = new Blob([this.contentUpload])
-                                                    // if (window.navigator.msSaveOrOpenBlob) {
-                                                    //     navigator.msSaveBlob(blob, this.filenameUpload)
-                                                    // } else {
-                                                    //     let aTag = document.createElement('a')
-                                                    //     aTag.download = this.filenameUpload
-                                                    //     aTag.href = URL.createObjectURL(blob)
-                                                    //     aTag.click()
-                                                    //     URL.revokeObjectURL(aTag.href)
-                                                    // }
+                                                this.modal6 = true;
+                                                if(res.data.data.length > 0){
+                                                    const eleArr = [];
+                                                    for (let i = 0; i < res.data.data.length; i++) {
+                                                        const element = {
+                                                            name:res.data.data[i].name,
+                                                            path:res.data.data[i].path
+                                                        }
+                                                        eleArr.push(element);
+                                                        // window.open(res.data.data[i].path);
+                                                        // this.contentUpload = res.data.data[i].path
+                                                        // this.filenameUpload = res.data.data[i].name
+                                                        // const blob = new Blob([this.contentUpload])
+                                                        // if (window.navigator.msSaveOrOpenBlob) {
+                                                        //     navigator.msSaveBlob(blob, this.filenameUpload)
+                                                        // } else {
+                                                        //     let aTag = document.createElement('a')
+                                                        //     aTag.download = this.filenameUpload
+                                                        //     aTag.href = URL.createObjectURL(blob)
+                                                        //     aTag.click()
+                                                        //     URL.revokeObjectURL(aTag.href)
+                                                        // }
+                                                    }
+                                                    this.data1 = eleArr;
                                                 }
                                             }else{
                                                 this.$Message.info('暂无相关文书');
@@ -1220,7 +1259,62 @@ export default {
                                     })
                                 }
                             }
-                        }, '下载文书'),
+                        },'下载文书'),
+                        // h('Badge',{
+                        //     props:{
+                        //         dot:'',
+                        //     },
+                        //     style:{
+                        //         'right':'60px'
+                        //     }
+                        // }),
+                        // h('Badge',{
+                        //     props:{
+                        //         dot:'',
+                        //         offset:['-100','0']
+                        //     },
+                        // },render:(h, params) => {
+
+                        // }'Button', {
+                        //     props: {
+                        //         type: 'text',
+                        //         size: 'small'
+                        //     },
+                        //     style:{
+                        //         padding:'0px 7px',
+                        //     },
+                        //     on: {
+                        //         click: () => {
+                        //             this.lawCaseId = params.row.id;
+                        //             downFiles(params.row.id).then(res => {
+                        //                 console.log(res)
+                        //                 if(res.data.state == 100){
+                        //                     if (res.data.data) {
+                        //                         for (let i = 0; i < res.data.data.length; i++) {
+                        //                             window.open(res.data.data[i].path);
+                        //                             // this.contentUpload = res.data.data[i].path
+                        //                             // this.filenameUpload = res.data.data[i].name
+                        //                             // const blob = new Blob([this.contentUpload])
+                        //                             // if (window.navigator.msSaveOrOpenBlob) {
+                        //                             //     navigator.msSaveBlob(blob, this.filenameUpload)
+                        //                             // } else {
+                        //                             //     let aTag = document.createElement('a')
+                        //                             //     aTag.download = this.filenameUpload
+                        //                             //     aTag.href = URL.createObjectURL(blob)
+                        //                             //     aTag.click()
+                        //                             //     URL.revokeObjectURL(aTag.href)
+                        //                             // }
+                        //                         }
+                        //                     }else{
+                        //                         this.$Message.info('暂无相关文书');
+                        //                     }
+                        //                 }else{
+                        //                     this.$Message.info(res.data.message);
+                        //                 }
+                        //             })
+                        //         }
+                        //     }
+                        // },'下载文书'),
                         h('Button', {
                             props: {
                                 type: 'text',
@@ -1607,6 +1701,7 @@ export default {
                            state:status,
                            cellClassName: status == "审核中" || status == "已撤回" || status == "撤诉申请" ? { state: 'table-blue-row1' } : (status == "审核通过" ? { state: 'table-green-row1' } : { state: 'table-red-row1' }),
                            ispay:item.isPay ? item.isPay : false,
+                           caseNo:item.caseNo
                         }
                         this.connectedData.push(data)
                     })
@@ -1618,7 +1713,28 @@ export default {
                 this.$Message.warning('网络错误！请刷新重试！');
             })
         },
-
+        downloadFile(){
+            if(this.isSelected.length > 0){
+                for(const item of this.isSelected){
+                    const link = document.createElement('a');
+                    //设置下载的文件名
+                    link.download = '';
+                    link.style.display = 'none';
+                    //设置下载路径
+                    link.href = item.path;
+                    //触发点击
+                    document.body.appendChild(link);
+                    link.click();
+                    //移除节点
+                    document.body.removeChild(link);
+                }
+            }else{
+                this.$Message.info('未选中任何文书！');
+            }
+        },
+        selected(selection){
+            this.isSelected = selection;
+        },
         changeTab(e){
             this.elementSw = false;
             let that=this;
