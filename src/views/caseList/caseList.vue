@@ -733,6 +733,18 @@ import {
 } from '@/api/creditCard.js';
 import ZhViewer from "@/components/moreFileViewer/moreFileViewer.vue";
 import editElement from '@/components/elementInfo/editElement.vue';
+
+export const downloadFile = (url) => {
+    const iframe = document.createElement("iframe");
+    iframe.style.display = "none";  // 防止影响页面
+    iframe.style.height = 0;  // 防止影响页面
+    iframe.src = url; 
+    document.body.appendChild(iframe);  // 这一行必须，iframe挂在到dom树上才会发请求
+    // 5分钟之后删除（onload方法对于下载链接不起作用，就先抠脚一下吧）
+    setTimeout(()=>{
+      iframe.remove();
+    }, 5 * 60 * 1000);
+}
 export default {
     components: {
         ClipLoader,
@@ -1226,8 +1238,8 @@ export default {
                                         if(res.data.state == 100){
                                             if (res.data.data) {
                                                 this.modal6 = true;
+                                                const eleArr = [];
                                                 if(res.data.data.length > 0){
-                                                    const eleArr = [];
                                                     for (let i = 0; i < res.data.data.length; i++) {
                                                         const element = {
                                                             name:res.data.data[i].name,
@@ -1247,9 +1259,9 @@ export default {
                                                         //     aTag.click()
                                                         //     URL.revokeObjectURL(aTag.href)
                                                         // }
-                                                    }
-                                                    this.data1 = eleArr;
+                                                    }  
                                                 }
+                                                this.data1 = eleArr;
                                             }else{
                                                 this.$Message.info('暂无相关文书');
                                             }
@@ -1260,14 +1272,15 @@ export default {
                                 }
                             }
                         },'下载文书'),
-                        // h('Badge',{
-                        //     props:{
-                        //         dot:'',
-                        //     },
-                        //     style:{
-                        //         'right':'60px'
-                        //     }
-                        // }),
+                        h('Badge',{
+                            props:{
+                                dot:'',
+                            },
+                            style:{
+                                'right':'60px',
+                                'display':params.row.isRead ? 'inline-block' : 'none'
+                            }
+                        }),
                         // h('Badge',{
                         //     props:{
                         //         dot:'',
@@ -1650,7 +1663,7 @@ export default {
             caseList(params).then(res => {
                 this.listLoading = false;
                 if(res.data.state == 100){
-                    res.data.result.content.map(item => {
+                    res.data.result.content.map((item,index) => {
                         var status;
                         if(item.auditStatus == null){
                             status = "审核中"
@@ -1701,7 +1714,8 @@ export default {
                            state:status,
                            cellClassName: status == "审核中" || status == "已撤回" || status == "撤诉申请" ? { state: 'table-blue-row1' } : (status == "审核通过" ? { state: 'table-green-row1' } : { state: 'table-red-row1' }),
                            ispay:item.isPay ? item.isPay : false,
-                           caseNo:item.caseNo
+                           caseNo:item.caseNo,
+                           isRead:res.data.readList[index]
                         }
                         this.connectedData.push(data)
                     })
@@ -1713,12 +1727,15 @@ export default {
                 this.$Message.warning('网络错误！请刷新重试！');
             })
         },
-        downloadFile(){
+        downloadFile(){            
             if(this.isSelected.length > 0){
                 for(const item of this.isSelected){
+                    // downloadFile(item.path);
+                    // window.open(item.path,'_blank')
                     const link = document.createElement('a');
                     //设置下载的文件名
-                    link.download = '';
+                    // link.download = 'download';
+                    link.setAttribute("download", "");
                     link.style.display = 'none';
                     //设置下载路径
                     link.href = item.path;
