@@ -417,9 +417,10 @@
                 <div class="middleType">
                     <!-- <Button :type="noewTYpe == '0' ? 'primary' : 'dashed'" class="btxa"  shape="circle"   @click="selType(0)">涉网案件</Button><br/><br/> -->
                     <Button :type="noewTYpe == '1' ? 'primary' : 'dashed'" class="btxa" shape="circle" @click="selType(1)">
-                        殿前法庭审判事务服务中心
+                        殿前法庭审判服务中心
                         <br/>
-                        <span class="Introduction">金融，互联网，互联网知识产权</span>
+                        <span class="Introduction">金融和融资纠纷</span>
+                        <span class="Introduction">涉互联网合同、侵权、知识产权纠纷</span>
                     </Button><br/><br/>
                     <Button :type="noewTYpe == '2' ? 'primary' : 'dashed'" class="btxa" shape="circle" @click="selType(2)">
                         立案庭诉讼服务中心
