@@ -400,6 +400,7 @@
         }
         
         .Introduction {
+            display: block;
             font-size: 12px;
         }
 
@@ -1501,7 +1502,7 @@
                     </div>
                      <div style="margin-top: 10px; " slot="footer">
                         <p style="float:left"><Checkbox @click.native="selectSure" v-model="single">我已阅读并同意以上内容</Checkbox></p><br/>
-                        <p style="text-align: center;"><Button type="info" :disabled="disabled"  @click="nextStepSure"  >{{buttonStr}}</Button></p>
+                        <p style="text-align: center;"><Button type="info" :disabled="disabled"  @click="nextStepSure3"  >{{buttonStr}}</Button></p>
                     </div>
                 </Modal>
                 <Modal
@@ -2569,7 +2570,8 @@
                 receive:function(data){
                     if(data == '1'){//根据要素信息或者信用卡信息从而进行是否下一步的判断
                         if(!this.isOpenevidenceMol){
-                            this.evidenceMol = true;
+                            this.sureMol = true;
+                            // this.evidenceMol = true;
                             this.ten = 10;
                             let timer = setInterval(()=>{
                                 this.disabled = true;
@@ -3874,6 +3876,10 @@
                     this.nextLoading = false;
                     window.localStorage.setItem('newItemStep',2);
                 },
+                nextStepSure3(){
+                    this.sureMol = false;
+                    this.evidenceMol = true;
+                },
                 nextStep(dex){
                     this.nextLoading = true;        
                     if(dex == 1){
@@ -3969,14 +3975,15 @@
                             if(res.data.state == 100){
                                 getOnlineLitigantInfo(this.caseId).then(ress => {
                                     if(ress.data.state == 100){
-                                        this.sureMol = true;
-                                        if(ress.data.onlineLitigant != null){
+                                        // this.sureMol = true;
+                                        if(ress.data.onlineLitigant){
                                             if(ress.data.onlineLitigant.litigantType == 0){
-                                                that.sureMoInfo.litigantName = ress.data.onlineLitigant.litigantName; 
-                                                that.sureMoInfo.acceptPeople = ress.data.onlineLitigant.litigantName;
+                                                console.log(that.sureMoInfo.litigantName,ress.data.onlineLitigant.litigantName);
+                                                this.sureMoInfo.litigantName = ress.data.onlineLitigant.litigantName; 
+                                                this.sureMoInfo.acceptPeople = ress.data.onlineLitigant.litigantName;
                                             }else{
-                                                that.sureMoInfo.litigantName = ress.data.onlineLitigant.litigantName;
-                                                that.sureMoInfo.acceptPeople = ress.data.onlineLitigant.legalManName;
+                                                this.sureMoInfo.litigantName = ress.data.onlineLitigant.litigantName;
+                                                this.sureMoInfo.acceptPeople = ress.data.onlineLitigant.legalManName;
                                             }
                                             that.sureMoInfo.sendAddress = ress.data.onlineLitigant.sendAddress;
                                             that.sureMoInfo.litigantPhone = ress.data.onlineLitigant.litigantPhone;
@@ -3998,34 +4005,35 @@
                                         that.sureMoInfo.year = new Date().getFullYear();
                                         that.sureMoInfo.month = new Date().getMonth() + 1;
                                         that.sureMoInfo.date = new Date().getDate();
-                                        if (that.ten == 10) {
-                                            let timer = setInterval(()=>{
-                                                this.disabled = true;
-                                                this.buttonStr ="同意并继续（" +  this.ten +"）";
+                                        this.nextStepSure();
+                                        // if (that.ten == 10) {
+                                        //     let timer = setInterval(()=>{
+                                        //         this.disabled = true;
+                                        //         this.buttonStr ="同意并继续（" +  this.ten +"）";
                                                 
-                                                if(this.ten ===0) {
-                                                    clearInterval(timer);
-                                                    if(this.single == true){
-                                                        this.disabled = false;
-                                                    }
-                                                    this.buttonStr = `同意并继续`;
-                                                }else{this.ten = this.ten - 1;}
-                                            },1000)
-                                        }else{
-                                            that.ten = 10;
-                                            let timer = setInterval(()=>{
-                                                this.disabled = true;
-                                                this.buttonStr ="同意并继续（" +  this.ten +"）";
+                                        //         if(this.ten ===0) {
+                                        //             clearInterval(timer);
+                                        //             if(this.single == true){
+                                        //                 this.disabled = false;
+                                        //             }
+                                        //             this.buttonStr = `同意并继续`;
+                                        //         }else{this.ten = this.ten - 1;}
+                                        //     },1000)
+                                        // }else{
+                                        //     that.ten = 10;
+                                        //     let timer = setInterval(()=>{
+                                        //         this.disabled = true;
+                                        //         this.buttonStr ="同意并继续（" +  this.ten +"）";
                                                 
-                                                if(this.ten ===0) {
-                                                    clearInterval(timer);
-                                                    if(this.single == true){
-                                                        this.disabled = false;
-                                                    }
-                                                    this.buttonStr = `同意并继续`;
-                                                }else{this.ten = this.ten - 1;}
-                                            },1000)
-                                        }
+                                        //         if(this.ten ===0) {
+                                        //             clearInterval(timer);
+                                        //             if(this.single == true){
+                                        //                 this.disabled = false;
+                                        //             }
+                                        //             this.buttonStr = `同意并继续`;
+                                        //         }else{this.ten = this.ten - 1;}
+                                        //     },1000)
+                                        // }
                                         window.localStorage.setItem('newItemStep',dex);
                                     }else{
                                         this.$Modal.warning({
@@ -4049,8 +4057,9 @@
                             this.stepNum = 3;
                         }else{
                             if(!this.isOpenevidenceMol){
-                            this.evidenceMol = true;
+                            // this.evidenceMol = true;
                             this.ten = 10;
+                            this.sureMol = true;
                             let timer = setInterval(()=>{
                                 this.disabled = true;
                                 this.buttonStr ="已经阅读（" +  this.ten +"）";
@@ -4090,6 +4099,7 @@
                     this.fileAdd = true;
                     this.isOpenevidenceMol = true;
                     this.evidenceMol = false;
+                    // this.sureMoInfo = false;
                     this.stepNum = 4;
                     this.nextLoading = false;
                 },

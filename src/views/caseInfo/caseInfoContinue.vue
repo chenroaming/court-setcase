@@ -1450,7 +1450,7 @@ v-clipboard:error="onError" style="font-size: 18px;margin-left: 10px;cursor: poi
     </div>
         <div style="margin-top: 10px; " slot="footer">
         <p style="float:left"><Checkbox @click.native="selectSure" v-model="single">我已阅读并同意以上内容</Checkbox></p><br/>
-        <p style="text-align: center;"><Button type="info" :disabled="disabled"  @click="nextStepSure"  >{{buttonStr}}</Button></p>
+        <p style="text-align: center;"><Button type="info" :disabled="disabled"  @click="nextStepSure3"  >{{buttonStr}}</Button></p>
         
     </div>
 </Modal>
@@ -2471,7 +2471,8 @@ methods: {
 receive:function(data){//要素信息接收子组件传值并判断是否进行下一步
     if(data == '1'){
         if(!this.isOpenevidenceMol){
-            this.evidenceMol = true;
+            // this.evidenceMol = true;
+            this.sureMol = true;
             this.ten = 10;
             let timer = setInterval(()=>{
                 this.disabled = true;
@@ -3762,6 +3763,10 @@ nextStepSure(){
     this.nextLoading = false;
     window.localStorage.setItem('process',2);
 },
+nextStepSure3(){
+    this.sureMol = false;
+    this.evidenceMol = true;
+},
 nextStepSure2(){
     this.getFilesL();
     this.dailiAdd = false;
@@ -3849,7 +3854,7 @@ nextStep(dex){
             if(res.data.state == 100){
                     getOnlineLitigantInfo(this.caseId).then(ress => {
                     if(ress.data.state == 100){
-                        this.sureMol = true;
+                        // this.sureMol = true;
                         if(ress.data.onlineLitigant != null){
                             if(ress.data.onlineLitigant.litigantType == 0){
                                 that.sureMoInfo.litigantName = ress.data.onlineLitigant.litigantName; 
@@ -3914,7 +3919,6 @@ nextStep(dex){
                         });
                     }
                 })
-                
             }else{
                 this.$Modal.warning({
                     title: "提示",
@@ -3931,7 +3935,8 @@ nextStep(dex){
             this.stepNum = 3;
         }else{
             if(!this.isOpenevidenceMol){
-            this.evidenceMol = true;
+            // this.evidenceMol = true;
+            this.sureMol = true;
             this.ten = 10;
             let timer = setInterval(()=>{
                 this.disabled = true;

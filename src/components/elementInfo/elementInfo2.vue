@@ -79,8 +79,8 @@
                             <FormItem label="申请支付令时">
                                 <DatePicker type="date" v-model="pay.applyTime" placeholder="请选择时间" style="width: 300px"></DatePicker>
                             </FormItem>
-                            <FormItem label="证据">
-                                <Input v-model="pay.applicationFee" :row="5" placeholder="请输入证据名称和页码序号" style="width: 300px" />
+                            <FormItem label="证据信息">
+                                <Input v-model="pay.applicationFee" :row="5" placeholder="请输入证据名称和证据页码序号" style="width: 300px" />
                                 <!-- <DatePicker type="date" v-model="pay.completeTime" placeholder="请选择时间" style="width: 300px"></DatePicker> -->
                             </FormItem>
                         </Form>
