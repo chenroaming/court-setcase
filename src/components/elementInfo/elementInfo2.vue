@@ -80,7 +80,7 @@
                                 <DatePicker type="date" v-model="pay.applyTime" placeholder="请选择时间" style="width: 300px"></DatePicker>
                             </FormItem>
                             <FormItem label="证据信息">
-                                <Input v-model="pay.applicationFee" :row="5" placeholder="请输入证据名称和证据页码序号" style="width: 300px" />
+                                <Input v-model="pay.proofName" :row="5" placeholder="请输入证据名称和证据页码序号" style="width: 300px" />
                                 <!-- <DatePicker type="date" v-model="pay.completeTime" placeholder="请选择时间" style="width: 300px"></DatePicker> -->
                             </FormItem>
                         </Form>
@@ -320,7 +320,8 @@ export default {
                 securities:'',
                 applicationFee:'',
                 applyTime:'',
-                completeTime:'' 
+                completeTime:'',
+                proofName:'',
             },
             creditInfo:[],
             gcIdList:'',
@@ -573,7 +574,8 @@ export default {
                     this.pay.completeTime == '' ? this.pay.completeTime : typeof(this.pay.completeTime) == 'number' ? this.time(this.pay.completeTime) : this.pay.completeTime.getFullYear()+'-'+(this.pay.completeTime.getMonth()+1)+'-'+this.pay.completeTime.getDate(),
                     this.endProcess.fee,
                     this.endProcess.time == '' ? this.endProcess.time : typeof(this.endProcess.time) == 'number' ? this.time(this.endProcess.time) : this.endProcess.time.getFullYear()+'-'+(this.endProcess.time.getMonth()+1)+'-'+this.endProcess.time.getDate(),
-                    this.endProcess.reason
+                    this.endProcess.reason,
+                    this.pay.proofName,
                     ).then(res2 => {
                         if(res2.data.state == 100){
                             this.$Message.success(res2.data.message);
@@ -653,6 +655,7 @@ export default {
             this.endProcess.fee = res.data.creditCard.endApplyFee;
             this.endProcess.time = res.data.creditCard.endMakeTime == null ? '' : this.time(res.data.creditCard.endMakeTime);
             this.endProcess.reason = res.data.creditCard.endReason;
+            this.pay.proofName = res.data.creditCard.proofName;
         })
     }
 };

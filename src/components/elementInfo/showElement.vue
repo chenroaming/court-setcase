@@ -22,6 +22,7 @@
             td:nth-child(2) {
             width: 75%;
             padding:3px 0px 3px 8px;
+            
             }
             /* // td:nth-child(3) {
             //   width: 20%;
@@ -43,6 +44,11 @@
     } 
     .bookbuilding-table .ivu-menu-vertical .ivu-menu-item{
         padding: 6px 24px;
+    }
+    .moreContent {
+        width: 100%;
+        display: inline-block;
+        word-break: break-all;
     }
 </style>
 
@@ -95,75 +101,75 @@
                 </tr>
                 <tr>
                     <td>放款日期</td>
-                    <td><span>{{litigation.loan}}</span></td>
+                    <td><span class="moreContent">{{litigation.loan}}</span></td>
                 </tr>
                 <tr>
                     <td>实际到期日期</td>
-                    <td><span>{{litigation.maturity}}</span></td>
+                    <td><span class="moreContent">{{litigation.maturity}}</span></td>
                 </tr>
                 <tr>
                     <td>逾期还款日期</td>
-                    <td><span>{{litigation.overdue}}</span></td>
+                    <td><span class="moreContent">{{litigation.overdue}}</span></td>
                 </tr>
                 <tr>
                     <td>欠款最新截止时间</td>
-                    <td><span>{{litigation.cutoff}}</span></td>
+                    <td><span class="moreContent">{{litigation.cutoff}}</span></td>
                 </tr>
                 <tr>
                     <td>欠款本金</td>
-                    <td><span>{{litigation.arrears}}</span></td>
+                    <td><span class="moreContent">{{litigation.arrears}}</span></td>
                 </tr>
                 <tr>
                     <td>利息</td>
-                    <td><span>{{litigation.interest}}</span></td>
+                    <td><span class="moreContent">{{litigation.interest}}</span></td>
                 </tr>
                 <tr>
                     <td>罚息</td>
-                    <td><span>{{litigation.penaltyInterest}}</span></td>
+                    <td><span class="moreContent">{{litigation.penaltyInterest}}</span></td>
                 </tr>
                 <tr>
                     <td>复利</td>
-                    <td><span>{{litigation.compoundInterest}}</span></td>
+                    <td><span class="moreContent">{{litigation.compoundInterest}}</span></td>
                 </tr>
                 <tr>
                     <td>最新欠款利息</td>
-                    <td><span>{{litigation.nInterest}}</span></td>
+                    <td><span class="moreContent">{{litigation.nInterest}}</span></td>
                 </tr>
                 <tr>
                     <td>最新欠款罚息</td>
-                    <td><span>{{litigation.npInterest}}</span></td>
+                    <td><span class="moreContent">{{litigation.npInterest}}</span></td>
                 </tr>
                 <tr>
                     <td>最新欠款复利</td>
-                    <td><span>{{litigation.ncdInterest}}</span></td>
+                    <td><span class="moreContent">{{litigation.ncdInterest}}</span></td>
                 </tr>
                 <tr>
                     <td>最新欠款利息等</td>
-                    <td><span>{{litigation.newArrears}}</span></td>
+                    <td><span class="moreContent">{{litigation.newArrears}}</span></td>
                 </tr>
                 <tr>
                     <td>违约金金额</td>
-                    <td><span>{{litigation.liquidatedDamages}}</span></td>
+                    <td><span class="moreContent">{{litigation.liquidatedDamages}}</span></td>
                 </tr>
                 <tr>
                     <td>实现债权的费用</td>
-                    <td><span>{{litigation.claim}}</span></td>
+                    <td><span class="moreContent">{{litigation.claim}}</span></td>
                 </tr>
                 <tr>
                     <td>律师费</td>
-                    <td><span>{{litigation.lawyerFee}}</span></td>
+                    <td><span class="moreContent">{{litigation.lawyerFee}}</span></td>
                 </tr>
                 <tr>
                     <td>保全费</td>
-                    <td><span>{{litigation.securityFee}}</span></td>
+                    <td><span class="moreContent">{{litigation.securityFee}}</span></td>
                 </tr>
                 <tr>
                     <td>公告费</td>
-                    <td><span>{{litigation.announcementFee}}</span></td>
+                    <td><span class="moreContent">{{litigation.announcementFee}}</span></td>
                 </tr>
                 <tr>
                     <td>实现债权其他费用</td>
-                    <td><span>{{litigation.otherFee}}</span></td>
+                    <td><span class="moreContent">{{litigation.otherFee}}</span></td>
                 </tr>
                 <tr>
                     <td>是否支持夫妻共同债</td>
@@ -180,51 +186,51 @@
                 </tr>
                 <tr>
                     <td>结婚登记时间</td>
-                    <td><span>{{litigation.marryTime}}</span></td>
+                    <td><span class="moreContent">{{litigation.marryTime}}</span></td>
                 </tr>
                 <tr>
                     <td>离婚登记时间</td>
-                    <td><span>{{litigation.divorceTime}}</span></td>
+                    <td><span class="moreContent">{{litigation.divorceTime}}</span></td>
                 </tr>
                 <tr>
                     <td>适用的法律条文</td>
-                    <td><span>{{litigation.legalProvisions}}</span></td>
+                    <td><span class="moreContent">{{litigation.legalProvisions}}</span></td>
                 </tr>
                 <tr>
                     <td>法律法规</td>
-                    <td><span>{{litigation.regulations}}</span></td>
+                    <td><span class="moreContent">{{litigation.regulations}}</span></td>
                 </tr>
                 <tr>
                     <td>诉前保全裁定案号</td>
-                    <td><span>{{litigation.caseNumber}}</span></td>
+                    <td><span class="moreContent">{{litigation.caseNumber}}</span></td>
                 </tr>
                 <tr>
                     <td>保全被申请人</td>
-                    <td><span>{{litigation.preservationMan}}</span></td>
+                    <td><span class="moreContent">{{litigation.preservationMan}}</span></td>
                 </tr>
                 <tr>
                     <td>申请保全时间</td>
-                    <td><span>{{litigation.preservationTime}}</span></td>
+                    <td><span class="moreContent">{{litigation.preservationTime}}</span></td>
                 </tr>
                 <tr>
                     <td>财产保全金额</td>
-                    <td><span>{{litigation.preservationMoney}}</span></td>
+                    <td><span class="moreContent">{{litigation.preservationMoney}}</span></td>
                 </tr>
                 <tr>
                     <td>财产保全费</td>
-                    <td><span>{{litigation.preservationFee}}</span></td>
+                    <td><span class="moreContent">{{litigation.preservationFee}}</span></td>
                 </tr>
                 <tr>
                     <td>作出保全裁定时间</td>
-                    <td><span>{{litigation.rulingTime}}</span></td>
+                    <td><span class="moreContent">{{litigation.rulingTime}}</span></td>
                 </tr>
                 <tr>
                     <td>解除保全申请时间</td>
-                    <td><span>{{litigation.releasePreservation}}</span></td>
+                    <td><span class="moreContent">{{litigation.releasePreservation}}</span></td>
                 </tr>
                 <tr>
                     <td>保全财产情况</td>
-                    <td><span>{{litigation.preservationStatus}}</span></td>
+                    <td><span class="moreContent">{{litigation.preservationStatus}}</span></td>
                 </tr>
                 <tr>
                     <td>核对状态</td>
@@ -237,13 +243,13 @@
                 <tr>
                     <td>合同名称</td>
                     <td>
-                    <span>{{contract.name}}</span>
+                    <span class="moreContent">{{contract.name}}</span>
                     </td>
                 </tr>
                 <tr>
                     <td>合同签订时间</td>
                     <td>
-                    <span>{{contract.time}}</span>
+                    <span class="moreContent">{{contract.time}}</span>
                     </td>
                 </tr>
                 <tr>
@@ -274,47 +280,47 @@
                 </tr>
                 <tr>
                     <td>结婚登记时间</td>
-                    <td><span>{{couple.marry}}</span></td>
+                    <td><span class="moreContent">{{couple.marry}}</span></td>
                 </tr>
                 <tr>
                     <td>离婚登记时间</td>
-                    <td><span>{{couple.divorce}}</span></td>
+                    <td><span class="moreContent">{{couple.divorce}}</span></td>
                 </tr>
                 <tr>
                     <td>请求支付的事实与理由</td>
-                    <td><span>{{pay.reason}}</span></td>
+                    <td><span class="moreContent">{{pay.reason}}</span></td>
                 </tr>
                 <tr>
                     <td>申请支付金额（元）</td>
-                    <td><span>{{pay.money}}</span></td>
+                    <td><span class="moreContent">{{pay.money}}</span></td>
                 </tr>
                 <tr>
                     <td>有价证券</td>
-                    <td><span>{{pay.securities}}</span></td>
+                    <td><span class="moreContent">{{pay.securities}}</span></td>
                 </tr>
                 <tr>
                     <td>支付令申请费（元）</td>
-                    <td><span>{{pay.applicationFee}}</span></td>
+                    <td><span class="moreContent">{{pay.applicationFee}}</span></td>
                 </tr>
                 <tr>
                     <td>申请支付令时</td>
-                    <td><span>{{pay.applyTime}}</span></td>
+                    <td><span class="moreContent">{{pay.applyTime}}</span></td>
                 </tr>
                 <tr>
                     <td>证据</td>
-                    <td><span>{{pay.completeTime}}</span></td>
+                    <td><span class="moreContent">{{pay.proofName}}</span></td>
                 </tr>
                 <tr>
                     <td>终结督促程序申请费（元）</td>
-                    <td><span>{{endProcess.fee}}</span></td>
+                    <td><span class="moreContent">{{endProcess.fee}}</span></td>
                 </tr>
                 <tr>
                     <td>终结督促程序裁定作出时间</td>
-                    <td><span>{{endProcess.time}}</span></td>
+                    <td><span class="moreContent">{{endProcess.time}}</span></td>
                 </tr>
                 <tr>
                     <td>终结督促程序的原因</td>
-                    <td><span>{{endProcess.reason}}</span></td>
+                    <td><span class="moreContent">{{endProcess.reason}}</span></td>
                 </tr>
                 <tr>
                     <td>核对状态</td>
@@ -331,71 +337,71 @@
                 <table class="bookbuilding-table" cellspacing="0" cellpadding="0" border="0">
                     <tr>
                         <td>信用卡卡号</td>
-                        <td><span>{{creditCard.num}}</span></td>
+                        <td><span class="moreContent">{{creditCard.num}}</span></td>
                     </tr>
                     <tr>
                         <td>信用卡种类</td>
-                        <td><span>{{creditCard.type}}</span></td>
+                        <td><span class="moreContent">{{creditCard.type}}</span></td>
                     </tr>
                     <tr>
                         <td>信用卡申请时间</td>
-                        <td><span>{{creditCard.applyTime}}</span></td>
+                        <td><span class="moreContent">{{creditCard.applyTime}}</span></td>
                     </tr>
                     <tr>
                         <td>信用卡核准发卡时间</td>
-                        <td><span>{{creditCard.issueTime}}</span></td>
+                        <td><span class="moreContent">{{creditCard.issueTime}}</span></td>
                     </tr>
                     <tr>
                         <td>信用额度（元）</td>
-                        <td><span>{{creditCard.quota}}</span></td>
+                        <td><span class="moreContent">{{creditCard.quota}}</span></td>
                     </tr>
                     <tr>
                         <td>透支利率</td>
-                        <td><span>{{creditCard.overRate}}</span></td>
+                        <td><span class="moreContent">{{creditCard.overRate}}</span></td>
                     </tr>
                     <tr>
                         <td>信用卡合约名称</td>
-                        <td><span>{{creditCard.name}}</span></td>
+                        <td><span class="moreContent">{{creditCard.name}}</span></td>
                     </tr>
                     <tr>
                         <td>利息约定</td>
-                        <td><span>{{creditCard.interestAgreement}}</span></td>
+                        <td><span class="moreContent">{{creditCard.interestAgreement}}</span></td>
                     </tr>
                     <tr>
                         <td>信用卡欠款最新截止时间</td>
-                        <td><span>{{creditCard.deadline}}</span></td>
+                        <td><span class="moreContent">{{creditCard.deadline}}</span></td>
                     </tr>
                     <tr>
                         <td>信用卡最新欠款本金（元）</td>
-                        <td><span>{{creditCard.principal}}</span></td>
+                        <td><span class="moreContent">{{creditCard.principal}}</span></td>
                     </tr>
                     <tr>
                         <td>信用卡最新欠款利息（元）</td>
-                        <td><span>{{creditCard.interest}}</span></td>
+                        <td><span class="moreContent">{{creditCard.interest}}</span></td>
                     </tr>
                     <tr>
                         <td>信用卡最新欠款滞纳金（违约金）（元）</td>
-                        <td><span>{{creditCard.latePayment}}</span></td>
+                        <td><span class="moreContent">{{creditCard.latePayment}}</span></td>
                     </tr>
                     <tr>
                         <td>信用卡年费（元）</td>
-                        <td><span>{{creditCard.annualFee}}</span></td>
+                        <td><span class="moreContent">{{creditCard.annualFee}}</span></td>
                     </tr>
                     <tr>
                         <td>信用卡分期手续费（元）</td>
-                        <td><span>{{creditCard.handlingFee}}</span></td>
+                        <td><span class="moreContent">{{creditCard.handlingFee}}</span></td>
                     </tr>
                     <tr>
                         <td>其他费用项目及金额（元）</td>
-                        <td><span>{{creditCard.otherFee}}</span></td>
+                        <td><span class="moreContent">{{creditCard.otherFee}}</span></td>
                     </tr>
                     <tr>
                         <td>违约金约定</td>
-                        <td><span>{{creditCard.defaultAgreement}}</span></td>
+                        <td><span class="moreContent">{{creditCard.defaultAgreement}}</span></td>
                     </tr>
                     <tr>
                         <td>实现债权的费用</td>
-                        <td><span>{{creditCard.agreementFee}}</span></td>
+                        <td><span class="moreContent">{{creditCard.agreementFee}}</span></td>
                     </tr>
                     <tr>
                         <td>实现债权费用的约定</td>
@@ -403,31 +409,31 @@
                     </tr>
                     <tr>
                         <td>律师费（元）</td>
-                        <td><span>{{creditCard.lawyerFee}}</span></td>
+                        <td><span class="moreContent">{{creditCard.lawyerFee}}</span></td>
                     </tr>
                     <tr>
                         <td>保全费（元）</td>
-                        <td><span>{{creditCard.securityFee}}</span></td>
+                        <td><span class="moreContent">{{creditCard.securityFee}}</span></td>
                     </tr>
                     <tr>
                         <td>公告费（元）</td>
-                        <td><span>{{creditCard.announcementFee}}</span></td>
+                        <td><span class="moreContent">{{creditCard.announcementFee}}</span></td>
                     </tr>
                     <tr>
                         <td>信用卡取现手续费（元）</td>
-                        <td><span>{{creditCard.cashFee}}</span></td>
+                        <td><span class="moreContent">{{creditCard.cashFee}}</span></td>
                     </tr>
                     <tr>
                         <td>其他项目费用（年费、取现手续费、分期手续费）的约定</td>
-                        <td><span>{{creditCard.otherProjectFee}}</span></td>
+                        <td><span class="moreContent">{{creditCard.otherProjectFee}}</span></td>
                     </tr>
                     <tr>
                         <td>最新截止时间后利息计算标准</td>
-                        <td><span>{{creditCard.endStandard}}</span></td>
+                        <td><span class="moreContent">{{creditCard.endStandard}}</span></td>
                     </tr>
                     <tr>
                         <td>最新截止时间后违约金（滞纳金）计算标准</td>
-                        <td><span>{{creditCard.endFeeStandard}}</span></td>
+                        <td><span class="moreContent">{{creditCard.endFeeStandard}}</span></td>
                     </tr>
                     <tr>
                         <td>合同信息</td>
@@ -458,27 +464,27 @@
             <table class="bookbuilding-table" cellspacing="0" cellpadding="0" border="0">
                 <tr>
                     <td>保证合同名称</td>
-                    <td><span>{{guaranteeContract2.name}}</span></td>
+                    <td><span class="moreContent">{{guaranteeContract2.name}}</span></td>
                 </tr>
                 <tr>
                     <td>合同签订时间</td>
-                    <td><span>{{guaranteeContract2.time}}</span></td>
+                    <td><span class="moreContent">{{guaranteeContract2.time}}</span></td>
                 </tr>
                 <tr>
                     <td>保证人</td>
-                    <td><span>{{guaranteeContract2.people}}</span></td>
+                    <td><span class="moreContent">{{guaranteeContract2.people}}</span></td>
                 </tr>
                 <tr>
                     <td>保证期间</td>
-                    <td><span>{{guaranteeContract2.timeRange}}</span></td>
+                    <td><span class="moreContent">{{guaranteeContract2.timeRange}}</span></td>
                 </tr>
                 <tr>
                     <td>保证方式</td>
-                    <td><span>{{guaranteeContract2.methods}}</span></td>
+                    <td><span class="moreContent">{{guaranteeContract2.methods}}</span></td>
                 </tr>
                 <tr>
                     <td>保证范围</td>
-                    <td><span>{{guaranteeContract2.range}}</span></td>
+                    <td><span class="moreContent">{{guaranteeContract2.range}}</span></td>
                 </tr>
             </table> 
         </div>
@@ -521,7 +527,7 @@
                 </tr>
                 <tr>
                     <td>授信合同期间</td>
-                    <td><span>{{credit.creditRange}}</span></td>
+                    <td><span class="moreContent">{{credit.creditRange}}</span></td>
                 </tr>
                 <tr>
                     <td>授信金额</td>
@@ -531,7 +537,7 @@
             <table class="bookbuilding-table" cellspacing="0" cellpadding="0" border="0" v-show="titleIndex == 1">
                 <tr>
                     <td>借款合同名称</td>
-                    <td><span>{{loan.name}}</span></td>
+                    <td><span class="moreContent">{{loan.name}}</span></td>
                 </tr>
                 <tr>
                     <td>借款人</td>
@@ -552,129 +558,129 @@
                 </tr>
                 <tr>
                     <td>签订借款合同时间</td>
-                    <td><span>{{loan.time}}</span></td>
+                    <td><span class="moreContent">{{loan.time}}</span></td>
                 </tr>
                 <tr>
                     <td>借款本金</td>
-                    <td><span>{{loan.money}}</span></td>
+                    <td><span class="moreContent">{{loan.money}}</span></td>
                 </tr>
                 <tr>
                     <td>借款期限</td>
-                    <td><span>{{loan.range}}</span></td>
+                    <td><span class="moreContent">{{loan.range}}</span></td>
                 </tr>
                 <tr>
                     <td>还款方式</td>
-                    <td><span>{{loan.methods}}</span></td>
+                    <td><span class="moreContent">{{loan.methods}}</span></td>
                 </tr>
                 <tr>
                     <td>借款利率</td>
-                    <td><span>{{loan.loanRate}}</span></td>
+                    <td><span class="moreContent">{{loan.loanRate}}</span></td>
                 </tr>
                 <tr>
                     <td>罚息利率</td>
-                    <td><span>{{loan.penaltyRate}}</span></td>
+                    <td><span class="moreContent">{{loan.penaltyRate}}</span></td>
                 </tr>
                 <tr>
                     <td>复利利率</td>
-                    <td><span>{{loan.compoundRate}}</span></td>
+                    <td><span class="moreContent">{{loan.compoundRate}}</span></td>
                 </tr>
                 <tr>
                     <td>罚息/复利约定</td>
-                    <td><span>{{loan.rateAgreement}}</span></td>
+                    <td><span class="moreContent">{{loan.rateAgreement}}</span></td>
                 </tr>
                 <tr>
                     <td>解除合同或提前收贷约定</td>
-                    <td><span>{{loan.releaseAgreement}}</span></td>
+                    <td><span class="moreContent">{{loan.releaseAgreement}}</span></td>
                 </tr>
                 <tr>
                     <td>违约金约定</td>
-                    <td><span>{{loan.defaultAgreement}}</span></td>
+                    <td><span class="moreContent">{{loan.defaultAgreement}}</span></td>
                 </tr>
                 <tr>
                     <td>实现债权费用的约定</td>
-                    <td><span>{{loan.feeAgreement}}</span></td>
+                    <td><span class="moreContent">{{loan.feeAgreement}}</span></td>
                 </tr>
                 <tr>
                     <td>送达约定</td>
-                    <td><span>{{loan.sendAgreement}}</span></td>
+                    <td><span class="moreContent">{{loan.sendAgreement}}</span></td>
                 </tr>
             </table> 
             <table class="bookbuilding-table" cellspacing="0" cellpadding="0" border="0" v-show="titleIndex == 2">
                 <tr>
                     <td>保证合同名称</td>
-                    <td><span>{{guarantee.name}}</span></td>
+                    <td><span class="moreContent">{{guarantee.name}}</span></td>
                 </tr>
                 <tr>
                     <td>保证人</td>
-                    <td><span>{{guarantee.guaranteePeople}}</span></td>
+                    <td><span class="moreContent">{{guarantee.guaranteePeople}}</span></td>
                 </tr>
                 <tr>
                     <td>保证方式</td>
-                    <td><span>{{guarantee.methods}}</span></td>
+                    <td><span class="moreContent">{{guarantee.methods}}</span></td>
                 </tr>
                 <tr>
                     <td>保证期间</td>
-                    <td><span>{{guarantee.timeRange}}</span></td>
+                    <td><span class="moreContent">{{guarantee.timeRange}}</span></td>
                 </tr>
                 <tr>
                     <td>保证合同签订时间</td>
-                    <td><span>{{guarantee.time}}</span></td>
+                    <td><span class="moreContent">{{guarantee.time}}</span></td>
                 </tr>
                 <tr>
                     <td>保证范围</td>
-                    <td><span>{{guarantee.guaranteeRange}}</span></td>
+                    <td><span class="moreContent">{{guarantee.guaranteeRange}}</span></td>
                 </tr>
             </table> 
             <table class="bookbuilding-table" cellspacing="0" cellpadding="0" border="0" v-show="titleIndex == 3">
                 <tr>
                     <td>抵押合同名称</td>
-                    <td><span>{{mortgage.name}}</span></td>
+                    <td><span class="moreContent">{{mortgage.name}}</span></td>
                 </tr>
                 <tr>
                     <td>抵押合同签订时间</td>
-                    <td><span>{{mortgage.time}}</span></td>
+                    <td><span class="moreContent">{{mortgage.time}}</span></td>
                 </tr>
                 <tr>
                     <td>抵押物权属</td>
-                    <td><span>{{mortgage.ownership}}</span></td>
+                    <td><span class="moreContent">{{mortgage.ownership}}</span></td>
                 </tr>
                 <tr>
                     <td>抵押物名称</td>
-                    <td><span>{{mortgage.articleName}}</span></td>
+                    <td><span class="moreContent">{{mortgage.articleName}}</span></td>
                 </tr>
                 <tr>
                     <td>抵押担保范围</td>
-                    <td><span>{{mortgage.range}}</span></td>
+                    <td><span class="moreContent">{{mortgage.range}}</span></td>
                 </tr>
                 <tr>
                     <td>办理抵押登记时间</td>
-                    <td><span>{{mortgage.handletime}}</span></td>
+                    <td><span class="moreContent">{{mortgage.handletime}}</span></td>
                 </tr>
             </table>
             <table class="bookbuilding-table" cellspacing="0" cellpadding="0" border="0" v-show="titleIndex == 4">
                 <tr>
                     <td>质押合同名称</td>
-                    <td><span>{{pledge.name}}</span></td>
+                    <td><span class="moreContent">{{pledge.name}}</span></td>
                 </tr>
                 <tr>
                     <td>质押合同签订时间</td>
-                    <td><span>{{pledge.time}}</span></td>
+                    <td><span class="moreContent">{{pledge.time}}</span></td>
                 </tr>
                 <tr>
                     <td>质押物权属</td>
-                    <td><span>{{pledge.ownership}}</span></td>
+                    <td><span class="moreContent">{{pledge.ownership}}</span></td>
                 </tr>
                 <tr>
                     <td>质押物名称</td>
-                    <td><span>{{pledge.articleName}}</span></td>
+                    <td><span class="moreContent">{{pledge.articleName}}</span></td>
                 </tr>
                 <tr>
                     <td>质押担保范围</td>
-                    <td><span>{{pledge.range}}</span></td>
+                    <td><span class="moreContent">{{pledge.range}}</span></td>
                 </tr>
                 <tr>
                     <td>办理质押登记时间</td>
-                    <td><span>{{pledge.handletime}}</span></td>
+                    <td><span class="moreContent">{{pledge.handletime}}</span></td>
                 </tr>
             </table> 
         </div>
@@ -1087,6 +1093,7 @@ export default {
                 this.endProcess.fee = res.data.creditCard.endApplyFee;
                 this.endProcess.time = res.data.creditCard.endMakeTime == null ? '' : this.time(res.data.creditCard.endMakeTime);
                 this.endProcess.reason = res.data.creditCard.endReason;
+                this.pay.proofName = res.data.creditCard.proofName;
             })
         }
     }

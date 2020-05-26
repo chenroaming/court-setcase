@@ -939,7 +939,7 @@ right: -20px;">元</span>
                 <DatePicker type="date" transfer :value="addFormItem.birthday2" @on-change="changeDate2"></DatePicker>
             </FormItem> -->
 
-            <FormItem label="联系号码*" style="width: 245px;" v-show="addFormItem.litigantType != '法人' && addFormItem.litigantType != '非法人组织'">
+            <FormItem label="手机号码*" style="width: 245px;" v-show="addFormItem.litigantType != '法人' && addFormItem.litigantType != '非法人组织'">
                 <Dropdown @on-click="changePhone" v-if="this.litigantId != ''">
                     <Input v-model="litigantPhoneSelect" :disabled="isDisabled" placeholder="请选择号码" @on-change></Input>
                     <DropdownMenu slot="list">
@@ -948,6 +948,9 @@ right: -20px;">元</span>
                 </Dropdown>
                 <Input v-model="addNewPhone" placeholder="请输入号码" v-if="this.litigantId == ''"></Input>
                 <div style="color: #ed3f14;position:absolute;top:28px;width: 155px;" v-if="this.litigantId == ''">多个号码请用逗号分隔</div>
+            </FormItem>
+            <FormItem label="固定电话" style="width: 505px;">
+                <Input v-model="addFormItem.fixedPhone" placeholder="请输入固话号码"></Input>
             </FormItem>
             <FormItem v-bind:label="addFormItem.litigantType == '法人' ? '法定代表人*' : '负责人*'" style="width: 505px;" v-show="addFormItem.litigantType != '自然人'">
                 <Input v-model="addFormItem.legalManName" v-bind:placeholder="addFormItem.litigantType == '法人' ? '请输入法定代表人姓名' : '请输入负责人姓名'" width="100px;"></Input>
@@ -980,7 +983,7 @@ right: -20px;">元</span>
             <FormItem :label="addFormItem.litigantType == '自然人' ? '现居地址*' : '经营地址*'" style="width: 505px">
                 <Input v-model="addFormItem.address" :placeholder="addFormItem.litigantType == '自然人' ? '请输入当前常住地址' : '请输入经营地址'"></Input>
             </FormItem>
-            <FormItem :label="addFormItem.litigantType == '自然人' ? '约定送达地址*' : '约定送达地址*'" style="width: 505px">
+            <FormItem :label="addFormItem.litigantStatus == '原告' ? '确定送达地址*' : '约定送达地址*'" style="width: 505px">
                 <Input v-model="addFormItem.sendAddress" placeholder="请输入当事人送达地址"></Input>
             </FormItem>
             <!-- <FormItem v-show="addFormItem.litigantType == '自然人'" label="个人证明" style="width: 505px">
@@ -3294,8 +3297,12 @@ submit(){   //添加当事人
         var birthday2 = '';
     }
     if(this.addFormItem.litigantType == '自然人'){
-        if(this.addFormItem.identityCard == '' && this.addFormItem.litigantStatus == "原告"){
+        if(this.addFormItem.identityCard == '' && this.addFormItem.litigantStatus == "原告" && !this.isUsual){
             this.$Message.info("原告身份证号码不能为空");
+            this.changeLoading();
+            return false;
+        }else if(this.addFormItem.identityCard == '' && !this.isUsual){
+            this.$Message.info("身份证号码不能为空");
             this.changeLoading();
             return false;
         }
@@ -3331,6 +3338,7 @@ submit(){   //添加当事人
             education:this.addFormItem.education,
             otherAddress:otherAddressStr,
             pfId:'',
+            litigantTelPhone:this.addFormItem.fixedPhone,
         }
     }else{
         if(this.addFormItem.litigantType == '法人'){
@@ -3338,7 +3346,7 @@ submit(){   //添加当事人
         }else{
             var liniType = 2;
         }
-        if(this.addFormItem.legalManPhone == '' ){
+        if(this.addFormItem.legalManPhone == '' && this.addFormItem.litigantStatus == "原告"){
             this.$Message.info("法人联系方式不能为空");
             this.changeLoading();
             return false;
@@ -3360,7 +3368,8 @@ submit(){   //添加当事人
             address:this.addFormItem.address,
             sendAddress:this.addFormItem.sendAddress,
             email:this.addFormItem.email,
-            legalManJob:this.addFormItem.legalManJob
+            legalManJob:this.addFormItem.legalManJob,
+            litigantTelPhone:this.addFormItem.fixedPhone,
         }
     }
     if(this.isUsual){  //添加常用当事人
@@ -3368,7 +3377,7 @@ submit(){   //添加当事人
         const checkPhone = this.addNewPhone.split(',').every((item) => {
             return phoneReg.test(item);
         })
-        if(!checkPhone && this.addFormItem.litigantType == '自然人'){
+        if(!checkPhone && this.addFormItem.litigantType == '自然人' && this.addFormItem.litigantStatus != '被告'){
             this.changeLoading();
             return this.$Message.warning('手机号码格式不正确！');
         }
@@ -3386,7 +3395,7 @@ submit(){   //添加当事人
     }else{  //添加/修改当事人
         if(this.litigantId != ""){  //修改当事人
             params.onlineLitigantId = this.litigantId;
-            if (!phoneReg.test(this.litigantPhoneSelect) && this.addFormItem.litigantType == '自然人'){
+            if (!phoneReg.test(this.litigantPhoneSelect) && this.addFormItem.litigantType == '自然人' && this.addFormItem.litigantStatus != '被告'){
                 this.changeLoading();
                 return this.$Message.warning('手机号码格式不正确！');
             }
@@ -3422,7 +3431,7 @@ submit(){   //添加当事人
         const checkPhone = this.addNewPhone.split(',').every((item) => {
             return phoneReg.test(item);
         })
-        if(!checkPhone && this.addFormItem.litigantType == '自然人'){
+        if(!checkPhone && this.addFormItem.litigantType == '自然人' && this.addFormItem.litigantStatus != '被告'){
             this.changeLoading();
             return this.$Message.warning('手机号码格式不正确！');
         }
@@ -3481,6 +3490,7 @@ getOneLini(id){ //获取当事人信息
             this.addFormItem.legalManPhone= res.data.onlineLitigant.legalManPhone;
             this.addFormItem.legalManId= res.data.onlineLitigant.legalManId;
             this.addFormItem.sendAddress= res.data.onlineLitigant.sendAddress;
+            this.addFormItem.fixedPhone = res.data.onlineLitigant.litigantTelPhone;
             let otherAddressArr=[]
             for (let index = 0; index < res.data.onlineLitigant.onlineLitigantAddresses.length; index++) {
                 if (res.data.onlineLitigant.onlineLitigantAddresses[index].type==3) {
@@ -3540,7 +3550,7 @@ submitLawyer(){ //添加代理人
             return false;
         }
         if(!this.addFormItem.lawyerOfficeName){
-            this.$Message.warning('律师事务所不能为空');
+            this.$Message.warning('执业机构不能为空');
             this.changeLoading();
             return false;
         }
@@ -3570,6 +3580,12 @@ submitLawyer(){ //添加代理人
             phone:this.addFormItem.lawermobile,
             address:this.addFormItem.address,
         }
+    }
+    if(this.addFormItem.lawerType == 5){
+        params.recUnit = this.addFormItem.recCompany;
+    }
+    if(this.addFormItem.lawerType == 4){
+        params.litigantShip = this.addFormItem.relatives;
     }
     if(this.isUsual){   //添加常用代理人
         params.onlineLitigantId = undefined;
@@ -3644,6 +3660,8 @@ getLaw(id){   //获取代理人信息
             this.addFormItem.lawIdentiCard2= res.data.onlineLawyer.identicard;
             this.addFormItem.lawerNum = res.data.onlineLawyer.lawyerIdcard;
             this.addFormItem.address = res.data.onlineLawyer.address;
+            this.addFormItem.recCompany = res.data.onlineLawyer.recUnit;
+            this.addFormItem.relatives = res.data.onlineLawyer.litigantShip;
             this.isUsual = false;
             this.lawyerModal = true;
         }else{
@@ -3723,7 +3741,6 @@ queryAgent1 (value) {
             if (res.data.lawyers != []) {
                 var arr1 = [];
                 var ary = res.data.lawyers;
-
                 for (var i = 0; i < ary.length; i++) {
                     this.numData1.push(ary[i].agentIdentiCard);
                 }
@@ -3801,6 +3818,7 @@ selectSure2(){
     }
 },
 nextStep(dex){
+    console.log(dex);
     this.nextLoading = true;
     if(dex == 1){
         const params = {
@@ -3853,71 +3871,72 @@ nextStep(dex){
             this.nextLoading = false;
             if(res.data.state == 100){
                     getOnlineLitigantInfo(this.caseId).then(ress => {
-                    if(ress.data.state == 100){
-                        // this.sureMol = true;
-                        if(ress.data.onlineLitigant != null){
-                            if(ress.data.onlineLitigant.litigantType == 0){
-                                that.sureMoInfo.litigantName = ress.data.onlineLitigant.litigantName; 
-                                that.sureMoInfo.acceptPeople = ress.data.onlineLitigant.litigantName;
-                            }else{
-                                that.sureMoInfo.litigantName = ress.data.onlineLitigant.litigantName;
-                                that.sureMoInfo.acceptPeople = ress.data.onlineLitigant.legalManName;
-                            }
-                            that.sureMoInfo.sendAddress = ress.data.onlineLitigant.sendAddress;
-                            
-                            that.sureMoInfo.litigantPhone = ress.data.onlineLitigant.litigantPhone;
-                            that.sureMoInfo.email = ress.data.onlineLitigant.email;
-                            if(ress.data.onlineLitigant.onlineLawyers.length > 0){
-                                this.lawyerList = [];
-                                for(const item of ress.data.onlineLitigant.onlineLawyers){                          
-                                    const data={
-                                        name:item.name,
-                                        card:item.identicard,
-                                        phone:item.phone,
-                                        adress:item.address,
-                                        id:item.id,
+                        if(ress.data.state == 100){
+                            // this.sureMol = true;
+                            if(ress.data.onlineLitigant != null){
+                                if(ress.data.onlineLitigant.litigantType == 0){
+                                    that.sureMoInfo.litigantName = ress.data.onlineLitigant.litigantName; 
+                                    that.sureMoInfo.acceptPeople = ress.data.onlineLitigant.litigantName;
+                                }else{
+                                    that.sureMoInfo.litigantName = ress.data.onlineLitigant.litigantName;
+                                    that.sureMoInfo.acceptPeople = ress.data.onlineLitigant.legalManName;
+                                }
+                                that.sureMoInfo.sendAddress = ress.data.onlineLitigant.sendAddress;
+                                
+                                that.sureMoInfo.litigantPhone = ress.data.onlineLitigant.litigantPhone;
+                                that.sureMoInfo.email = ress.data.onlineLitigant.email;
+                                if(ress.data.onlineLitigant.onlineLawyers.length > 0){
+                                    this.lawyerList = [];
+                                    for(const item of ress.data.onlineLitigant.onlineLawyers){                          
+                                        const data={
+                                            name:item.name,
+                                            card:item.identicard,
+                                            phone:item.phone,
+                                            adress:item.address,
+                                            id:item.id,
+                                        }
+                                        this.lawyerList.push(data);
                                     }
-                                    this.lawyerList.push(data);
                                 }
                             }
-                        }
-                        that.sureMoInfo.year = new Date().getFullYear();
-                        that.sureMoInfo.month = new Date().getMonth() + 1;
-                        that.sureMoInfo.date = new Date().getDate();
-                        if (that.ten == 10) {
-                            let timer = setInterval(()=>{
-                                this.disabled = true;
-                                this.buttonStr ="同意并继续（" +  this.ten +"）";
-                                
-                                if(this.ten ===0) {
-                                    clearInterval(timer);
-                                    if(this.single == true){
-                                        this.disabled = false;
-                                    }
-                                    this.buttonStr = `同意并继续`;
-                                }else{this.ten = this.ten - 1;}
-                            },1000)
+                            that.sureMoInfo.year = new Date().getFullYear();
+                            that.sureMoInfo.month = new Date().getMonth() + 1;
+                            that.sureMoInfo.date = new Date().getDate();
+                            this.nextStepSure();
+                            // if (that.ten == 10) {
+                            //     let timer = setInterval(()=>{
+                            //         this.disabled = true;
+                            //         this.buttonStr ="同意并继续（" +  this.ten +"）";
+                                    
+                            //         if(this.ten ===0) {
+                            //             clearInterval(timer);
+                            //             if(this.single == true){
+                            //                 this.disabled = false;
+                            //             }
+                            //             this.buttonStr = `同意并继续`;
+                            //         }else{this.ten = this.ten - 1;}
+                            //     },1000)
+                            // }else{
+                            //     that.ten = 10;
+                            //     let timer = setInterval(()=>{
+                            //         this.disabled = true;
+                            //         this.buttonStr ="同意并继续（" +  this.ten +"）";
+                                    
+                            //         if(this.ten ===0) {
+                            //             clearInterval(timer);
+                            //             if(this.single == true){
+                            //                 this.disabled = false;
+                            //             }
+                            //             this.buttonStr = `同意并继续`;
+                            //         }else{this.ten = this.ten - 1;}
+                            //     },1000)
+                            // }
                         }else{
-                            that.ten = 10;
-                            let timer = setInterval(()=>{
-                                this.disabled = true;
-                                this.buttonStr ="同意并继续（" +  this.ten +"）";
-                                
-                                if(this.ten ===0) {
-                                    clearInterval(timer);
-                                    if(this.single == true){
-                                        this.disabled = false;
-                                    }
-                                    this.buttonStr = `同意并继续`;
-                                }else{this.ten = this.ten - 1;}
-                            },1000)
+                            this.$Modal.warning({
+                                title: "提示",
+                                content: ress.data.message
+                            });
                         }
-                    }else{
-                        this.$Modal.warning({
-                            title: "提示",
-                            content: ress.data.message
-                        });
-                    }
                 })
             }else{
                 this.$Modal.warning({
@@ -3936,7 +3955,34 @@ nextStep(dex){
         }else{
             if(!this.isOpenevidenceMol){
             // this.evidenceMol = true;
-            this.sureMol = true;
+            getOnlineLitigantInfo(this.caseId).then(ress => {
+                if(ress.data.state == 100){
+                    this.sureMol = true;
+                    if(ress.data.onlineLitigant != null){
+                        if(ress.data.onlineLitigant.litigantType == 0){
+                            this.sureMoInfo.litigantName = ress.data.onlineLitigant.litigantName; 
+                            this.sureMoInfo.acceptPeople = ress.data.onlineLitigant.litigantName;
+                        }else{
+                            this.sureMoInfo.litigantName = ress.data.onlineLitigant.litigantName;
+                            this.sureMoInfo.acceptPeople = ress.data.onlineLitigant.legalManName;
+                        }
+                        this.sureMoInfo.sendAddress = ress.data.onlineLitigant.sendAddress;
+                        
+                        this.sureMoInfo.litigantPhone = ress.data.onlineLitigant.litigantPhone;
+                        this.sureMoInfo.email = ress.data.onlineLitigant.email;
+                    }
+                    this.sureMoInfo.year = new Date().getFullYear();
+                    this.sureMoInfo.month = new Date().getMonth() + 1;
+                    this.sureMoInfo.date = new Date().getDate();
+                    // this.nextStepSure();
+                }else{
+                    this.$Modal.warning({
+                        title: "提示",
+                        content: ress.data.message
+                    });
+                }
+            })
+            // this.sureMol = true;
             this.ten = 10;
             let timer = setInterval(()=>{
                 this.disabled = true;
@@ -3959,6 +4005,44 @@ nextStep(dex){
         }
     }else if(dex == 4){
         this.isElement == 1 ? this.$refs.element.submit() : this.$refs.element2.submitLoan();
+        if(!this.isOpenevidenceMol){
+            getOnlineLitigantInfo(this.caseId).then(ress => {
+                if(ress.data.state == 100){
+                    this.sureMol = true;
+                    let timer = setInterval(()=>{
+                        this.disabled = true;
+                        this.buttonStr ="已经阅读（" +  this.ten +"）";
+                        if(this.ten ===0) {
+                            clearInterval(timer);
+                            this.disabled = false;
+                            this.buttonStr = `已经阅读`;
+                        }else{this.ten = this.ten - 1;}
+                    },1000)
+                    if(ress.data.onlineLitigant != null){
+                        if(ress.data.onlineLitigant.litigantType == 0){
+                            this.sureMoInfo.litigantName = ress.data.onlineLitigant.litigantName; 
+                            this.sureMoInfo.acceptPeople = ress.data.onlineLitigant.litigantName;
+                        }else{
+                            this.sureMoInfo.litigantName = ress.data.onlineLitigant.litigantName;
+                            this.sureMoInfo.acceptPeople = ress.data.onlineLitigant.legalManName;
+                        }
+                        this.sureMoInfo.sendAddress = ress.data.onlineLitigant.sendAddress;
+                        
+                        this.sureMoInfo.litigantPhone = ress.data.onlineLitigant.litigantPhone;
+                        this.sureMoInfo.email = ress.data.onlineLitigant.email;
+                    }
+                    this.sureMoInfo.year = new Date().getFullYear();
+                    this.sureMoInfo.month = new Date().getMonth() + 1;
+                    this.sureMoInfo.date = new Date().getDate();
+                    // this.nextStepSure();
+                }else{
+                    this.$Modal.warning({
+                        title: "提示",
+                        content: ress.data.message
+                    });
+                }
+            })
+        }
     }  
 },
 getbrief(){
@@ -3996,6 +4080,7 @@ upstep(dex){
             this.elementAdd = true;
             this.stepNum = 3;
         }else{
+            this.getlawyerLis();
             this.dailiAdd = true;
             this.stepNum = 2;
         }
@@ -4051,6 +4136,7 @@ clearAddfortem(){
     this.isDisabled = true;
     this.litigantPhoneSelect = '';
     this.addNewPhone = '';
+    this.addFormItem.fixedPhone = '';
 },
 //8-12--新增
 addUsualLawyer(){   //增加常用律师

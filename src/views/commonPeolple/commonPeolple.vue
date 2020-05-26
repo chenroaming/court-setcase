@@ -105,6 +105,9 @@
                         <Input v-model="addFormItem.litigantPhone" placeholder="请输入手机号码"></Input>
                         <div style="color: #ed3f14;position:absolute;top:28px;left:5px;">多个手机号码请用逗号分隔</div>
                     </FormItem>
+                    <FormItem label="固定电话" style="width: 505px;">
+                        <Input v-model="addFormItem.fixedPhone" placeholder="请输入固话号码"></Input>
+                    </FormItem>
                     <FormItem v-bind:label="addFormItem.litigantType == '法人' ? '法定代表人*' : '负责人*'" style="width: 505px;" v-show="addFormItem.litigantType != '自然人'">
                         <Input v-model="addFormItem.legalManName" v-bind:placeholder="addFormItem.litigantType == '法人' ? '请输入法定代表人姓名' : '请输入负责人姓名'" width="100px;"></Input>
                     </FormItem>
@@ -127,7 +130,7 @@
                     <FormItem :label="addFormItem.litigantType == '自然人' ? '经常居住地址*' : '公司经营地址*'" style="width: 505px">
                         <Input v-model="addFormItem.address" placeholder="请输入经常居住地址"></Input>
                     </FormItem>
-                    <FormItem :label="addFormItem.litigantType == '自然人' ? '确认送达地址*' : '确认送达地址*'" style="width: 505px">
+                    <FormItem :label="addFormItem.litigantStatus == '原告' ? '确定送达地址*' : '约定送达地址*'" style="width: 505px">
                         <Input v-model="addFormItem.sendAddress" placeholder="请输入送达地址"></Input>
                     </FormItem>
                     <FormItem label="其他送达地址" style="width: 505px" v-for="(item,key) in addFormItem.otherAddressArr">
@@ -148,7 +151,7 @@
             :mask-closable="false"
             :title="this.lawyerId == '' ? '添加常用代理人' : '查看/修改常用代理人'">
             <div>
-                <Form :model="addFormItem" :label-width="100" inline>
+                <Form :model="addFormItem" :label-width="105" inline>
                     <FormItem label="代理人身份" style="width: 245px;">
                         <Select v-model="addFormItem.lawerType" transfer @on-change="changeType" placeholder="请选择">
                             <Option v-for="item in lawerType" :value="item.value">{{ item.label }}</Option>
@@ -167,28 +170,36 @@
                         <!-- <Input v-model="addFormItem.lawermobile"  placeholder="请输入代理人电话" width="100px;"></Input> -->
                         <AutoComplete v-model="addFormItem.lawermobile" :data="phoneData1" @on-search="queryAgent1" placeholder="请输入代理人电话" transfer></AutoComplete>
                     </FormItem>
-                    <FormItem label="律所*" v-show="!lawyerT1" style="width: 505px;">
+                    <FormItem label="执业机构*" v-show="!lawyerT1" style="width: 515px;">
                         <!-- <Input v-model="addFormItem.lawIdentiCard" placeholder="请输入代理人公民身份证号码"  ></Input> -->
                         <AutoComplete v-model="addFormItem.lawyerOfficeName"  placeholder="请输入律师所属事务所" transfer></AutoComplete>
                     </FormItem>
-                    <FormItem label="公民身份证号码" v-show="lawyerT1" style="width: 505px;">
+                    <FormItem label="公民身份证号码" v-show="lawyerT1" style="width: 515px;">
                         <!-- <Input v-model="addFormItem.lawIdentiCard" placeholder="请输入代理人公民身份证号码"  ></Input> -->
                         <AutoComplete v-model="addFormItem.lawIdentiCard" :data="numData1"  placeholder="请输入代理人公民身份证号码" transfer></AutoComplete>
                     </FormItem>
-                    <FormItem label="公民身份证号码" v-show="!lawyerT1" style="width: 505px;">
+                    <FormItem label="公民身份证号码" v-show="!lawyerT1" style="width: 515px;">
                         <!-- <Input v-model="addFormItem.lawIdentiCard" placeholder="请输入代理人公民身份证号码"  ></Input> -->
                         <Input v-model="addFormItem.lawIdentiCard2" placeholder="请输入代理人公民身份证号码"></Input>
                     </FormItem>
-                    <FormItem label="工作证件号码*" v-show="!lawyerT1" style="width: 505px;">
+                    <FormItem label="工作证件号码*" v-show="!lawyerT1" style="width: 515px;">
                         <!-- <Input v-model="addFormItem.lawerNum" placeholder="请输入代理人工作证件号码"  ></Input> -->
                         <AutoComplete v-model="addFormItem.lawerNum" :data="lawNumData1" placeholder="请输入代理人工作证件号码" transfer></AutoComplete>
                     </FormItem>
-                    <FormItem label="电子邮箱" style="width: 505px">
+                    <FormItem label="电子邮箱" style="width: 515px">
                         <Input v-model="addFormItem.email" placeholder="请输入电子邮箱"></Input>
                     </FormItem>
-                    <FormItem label="联系地址"  style="width: 505px;">
+                    <FormItem label="联系地址"  style="width: 515px;">
                         <!-- <Input v-model="addFormItem.lawerNum" placeholder="请输入代理人联系地址"  ></Input> -->
                         <AutoComplete v-model="addFormItem.address"  placeholder="请输入代理人联系地址" transfer></AutoComplete>
+                    </FormItem>
+                    <FormItem label="推荐单位*" v-show="addFormItem.lawerType == 5"  style="width: 515px;">
+                        <!-- <Input v-model="addFormItem.lawerNum" placeholder="请输入代理人联系地址"  ></Input> -->
+                        <AutoComplete v-model="addFormItem.recCompany"  placeholder="请输入推荐单位" transfer></AutoComplete>
+                    </FormItem>
+                    <FormItem label="与当事人关系*" v-show="addFormItem.lawerType == 4"  style="width: 515px;">
+                        <!-- <Input v-model="addFormItem.lawerNum" placeholder="请输入代理人联系地址"  ></Input> -->
+                        <AutoComplete v-model="addFormItem.relatives"  placeholder="请输入与当事人关系" transfer></AutoComplete>
                     </FormItem>
                 </Form>
             </div>
@@ -302,6 +313,7 @@ export default {
                                 this.addFormItem.legalManPhone= tem.legalManPhone;
                                 this.addFormItem.legalManId= tem.legalManId;
                                 this.addFormItem.sendAddress= tem.sendAddress;
+                                this.addFormItem.fixedPhone = tem.litigantTelPhone;
                                 let otherAddressArr=[]
                                 for (let index = 0; index < tem.onlineLitigantAddress.length; index++) {
                                     if (tem.onlineLitigantAddress[index].type==3) {
@@ -423,6 +435,8 @@ export default {
                                 this.addFormItem.lawerNum = tem.lawyerIdcard;
                                 this.addFormItem.address = tem.address;
                                 this.lawyerModal = true;
+                                this.addFormItem.recCompany = tem.recUnit;
+                                this.addFormItem.relatives = tem.litigantShip;
                             }
                         }
                         },
@@ -530,6 +544,9 @@ export default {
                 lawIdentiCard1: "",
                 lawerNum1: "",
                 otherAddressArr:[],
+                recCompany:'',
+                relatives:'',
+                fixedPhone:'',
             },
             nationList:["汉族","蒙古族","回族","藏族","维吾尔族","苗族","彝族","壮族","布依族","朝鲜族","满族","侗族","瑶族","白族","土家族",
                "哈尼族","哈萨克族","傣族","黎族","傈僳族","佤族","畲族","高山族","拉祜族","水族","东乡族","纳西族","景颇族","柯尔克孜族",
@@ -637,7 +654,8 @@ export default {
                     nationality:this.addFormItem.nationality,
                     // politicalStatus:this.addFormItem.politicalStatus,
                     education:this.addFormItem.education,
-                    otherAddress:otherAddressStr
+                    otherAddress:otherAddressStr,
+                    litigantTelPhone:this.addFormItem.fixedPhone,
                 }
             }else{
                 if(this.addFormItem.litigantType == '法人'){
@@ -667,7 +685,8 @@ export default {
                     address:this.addFormItem.address,
                     sendAddress:this.addFormItem.sendAddress,
                     email:this.addFormItem.email,
-                    legalManJob:this.addFormItem.legalManJob
+                    legalManJob:this.addFormItem.legalManJob,
+                    litigantTelPhone:this.addFormItem.fixedPhone,
                 }
             }
             if(this.litigantId != ""){
@@ -755,6 +774,12 @@ export default {
                     phone:this.addFormItem.lawermobile,
                     address:this.addFormItem.address,
                 }
+            }
+            if(this.addFormItem.lawerType == 5){
+                params.recUnit = this.addFormItem.recCompany;
+            }
+            if(this.addFormItem.lawerType == 4){
+                params.litigantShip = this.addFormItem.relatives;
             }
             if(this.lawyerId != ""){
                 params.clId = this.lawyerId;

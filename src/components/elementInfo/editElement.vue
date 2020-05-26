@@ -199,7 +199,7 @@
                     <DatePicker type="date" v-model="pay.applyTime" :disabled="isChecked" placeholder="请选择时间" style="width: 300px"></DatePicker>
                 </FormItem>
                 <FormItem label="证据：">
-                    <Input v-model="pay.completeTime" :disabled="isChecked" :row="5" placeholder="请输入证据名称和页码序号" style="width: 300px" />
+                    <Input v-model="pay.proofName" :disabled="isChecked" :row="5" placeholder="请输入证据名称和页码序号" style="width: 300px" />
                     <!-- <DatePicker type="date" v-model="pay.completeTime" :disabled="isChecked" placeholder="请选择时间" style="width: 300px"></DatePicker> -->
                 </FormItem>
                 <FormItem label="终结督促程序裁定作出时间：">
@@ -1005,7 +1005,8 @@ export default {
                         mayTime:this.pay.completeTime == '' ? this.pay.completeTime : typeof(this.pay.completeTime) == 'number' ? this.time(this.pay.completeTime) : this.pay.completeTime.getFullYear()+'-'+(this.pay.completeTime.getMonth()+1)+'-'+this.pay.completeTime.getDate(),
                         eayFee:this.endProcess.fee,
                         emkTime:this.endProcess.time == '' ? this.endProcess.time : typeof(this.endProcess.time) == 'number' ? this.time(this.endProcess.time) : this.endProcess.time.getFullYear()+'-'+(this.endProcess.time.getMonth()+1)+'-'+this.endProcess.time.getDate(),
-                        endReason:this.endProcess.reason
+                        endReason:this.endProcess.reason,
+                        proofName:this.pay.proofName,
                     }
                     editInfo(obj).then(res => {
                         this.submitLoading = false;
@@ -1422,6 +1423,7 @@ export default {
                 this.endProcess.fee = res.data.creditCard.endApplyFee;
                 this.endProcess.time = res.data.creditCard.endMakeTime == null ? '' : this.time(res.data.creditCard.endMakeTime);
                 this.endProcess.reason = res.data.creditCard.endReason;
+                this.pay.proofName = res.data.creditCard.proofName;
             })
         }
     }

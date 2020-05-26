@@ -1019,7 +1019,7 @@
                                 <Input v-model="addFormItem.fixedPhone" placeholder="请输入固话号码"></Input>
                             </FormItem> -->
         
-                            <FormItem label="联系号码*" style="width: 245px;" v-show="addFormItem.litigantType != '法人' && addFormItem.litigantType != '非法人组织'" >
+                            <FormItem label="手机号码*" style="width: 245px;" v-show="addFormItem.litigantType != '法人' && addFormItem.litigantType != '非法人组织'" >
                                 <!-- <Input v-model="addFormItem.litigantPhone" placeholder="请输入手机号码"></Input>
                                 <div style="color: #ed3f14;position:absolute;top:28px;left:5px;">多个手机号码请用逗号分隔</div> -->
                                 <Dropdown @on-click="changePhone" v-if="this.litigantId != ''">
@@ -1031,7 +1031,9 @@
                                 <Input v-model="addNewPhone" placeholder="请输入号码" v-if="this.litigantId == ''"></Input>
                                 <div style="color: #ed3f14;position:absolute;top:28px;width: 155px;" v-if="this.litigantId == ''">多个号码请用逗号分隔</div>
                             </FormItem>
-                            
+                            <FormItem label="固定电话" style="width: 505px;">
+                                <Input v-model="addFormItem.fixedPhone" placeholder="请输入固话号码"></Input>
+                            </FormItem>
                             <!-- <FormItem :label="addFormItem.litigantType == '自然人' ?'固定电话' : '固定电话*'" style="width: 245px;">
                                 <Input v-model="addFormItem.litigantTelPhone" placeholder="请输入固定电话"></Input>
                             </FormItem> -->
@@ -1070,7 +1072,7 @@
                             <FormItem :label="addFormItem.litigantType == '自然人' ? '现居地址*' : '办公地址*'" style="width: 505px">
                                 <Input v-model="addFormItem.address" :placeholder="addFormItem.litigantType == '自然人' ? '请输入当前常住地址' : '请输入办公地址'"></Input>
                             </FormItem>
-                            <FormItem :label="addFormItem.litigantType == '自然人' ? '约定送达地址*' : '约定送达地址*'" style="width: 505px">
+                            <FormItem :label="addFormItem.litigantStatus == '原告' ? '确定送达地址*' : '约定送达地址*'" style="width: 505px">
                                 <Input v-model="addFormItem.sendAddress" placeholder="请输入当事人送达地址"></Input>
                             </FormItem>
                             <!-- <FormItem v-show="addFormItem.litigantType == '自然人'" label="个人证明" style="width: 505px">
@@ -1131,7 +1133,7 @@
                     :mask-closable="false"
                     :title="this.lawyerId == '' ? '添加代理人' : '查看/修改代理人'">
                     <div>
-                        <Form :model="addFormItem" :label-width="100" inline>
+                        <Form :model="addFormItem" :label-width="105" inline>
                             <FormItem label="代理人身份" style="width: 245px;">
                                 <Select v-model="addFormItem.lawerType" transfer @on-change="changeType" placeholder="请选择">
                                     <Option v-for="item in lawerType" :value="item.value">{{ item.label }}</Option>
@@ -1150,34 +1152,34 @@
                                 <!-- <Input v-model="addFormItem.lawermobile"  placeholder="请输入代理人电话" width="100px;"></Input> -->
                                 <AutoComplete v-model="addFormItem.lawermobile" :data="phoneData1" @on-search="queryAgent1" placeholder="请输入代理人电话" transfer></AutoComplete>
                             </FormItem>
-                            <FormItem label="执业机构*" v-show="!lawyerT1" style="width: 505px;">
+                            <FormItem label="执业机构*" v-show="!lawyerT1" style="width: 515px;">
                                 <!-- <Input v-model="addFormItem.lawIdentiCard" placeholder="请输入代理人公民身份证号码"  ></Input> -->
                                 <AutoComplete v-model="addFormItem.lawyerOfficeName"  placeholder="请输入执业机构" transfer></AutoComplete>
                             </FormItem>
-                            <FormItem label="公民身份证号码*" v-show="lawyerT1" style="width: 505px;">
+                            <FormItem label="公民身份证号码*" v-show="lawyerT1" style="width: 515px;">
                                 <!-- <Input v-model="addFormItem.lawIdentiCard" placeholder="请输入代理人公民身份证号码"  ></Input> -->
                                 <AutoComplete v-model="addFormItem.lawIdentiCard" :data="numData1" @on-search="queryAgent1" placeholder="请输入代理人公民身份证号码" transfer></AutoComplete>
                             </FormItem>
-                            <FormItem label="公民身份证号码*" v-show="!lawyerT1" style="width: 505px;">
+                            <FormItem label="公民身份证号码*" v-show="!lawyerT1" style="width: 515px;">
                                 <!-- <Input v-model="addFormItem.lawIdentiCard" placeholder="请输入代理人公民身份证号码"  ></Input> -->
                                 <Input v-model="addFormItem.lawIdentiCard2" placeholder="请输入代理人公民身份证号码"></Input>
                             </FormItem>
-                            <FormItem label="工作证件号码*" v-show="!lawyerT1" style="width: 505px;">
+                            <FormItem label="工作证件号码*" v-show="!lawyerT1" style="width: 515px;">
                                 <!-- <Input v-model="addFormItem.lawerNum" placeholder="请输入代理人工作证件号码"  ></Input> -->
                                 <AutoComplete v-model="addFormItem.lawIdentiCard" :data="lawNumData1" @on-search="queryAgent1" placeholder="请输入代理人工作证件号码" transfer></AutoComplete>
                             </FormItem>
-                            <FormItem label="电子邮箱*" style="width: 505px">
+                            <FormItem label="电子邮箱*" style="width: 515px">
                                 <Input v-model="addFormItem.email" placeholder="请输入电子邮箱"></Input>
                             </FormItem>
-                            <FormItem label="联系地址"  style="width: 505px;">
+                            <FormItem label="联系地址"  style="width: 515px;">
                                 <!-- <Input v-model="addFormItem.lawerNum" placeholder="请输入代理人联系地址"  ></Input> -->
                                 <AutoComplete v-model="addFormItem.address"  placeholder="请输入代理人确认送达地址" transfer></AutoComplete>
                             </FormItem>
-                            <FormItem label="推荐单位*" v-show="citizen"  style="width: 505px;">
+                            <FormItem label="推荐单位*" v-show="citizen"  style="width: 515px;">
                                 <!-- <Input v-model="addFormItem.lawerNum" placeholder="请输入代理人联系地址"  ></Input> -->
                                 <AutoComplete v-model="addFormItem.recCompany"  placeholder="请输入推荐单位" transfer></AutoComplete>
                             </FormItem>
-                            <FormItem label="与当事人关系*" v-show="relatives"  style="width: 505px;">
+                            <FormItem label="与当事人关系*" v-show="relatives"  style="width: 515px;">
                                 <!-- <Input v-model="addFormItem.lawerNum" placeholder="请输入代理人联系地址"  ></Input> -->
                                 <AutoComplete v-model="addFormItem.relatives"  placeholder="请输入与当事人关系" transfer></AutoComplete>
                             </FormItem>
@@ -3309,8 +3311,12 @@
                         var birthday2 = '';
                     }
                     if(this.addFormItem.litigantType == '自然人'){
-                        if(this.addFormItem.identityCard == '' && this.addFormItem.litigantStatus == "原告"){
+                        if(this.addFormItem.identityCard == '' && this.addFormItem.litigantStatus == "原告" && !this.isUsual){
                             this.$Message.info("原告身份证号码不能为空");
+                            this.changeLoading();
+                            return false;
+                        }else if(this.addFormItem.identityCard == '' && this.isUsual){
+                            this.$Message.info("身份证号码不能为空");
                             this.changeLoading();
                             return false;
                         }
@@ -3344,7 +3350,8 @@
                             nationality:this.addFormItem.nationality,
                             // politicalStatus:this.addFormItem.politicalStatus,
                             education:this.addFormItem.education,
-                            otherAddress:otherAddressStr
+                            otherAddress:otherAddressStr,
+                            litigantTelPhone:this.addFormItem.fixedPhone,
                         }
                     }else{
                         if(this.addFormItem.litigantType == '法人'){
@@ -3352,7 +3359,7 @@
                         }else{
                             var liniType = 2;
                         }
-                        if(this.addFormItem.legalManPhone == '' ){
+                        if(this.addFormItem.legalManPhone == '' && this.addFormItem.litigantStatus == "原告"){
                             this.$Message.info("法人联系方式不能为空");
                             this.changeLoading();
                             return false;
@@ -3392,7 +3399,8 @@
                             sendAddress:this.addFormItem.sendAddress,
                             email:this.addFormItem.email,
                             legalManJob:this.addFormItem.legalManJob,
-                            otherAddress:otherAddressStr
+                            otherAddress:otherAddressStr,
+                            litigantTelPhone:this.addFormItem.fixedPhone,
                         }
                     }
                     console.log(this.litigantId)
@@ -3401,7 +3409,7 @@
                         const checkPhone = this.addNewPhone.split(',').every((item) => {
                             return phoneReg.test(item);
                         })
-                        if(!checkPhone && this.addFormItem.litigantType == '自然人'){
+                        if(!checkPhone && this.addFormItem.litigantType == '自然人' && this.addFormItem.litigantStatus != '被告'){
                             this.changeLoading();
                             return this.$Message.warning('手机号码格式不正确！');
                         }
@@ -3419,7 +3427,7 @@
                     }else{
                          if(this.litigantId != ""){  //修改当事人
                             params.onlineLitigantId = this.litigantId;
-                            if (!phoneReg.test(this.litigantPhoneSelect) && this.addFormItem.litigantType == '自然人'){
+                            if (!phoneReg.test(this.litigantPhoneSelect) && this.addFormItem.litigantType == '自然人' && this.addFormItem.litigantStatus != '被告'){
                                 this.changeLoading();
                                 return this.$Message.warning('手机号码格式不正确！');
                             }
@@ -3461,7 +3469,7 @@
                         const checkPhone = this.addNewPhone.split(',').every((item) => {
                             return phoneReg.test(item);
                         })
-                        if(!checkPhone && this.addFormItem.litigantType == '自然人'){
+                        if(!checkPhone && this.addFormItem.litigantType == '自然人' && this.addFormItem.litigantStatus != '被告'){
                             this.changeLoading();
                             return this.$Message.warning('手机号码格式不正确！');
                         }
@@ -3524,6 +3532,7 @@
                             this.addFormItem.legalManPhone= res.data.onlineLitigant.legalManPhone;
                             this.addFormItem.legalManId= res.data.onlineLitigant.legalManId;
                             this.addFormItem.sendAddress= res.data.onlineLitigant.sendAddress;
+                            this.addFormItem.fixedPhone = res.data.onlineLitigant.litigantTelPhone;
                             let otherAddressArr=[]
                             for (let index = 0; index < res.data.onlineLitigant.onlineLitigantAddresses.length; index++) {
                                 if (res.data.onlineLitigant.onlineLitigantAddresses[index].type==3) {
@@ -3581,7 +3590,7 @@
                             return false;
                         }
                         if(!this.addFormItem.lawyerOfficeName){
-                            this.$Message.warning('律师事务所不能为空');
+                            this.$Message.warning('执业机构不能为空');
                             this.changeLoading();
                             return false;
                         }
@@ -3613,6 +3622,12 @@
                             phone:this.addFormItem.lawermobile,
                             address:this.addFormItem.address,
                         }
+                    }
+                    if(this.addFormItem.lawerType == 5){
+                        params.recUnit = this.addFormItem.recCompany;
+                    }
+                    if(this.addFormItem.lawerType == 4){
+                        params.litigantShip = this.addFormItem.relatives;
                     }
                     if(this.isUsual){   //添加常用代理人
                         params.onlineLitigantId = undefined;
@@ -3679,10 +3694,12 @@
                             this.addFormItem.lawermobile= res.data.onlineLawyer.phone;
                             this.addFormItem.email = res.data.onlineLawyer.email;
                             this.addFormItem.lawyerOfficeName = res.data.onlineLawyer.lawyerOfficeName ? res.data.onlineLawyer.lawyerOfficeName : "";
-                            this.addFormItem.lawIdentiCard= res.data.onlineLawyer.lawyerIdcard;
+                            this.addFormItem.lawIdentiCard= res.data.onlineLawyer.identicard;
                             this.addFormItem.lawIdentiCard2= res.data.onlineLawyer.identicard;
                             this.addFormItem.lawerNum = res.data.onlineLawyer.lawyerIdcard;
                             this.addFormItem.address = res.data.onlineLawyer.address;
+                            this.addFormItem.recCompany = res.data.onlineLawyer.recUnit;
+                            this.addFormItem.relatives = res.data.onlineLawyer.litigantShip;
                             this.isUsual = false;
                             this.lawyerModal = true;
                         }else{
@@ -4211,6 +4228,7 @@
                     this.isDisabled = true;
                     this.litigantPhoneSelect = '';
                     this.addNewPhone = '';
+                    this.addFormItem.fixedPhone = '';
                 },
                 //8-12--新增
                 addUsualLawyer(){   //增加常用律师

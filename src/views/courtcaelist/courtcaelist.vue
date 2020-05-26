@@ -636,6 +636,9 @@
                     <FormItem label="手机号码:" style="width: 245px;" v-show="addFormItem.litigantType != '法人' && addFormItem.litigantType != '非法人组织'">
                         <span>{{addFormItem.litigantPhone}}</span>
                     </FormItem>
+                    <FormItem label="固定电话:" style="width: 245px;">
+                        <span>{{addFormItem.fixedPhone}}</span>
+                    </FormItem>
                     <!-- <FormItem label="固定电话:" style="width: 245px;">
                         <span>{{addFormItem.litigantTelPhone}}</span>
                     </FormItem>
@@ -670,7 +673,7 @@
                     <FormItem :label="addFormItem.litigantType == '自然人' ? '经常居住地址：' : '公司经营地址：'" style="width: 505px">
                         <span>{{addFormItem.address}}</span>
                     </FormItem>
-                    <FormItem :label="addFormItem.litigantType == '自然人' ? '确认送达地址：' : '确认送达地址：'" style="width: 505px">
+                    <FormItem :label="addFormItem.litigantType == '自然人' ? '约定送达地址：' : '约定送达地址：'" style="width: 505px">
                         <span>{{addFormItem.sendAddress}}</span>
                     </FormItem>
                 </Form>
@@ -701,7 +704,7 @@
                     <FormItem label="电话:" style="width: 245px;">
                         <span>{{addFormItem.lawermobile}}</span>
                     </FormItem>
-                     <FormItem label="律所:" v-show="!lawyerT1" style="width: 505px;">
+                     <FormItem label="执业机构:" v-show="!lawyerT1" style="width: 505px;">
                         <span>{{addFormItem.lawyerOfficeName}}</span>
                     </FormItem>
                     <FormItem label="公民身份证号码:" v-show="lawyerT1" style="width: 505px;">
@@ -718,6 +721,12 @@
                     </FormItem>
                     <FormItem label="联系地址:"  style="width: 505px;">
                         <span>{{addFormItem.address}}</span>
+                    </FormItem>
+                    <FormItem label="推荐单位:" v-if="addFormItem.lawerType == '公民'" style="width: 505px;">
+                        <span>{{addFormItem.recUnit}}</span>
+                    </FormItem>
+                    <FormItem label="与当事人关系:" v-if="addFormItem.lawerType == '近亲属'" style="width: 505px;">
+                        <span>{{addFormItem.litigantShip}}</span>
                     </FormItem>
                 </Form>
             </div>
@@ -1751,6 +1760,7 @@ export default {
                     this.addFormItem.legalManPhone= res.data.onlineLitigant.legalManPhone;
                     this.addFormItem.legalManId= res.data.onlineLitigant.legalManId;
                     this.addFormItem.sendAddress= res.data.onlineLitigant.sendAddress;
+                    this.addFormItem.fixedPhone = res.data.onlineLitigant.litigantTelPhone;
                     this.completeMol = true;
                 }else{
                     this.$Message.info(res.data.message);
@@ -1788,6 +1798,8 @@ export default {
                     this.addFormItem.lawerNum = res.data.onlineLawyer.lawyerIdcard;
                     this.addFormItem.address = res.data.onlineLawyer.address;
                     this.lawyerMol = true;
+                    this.addFormItem.recUnit = res.data.onlineLawyer.recUnit;
+                    this.addFormItem.litigantShip = res.data.onlineLawyer.litigantShip;
                 }else{
                     this.$Message.info(res.data.message);
                 }
@@ -2039,8 +2051,7 @@ export default {
                                 defendant = defendant + it.litigantName + "、"
                             }
                         })
-    
-                        let atr = '原告' + plainTiffs.slice(0,plainTiffs.length-1) + "与被告" + defendant.slice(0,defendant.length-1) + "纠纷"; 
+                        const atr = `原告${plainTiffs.slice(0,plainTiffs.length-1)}与被告${defendant.slice(0,defendant.length-1)}${item.onlineBrief.name}`;
                         const data = {
                            id:item.id,
                            code:item.code,

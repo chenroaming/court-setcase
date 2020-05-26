@@ -22,13 +22,13 @@ export function addUpdateCardInfo (cardId,partCardId,cardNo,contractName,interes
 export function upPartOfCard (partCardId,contractName,signTime,
     joint,mgTime,dvTime,
     reasonContent,ayAmount,securities,ayFee,ayTime,mayTime,
-    eayFee,emkTime,endReason) {
+    eayFee,emkTime,endReason,proofName) {
     const params = {
         partCardId,//必传参数
         contractName,signTime,//合同信息等
         joint,mgTime,dvTime,//夫妻共同债务
         reasonContent,ayAmount,securities,ayFee,ayTime,mayTime,//支付令
-        eayFee,emkTime,endReason//终结督促程序
+        eayFee,emkTime,endReason,proofName//终结督促程序
     };
     return service({
         url: '/online/part/upPartOfCard.jhtml',
